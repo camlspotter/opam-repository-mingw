@@ -1,0 +1,12 @@
+opam-version: "1.2"
+maintainer: "jun.furuse@gmail.com"
+authors: [ "Jason Hickey" "Aleksey Nogin" ]
+homepage: "http://omake.metaprl.org/index.html"
+build: [
+  [make "bootstrap-mingw" "PREFIX=%{prefix}%"]
+  [make "all" "PREFIX=%{prefix}%"]
+  [make "install" "PREFIX=%{prefix}%"]
+]
+depends: ["ocamlfind"]
+patches: [
+]
