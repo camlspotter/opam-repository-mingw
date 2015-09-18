@@ -1,0 +1,4 @@
+bin: [
+  "src/main/osh.exe" { "osh.exe" }
+  "src/main/omake.exe" { "omake.exe" }
+]
