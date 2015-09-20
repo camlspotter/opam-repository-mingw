@@ -1,5 +1,18 @@
-*** src/Makefile.orig	2015-09-20 19:01:22.836095900 +0800
---- src/Makefile	2015-09-20 19:01:14.648556200 +0800
+*** a/Makefile	2015-09-14 19:52:18.000000000 +0800
+--- b/Makefile	2015-09-20 19:09:16.471768600 +0800
+***************
+*** 18,23 ****
+--- 18,25 ----
+    $(error Please define PREFIX)
+  endif
+  
++ PREFIX:=$(shell cygpath -m $(PREFIX))
++ 
+  ifndef TARGET
+    TARGET := native
+  endif
+*** a/src/Makefile	2015-09-20 19:01:22.836095900 +0800
+--- b/src/Makefile	2015-09-20 19:01:14.648556200 +0800
 ***************
 *** 62,68 ****
   

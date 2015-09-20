@@ -2,3 +2,30 @@ bin: [
   "src/main/osh.exe" { "osh.exe" }
   "src/main/omake.exe" { "omake.exe" }
 ]
+lib: [
+  "lib/build/C.om" { "build/C.om" }
+  "lib/build/Common.om" { "build/Common.om" }
+  "lib/build/Latex.om" { "build/LaTeX.om" }
+  "lib/build/OCaml.om" { "build/OCaml.om" }
+  "lib/build/svn_realclean.om" { "build/svn_realclean.om" }
+  "lib/configure/Configure.om" { "configure/Configure.om" }
+  "lib/configure/fam.om" { "configure/fam.om" }
+  "lib/configure/fs_case_sensitive.om" { "configure/fs_case_sensitive.om" }
+  "lib/configure/moncontrol.om" { "configure/moncontrol.om" }
+  "lib/configure/ncurses.om" { "configure/ncurses.om" }
+  "lib/configure/posix_spawn.om" { "configure/posix_spawn.om" }
+  "lib/configure/readline.om" { "configure/readline.om" }
+  "lib/configure/snprintf.om" { "configure/snprintf.om" }
+  "lib/configure/X.om" { "configure/X.om" }
+  "lib/OMakefile.default" { "OMakefile.default" }
+  "lib/OMakeroot.default" { "OMakeroot.default" }
+  "lib/OMakeroot.om" { "OMakeroot.om" }
+  "lib/parse/C/Lex.om" { "parse/C/Lex.om" }
+  "lib/parse/C/Parse.om" { "parse/C/Parse.om" }
+  "lib/parse/LaTeX/Lex.om" { "parse/LaTeX/Lex.om" }
+  "lib/parse/LaTeX/Macros.om" { "parse/LaTeX/Macros.om" }
+  "lib/parse/LaTeX/Parse.om" { "parse/LaTeX/Parse.om" }
+  "lib/parse/LaTeX/Spell.om" { "parse/LaTeX/Spell.om" }
+  "lib/Pervasives.om" { "Pervasives.om" }
+  "lib/web/simple-xml.om" { "web/simple-xml.om" }
+]
