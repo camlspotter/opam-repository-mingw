@@ -1,0 +1,19 @@
+*** src/Makefile.orig	2015-09-20 19:01:22.836095900 +0800
+--- src/Makefile	2015-09-20 19:01:14.648556200 +0800
+***************
+*** 62,68 ****
+  
+  # Do not use . to refer to the current directory, because ocamlbuild
+  # descends into another directory when executing commands.
+! SRC   := $(shell pwd)
+  
+  FLAGS := -v -lg 1 -la 1 -lc 1 --comment --infer --stdlib $(SRC) --strict --fixed-exception
+  
+--- 62,68 ----
+  
+  # Do not use . to refer to the current directory, because ocamlbuild
+  # descends into another directory when executing commands.
+! SRC   := $(shell cygpath -m `pwd`)
+  
+  FLAGS := -v -lg 1 -la 1 -lc 1 --comment --infer --stdlib $(SRC) --strict --fixed-exception
+  
