@@ -1,0 +1,19 @@
+*** a/Makefile.conf	Fri Jul 24 05:02:49 2015
+--- b/Makefile.conf	Tue Sep 22 13:20:43 2015
+***************
+*** 23,29 ****
+  EXEEXT :=
+  OBJEXT := .o
+  LIBEXT := .a
+! DLLEXT := .so
+  
+  ifeq ($(shell ocamlc -version | grep -q "^4."; echo $$?),0)
+  WITH_TOPLEVEL =YES
+--- 23,29 ----
+  EXEEXT :=
+  OBJEXT := .o
+  LIBEXT := .a
+! DLLEXT := .dll
+  
+  ifeq ($(shell ocamlc -version | grep -q "^4."; echo $$?),0)
+  WITH_TOPLEVEL =YES

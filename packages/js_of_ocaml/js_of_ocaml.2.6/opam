@@ -29,3 +29,7 @@ conflicts: [
 ]
 
 available: [ ocaml-version >= "4.00.0" ]
+
+patches: [
+  "opamingw.patch"
+]
