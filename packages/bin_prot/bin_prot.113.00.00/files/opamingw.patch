@@ -1,0 +1,36 @@
+*** a/setup.ml	Fri Sep 25 16:38:36 2015
+--- b/setup.ml	Fri Sep 25 18:30:45 2015
+***************
+*** 6901,6907 ****
+                 post_command =
+                   [
+                      (OASISExpr.EBool true,
+!                       Some (("config/arch.sh", ["$ocamlc"])))
+                   ]
+              };
+            build_type = (`Build, "ocamlbuild", Some "0.4");
+--- 6901,6907 ----
+                 post_command =
+                   [
+                      (OASISExpr.EBool true,
+!                       Some (("sh", ["-c"; "\"config/arch.sh $ocamlc\""])))
+                   ]
+              };
+            build_type = (`Build, "ocamlbuild", Some "0.4");
+***************
+*** 6911,6917 ****
+                   [
+                      (OASISExpr.EBool true,
+                        Some
+!                         (("sh", "-c", "mkdir -p _build; cp lib/*.mlh _build/"])))
+                   ];
+                 post_command = [(OASISExpr.EBool true, None)]
+              };
+--- 6911,6917 ----
+                   [
+                      (OASISExpr.EBool true,
+                        Some
+!                         (("sh", ["-c"; "\"mkdir -p _build; cp lib/*.mlh _build/\""])))
+                   ];
+                 post_command = [(OASISExpr.EBool true, None)]
+              };
