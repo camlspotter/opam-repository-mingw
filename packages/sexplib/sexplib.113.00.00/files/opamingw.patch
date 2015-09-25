@@ -27,4 +27,4 @@
   .PHONY: default build doc test all install uninstall reinstall clean distclean configure
 + 
 + lib/pre_sexp.ml: lib/pre_sexp.ml.in
-+ 	`ocamlc -config | grep bytecomp_c_compiler | sed -e 's/.*: //'` -E -undef -traditional -Isyntax -w - < $< > $@
++ 	`ocamlc -config | grep bytecomp_c_compiler: | sed -e 's/.*: //'` -E -undef -traditional -Isyntax -w - < $< > $@
