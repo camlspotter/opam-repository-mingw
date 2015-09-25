@@ -13,4 +13,5 @@ depends: ["camlp4"
           "type_conv" {>= "113.00.00" & < "113.01.00"}]
 available: [ ocaml-version >= "4.02.1" ]
 patches: [
+  "opamingw.patch"
 ]
