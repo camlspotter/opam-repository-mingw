@@ -24,3 +24,6 @@ depends: ["camlp4"
           "typerep"       {>= "113.00.00" & < "113.01.00"}
           "variantslib"   {>= "109.15.00" & < "109.16.00"}]
 available: [ ocaml-version >= "4.02.1" ]
+patches: [
+  "opamingw.patch"
+]
