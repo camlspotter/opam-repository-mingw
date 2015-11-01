@@ -1,0 +1,48 @@
+#!/bin/sh
+
+set -eu
+
+cygwin_root="$(cygpath -m /)"
+cygwin_arch="$(uname -m)"
+
+mingw_arch="$(ocamlc -config 2>/dev/null | awk '/^system/ {print $2}')"
+
+if [ "$mingw_arch" != "mingw64" ] && [ "$mingw_arch" != "mingw" ] ; then
+    echo "unsupported mingw_arch: '$mingw_arch'" >&2
+    exit 2
+fi
+
+case "$cygwin_arch" in
+    *[Ii][3456789]86*)
+        url='https://www.cygwin.com/setup-x86.exe' ;;
+    *[Xx]86_64*)
+        url='https://www.cygwin.com/setup-x86_64.exe' ;;
+    *)
+        echo "unsupported platform $cygwin_arch" >&2
+        exit 1
+esac
+
+if [ ! -f "cygwin-dl.exe" ]; then
+    if which curl >/dev/null 2>&1 ; then
+        curl --insecure --retry 2 --retry-delay 3 -L -o cygwin-dl.exe "$url"
+    elif which wget >/dev/null 2>&1 ; then
+        wget --content-disposition --no-check-certificate -t 3 -O cygwin-dl.exe "$url"
+    else
+        echo "wget / curl not installed" >&2
+        exit 1
+    fi
+    chmod 0755 cygwin-dl.exe
+fi
+
+if [ "$mingw_arch" = "mingw64" ]; then
+    help="$(cygpath -m /usr/bin/x86_64-w64-mingw32-pkg-config | sed 's|/|\\\\\\\\|g')"
+else
+    help="$(cygpath -m /usr/bin/i686-w64-mingw32-pkg-config | sed 's|/|\\\\\\\\|g')"
+fi
+sed "s|@PKG_CONFIG@|$help|g" config.h.in >config.h
+
+sed \
+    -e "s|@CYGWIN_ROOT@|${cygwin_root}|g" \
+    -e "s|@CYGWIN_ARCH@|${cygwin_arch}|g" \
+    -e "s|@MINGW_ARCH@|${mingw_arch}|g" \
+    depext-cygwin.json.in > depext-cygwin.json

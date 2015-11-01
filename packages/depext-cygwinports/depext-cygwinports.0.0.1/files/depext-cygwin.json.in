@@ -1,0 +1,7 @@
+{
+    "cygwin_root": "@CYGWIN_ROOT@",
+    "cygwin_arch": "@CYGWIN_ARCH@",
+    "mingw_arch": "@MINGW_ARCH@",
+    "mirror_cygwin": "ftp://ftp-stud.hs-esslingen.de/pub/Mirrors/sources.redhat.com/cygwin/",
+    "mirror_cygports": "ftp://ftp.gwdg.de/pub/linux/sources.redhat.com/cygwinports/"
+}
