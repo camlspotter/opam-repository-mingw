@@ -1,0 +1,113 @@
+--- ./OCamlMakefile
++++ ./OCamlMakefile
+@@ -492,8 +492,8 @@
+ ifdef USE_CAMLP4
+   CAMLP4PATH := \
+     $(shell $(CAMLP4) -where 2>/dev/null || echo /usr/local/lib/camlp4)
+-  INCFLAGS := -I $(CAMLP4PATH)
+-  CINCFLAGS := -I$(CAMLP4PATH)
++  INCFLAGS := -I "$(CAMLP4PATH)"
++  CINCFLAGS := -I"$(CAMLP4PATH)"
+ endif
+ 
+ DINCFLAGS := $(INCFLAGS) $(SOURCE_DIRS:%=-I %) $(OCAML_DEFAULT_DIRS:%=-I %)
+--- ./pcre/Makefile
++++ ./pcre/Makefile
+@@ -59,24 +59,24 @@
+ 	global_def.mli global_def.ml
+ 
+ mikmatch.mli: ../common/mikmatch.mli
+-	ln -s $< $@
++	cp -p  $< $@
+ mikmatch.ml: ../common/mikmatch.ml
+-	ln -s $< $@
++	cp -p $< $@
+ syntax_common.ml: ../common/syntax_common.ml
+-	ln -s $< $@
++	cp -p $< $@
+ match.ml: ../common/match.ml
+-	ln -s $< $@
++	cp -p $< $@
+ mm_util.ml: ../common/mm_util.ml
+-	ln -s $< $@
++	cp -p $< $@
+ global_def.mli: ../common/global_def.mli
+-	ln -s $< $@
++	cp -p $< $@
+ global_def.ml: ../common/global_def.ml
+-	ln -s $< $@
++	cp -p $< $@
+ 
+ pa_lib:
+ 	$(MAKE) RESULT=pa_mikmatch_pcre pabc bcl
+ 
+-install: topinstall
++install: version topinstall
+ 	if test -f nativecode; \
+ 	then \
+ 		$(MAKE) "LIBINSTALL_FILES=$(ALL_LIBINSTALL_FILES)" libinstall;\
+@@ -92,7 +92,7 @@
+ 
+ misc-bc:
+ 	ocamlc -c mikmatch.mli
+-	ocamlc -a -o run_mikmatch_pcre.cma -I $(PCRE_DIR) \
++	ocamlc -a -o run_mikmatch_pcre.cma -I "$(PCRE_DIR)" \
+ 		mikmatch.ml run_mikmatch_pcre.ml
+ 	ocamlfind ocamlmktop -o mikmatch_pcre.top \
+ 	  -linkpkg -package camlp4.lib,pcre,unix \
+@@ -100,7 +100,7 @@
+ 
+ misc-nc:
+ 	ocamlc -c mikmatch.mli
+-	ocamlopt -a -o run_mikmatch_pcre.cmxa -I $(PCRE_DIR) \
++	ocamlopt -a -o run_mikmatch_pcre.cmxa -I "$(PCRE_DIR)" \
+ 		mikmatch.ml run_mikmatch_pcre.ml
+ 
+ 
+@@ -110,7 +110,7 @@
+ # Toplevel (preinstall test)
+ simple-test:
+ 	camlp4o ./pa_mikmatch_pcre.cma -printer o test.ml > test.ppo
+-	ocamlmktop -o mikmatch_pcre.test -I +camlp4 -I .  -I $(PCRE_DIR) \
++	ocamlmktop -o mikmatch_pcre.test -I +camlp4 -I .  -I "$(PCRE_DIR)" \
+ 		dynlink.cma \
+ 		camlp4o.cma \
+ 		pa_mikmatch_pcre.cma pcre.cma unix.cma run_mikmatch_pcre.cma
+@@ -120,7 +120,7 @@
+ 	camlp4o ./pa_mikmatch_pcre.cma -printer o -direct test.ml > test.ppo
+ 	ocamlopt \
+ 		-pp 'camlp4o ./pa_mikmatch_pcre.cma' \
+-		-I $(PCRE_DIR) pcre.cmxa run_mikmatch_pcre.cmxa \
++		-I "$(PCRE_DIR)" pcre.cmxa run_mikmatch_pcre.cmxa \
+ 		test.ml -o test
+ 	./test
+ 
+--- ./str/Makefile
++++ ./str/Makefile
+@@ -44,19 +44,19 @@
+ 	global_def.mli global_def.ml
+ 
+ mikmatch.mli: ../common/mikmatch.mli
+-	ln -s $< $@
++	cp -p $< $@
+ mikmatch.ml: ../common/mikmatch.ml
+-	ln -s $< $@
++	cp -p $< $@
+ syntax_common.ml: ../common/syntax_common.ml
+-	ln -s $< $@
++	cp -p $< $@
+ match.ml: ../common/match.ml
+-	ln -s $< $@
++	cp -p $< $@
+ mm_util.ml: ../common/mm_util.ml
+-	ln -s $< $@
++	cp -p $< $@
+ global_def.mli: ../common/global_def.mli
+-	ln -s $< $@
++	cp -p $< $@
+ global_def.ml: ../common/global_def.ml
+-	ln -s $< $@
++	cp -p $< $@
+ 
+ .PHONY: pa_lib install uninstall version topinstall misc
+ 
