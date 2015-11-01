@@ -1,0 +1,36 @@
+--- ./Makefile
++++ ./Makefile
+@@ -85,9 +85,9 @@
+ 	for p in $(notdir $(PROGS)) ; do \
+ 		tgt=`echo $$p | sed -e 's/^main.//' -e 's/_/-/g'` ; \
+ 		if [ -f _build/$$p.native ] ; then \
+-			cp _build/$$p.native $(DESTDIR)/$(BINDIR)/$$tgt ; \
++			cp _build/$$p.native $(DESTDIR)/$(BINDIR)/$$tgt$(EXE) ; \
+ 		else \
+-			cp _build/$$p.byte $(DESTDIR)/$(BINDIR)/$$tgt ; \
++			cp _build/$$p.byte $(DESTDIR)/$(BINDIR)/$$tgt$(EXE) ; \
+ 		fi ; \
+ 		echo "Installed $(DESTDIR)/$(BINDIR)/$$tgt" ; \
+ 	done
+@@ -99,8 +99,8 @@
+ 	$(UNINSTALL) $(NAME)
+ 	for p in $(notdir $(PROGS)) ; do \
+ 		tgt=`echo $$p | sed -e 's/^main.//' -e 's/_/-/g'` ; \
+-		if [ -f $(DESTDIR)/$(BINDIR)/$$tgt ] ; then \
+-			rm $(DESTDIR)/$(BINDIR)/$$tgt ; \
++		if [ -f $(DESTDIR)/$(BINDIR)/$$tgt$(EXE) ] ; then \
++			rm $(DESTDIR)/$(BINDIR)/$$tgt$(EXE) ; \
+ 		fi ; \
+ 		echo "Removed $(DESTDIR)/$(BINDIR)/$$tgt" ; \
+ 	done
+--- ./Makefile.config
++++ ./Makefile.config
+@@ -3,7 +3,7 @@
+ export DESTDIR =
+ 
+ # all the following variables will be prepended by $(DESTDIR) upon install
+-
++export EXE=.exe
+ export OCAMLLIBDIR := $(shell ocamlc -where)
+ export BINDIR  = /usr/bin
+ export LIBDIR = /usr/lib
