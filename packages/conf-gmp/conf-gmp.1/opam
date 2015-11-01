@@ -6,7 +6,8 @@ bug-reports: "https://github.com/ocaml/opam-repository/issues"
 dev-repo: "https://github.com/ocaml/opam-repository.git"
 license: "GPL"
 build: [
-  ["sh" "-c" "cc -c $CFLAGS -I/usr/local/include test.c"]
+  ["sh" "-c" "cc -c $CFLAGS -I/usr/local/include test.c"] { os != "win32" }
+  ["dash.exe" "-c" "cc=$(ocamlc -config | awk '/^bytecomp_c_compiler/ {for(i=2;i<=NF;i++) printf \" %s \"  ,$i}') ; $cc -c $CFLAGS test.c"] { os = "win32" }
 ]
 depexts: [
   [["debian"] ["libgmp-dev"]]
@@ -15,4 +16,5 @@ depexts: [
   [["centos"] ["gmp" "gmp-devel"]]
   [["openbsd"] ["gmp"]]
   [["freebsd"] ["gmp"]]
+  [["win32" "cygwinports"] ["gmp"]]
 ]
