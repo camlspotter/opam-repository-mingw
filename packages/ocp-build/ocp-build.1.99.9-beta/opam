@@ -4,6 +4,7 @@ build: [
   [ "./configure" "--prefix" "%{prefix}%"  ]
   [ make ]
   [ make "install" ]
+  ["sh.exe" "-c" "if [ -f '%{bin}%/ocp-build' ] && [ ! -f '%{bin}%/ocp-build.exe' ] ; then mv '%{bin}%/ocp-build' '%{bin}%/ocp-build.exe' ; fi" ] { os = "win32" }
 ]
 remove: [
   [ "rm" "-f" "%{prefix}%/bin/ocp-build" ]
@@ -12,3 +13,4 @@ remove: [
 ]
 depends: [ "ocamlfind" "camlp4" ]
 conflicts: [ "typerex"  {< "1.99.7"} ]
+patches: [ "patch-aa" ]

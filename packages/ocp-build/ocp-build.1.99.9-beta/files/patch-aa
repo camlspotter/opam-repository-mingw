@@ -1,0 +1,78 @@
+--- ./src/ocp-build/buildMisc.ml
++++ ./src/ocp-build/buildMisc.ml
+@@ -392,5 +392,6 @@
+ 
+ let exists_as_directory filename =
+   try
+-    Sys.is_directory filename
++    MinUnix.( (stat filename).st_kind = S_DIR )
++  (*Sys.is_directory filename*)
+   with _ -> false
+--- ./src/ocp-build/metaFile.ml
++++ ./src/ocp-build/metaFile.ml
+@@ -86,13 +86,33 @@
+       (String.concat " " var.metavar_value)
+   ) entries
+ 
++let normalize_dir = function
++| Some str when Sys.os_type = "Win32" ->
++  let len = String.length str in
++  let buf = Buffer.create len in
++  let rec iter i bs =
++    if i >= len then
++      Buffer.contents buf
++    else
++      match str.[i] with
++      | '\\' | '/' ->
++        if bs = false || i = 1 then
++          Buffer.add_char buf '/' ;
++        iter (succ i) true
++      | x ->
++        Buffer.add_char buf x ;
++        iter (succ i) false
++  in
++  Some(iter 0 false)
++| x -> x
++
+ let create_meta_file filename meta =
+   let oc = open_out filename in
+   let rec fprintf_meta oc indent meta =
+     fprintf_option_field oc indent "version" meta.meta_version;
+     fprintf_option_field oc indent "description" meta.meta_description;
+     fprintf_option_field oc indent "name" meta.meta_name;
+-    fprintf_option_field oc indent "directory" meta.meta_directory;
++    fprintf_option_field oc indent "directory" (normalize_dir meta.meta_directory);
+     fprintf_option_field oc indent "license" meta.meta_license;
+     fprintf_option_field oc indent "preprocessor" meta.meta_preprocessor;
+     fprintf_option_field oc indent "linkopts" meta.meta_linkopts;
+--- ./src/ocplib/unix/minUnix.ml
++++ ./src/ocplib/unix/minUnix.ml
+@@ -230,6 +230,28 @@
+ external stat : string -> stats = "unix_stat"
+ external lstat : string -> stats = "minUnix_lstat"
+ external fstat : file_descr -> stats = "unix_fstat"
++
++let clean_fln fln =
++  let len = String.length fln in
++  if len < 2 then
++    fln
++  else
++    match fln.[len-1] with
++    | '\\' | '/' ->
++      if len = 3 && fln.[1] = ':' then
++        fln
++      else
++        String.sub fln 0 (len - 1)
++    | _ -> fln
++
++let stat = match os_type with
++| WINDOWS -> fun a -> stat (clean_fln a)
++| _ -> stat
++
++let lstat = match os_type with
++| WINDOWS -> fun a -> lstat (clean_fln a)
++| _ -> lstat
++  
+ external unlink : string -> unit = "unix_unlink"
+ external rename : string -> string -> unit = "unix_rename"
+ external link : string -> string -> unit = "unix_link"
