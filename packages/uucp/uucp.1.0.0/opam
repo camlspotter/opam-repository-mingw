@@ -14,4 +14,4 @@ build:
   [ "ocaml" "pkg/git.ml" ]
   [ "ocaml" "pkg/build.ml" "native=%{ocaml-native}%"
                            "native-dynlink=%{ocaml-native}%" ]
-]
+]patches: [ "patch-aa" ]
