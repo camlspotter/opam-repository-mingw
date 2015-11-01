@@ -16,3 +16,4 @@ depends: [
   "ocamlfind"
 ]
 ocaml-version: [ >= "3.12.0" ]
+patches: [ "patch-bitmasks.1.0.0" ]
