@@ -11,9 +11,11 @@ build: [
   [make "all"]
   [make "install"]
 ]
+install: [
+  [make "install"]
+  ["sh.exe" "-c" "if [ -f '%{bin}%/bisect-report' ] && [ ! -f '%{bin}%/bisect-report.exe' ] ; then mv '%{bin}%/bisect-report' '%{bin}%/bisect-report.exe' ; fi" ] { os = "win32" }
+  ["sh.exe" "-c" "if [ -f '%{bin}%/bisect-report.opt' ] && [ ! -f '%{bin}%/bisect-report.opt.exe' ] ; then mv '%{bin}%/bisect-report.opt' '%{bin}%/bisect-report.opt.exe' ; fi" ] { os = "win32" }
+]
 remove: [["ocamlfind" "remove" "bisect"]]
 depends: ["ocamlfind" "camlp4"]
-patches: [
-  "install-thread.patch"
-  "opam.patch"
-]
+patches: ["patch-bisect-1.3"]
