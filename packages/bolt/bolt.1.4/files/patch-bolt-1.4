@@ -1,0 +1,68 @@
+--- ./configure
++++ ./configure
+@@ -20,9 +20,11 @@
+ 
+ # default values
+ ocamlbuild=`which ocamlbuild || echo '/usr/local/bin/ocamlbuild'`
+-bin_path=`dirname $ocamlbuild`
+-ocaml_prefix=`dirname $bin_path`
++bin_path="$(cygpath -m "$(dirname $ocamlbuild)")"
++ocamlbuild="$(cygpath -m "$ocamlbuild")"
++ocaml_prefix="$(cygpath -m "$(dirname $bin_path)")"
+ ocamlfind=`which ocamlfind 2> /dev/null || echo ''`
++ocamlfind="$(cygpath -m "$ocamlfind")"
+ native_dynlink='TRUE'
+ devel='FALSE'
+ 
+@@ -46,11 +48,7 @@
+ done
+ 
+ # make options
+-make_quiet=`make -f - <<EOF
+-default: gnumake
+-	@if [ "$^" != "" ]; then echo '--no-print-directory'; fi
+-gnumake:
+-EOF`
++make_quiet='--no-print-directory'
+ 
+ # file creation
+ echo "# timestamp: `date`" > Makefile.config
+--- ./Makefile
++++ ./Makefile
+@@ -20,7 +20,7 @@
+ 
+ # PATHS
+ 
+-PATH_BASE=`pwd`
++PATH_BASE=$(shell cygpath -m "$$(readlink -f .)")
+ PATH_BUILD=$(PATH_BASE)/_build
+ PATH_OCAMLDOC=$(PATH_BASE)/ocamldoc
+ PATH_SRC=$(PATH_BASE)/src
+--- ./myocamlbuild.ml
++++ ./myocamlbuild.ml
+@@ -57,20 +57,22 @@
+ let version_ml = "src/library/version.ml"
+ let version_file = "../VERSION"
+ 
++let filename_concat a b = a ^ "/" ^ b
++
+ let () =
+   let safe_cp src dst =
+     let src = Pathname.mk src in
+     let dst = Pathname.mk dst in
+     let dir = Pathname.dirname dst in
+-    let cmd = Printf.sprintf "mkdir -p %s" (Pathname.to_string dir) in
++    let cmd = Printf.sprintf "\"\"mkdir.exe\" -p %s\"" (Filename.quote (Pathname.to_string dir) ) in
+     if Sys.command cmd <> 0 then failwith ("cannot run " ^ cmd);
+     cp src dst in
+   dispatch begin function
+     | After_rules ->
+         let camlp4of =
+           try
+-            let path_bin = Filename.concat (Sys.getenv "PATH_OCAML_PREFIX") "bin" in
+-            Filename.concat path_bin "camlp4of"
++            let path_bin = filename_concat (Sys.getenv "PATH_OCAML_PREFIX") "bin" in
++            filename_concat path_bin "camlp4of"
+           with _ -> "camlp4of" in
+         flag ["ocaml"; "compile"; "pp_camlp4of"] (S[A"-pp"; A camlp4of]);
+         flag ["ocaml"; "pp:dep"; "pp_camlp4of"] (S[A camlp4of]);
