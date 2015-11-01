@@ -2,6 +2,8 @@ opam-version: "1"
 maintainer: "dev@ocsigen.org"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix "--%{type_conv:enable}%-tc"]
+  ["tar" "-chf" "syntax.tar" "syntax"] { os = "win32" }
+  ["tar" "-xf" "syntax.tar" "syntax"] { os = "win32" }
   [make]
   [make "install"]
 ]
