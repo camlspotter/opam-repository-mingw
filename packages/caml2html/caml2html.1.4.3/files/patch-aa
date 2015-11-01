@@ -1,0 +1,23 @@
+--- ./Makefile
++++ ./Makefile
+@@ -81,11 +81,18 @@
+ 		main.ml \
+ 		-ln
+ 
++OSTYPE=$(shell ocamlfind ocamlc -config | grep '^os_type: ' | awk '{print $$2}')
++ifeq ($(OSTYPE),$(filter $(OSTYPE),Win32 Cygwin))
++EXTEXE=.exe
++else
++EXTEXE=
++endif
++
+ caml2html: $(OBJS-NAT)
+-	$(OCAMLOPT) -o caml2html str.cmxa unix.cmxa $(OBJS-NAT)
++	$(OCAMLOPT) -o caml2html$(EXTEXE) str.cmxa unix.cmxa $(OBJS-NAT)
+ 
+ caml2html.byte: $(OBJS)
+-	$(OCAMLC) -custom -o caml2html.byte str.cma unix.cma $(OBJS)
++	$(OCAMLC) -custom -o caml2html.byte$(EXTEXE) str.cma unix.cma $(OBJS)
+ 
+ lib: all bytelib optlib
+ 
