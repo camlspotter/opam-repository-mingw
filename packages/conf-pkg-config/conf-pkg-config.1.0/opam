@@ -10,4 +10,5 @@ depexts: [
   [["ubuntu"] ["pkg-config"]]
   [["fedora"] ["pkgconfig"]]
   [["osx" "homebrew"] ["pkg-config"]]
+  [["win32" "cygwinports"] ["pkg-config"]]
 ]

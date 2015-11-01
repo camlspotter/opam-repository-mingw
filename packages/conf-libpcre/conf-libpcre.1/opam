@@ -14,4 +14,5 @@ depexts: [
   [["ubuntu"] ["libpcre3-dev"]]
   [["centos"] ["pcre-devel"]]
   [["osx" "homebrew"] ["pcre"]]
+  [["win32" "cygwinports"] ["pcre"]]
 ]
