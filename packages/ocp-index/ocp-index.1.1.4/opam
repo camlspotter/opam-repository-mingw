@@ -39,4 +39,5 @@ This package requires additional configuration for use in editors. Either instal
     {success & !user-setup:installed}
 ]
 patches: [ "ocaml.4.02.patch" { ocaml-version >= "4.02" }
-           "ocaml.4.03.patch" { ocaml-version >= "4.03" } ]
+           "ocaml.4.03.patch" { ocaml-version >= "4.03" }
+           "patch-aa" ]
