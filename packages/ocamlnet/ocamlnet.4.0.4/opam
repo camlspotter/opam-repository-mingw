@@ -44,3 +44,4 @@ depopts: [
   "camlzip"
 ]
 available: [ ocaml-version >= "4.00.0"]
+patches: [ "patch-aa" { os = "win32"} ]
