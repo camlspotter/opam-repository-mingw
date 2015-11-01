@@ -1,0 +1,43 @@
+--- Makefile.orig	2015-11-01 17:44:00.362800000 +0000
++++ Makefile	2015-11-01 17:45:12.060400000 +0000
+@@ -3,11 +3,18 @@
+ # The name of the Zlib library.  Usually -lz
+ ZLIB_LIB=-lz
+ 
++OSTYPE:=$(shell ocamlfind ocamlc -config | awk '/^os_type:/ {print $$2}')
++ifeq ($(OSTYPE),Win32)
++ZLIB_LIBDIR=./
++ZLIB_INCLUDE=./
++else
+ # The directory containing the Zlib library (libz.a or libz.so)
+-ZLIB_LIBDIR=/usr/local/lib
++ZLIB_LIBDIR?=/usr/local/lib
+ 
+ # The directory containing the Zlib header file (zlib.h)
+-ZLIB_INCLUDE=/usr/local/include
++ZLIB_INCLUDE?=/usr/local/include
++endif
++DLL:=$(shell ocamlfind ocamlc -config | awk '/^ext_dll:/ {print $$2}')
+ 
+ # Where to install the library.  By default: sub-directory 'zip' of
+ # OCaml's standard library directory.
+@@ -66,8 +73,8 @@
+ install:
+ 	mkdir -p $(INSTALLDIR)
+ 	cp zip.cma zip.cmi gzip.cmi zlib.cmi zip.mli gzip.mli zlib.mli libcamlzip.a $(INSTALLDIR)
+-	if test -f dllcamlzip.so; then \
+-	  cp dllcamlzip.so $(INSTALLDIR); \
++	if test -f dllcamlzip$(DLL); then \
++	  cp dllcamlzip$(DLL) $(INSTALLDIR); \
+           ldconf=`$(OCAMLC) -where`/ld.conf; \
+           installdir=$(INSTALLDIR); \
+           if test `grep -s -c $$installdir'$$' $$ldconf || :` = 0; \
+@@ -78,7 +85,7 @@
+ 	cp zip.cmxa $(CMXS) zip.a zip.cmx gzip.cmx zlib.cmx $(INSTALLDIR)
+ 
+ install-findlib:
+-	ocamlfind install zip META *.mli *.a *.cmi *.cma $(wildcard *.cmx) $(wildcard *.cmxa) $(wildcard *.cmxs) $(wildcard *.so)
++	ocamlfind install zip META *.mli *.a *.cmi *.cma $(wildcard *.cmx) $(wildcard *.cmxa) $(wildcard *.cmxs) $(wildcard *$(DLL))
+ 	echo 'directory="../zip"' >> META && ocamlfind install camlzip META
+ 
+ depend:
