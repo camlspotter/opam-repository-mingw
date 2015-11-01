@@ -10,3 +10,4 @@ build: [
 build-doc: [["ocaml" "setup.ml" "-doc"]]
 remove: [["ocamlfind" "remove" "getopt"]]
 depends: ["ocamlfind"]
+patches: [ "patch-getopt-20120615" ]
