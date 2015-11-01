@@ -16,3 +16,4 @@ depends: [
   "ocamlify"
   "ocamlmod"
 ]
+patches: [ "patch-oasis-0.4.5" ]
