@@ -21,7 +21,11 @@ tags: [
   "markdown"
 ]
 
-build: [make "all"]
+build: [
+ ["tar" "-chf" "syntax.tar" "syntax"] { os = "win32" }
+ ["tar" "-xf" "syntax.tar" "syntax"] { os = "win32" }
+ [make "all"]
+]
 install: [make "install"]
 remove: ["ocamlfind" "remove" "cow"]
 build-test: [make "tests"]
