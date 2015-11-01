@@ -20,3 +20,4 @@ depends: [
   "ounit" {test}
   "ppx_import" {test}
 ]
+patches: [ "patch-ppx_deriving_yojson-2.3" ]
