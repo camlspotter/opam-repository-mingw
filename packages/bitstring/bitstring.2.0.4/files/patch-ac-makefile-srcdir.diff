@@ -1,0 +1,38 @@
+--- Makefile.in.orig	2012-09-19 13:14:35.738400000 +0000
++++ Makefile.in	2012-09-19 14:15:11.256000000 +0000
+@@ -30,8 +30,16 @@
+ 
+ BYTESWAP_H	= @BYTESWAP_H@
+ 
+-OCAMLLIB	= @OCAMLLIB@
++OCAMLLIB	= $(shell echo "@OCAMLLIB@" | tr -d '\r')
++OSTYPE=$(shell $OCAMLC -config | grep '^os_type: ' | awk '{print $$2}')
++ifeq ($(OSTYPE),$(filter $(SSTYPE),Win32 Cygwin))
++DLL=.dll
++else
++DLL=.so
++endif
++
+ top_srcdir	= @top_srcdir@
++srcdir		= @srcdir@
+ 
+ pkg_cil		= @OCAML_PKG_cil@
+ pkg_extlib	= @OCAML_PKG_extlib@
+@@ -55,7 +63,7 @@
+ OCAMLDOCFLAGS	= -html -sort
+ 
+ CC		= @CC@
+-CFLAGS		= @CFLAGS@ -Wall -Werror -fPIC -I$(top_srcdir) -I$(OCAMLLIB)
++CFLAGS		= @CFLAGS@ -Wall -fPIC -I "$(top_srcdir)" -I "$(OCAMLLIB)"
+ 
+ LIBRARY_PATH	= @abs_top_builddir@
+ LD_LIBRARY_PATH	= @abs_top_builddir@
+@@ -273,7 +281,7 @@
+ # Install.
+ 
+ install:
+-	ocamlfind install bitstring META *.mli *.cmx *.cma *.cmxa *.a *.so \
++	ocamlfind install bitstring META *.mli *.cmx *.cma *.cmxa *.a *$(DLL) \
+ 		bitstring.cmi \
+ 		bitstring_persistent.cmi \
+ 		pa_bitstring.cmo
