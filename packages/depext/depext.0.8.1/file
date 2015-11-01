@@ -1,0 +1,69 @@
+--- depext.ml.orig	2015-08-04 02:40:48.000000000 +0200
++++ depext.ml	2015-11-01 16:22:14.218226747 +0100
+@@ -40,8 +40,15 @@
+   in
+   aux 0
+ 
++let is_win = Sys.os_type = "Win32"
++
+ let has_command c =
+-  let cmd = Printf.sprintf "command -v %s >/dev/null" c in
++  let cmd =
++    if is_win then
++      Printf.sprintf "dash.exe -ec 'command -v %s' >NUL" c
++    else
++      Printf.sprintf "command -v %s >/dev/null" c
++  in
+   try Sys.command cmd = 0 with Sys_error _ -> false
+ 
+ let run_command c =
+@@ -106,6 +113,11 @@
+        | s -> Some (`Other s)
+      with Not_found | Failure _ -> None)
+   | `OpenBSD -> Some `OpenBSD
++  | `Win32 ->
++    if has_command "cygwin-install" then
++      Some `Cygwinports
++    else
++      None
+   | _ -> None
+ 
+ (* generate OPAM depexts flags *)
+@@ -140,6 +152,7 @@
+   | Some `Archlinux -> ["archlinux"]
+   | Some `Gentoo -> ["gentoo"]
+   | Some `OpenBSD -> ["openbsd"]
++  | Some `Cygwinports -> ["cygwinports"]
+   | Some (`Other s) -> [String.lowercase s]
+   | None -> []
+ 
+@@ -191,6 +204,8 @@
+     ["pacman"::"-S"::packages]
+   | Some `Gentoo ->
+     ["emerge"::packages]
++  | Some `Cygwinports ->
++    ["cygwin-install"::"install"::packages]
+   | Some (`Other d) ->
+     failwith ("Sorry, don't know how to install packages on your " ^ d ^ " system")
+   | None ->
+@@ -232,16 +247,18 @@
+          | [pkg;_;_;"installed"] -> pkg :: acc
+          | _ -> acc)
+       [] lines
+-  | Some (`Centos | `Fedora | `Mageia | `Archlinux| `Gentoo) ->
++  | Some (`Centos | `Fedora | `Mageia | `Archlinux| `Gentoo| `Cygwinports) ->
+     let query_command_prefix = match distribution with
+       | Some (`Centos | `Fedora | `Mageia) -> "rpm -qi "
+       | Some `Archlinux -> "pacman -Q "
+       | Some `Gentoo -> "equery list "
++      | Some `Cygwinports -> "cygwin-install status "
+       | _ -> assert(false)
+     in
+     List.filter
+       (fun pkg_name ->
+-         let cmd = query_command_prefix ^ pkg_name ^ " 2>/dev/null" in
++         let null = if is_win then "NULL" else "/dev/null" in
++         let cmd = query_command_prefix ^ pkg_name ^ " 2>" ^ null in
+          match Unix.system cmd with
+          | Unix.WEXITED 0 -> true (* installed *)
+          | Unix.WEXITED 1 -> false (* not installed *)
