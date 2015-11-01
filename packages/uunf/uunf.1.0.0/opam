@@ -17,4 +17,4 @@ build:
                            "native-dynlink=%{ocaml-native-dynlink}%"
                            "uutf=%{uutf:installed}%"
                            "cmdliner=%{cmdliner:installed}%" ]
-]
+]patches: [ "patch-aa" ]
