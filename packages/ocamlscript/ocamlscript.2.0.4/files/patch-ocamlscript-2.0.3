@@ -1,0 +1,98 @@
+--- ./main.ml
++++ ./main.ml
+@@ -482,7 +482,7 @@
+     match Array.to_list Sys.argv with
+ 	ocamlscript :: (arg1 :: other_args as l) -> 
+ 	  (match guess_arg1 arg1 with
+-	       `Script_name -> (`File (absolute arg1), l)
++	       `Script_name -> (`File (absolute (CygwinPath.to_native arg1)), l)
+ 	     | `Ocamlscript_args (opt1, stopped, hardcoded_script_args) ->
+ 		 let command_line_script_args = 
+ 		   let continued_args =
+@@ -513,6 +513,7 @@
+ 			     (`Stdin,
+ 			      "" :: hardcoded_script_args)
+ 			 | script_name :: l -> 
++                             let script_name = CygwinPath.to_native script_name in
+ 			     Opt.set "source" Opt.from (`File script_name);
+ 			     (`File (absolute script_name), 
+ 			      script_name :: (hardcoded_script_args @ l)))
+--- ./Makefile
++++ ./Makefile
+@@ -15,7 +15,7 @@
+ endif
+ export BINDIR
+ 
+-PACKS = unix str
++PACKS = unix str cygwinpath
+ PP = camlp4o -I . -parser pa_tryfinally.cmo -parser pa_opt.cmo
+ export PP
+ 
+@@ -23,6 +23,14 @@
+ OCAMLFLAGS = -dtypes
+ 
+ 
++
++ifeq ($(OS),Windows_NT)
++EXE := .exe
++else
++EXE :=
++endif
++
++
+ .PHONY: init default common bytelib optlib optexe bytelib optlib \
+         install uninstall test tests examples ocamldoc version meta archive
+ 
+@@ -45,11 +53,11 @@
+ 		cp pa_tryfinally310.cmi pa_tryfinally.cmi
+ 
+ byteexe: bytelib
+-	ocamlfind ocamlc -o ocamlscript.byte -pp '$(PP)' \
++	ocamlfind ocamlc -o ocamlscript.byte$(EXE) -pp '$(PP)' \
+ 	  -package '$(PACKS)' -linkpkg $(OCAMLFLAGS) \
+ 	  ocamlscript.cmo main.ml
+ optexe: optlib
+-	ocamlfind ocamlopt -o ocamlscript -pp '$(PP)' \
++	ocamlfind ocamlopt -o ocamlscript$(EXE) -pp '$(PP)' \
+ 	  -package '$(PACKS)' -linkpkg $(OCAMLFLAGS) \
+ 	  ocamlscript.cmx main.ml
+ bytelib: pabc
+--- ./ocaml.ml
++++ ./ocaml.ml
+@@ -119,8 +119,8 @@
+   let camlp4_stuff =
+     if !use_camlp4 then
+       let syntax, camlp4 =
+-	if !revised then "camlp4r", !camlp4r
+-	else "camlp4o", !camlp4o in
++	if !revised then "camlp4r", exe !camlp4r
++	else "camlp4o", exe !camlp4o in
+       let ppoptions = 
+ 	if !ppopt = [] then []
+ 	else 
+@@ -131,7 +131,7 @@
+ 	"-syntax" :: syntax :: ppoptions
+       else 
+ 	let space = function "" -> "" | s -> " " ^ s in
+-	["-pp"; sprintf "'%s%s'" camlp4 (space (String.concat " " ppoptions))]
++	["-pp"; sprintf "%s%s" camlp4 (space (String.concat " " ppoptions))]
+     else [] in
+   let packages =
+     if really_use_ocamlfind then
+@@ -148,7 +148,7 @@
+   
+   let xcommands, all_ml_files = extra_commands all_sources in
+ 
+-  let args = compiler @ "-o" :: "prog" :: 
++  let args = compiler @ "-o" :: (exe "prog") ::
+ 	       flags @ camlp4_stuff @ packages @ all_ml_files in
+   (init, xcommands, command args, exe "prog")
+ 
+--- ./pipeline.ml
++++ ./pipeline.ml
+@@ -1,4 +1,4 @@
+-(*pp $PP *)
++(*pp camlp4o -I . pa_tryfinally.cmo pa_opt.cmo *)
+ 
+ open Printf
+ open Unix

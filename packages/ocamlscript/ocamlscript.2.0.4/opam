@@ -2,7 +2,15 @@ opam-version: "1"
 maintainer: "martin@mjambon.com"
 build: [
   [make]
+]
+install: [
   [make "install"]
 ]
 remove: [["ocamlfind" "remove" "ocamlscript"]]
-depends: ["ocamlfind" "camlp4"]
+depends: [
+ "ocamlfind"
+ "camlp4"
+ "cygwinpath" { build }
+]
+
+patches: [ "patch-ocamlscript-2.0.3" { os = "win32" } ]
