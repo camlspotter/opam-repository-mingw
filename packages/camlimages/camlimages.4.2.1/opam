@@ -19,3 +19,4 @@ authors: [
   "François Pessaux"
   "Pierre Weis"
 ]
+patches: [ "patch-camlimages-4.2.1" { os = "win32" } ]
