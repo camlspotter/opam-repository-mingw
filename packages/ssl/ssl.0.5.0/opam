@@ -14,4 +14,5 @@ depexts: [
   [["ubuntu"] ["libssl-dev"]]
   [["centos"] ["openssl-devel"]]
   [["fedora"] ["openssl-devel"]]
+  [["win32" "cygwinports"] ["openssl"]]
 ]
