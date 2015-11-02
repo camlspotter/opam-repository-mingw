@@ -10,7 +10,8 @@ depexts: [
   [ ["ubuntu"] [ "libffi-dev" ] ]
   [ ["osx" "homebrew"] ["libffi"] ]
   [ ["centos"] ["libffi-devel"] ]
- ]
+  [ ["win32" "cygwinports"] ["libffi"] ]
+]
 tags: ["org:ocamllabs" "org:mirage"]
 post-messages: [
   "This package requires libffi on your system" {failure}
