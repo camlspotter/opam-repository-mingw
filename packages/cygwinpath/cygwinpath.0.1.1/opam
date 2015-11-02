@@ -1,0 +1,13 @@
+opam-version: "1"
+maintainer: "andreashauptmann@t-online.de"
+build: [
+  [make "all"]
+]
+install: [
+  [make "install"]
+]
+remove: [["ocamlfind" "remove" "cygwinpath"]]
+depends: [
+ "ocamlfind"
+ "ocamlnet" { >= "4" }
+]
