@@ -8,8 +8,9 @@ tags: [
   "org:typerex"
 ]
 build: [
-  ["ocp-build" "-init"]
-  ["ocp-build" "ocaml-top"]
+  ["ocp-build" "-init"] { os != "win32" }
+  ["ocp-build" "ocaml-top"] { os != "win32" }
+  [make "-f" "Makefile.win32" ] { os = "win32" }
 ]
 depends: [
   "ocp-build" {>= "1.99.6-beta"}
@@ -18,3 +19,4 @@ depends: [
   "ocp-indent" {>= "1.4.1"}
   "ocp-index" {>= "1.0.1"}
 ]
+patches: [ "patch-aa" { os = "win32" } ]

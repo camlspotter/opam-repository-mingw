@@ -1,0 +1,50 @@
+diff -b -B -u -r ../ocaml-top-1.1.2.orig/data/toplevel_init.ml ./data/toplevel_init.ml
+--- ./data/toplevel_init.ml
++++ ./data/toplevel_init.ml
+@@ -77,10 +77,10 @@
+   and get_formatter_output_functions =
+     pp_get_formatter_output_functions std_formatter
+ 
+-  and set_all_formatter_output_functions =
++(*  and set_all_formatter_output_functions =
+     pp_set_all_formatter_output_functions std_formatter
+   and get_all_formatter_output_functions =
+-    pp_get_all_formatter_output_functions std_formatter
++    pp_get_all_formatter_output_functions std_formatter *)
+ 
+   and set_formatter_tag_functions =
+     pp_set_formatter_tag_functions std_formatter
+diff -b -B -u -r ../ocaml-top-1.1.2.orig/ocaml-top.install ./ocaml-top.install
+--- ./ocaml-top.install
++++ ./ocaml-top.install
+@@ -1,5 +1,5 @@
+ bin: [
+-  "_obuild/ocaml-top/ocaml-top.asm" {"ocaml-top"}
++  "src/ocaml-top" {"ocaml-top"}
+ ]
+ share: [
+   "data/ocaml.lang"
+diff -b -B -u -r ../ocaml-top-1.1.2.orig/src/cfg.ml ./src/cfg.ml
+--- ./src/cfg.ml
++++ ./src/cfg.ml
+@@ -46,7 +46,7 @@
+     else dir
+   in
+   let default =
+-    if is_unix && Filename.basename program_dir = "bin" then
++    if (* is_unix &&*) Filename.basename program_dir = "bin" then
+       Filename.dirname program_dir / "share" / "ocaml-top"
+     else
+       program_dir / "data"
+diff -b -B -u -r ../ocaml-top-1.1.2.orig/src/Makefile ./src/Makefile
+--- ./src/Makefile
++++ ./src/Makefile
+@@ -2,7 +2,7 @@
+ 
+ SRC = cfg.ml tools.mli tools.ml top.mli top.ml gui.mli gui.ml ocamlBuffer.mli ocamlBuffer.ml topUi.mli topUi.ml completion.mli completion.ml main.ml
+ 
+-OCAMLFIND_OPTS = -package unix,lablgtk2,lablgtk2.sourceview2,str,ocp-indent-lib,ocp-index-lib -linkpkg -thread -g
++OCAMLFIND_OPTS = -package unix,lablgtk2,lablgtk2.sourceview2,str,ocp-indent.lib,ocp-index.lib -linkpkg -thread -g
+ 
+ UNAME := $(shell uname)
+ ifeq (WIN,$(findstring WIN,$(UNAME)))
