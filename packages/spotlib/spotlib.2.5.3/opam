@@ -10,7 +10,8 @@ install: [
   ["ocaml" "setup.ml" "-install"]
 ]
 remove: [
-  ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
+  ["ocaml" "setup.ml" "-configure" "--prefix" prefix] { os != "win32" }
+  ["ocaml" "setup.ml" "-configure" "--prefix" prefix "--use-bash" "dash.exe"] { os = "win32" }
   ["ocaml" "setup.ml" "-uninstall"]
 ]
 depends: [
