@@ -3,9 +3,15 @@ maintainer: "jun.furuse@gmail.com"
 authors: [ "Jason Hickey" "Aleksey Nogin" ]
 homepage: "http://omake.metaprl.org/index.html"
 build: [
+  ["ocamlfind" "ocamlopt" "-linkpkg" "-package" "str,cygwinpath" "ohelper.ml" "-o" "mmtranslate.exe"] { os = "win32" }
+  ["cp" "mmtranslate.exe" "%{prefix}%/bin/mmtranslate.exe"] { os = "win32" }
   [make "bootstrap-mingw" "PREFIX=%{prefix}%"]
   [make "all" "PREFIX=%{prefix}%"]
+  ["rm" "%{prefix}%/bin/mmtranslate.exe"] { os = "win32" }
 ]
-depends: ["ocamlfind"]
-patches: [
+
+depends: [
+ "ocamlfind"
+ "cygwinpath" { build }
 ]
+patches: [ "patch-mm" { os = "win32" } ]

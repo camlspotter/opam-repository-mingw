@@ -1,4 +1,5 @@
 bin: [
+  "mmtranslate.exe" { "mmtranslate.exe" }
   "src/main/osh.exe" { "osh.exe" }
   "src/main/omake.exe" { "omake.exe" }
 ]
