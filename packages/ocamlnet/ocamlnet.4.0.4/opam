@@ -3,15 +3,18 @@ maintainer: "vb@luminar.eu.org"
 homepage: "http://projects.camlcity.org/projects/ocamlnet.html"
 doc: ["http://projects.camlcity.org/projects/dl/ocamlnet-4.0.4/doc/html-main/index.html"]
 build: [
-  ["./configure" "-bindir" bin "-%{conf-gssapi:enable}%-gssapi" "-%{conf-gnutls:enable}%-gnutls" "-%{pcre:enable}%-pcre" "-%{lablgtk:enable}%-gtk2" "-%{camlzip:enable}%-zip" "-with-nethttpd"]
+  ["./configure" "-bindir" bin "-%{conf-gssapi:enable}%-gssapi" "-%{conf-gnutls:enable}%-gnutls" "-%{pcre:enable}%-pcre" "-%{lablgtk:enable}%-gtk2" "-%{camlzip:enable}%-zip" "-with-nethttpd"]  { os != "win32" }
+  ["./configure" "-bindir" bin "-%{conf-gssapi:enable}%-gssapi" "-%{conf-gnutls:enable}%-gnutls" "-%{pcre:enable}%-pcre" "-disable-gtk2" "-%{camlzip:enable}%-zip" "-with-nethttpd"]  { os = "win32" }
   [make "all"]
   [make "opt"]
+]
+install: [
   [make "install"]
 ]
 authors: ["Gerd Stolpmann"]
 remove: [
   ["ocamlfind" "remove" "equeue"]
-  ["ocamlfind" "remove" "equeue-gtk2"] {"%{lablgtk:installed}%"}
+  ["ocamlfind" "remove" "equeue-gtk2"] {"%{lablgtk:installed}%" & os != "win32"}
   ["ocamlfind" "remove" "netcamlbox"]
   ["ocamlfind" "remove" "netcgi2"]
   ["ocamlfind" "remove" "netcgi2-plex"]
@@ -39,7 +42,7 @@ depends: ["ocamlfind" {build}]
 depopts: [
   "conf-gnutls"
   "conf-gssapi"
-  "lablgtk"
+  "lablgtk" { os != "win32" }
   "pcre"
   "camlzip"
 ]
