@@ -12,4 +12,5 @@ depexts: [
   [["debian"] ["libglew-dev"]]
   [["mageia"] ["libglew-devel"]]
   [["ubuntu"] ["libglew-dev"]]
+  [["win32" "cygwinports"] ["glew"]]
 ]

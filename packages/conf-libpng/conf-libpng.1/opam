@@ -13,4 +13,5 @@ depexts: [
   [["debian"] ["libpng12-dev"]]
   [["mageia"] ["libpng-devel"]]
   [["ubuntu"] ["libpng12-dev"]]
+  [["win32" "cygwinports"] ["libpng"]]
 ]

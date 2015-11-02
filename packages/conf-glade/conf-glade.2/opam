@@ -6,4 +6,5 @@ build: [["pkg-config" "libglade-2.0"]]
 depexts: [
   [["debian"] ["libglade2-dev"]]
   [["ubuntu"] ["libglade2-dev"]]
+  [["win32" "cygwinports"] ["libglade2.0"]]
 ]
