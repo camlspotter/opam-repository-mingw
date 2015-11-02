@@ -17,6 +17,7 @@ depopts: [
 depexts: [
   [["debian"] ["libgtk2.0-dev" "libexpat1-dev"]]
   [["ubuntu"] ["libgtk2.0-dev" "libexpat1-dev"]]
+  [["win32" "cygwinports"] ["gtk2.0"]]
 ]
 patches: ["lablgldir.patch"]
 post-messages: [
