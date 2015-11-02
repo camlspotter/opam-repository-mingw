@@ -6,8 +6,8 @@ a shell interpreter to run configure scripts, git, rsync, ...)
 
 ## Download
 
-* [64-bit](https://dl.dropboxusercontent.com/s/mvykek309ote8b5/opam64.tar.xz)
-* [32-bit](https://dl.dropboxusercontent.com/s/mf8xctfr0bcy33p/opam32.tar.xz)
+* [32-bit](https://dl.dropboxusercontent.com/s/eo4igttab8ipyle/opam32.tar.xz)
+* [64-bit](https://dl.dropboxusercontent.com/s/b2q2vjau7if1c1b/opam64.tar.xz)
 
 The archives contain native versions of opam, flexdll and aspcud. They
 are all not linked against cygwin1.dll, so you can use them with
@@ -63,25 +63,29 @@ Use at your own risk. It's was hastily put together,...
 Some packages that can be installed (latest versions only, depext
 enabled):
 
-alcotest atd base-bigarray base-bytes base-threads base-unix base64
-batteries bench benchmark bencode bin_prot biniou bisect bitmasks
-bitstring bitv bolt calendar caml2html camlmix camlp4 camlp5 camlzip
-camomile cconv cfg cmdliner cohttp comparelib conduit conf-gmp
-conf-libpcre conf-pkg-config config-file containers cow cppo cryptgps
-cryptokit cstruct cudf custom_printf depext depext-cygwinports
-deriving dolog dose dum dyntype dypgen easy-format enumerate estring
+alcotest atd base-bigarray base-bytes base-threads base-unix base58
+base64 batteries bear beluga bench benchmark bencode bes bin_prot
+biniou bisect bitmasks bitstring bitv bolt bson calendar callipyge
+caml2html camlimages camlmix camlp4 camlp5 camlpdf camlprime
+camltemplate camlzip camomile cconv ccss cfg cmdliner cohttp
+comparelib conduit conf-gmp conf-gtksourceview conf-libpcre
+conf-pkg-config config-file containers cow cppo crc cryptgps
+cryptohash cryptokit cstruct csv ctypes ctypes-foreign cubicle cudf
+custom_printf cygwinpath decompress depext depext-cygwinports deriving
+dolog dose dum dyntype dypgen easy-format enumerate estring expect
 extlib-compat ezjsonm faillib fieldslib fileutils functory gen getopt
 gg hamt herelib hex humane-re integration1d ipaddr js_of_ocaml jsonm
-lambda-term lazy-trie lwt magic-mime menhir mikmatch monadlib
-monomorphic mparser mstruct oasis ocaml-data-notation ocamlfind
-ocamlgraph ocamlify ocamlmod ocamlnet ocp-build ocp-indent ocp-index
-ocplib-endian odate omake omd optcomp optimization1d otfm ounit
-pa_bench pa_monad_custom pa_ounit pa_ovisitor pa_test pa_where pcre
-pipebang ppx_deriving ppx_deriving_yojson ppx_import ppx_include
-ppx_test ppx_tools pxp qtest re react reactiveData root1d rope sedlex
-sequence sexplib spotlib stringext syndic textwrap tophide type_conv
-typerep tyxml ucorelib uint ulex uri utop uucd uucp uuidm uunf uutf
-variantslib vg xml-light xmlm xstr xstrp4 yojson zarith zed
+lablgtk lambda-term lazy-trie lwt magic-mime menhir mikmatch monadlib
+monomorphic mparser mstruct oasis ocaml-data-notation ocaml-inifiles
+ocaml-top ocamlfind ocamlgraph ocamlify ocamlmod ocamlnet ocamlscript
+ocp-build ocp-indent ocp-index ocplib-endian ocurl odate omake omd
+optcomp optimization1d ospec otfm ounit pa_bench pa_monad_custom
+pa_ounit pa_ovisitor pa_test pa_where pcre pipebang ppx_deriving
+ppx_deriving_yojson ppx_import ppx_include ppx_test ppx_tools pxp
+qtest re react reactiveData root1d rope sedlex sequence sexplib
+spotlib stringext syndic text textwrap tophide type_conv typerep tyxml
+ucorelib uint ulex uri utop uucd uucp uuidm uunf uutf variantslib vg
+xml-light xmlm xstr xstrp4 yojson zarith zed
 
 Try it out to see, if they were really installed successfully or opam
 just didn't report any errors :)
