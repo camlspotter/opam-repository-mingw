@@ -1,4 +1,5 @@
 lib: [
+  "META"
   "graph.cma"
   "graph.cmi"
   "graph.cmxa"
