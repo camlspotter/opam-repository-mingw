@@ -18,6 +18,36 @@
  # Check Ocaml
  
  ocamlc=${ocamln}c
+@@ -200,13 +204,13 @@
+     EXE=
+ fi
+ 
+-if test "$win32" = "true"; then
+-    EXT_OBJ=.obj
+-    EXT_LIB=.lib
+-else
++#if test "$win32" = "true"; then
++#    EXT_OBJ=.obj
++#    EXT_LIB=.lib
++#else
+     EXT_OBJ=.o
+     EXT_LIB=.a
+-fi
++#fi
+ 
+ if test "$bindir" != ""; then
+     BINDIR=$bindir
+--- ./etc/Makefile
++++ ./etc/Makefile
+@@ -114,7 +114,7 @@
+ 	  for i in $(OBJS:.cmo=); do \
+ 	    cp $$i$(EXT_OBJ) "$(DESTDIR)$(LIBDIR)/$(CAMLP5N)/."; \
+ 	  done; \
+-	  cp $(CAMLP5N)o.opt "$(DESTDIR)$(BINDIR)/."; \
++	  cp $(CAMLP5N)o.opt "$(DESTDIR)$(BINDIR)/$(CAMLP5N)o.opt$(EXE)"; \
+ 	  cp mk$(CAMLP5N).opt.sh "$(DESTDIR)$(BINDIR)/mk$(CAMLP5N).opt"; \
+ 	  chmod a+x "$(DESTDIR)$(BINDIR)/mk$(CAMLP5N).opt"; \
+ 	fi
 --- ./main/main.ml
 +++ ./main/main.ml
 @@ -167,6 +167,16 @@
@@ -37,6 +67,23 @@
    eprintf "Camlp5 version %s (ocaml %s)\n" Pcaml.version
      Pconfig.ocaml_version;
    flush stderr;
+--- ./meta/Makefile
++++ ./meta/Makefile
+@@ -1,4 +1,4 @@
+-# Makefile,v
++#c Makefile,v
+ 
+ TOP=..
+ include $(TOP)/config/Makefile
+@@ -66,7 +66,7 @@
+ 	cp pa_macro.cmi pa_extend.cmi "$(DESTDIR)$(LIBDIR)/$(CAMLP5N)/."
+ 	cp $(CAMLP5N)r$(EXE) "$(DESTDIR)$(BINDIR)/."
+ 	if test -f $(CAMLP5N)r.opt; then \
+-	  cp $(CAMLP5N)r.opt "$(DESTDIR)$(BINDIR)/."; \
++	  cp $(CAMLP5N)r.opt "$(DESTDIR)$(BINDIR)/$(CAMLP5N)r.opt$(EXE)"; \
+ 	fi
+ 	if test -f pa_r.cmx; then \
+ 	  cp $(OBJS:.cmo=.cmx) "$(DESTDIR)$(LIBDIR)/$(CAMLP5N)/."; \
 --- ./odyl/odyl.ml
 +++ ./odyl/odyl.ml
 @@ -13,10 +13,36 @@
@@ -60,14 +107,14 @@
 +        match Sys.os_type with
 +          [ "Win32" ->
 +          let len = String.length p in
-+          let b = Bytes.create len in
++          let b = Buffer.create len in
 +          do {
 +          for i = 0 to len - 1 do {
-+            Bytes.set b i (match p.[i] with
++            Buffer.add_char b (match p.[i] with
 +            [ '\\' ->  '/'
 +            | x -> x ])
 +          };
-+          Bytes.to_string b}
++          Buffer.contents  b}
 +        | _ -> p ]
 +      in
 +      do {
