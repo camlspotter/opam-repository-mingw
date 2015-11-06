@@ -31,3 +31,4 @@ depopts: [
   "camlp4"
 ]
 available: [ ocaml-version >= "4.01" ]
+patches: [ "patch-aa" { os = "win32" } ]
