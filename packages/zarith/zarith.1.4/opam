@@ -15,4 +15,4 @@ depends: [
   "ocamlfind"
   "conf-gmp"
 ]
-patches: [ "z_pp.pl.patch" ]
+patches: [ "z_pp.pl.patch" "patch-zarith-1.4" { os = "win32" } ]
