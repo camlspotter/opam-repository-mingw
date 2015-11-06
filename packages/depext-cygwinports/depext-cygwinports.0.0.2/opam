@@ -1,0 +1,20 @@
+opam-version: "1.2"
+name: "depext-cygwinports"
+version: "0.0.2"
+maintainer: "andreashauptmann@t-online.de"
+authors: [ "andreashauptmann@t-online.de" ]
+license: "Boost Software License"
+homepage: "https://github.com/fdopen/depext-cygwinports"
+dev-repo: "https://github.com/fdopen/depext-cygwinports.git"
+bug-reports: "https://github.com/fdopen/depext-cygwinports/issues"
+build: [
+ [ "./configure" ]
+ [ make "all" ]
+]
+install:[[ make "install" "PREFIX=%{prefix}%" ]]
+remove: [[ make "uninstall" "PREFIX=%{prefix}%" ]]
+depends: [
+  "config-file" {build}
+  "base-bytes" {build}
+]
+available: [ os = "win32" ]
