@@ -30,4 +30,5 @@ depexts: [
   [["freebsd"] ["database/sqlite3"]]
   [["openbsd"] ["database/sqlite3"]]
   [["ubuntu"] ["libsqlite3-dev"]]
+  [["win32" "cygwinports"] ["sqlite3"]]
 ]
