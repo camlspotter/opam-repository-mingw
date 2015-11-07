@@ -19,7 +19,7 @@ depexts: [
   [["ubuntu"] ["libgtk2.0-dev" "libexpat1-dev"]]
   [["win32" "cygwinports"] ["gtk2.0"]]
 ]
-patches: ["lablgldir.patch"]
+patches: ["lablgldir.patch" "patch-bd" { os = "win32" }]
 post-messages: [
   "This package requires gtk+ 2.0 development packages installed on your system" {failure}
   "To solve pkg-config issues, you may need to do
