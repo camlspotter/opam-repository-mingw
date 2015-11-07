@@ -1,0 +1,17 @@
+--- compiler/Makefile
++++ compiler/Makefile
+@@ -44,11 +44,11 @@
+ 	mv -f $< $@
+ 
+ 
+-man: man/$(MINIFIER).1 man/$(COMPILER).1
+-man/$(MINIFIER).1: $(MINIFIER)
++man: man/jsoo_minify.1 man/js_of_ocaml.1
++man/jsoo_minify.1: $(MINIFIER)
+ 	mkdir -p man
+ 	./$(MINIFIER) --help=groff >$@
+-man/$(COMPILER).1: $(COMPILER)
++man/js_of_ocaml.1: $(COMPILER)
+ 	mkdir -p man
+ 	./$(COMPILER) --help=groff >$@
+ 
