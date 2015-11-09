@@ -2,13 +2,14 @@ opam-version: "1"
 version: "4.02.3"
 src: "http://caml.inria.fr/pub/distrib/ocaml-4.02/ocaml-4.02.3.tar.xz"
 patches:[
-  "https://gist.githubusercontent.com/fdopen/f35f562d514b2767c91c/raw/6cc3195d07e1d7908b3fc49e8697f7cd8d550bdd/patch-ocaml-4.02.3"
+  "https://gist.githubusercontent.com/fdopen/c1114aebeec64b3b7121/raw/b0c5c9daa713042a87642a1d7e59b40df4471616/patch-ocaml-4.02.3"
 ]
   
 build: [
   [ "cp" "config/m-nt.h" "config/m.h" ]
   [ "cp" "config/s-nt.h" "config/s.h" ]
-  [ "cp" "config/Makefile.mingw" "config/Makefile" ]  
+  [ "cp" "config/Makefile.mingw" "config/Makefile" ]
+  [ "sed" "-i" "s#@PREFIX@#%{prefix}%#g" "config/Makefile" ]
   [make "-f" "Makefile.nt" "world.opt" "PREFIX=%{prefix}%" ]
   [make "-f" "Makefile.nt" "install" "PREFIX=%{prefix}%" ]
 ]

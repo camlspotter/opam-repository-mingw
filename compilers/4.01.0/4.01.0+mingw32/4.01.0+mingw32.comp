@@ -2,7 +2,7 @@ opam-version: "1"
 version: "4.01.0"
 src: "http://caml.inria.fr/pub/distrib/ocaml-4.01/ocaml-4.01.0.tar.xz"
 patches:[
-  "http://10.0.2.2/patch-ocaml-src-4.01.0"
+  "https://gist.githubusercontent.com/fdopen/8043611b56ecb6b49dae/raw/783c82241ada7cefdff9d8bf7ba76e0419d6641a/gistfile1.txt"
 ]
   
 build: [
