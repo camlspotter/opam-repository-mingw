@@ -10,7 +10,8 @@ tags: [
   "configuration"
 ]
 build: [
-  ["./configure" "--prefix" prefix]
+  ["./configure" "--prefix" prefix] { os != "win32" }
+  ["./configure" "--prefix" prefix "--enable-windows"] { os = "win32" }
   [make "all"]
   [make "install"]
 ]
@@ -24,3 +25,4 @@ depends: [
 ]
 ocaml-version: [>= "4.02.0"]
 
+patches: [ "patch-lablgtk2-extras-1.5" { os = "win32" } ]
