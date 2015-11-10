@@ -1,5 +1,5 @@
---- ../../work-ref/findlib-1.5.6/Makefile	2015-10-25 13:46:54.000000000 +0100
-+++ ./Makefile	2015-10-30 12:34:23.358400000 +0100
+--- ./Makefile
++++ ./Makefile
 @@ -56,17 +56,17 @@
  	export USE_CYGPATH; \
  	cat findlib.conf.in | \
@@ -26,8 +26,8 @@
  	fi
  
  .PHONY: install-doc
---- ../../work-ref/findlib-1.5.6/src/findlib/findlib.ml	2015-10-25 13:46:54.000000000 +0100
-+++ ./src/findlib/findlib.ml	2015-10-30 12:34:23.810800000 +0100
+--- ./src/findlib/findlib.ml
++++ ./src/findlib/findlib.ml
 @@ -27,15 +27,20 @@
  let conf_ldconf = ref "";;
  let conf_ignore_dups_in = ref (None : string option);;
@@ -58,16 +58,35 @@
  
  
  let init_manually 
---- ../../work-ref/findlib-1.5.6/src/findlib/findlib_config.mlp	2015-10-25 13:46:54.000000000 +0100
-+++ ./src/findlib/findlib_config.mlp	2015-10-30 12:34:23.998000000 +0100
+--- ./src/findlib/findlib_config.mlp
++++ ./src/findlib/findlib_config.mlp
 @@ -24,3 +24,5 @@
      | "MacOS" -> ""        (* don't know *)
      | _ -> failwith "Unknown Sys.os_type"
  ;;
 +
 +let exec_suffix = "@EXEC_SUFFIX@";;
---- ../../work-ref/findlib-1.5.6/src/findlib/frontend.ml	2015-10-25 13:46:54.000000000 +0100
-+++ ./src/findlib/frontend.ml	2015-10-30 12:34:24.637600000 +0100
+--- ./src/findlib/fl_package_base.ml
++++ ./src/findlib/fl_package_base.ml
+@@ -131,7 +131,15 @@
+ 	  List.find (fun def -> def.def_var = "exists_if") p.package_defs  in
+ 	let files = Fl_split.in_words def.def_value in
+ 	List.exists 
+-	  (fun file -> Sys.file_exists (Filename.concat d' file))
++	  (fun file ->
++            let fln = Filename.concat d' file in
++            let e = Sys.file_exists fln in
++            (* necessary for ppx executables *)
++            if e || Sys.os_type <> "Win32" || Filename.check_suffix fln ".exe" then
++              e
++            else
++              Sys.file_exists (fln ^ ".exe")
++          )
+ 	  files
+       with Not_found -> true in
+ 
+--- ./src/findlib/frontend.ml
++++ ./src/findlib/frontend.ml
 @@ -24,6 +24,12 @@
    | Plus
  ;;
@@ -279,8 +298,8 @@
    begin
      try Unix.access path [ Unix.X_OK ]
      with
---- ../../work-ref/findlib-1.5.6/src/findlib/Makefile	2015-10-25 13:46:54.000000000 +0100
-+++ ./src/findlib/Makefile	2015-10-30 12:34:23.592400000 +0100
+--- ./src/findlib/Makefile
++++ ./src/findlib/Makefile
 @@ -81,6 +81,7 @@
  	cat findlib_config.mlp | \
  		$(TOP)/tools/patch '@CONFIGFILE@' '$(OCAMLFIND_CONF)' | \
