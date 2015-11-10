@@ -15,3 +15,4 @@ depends: [
   "ppx_test" {>="1.0.1"}
 ]
 ocaml-version: [>= "4.02.1"]
+patches: [ "patch-aa" { os = "win32" } ]
