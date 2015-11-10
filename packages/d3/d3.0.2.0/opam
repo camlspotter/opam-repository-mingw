@@ -24,3 +24,4 @@ depends: [
   "ocamlfind" {build}
 ]
 available: [ ocaml-version >= "4.01.0" ]
+patches: [ "patch-aa" { os = "win32" } ]
