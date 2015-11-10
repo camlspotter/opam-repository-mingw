@@ -26,3 +26,4 @@ depexts: [
   [["centos"] ["libcurl-devel" "openssl-devel"]]
   [["win32" "cygwinports"] ["curl"]]
 ]
+patches: [ "examples.diff" ]
