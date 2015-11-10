@@ -1,0 +1,11 @@
+--- ./Makefile
++++ ./Makefile
+@@ -2,7 +2,7 @@
+ all: byte native result.install
+ 
+ result.ml: which_result.ml
+-	cp `ocaml which_result.ml` result.ml
++	cp `ocaml which_result.ml | tr -d '\r'` result.ml
+ 
+ .PHONY: byte
+ byte: result.ml
