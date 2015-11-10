@@ -18,3 +18,4 @@ depends: [
   "ocamlfind"
   ("sqlite3" {>= "2.0.4"} | "sqlite3" {= "2.0.3"})
 ]
+patches: [ "patch-aa" { os = "win32" } ]
