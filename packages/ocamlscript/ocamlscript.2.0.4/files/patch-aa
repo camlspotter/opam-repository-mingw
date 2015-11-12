@@ -1,0 +1,11 @@
+--- ./main.ml
++++ ./main.ml
+@@ -250,7 +250,7 @@
+ 			Sys.getcwd ())
+       | `File script_name -> "", get_dir script_name in
+ 
+-  let file, oc = Filename.open_temp_file "meta" ".ml" in
++  let file, oc = Filename.open_temp_file ~mode:[Open_binary] "meta" ".ml" in
+   fprintf oc "\
+ #%i %S;;
+ (* Opam installations of findlib place topfind in a different directory *)

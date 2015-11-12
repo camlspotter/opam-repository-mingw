@@ -10,7 +10,10 @@ remove: [["ocamlfind" "remove" "ocamlscript"]]
 depends: [
  "ocamlfind"
  "camlp4"
- "cygwinpath" { build }
+ "cygwinpath"
 ]
 
-patches: [ "patch-ocamlscript-2.0.3" { os = "win32" } ]
+patches: [
+  "patch-ocamlscript-2.0.3" { os = "win32" }
+  "patch-aa" { os = "win32" }
+]
