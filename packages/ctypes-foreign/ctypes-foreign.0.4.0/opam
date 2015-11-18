@@ -10,7 +10,7 @@ depexts: [
   [ ["ubuntu"] [ "libffi-dev" ] ]
   [ ["osx" "homebrew"] ["libffi"] ]
   [ ["centos"] ["libffi-devel"] ]
-  [ ["win32" "cygwinports"] ["libffi"] ]
+  [ ["win32" "cygwinports"] ["libffi" "pkg-config"] ]
 ]
 tags: ["org:ocamllabs" "org:mirage"]
 post-messages: [
