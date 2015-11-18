@@ -6,8 +6,8 @@ a shell interpreter to run configure scripts, git, rsync, ...)
 
 ## Download
 
-* [32-bit](https://dl.dropboxusercontent.com/s/eo4igttab8ipyle/opam32.tar.xz) (updated 9. Nov 2015)
-* [64-bit](https://dl.dropboxusercontent.com/s/b2q2vjau7if1c1b/opam64.tar.xz) (updated 9. Nov 2015)
+* [32-bit](https://dl.dropboxusercontent.com/s/eo4igttab8ipyle/opam32.tar.xz) (updated 18. Nov 2015)
+* [64-bit](https://dl.dropboxusercontent.com/s/b2q2vjau7if1c1b/opam64.tar.xz) (updated 18. Nov 2015)
 
 The archives contain native versions of opam, flexdll and aspcud. They
 are all not linked against cygwin1.dll, so you can use them with
@@ -17,9 +17,8 @@ either the 32-bit or 64-bit version of cygwin.
 ## Installation
 
 * First install [cygwin](https://cygwin.com/) and a few additionals
-  packages: rsync, patch, diffutils, curl (or wget), make, unzip, git,
-  m4, perl.  And of course mingw64-i686-gcc-core and/or
-  mingw64-x86_64-gcc-core.
+  packages: rsync, patch, diffutils, curl, make, unzip, git, m4, perl.
+  And of course mingw64-i686-gcc-core and/or mingw64-x86_64-gcc-core.
 
 * If your logon name contains whitespace characters (e.g. 'Firstname
   Lastname') or any other character that would require quoting inside
