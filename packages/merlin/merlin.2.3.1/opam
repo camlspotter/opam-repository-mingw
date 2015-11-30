@@ -8,6 +8,7 @@ build: [
   ["./configure" "--prefix" prefix]
   ["rm" "-rf" "%{prefix}%/share/ocamlmerlin"]
   [make "-j" jobs]
+  ["sh.exe" "-c" "if [ ! -f ocamlmerlin.exe ] ; then cp -p ocamlmerlin_*.exe ocamlmerlin.exe; fi "] { os = "win32" }
 ]
 depends: [
   "ocamlfind" {>= "1.5.2"}
