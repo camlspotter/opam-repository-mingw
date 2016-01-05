@@ -32,3 +32,6 @@ depexts: [
   [["ubuntu"] ["libsqlite3-dev"]]
   [["win32" "cygwinports"] ["sqlite3"]]
 ]
+patches: [
+  "no-enable-load-extensions.patch"
+]
