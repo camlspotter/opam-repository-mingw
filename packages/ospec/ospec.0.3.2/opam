@@ -14,4 +14,4 @@ depends: [
   "camlp4"
   "ocamlbuild" {build}
 ]
-patches: [ "patch-ospec.0.3.2" ]
+patches: [ "patch-ospec.0.3.2" { os = "win32" } ]
