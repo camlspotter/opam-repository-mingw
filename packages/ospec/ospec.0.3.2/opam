@@ -1,12 +1,17 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "andrenth@gmail.com"
 build: [
-  ["ocaml" "setup.ml" "-configure" "--prefix" prefix] { os != "win32" }
-  ["ocaml" "setup.ml" "-configure" "--prefix" prefix "--use-bash" "dash.exe"] { os = "win32" }
+  ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
+]
+install: [
   ["ocaml" "setup.ml" "-install"]
   ["sh.exe" "-c" "if [ -f '%{bin}%/ospec' ] && [ ! -f '%{bin}%/ospec.exe' ] ; then mv '%{bin}%/ospec' '%{bin}%/ospec.exe' ; fi" ] { os = "win32" }
 ]
 remove: [["ocamlfind" "remove" "ospec"]]
-depends: ["ocamlfind" "camlp4"]
+depends: [
+  "ocamlfind"
+  "camlp4"
+  "ocamlbuild" {build}
+]
 patches: [ "patch-ospec.0.3.2" ]

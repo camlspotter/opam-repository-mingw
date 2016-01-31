@@ -27,5 +27,6 @@ depends: [
   "ocamlfind" {build}
   "ounit" {test}
   "ppx_import" {test}
+  "ocamlbuild" {build}
 ]
 patches: [ "patch-ppx_deriving_yojson-2.3" ]

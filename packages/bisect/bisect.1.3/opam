@@ -1,4 +1,4 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "contact@ocamlpro.com"
 authors: ["Xavier Clerc"]
 homepage: "http://bisect.x9c.fr/"
@@ -9,7 +9,6 @@ build: [
   ["sh" "configure" "-ocaml-prefix" prefix "-ocamlfind" "%{bin}%/ocamlfind" "-ppx"]
     {ocaml-version = "4.00.1"}
   [make "all"]
-  [make "install"]
 ]
 install: [
   [make "install"]
@@ -17,5 +16,9 @@ install: [
   ["sh.exe" "-c" "if [ -f '%{bin}%/bisect-report.opt' ] && [ ! -f '%{bin}%/bisect-report.opt.exe' ] ; then mv '%{bin}%/bisect-report.opt' '%{bin}%/bisect-report.opt.exe' ; fi" ] { os = "win32" }
 ]
 remove: [["ocamlfind" "remove" "bisect"]]
-depends: ["ocamlfind" "camlp4"]
+depends: [
+  "ocamlfind"
+  "camlp4"
+  "ocamlbuild" {build}
+]
 patches: ["patch-bisect-1.3"]
