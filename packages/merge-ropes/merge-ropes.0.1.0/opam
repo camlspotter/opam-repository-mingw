@@ -11,6 +11,6 @@ remove: ["ocamlfind" "remove" "merge-ropes"]
 depends: [
   "irmin" {= "0.8.3"}
   "comparelib"
-  "sexplib"
+  "sexplib" {< "113.01.00"}
   "ocamlbuild" {build}
 ]
