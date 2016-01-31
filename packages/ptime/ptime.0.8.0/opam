@@ -16,6 +16,8 @@ depends: [
 depopts: [ "js_of_ocaml" ]
 build:
 [
+  [ "tar" "-chf" "test.tar" "src-jsoo" "src-os" { os = "win32" } ]
+  [ "tar" "-xf" "test.tar" { os = "win32" } ]
   [ "ocaml" "pkg/git.ml" ]
   [ "ocaml" "pkg/build.ml" "native=%{ocaml-native}%"
                            "native-dynlink=%{ocaml-native-dynlink}%"
