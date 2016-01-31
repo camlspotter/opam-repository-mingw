@@ -10,4 +10,5 @@ depexts: [
   [["centos"] ["openssl-devel"]]
   [["fedora"] ["openssl-devel"]]
   [["osx" "homebrew"] ["openssl"]]
+  [["win32" "cygwinports"] ["openssl" "pkg-config"]]
 ]
