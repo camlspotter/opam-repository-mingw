@@ -5,8 +5,14 @@ bug-reports:  "https://github.com/ocsigen/js_of_ocaml/issues"
 homepage:     "http://ocsigen.org/js_of_ocaml"
 dev-repo:     "https://github.com/ocsigen/js_of_ocaml.git"
 
-build:   [make "build"]
-install: [make "install-lib" "BINDIR=%{bin}%"]
+build:   [
+  [make "build"] { os != "win32" }
+  [make "build" "EXEEXT=.exe" "EXEXT=.exe"] { os = "win32" }
+]
+install: [
+  [make "install-lib" "BINDIR=%{bin}%"] { os != "win32" }
+  [make "install-lib" "BINDIR=%{bin}%" "EXEEXT=.exe" "EXEXT=.exe"] { os = "win32" }
+]
 remove:  ["ocamlfind" "remove" "js_of_ocaml"]
 
 depends: [
@@ -29,3 +35,8 @@ conflicts: [
   "reactiveData" {< "0.2"}
 ]
 available: [ ocaml-version >= "4.00.0" ]
+
+patches: [
+  "opamingw.patch" { os = "win32" }
+  "patch-bb" { os = "win32" }
+]
