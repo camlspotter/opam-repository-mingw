@@ -17,6 +17,7 @@ packages: [
   "base-unix"
   "base-bigarray"
   "base-threads"
+  "base-ocamlbuild"
 ]
 env: [
 [CAML_LD_LIBRARY_PATH = "%{lib}%/stublibs"]

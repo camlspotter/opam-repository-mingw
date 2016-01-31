@@ -11,6 +11,7 @@ packages: [
   "base-unix"
   "base-bigarray"
   "base-threads"
+  "base-ocamlbuild"
 ]
 env: [
 [OCAMLLIB = "%{prefix}%/lib/ocaml"]
