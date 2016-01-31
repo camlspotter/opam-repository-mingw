@@ -25,3 +25,4 @@ depends: [
   "ocamlbuild"
 ]
 patches: [ "patch-oasis-0.4.5" ]
+available: [ ocaml-version >= "3.11.2" & ocaml-version < "4.03.0" ]
