@@ -7,7 +7,6 @@ build: [
   ["mv" "lib/pre_sexp.ml" "lib/pre_sexp.ml.in"]
   [make "lib/pre_sexp.ml"]
   [make]
-  [make "install"]
 ]
 remove: [
   ["ocamlfind" "remove" "sexplib"]
@@ -23,7 +22,10 @@ conflicts: [
   "type_conv" {< "113.00.00"}
   "type_conv" {>= "113.01.00"}
 ]
-available: [ ocaml-version >= "4.02.1" ]
+available: [ ocaml-version >= "4.02.1" & ocaml-version < "4.03" ]
+bug-reports: "https://github.com/janestreet/sexplib/issues"
+dev-repo: "https://github.com/janestreet/sexplib.git"
+install: [[make "install"]]
 patches: [
   "opamingw.patch"
 ]
