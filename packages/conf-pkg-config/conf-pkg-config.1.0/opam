@@ -9,6 +9,7 @@ depexts: [
   [["debian"] ["pkg-config"]]
   [["ubuntu"] ["pkg-config"]]
   [["fedora"] ["pkgconfig"]]
+  [["centos"] ["pkgconfig"]]
   [["osx" "homebrew"] ["pkg-config"]]
   [["win32" "cygwinports"] ["pkg-config"]]
 ]
