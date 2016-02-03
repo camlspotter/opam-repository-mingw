@@ -15,3 +15,4 @@ depends: [
   "ppx_tools"
 ]
 available: [ ocaml-version >= "4.02.3" ]
+patches: [ "patch-gen_install_ml" { os = "win32" } ]

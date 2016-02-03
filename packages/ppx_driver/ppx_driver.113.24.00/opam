@@ -17,3 +17,6 @@ depends: [
   "ppx_optcomp" {>= "113.24.00" & < "113.25.00"}
 ]
 available: [ ocaml-version >= "4.02.3" ]
+patches: [ "patch-gen_install_ml" { os = "win32" }
+           "patch-ppx_driver" { os = "win32" }
+           "patch-ocamlbuild" { os = "win32" } ]
