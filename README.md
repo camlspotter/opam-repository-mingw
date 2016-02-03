@@ -6,8 +6,8 @@ a shell interpreter to run configure scripts, git, rsync, ...)
 
 ## Download
 
-* [32-bit](https://dl.dropboxusercontent.com/s/eo4igttab8ipyle/opam32.tar.xz) (updated 18. Nov 2015)
-* [64-bit](https://dl.dropboxusercontent.com/s/b2q2vjau7if1c1b/opam64.tar.xz) (updated 18. Nov 2015)
+* [32-bit](https://dl.dropboxusercontent.com/s/eo4igttab8ipyle/opam32.tar.xz) (updated 3. Feb 2016)
+* [64-bit](https://dl.dropboxusercontent.com/s/b2q2vjau7if1c1b/opam64.tar.xz) (updated 3. Feb 2016)
 
 The archives contain native versions of opam, flexdll and aspcud. They
 are all not linked against cygwin1.dll, so you can use them with
@@ -30,7 +30,7 @@ either the 32-bit or 64-bit version of cygwin.
 ```bash
 $ tar -xf 'opam32.tar.xz' # or tar -xf 'opam64.tar.xz'
 $ bash opam32/install.sh  # --prefix /usr/foo, the default prefix is /usr/local
-                        # maybe you have to add /usr/local/bin to your PATH
+                          # maybe you have to add /usr/local/bin to your PATH
 $ opam init mingw 'https://github.com/fdopen/opam-repository-mingw.git' --comp 4.02.3+mingw32 --switch 4.02.3+mingw32
 # or, if you prefer the 64-bit version
 $ opam init mingw 'https://github.com/fdopen/opam-repository-mingw.git' --comp 4.02.3+mingw64 --switch 4.02.3+mingw64
