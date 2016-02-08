@@ -7,7 +7,7 @@ dev-repo: "https://github.com/ocaml/opam-repository.git"
 license: "GPL"
 build: [
   ["sh" "-c" "cc -c $CFLAGS -I/usr/local/include test.c"] { os != "win32" }
-  ["dash.exe" "-c" "cc=$(ocamlc -config | awk '/^bytecomp_c_compiler/ {for(i=2;i<=NF;i++) printf \" %s \"  ,$i}') ; $cc -c $CFLAGS test.c"] { os = "win32" }
+  ["./test-win.sh"] { os = "win32" }
 ]
 depexts: [
   [["debian"] ["libgmp-dev"]]
