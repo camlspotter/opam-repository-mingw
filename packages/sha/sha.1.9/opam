@@ -2,9 +2,10 @@ opam-version: "1"
 maintainer: "dave.scott@eu.citrix.com"
 homepage: "https://github.com/vincenthz/ocaml-sha"
 build: [
+  ["sh" "real_configure"]
   [make]
   [make "install"]
 ]
-patches: ["freebsd.patch"]
+patches: ["patch-sha"]
 remove: [["ocamlfind" "remove" "sha"]]
 depends: ["ocamlfind"]
