@@ -1,18 +1,31 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "garrigue@math.nagoya-u.ac.jp"
+authors: [ "garrigue@math.nagoya-u.ac.jp" ]
 homepage: "http://labltk.forge.ocamlcore.org/"
 build: [
-  ["./configure" "-use-findlib" "-installbindir" bin]
-  [make "all" "opt"]
-  [make "install"]
+  ["./configure" "-use-findlib" "-installbindir" bin] { os != "win32" }
+  [make "all" "opt"] { os != "win32" }
+  ["bash.exe" "build.sh" prefix ] { os = "win32" }
 ]
-ocaml-version: [ >= "4.02" ]
-remove: [["ocamlfind" "remove" "labltk"]]
+install: [
+  [make "install"] { os != "win32" }
+  ["bash.exe" "install.sh" prefix ] { os = "win32" }
+]
+available: [ocaml-version >= "4.02.0"]
+remove: [
+ ["ocamlfind" "remove" "labltk"]
+ ["rm" "-f" "%{bin}%/labltk.bat" "%{bin}%/ocamlbrowser"]
+]
 depends: ["ocamlfind"]
 depexts: [
   [["debian"] ["tcl-dev" "tk-dev"]]
   [["ubuntu"] ["tcl-dev" "tk-dev"]]
+  [["win32" "cygwinports"] ["tk" "tcl"]]
 ]
 post-messages: [
-  "This package requires Tcl/Tk with its development packages installed on your system" {failure}
+  "This package requires Tcl-Tk with its development packages installed on your system" {failure}
+  "You must either set the environment variable TK_LIBRARY manually (e.g. to C:\\cygwin\\usr\\x86_64-w64-mingw32\\sys-root\\mingw\\lib\\tk8.5) or copy the tcl-tk-files relative to your executable in a appropriate order" { success & os = "win32"}
+]
+patches: [
+ "patch-labltk"
 ]
