@@ -1,0 +1,34 @@
+--- ./setup.ml
++++ ./setup.ml
+@@ -8017,9 +8017,8 @@
+   lazy(match cairo_cflags with
+        | [] ->
+          (match Sys.os_type with
++          | "Win32" | "Cygwin"
+           | "Unix" -> split_on_space(pkg_config "cairo" ["--cflags-only-I"])
+-          | "Cygwin" -> ["-I"; "C:/gtk/include/cairo"]
+-          | "Win32" -> ["/I"; "C:\\gtk\\include\\cairo"]
+           | os -> printf "Operating system %S not known" os;  exit 1)
+        | _ -> cairo_cflags)
+ 
+@@ -8028,9 +8027,8 @@
+   lazy(match cairo_clibs with
+        | [] ->
+          (match Sys.os_type with
++          | "Cygwin" | "Win32"
+           | "Unix" -> split_on_space(pkg_config "cairo" ["--libs"])
+-          | "Cygwin" -> ["-LC:/gtk/lib"; "-lcairo"]
+-          | "Win32" -> ["/LC:\\gtk\\lib"; "cairo.lib"]
+           | os -> printf "Operating system %S not known" os;  exit 1)
+        | _ -> cairo_clibs)
+ 
+@@ -8049,8 +8047,7 @@
+     close_out fh;
+     let exe = Filename.temp_file "oasis-" ".exe" in
+     let o = match Sys.os_type with
+-      | "Unix" | "Cygwin" -> "-o " ^ exe
+-      | "Win32" -> "/Fe" ^ exe
++      | "Win32" | "Unix" | "Cygwin" -> "-o " ^ exe 
+       | _ -> assert false in
+     let args = o :: stdlib :: (cflags @ [tmp] @ lflags) in
+     let f_exit_code e =

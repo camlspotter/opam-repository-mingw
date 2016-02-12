@@ -43,4 +43,8 @@ depexts: [
   [ [ "freebsd" ] [ "graphics/cairo" ] ]
   [ [ "openbsd" ] [ "graphics/cairo" ] ]
   [ [ "osx" "homebrew" ] [ "cairo" "pkg-config" ] ]
+  [ [ "win32" "cygwinports" ] [ "cairo" "pkg-config" ] ]
+]
+patches: [
+ "patch-cairo2"
 ]
