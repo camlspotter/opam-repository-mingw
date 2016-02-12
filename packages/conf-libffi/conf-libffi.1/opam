@@ -3,6 +3,7 @@ maintainer: "blue-prawn"
 authors: ["Anthony Green"]
 homepage: "http://sourceware.org/libffi/"
 license: "MIT"
+depends: [ "conf-pkg-config" ]
 build: [["pkg-config" "libffi"]]
 depexts: [
   [["debian"] ["libffi-dev"]]

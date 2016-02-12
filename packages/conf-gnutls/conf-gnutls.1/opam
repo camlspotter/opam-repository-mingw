@@ -1,6 +1,7 @@
 opam-version: "1.2"
 maintainer: "vb@luminar.eu.org"
 build: [["pkg-config" "gnutls"]]
+depends: [ "conf-pkg-config" ]
 depexts: [
   [["debian"] ["libgnutls-dev"]]
   [["ubuntu"] ["libgnutls-dev"]]

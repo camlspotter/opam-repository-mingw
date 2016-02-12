@@ -7,7 +7,7 @@ build: [
   [make "install"]
 ]
 remove: [["ocamlfind" "remove" "lablgtk2"]]
-depends: ["ocamlfind" "camlp4"]
+depends: ["ocamlfind" "camlp4" "conf-pkg-config"]
 depopts: [
   "conf-gtksourceview"
   "conf-gnomecanvas"

@@ -18,7 +18,10 @@ build-test: [
 ]
 build-doc: [[make "doc"]]
 remove: [["ocamlfind" "remove" "curl"]]
-depends: ["ocamlfind" {build}]
+depends: [
+  "conf-pkg-config"
+  "ocamlfind" {build}
+]
 depopts: ["lwt"]
 depexts: [
   [["debian"] ["libcurl4-gnutls-dev"]]

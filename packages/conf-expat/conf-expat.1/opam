@@ -2,6 +2,7 @@ opam-version: "1"
 maintainer: "blue-prawn"
 homepage: "http://www.libexpat.org/"
 license: "MIT"
+depends: [ "conf-pkg-config" ]
 build: [["pkg-config" "expat"]]
 depexts: [
   [["debian"] ["libexpat1-dev"]]

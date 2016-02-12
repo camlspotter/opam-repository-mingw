@@ -3,6 +3,7 @@ maintainer: "blue-prawn"
 authors: ["Daniel Stenberg"]
 homepage: "http://curl.haxx.se/"
 license: "BSD-like"
+depends: [ "conf-pkg-config" ]
 build: [["pkg-config" "libcurl"]]
 depexts: [
   [["debian"] ["libcurl4-gnutls-dev"]]
