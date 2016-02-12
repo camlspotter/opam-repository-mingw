@@ -9,6 +9,8 @@ license: "LGPL-2.1+ with OCaml linking exception"
 build: [
   ["./configure" "--prefix" prefix]
   [make]
+]
+install: [
   [make "install"]
 ]
 remove: [["ocamlfind" "remove" "bz2"]]
@@ -16,4 +18,8 @@ depends: ["ocamlfind"]
 depexts: [
   [["debian"] ["libbz2-dev"]]
   [["ubuntu"] ["libbz2-dev"]]
+  [["win32" "cygwinports"] ["bzip2"]]
+]
+patches: [
+ "patch-camlbz2"
 ]

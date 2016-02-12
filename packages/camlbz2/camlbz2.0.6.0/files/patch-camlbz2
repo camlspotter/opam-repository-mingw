@@ -1,0 +1,41 @@
+--- ./Makefile.in
++++ ./Makefile.in
+@@ -15,13 +15,14 @@
+ BZ_PREFIX := @BZ_PREFIX@
+ CPPFLAGS = $(if $(BZ_PREFIX),-D BZ_PREFIX) @CPPFLAGS@
+ 
++EXT_DLL:=$(shell $(OCAMLFIND) ocamlc -config | awk '/^ext_dll:/ {print $$2}')
+ NAME := camlbz2
+ SHORTNAME := bz2
+ VERSION := 0.6.0
+ 
+ INSTALLFILES := $(SHORTNAME).cmi $(SHORTNAME).cmx $(SHORTNAME).mli \
+ 	$(SHORTNAME).a $(SHORTNAME).cma $(SHORTNAME).cmxa \
+-	dll$(NAME).so lib$(NAME).a
++	dll$(NAME)$(EXT_DLL) lib$(NAME).a
+ 
+ DISTSRC := $(SHORTNAME).ml $(SHORTNAME).mli \
+ 	c_bz.c io.h \
+@@ -52,11 +53,11 @@
+ install : normal-install
+ endif
+ 
+-stub   : dll$(NAME).so lib$(NAME).a
++stub   : dll$(NAME)$(EXT_DLL) lib$(NAME).a
+ lib    : $(SHORTNAME).cma
+ libopt : $(SHORTNAME).cmxa
+ 
+-lib$(NAME).a dll$(NAME).so : c_bz.o
++lib$(NAME).a dll$(NAME)$(EXT_DLL) : c_bz.o
+ 	$(OCAMLMKLIB) -oc $(NAME) $^ $(CLIBS) $(CLIBSDIR)
+ 
+ $(SHORTNAME).cma : $(SHORTNAME).cmo
+@@ -86,7 +87,7 @@
+ 		$(SHORTNAME) META $(INSTALLFILES)
+ 
+ clean:
+-	rm -f *.cm* *.a *.so *.o *.opt test test.opt
++	rm -f *.cm* *.a *$(EXT_DLL) *.o *.opt test test.opt
+ distclean: clean
+ 	rm -rf .depend Makefile aclocal.m4 autom4te.cache/ doc/
+ 	rm -f config.log config.status configure
