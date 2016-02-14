@@ -25,3 +25,6 @@ depends: [
   "cmdliner"
   "ocamlbuild" {build}
 ]
+patches: [
+  "patch-crunch" { os = "win32" }
+]
