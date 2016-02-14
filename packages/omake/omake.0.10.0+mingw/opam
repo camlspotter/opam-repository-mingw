@@ -9,9 +9,14 @@ build: [
   [make "all" "PREFIX=%{prefix}%"]
   ["rm" "%{prefix}%/bin/mmtranslate.exe"] { os = "win32" }
 ]
-
+remove: [
+  ["rm" "-rf" "%{prefix}%/lib/omake"]
+]
 depends: [
  "ocamlfind"
  "cygwinpath" { build }
 ]
-patches: [ "patch-mm" { os = "win32" } ]
+patches: [
+  "patch-mm" { os = "win32" }
+  "patch-chmod"
+]
