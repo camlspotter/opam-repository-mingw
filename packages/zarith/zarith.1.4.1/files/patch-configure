@@ -1,0 +1,48 @@
+--- ./configure
++++ ./configure
+@@ -23,8 +23,8 @@
+ perf='no'
+ 
+ #ar='ar'
+-ar_help=$(ocamlc -config | awk '/^system/ {print $$2}')
+-case "$ar_help" in
++system_help=$(ocamlc -config | awk '/^system/ {print $$2}')
++case "$system_help" in
+     *mingw64*)
+         if which x86_64-w64-mingw32-ar >/dev/null 2>&1 ; then
+             ar=x86_64-w64-mingw32-ar
+@@ -221,13 +221,32 @@
+   searchbinreq "$CC"
+   cc="$CC"
+   ccopt="$CFLAGS"
+-elif ! searchbin 'gcc'; then
++else
++    cc=
++    case "$system_help" in
++        *mingw64*)
++            if which x86_64-w64-mingw32-gcc >/dev/null 2>&1 ; then
++                cc=x86_64-w64-mingw32-gcc
++                ccopt="-O3 -Wall -Wextra $CFLAGS"
++            fi
++            ;;
++        *mingw*)
++            if which i686-w64-mingw32-gcc >/dev/null 2>&1 ; then
++                cc=i686-w64-mingw32-gcc
++                ccopt="-O3 -Wall -Wextra $CFLAGS"
++            fi
++            ;;
++    esac
++    if [ -z "$cc" ]; then
++        if ! searchbin 'gcc'; then
+   cc='gcc'
+   ccopt="-O3 -Wall -Wextra $CFLAGS"
+-else
++        else
+   searchbinreq 'cc'
+   cc='cc'
+   ccopt="-O3 -Wall -Wextra $CFLAGS"
++        fi
++    fi
+ fi
+ 
+ # optional native-code generation
