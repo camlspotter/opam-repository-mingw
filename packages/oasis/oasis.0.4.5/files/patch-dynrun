@@ -1,0 +1,17 @@
+diff -r -b -B -u ../oasis-0.4.5.orig/src/dynrun/OASISDynRun.ml ./src/dynrun/OASISDynRun.ml
+--- ./src/dynrun/OASISDynRun.ml
++++ ./src/dynrun/OASISDynRun.ml
+@@ -50,7 +50,12 @@
+ 
+   let setup setup_t =
+     let tmp_setup_fn =
+-      Filename.temp_file (setup_t.package.name^"-setup") ".ml" in
++      if Sys.os_type <> "Win32" then
++        Filename.temp_file (setup_t.package.name^"-setup") ".ml"
++      else
++        (* dirty hack, because otherwise to_unix will fail *)
++        Filename.temp_file ~temp_dir:"." ("tmp-"^setup_t.package.name^"-setup") ".ml"
++    in
+     let restored = ref false in
+     let cleanup () =
+       if not !restored then begin
