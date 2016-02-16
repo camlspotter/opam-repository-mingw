@@ -10,7 +10,8 @@ tags: [
 ]
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix "--%{ounit:enable}%-ounit"]
-  [make "all" "install_file"]
+  [make "all" "install_file"] { os != "win32" }
+  [make "all"] { os = "win32" }
 ]
 install: [
   [make "install"]
