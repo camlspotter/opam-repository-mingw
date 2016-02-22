@@ -1,0 +1,35 @@
+diff --git a/Makefile b/Makefile
+index 5f4323e..f12237c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -130,10 +130,9 @@ INCLUDES_FOR_OCAMLDEP=$(addprefix -I , $(FRAMAC_SRC_DIRS)) \
+ DEP_FLAGS= $(shell echo $(INCLUDES_FOR_OCAMLDEP) \
+              | $(SED) -e "s/-I *.:[^ ]*//g" -e "s/-I *+[^ ]*//g")
+ 
+-# Files for which dependencies are computed
+-FILES_FOR_OCAMLDEP+=$(PLUGIN_LIB_DIR)/*.mli \
+-		$(addsuffix /*.mli, $(FRAMAC_SRC_DIRS)) \
+-		$(addsuffix /*.ml, $(FRAMAC_SRC_DIRS))
++# Files for which dependencies must be computed computed.
++# Other files are added later in this Makefile.
++FILES_FOR_OCAMLDEP+=$(PLUGIN_LIB_DIR)/*.mli
+ 
+ # Developments flags to be used by ocamlc and ocamlopt when compiling Frama-C
+ # itself. For development versions, we add -warn-error for most warnings
+@@ -1234,8 +1233,6 @@ PLUGIN_INTERNAL_TEST:=yes
+ PLUGIN_DEPENDENCIES:=Pdg Callgraph Value
+ include share/Makefile.plugin
+ 
+-FILES_FOR_OCAMLDEP+=$(TEST_SLICING_ML)
+-
+ #####################
+ # External plug-ins #
+ #####################
+@@ -1325,7 +1322,6 @@ GUI_INCLUDES = -I src/plugins/gui -I $(PLUGIN_LIB_DIR)/gui -I $(LABLGTK_PATH)
+ INCLUDES_FOR_OCAMLDEP+=-I src/plugins/gui
+ BYTE_GUI_LIBS+= lablgtk.cma
+ OPT_GUI_LIBS += lablgtk.cmxa
+-FILES_FOR_OCAMLDEP+= src/plugins/gui/*.ml src/plugins/gui/*.mli
+ 
+ ifeq ("$(OCAMLGRAPH_LOCAL)","")
+ GUI_INCLUDES += $(OCAMLGRAPH)
