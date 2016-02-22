@@ -1,0 +1,131 @@
+--- ./src/base/BaseStandardVar.ml
++++ ./src/base/BaseStandardVar.ml
+@@ -148,6 +148,23 @@
+     OASISUtils.failwithf (f_ "Cannot handle os_type %s filename concat")
+       (os_type ())
+ (**/**)
++let auto_bash =
++  lazy (
++    try
++      OASISFileUtil.which ~plain:true "dash"
++    with
++    | Not_found | Sys_error _ ->
++      try
++        OASISFileUtil.which ~plain:true "bash"
++      with
++      | Not_found | Sys_error _ -> "" )
++
++let auto_bash () =
++  if Sys.os_type <> "Win32" then
++    ""
++  else
++    Lazy.force auto_bash
++
+ 
+ let bash_cmd =
+   var_define
+@@ -155,7 +172,7 @@
+     ~cli:CLIAuto
+     ~arg_help:"program"
+     "use_bash"
+-    (fun () -> "")
++    auto_bash
+ 
+ 
+ let prefix =
+--- ./src/oasis/OASISExec.ml
++++ ./src/oasis/OASISExec.ml
+@@ -118,10 +118,10 @@
+     in
+     let exts' =
+       List.filter
+-        ( fun a -> a <> "" && a.[0] = '.' && a <> ".EXE" )
+-        (List.map String.uppercase exts) (* windows file system doesn't care *)
++        ( fun a -> a <> "" && a.[0] = '.' && a <> ".exe" )
++        (List.map String.lowercase exts) (* windows file system doesn't care *)
+     in
+-      ".EXE"::exts' (* .exe first, most common *)
++      ".exe"::exts' (* .exe first, most common *)
+   end
+ 
+ let exe_file_exists fln =
+--- ./src/oasis/OASISFileTemplate.ml
++++ ./src/oasis/OASISFileTemplate.ml
+@@ -496,6 +496,12 @@
+         if Sys.file_exists bak then begin
+           info ~ctxt (f_ "Restore file '%s' with backup file '%s'.")
+             fn bak;
++          if Sys.os_type = "Win32" then (
++            try
++              Sys.remove fn
++            with
++            | Sys_error _ -> ()
++          );
+           Sys.rename bak fn
+         end else begin
+           warning ~ctxt
+--- ./src/oasis/OASISFileUtil.ml
++++ ./src/oasis/OASISFileUtil.ml
+@@ -84,7 +84,7 @@
+     ) alternatives
+ 
+ 
+-let which ~ctxt prg =
++let which ?(plain=false) ?ctxt prg =
+   let path_sep =
+     match Sys.os_type with
+       | "Win32" ->
+@@ -96,13 +96,16 @@
+   let exec_ext =
+     match Sys.os_type with
+       | "Win32" ->
+-          "" :: (OASISString.nsplit (Sys.getenv "PATHEXT") path_sep)
++          "" :: (List.map String.lowercase (OASISString.nsplit (Sys.getenv "PATHEXT") path_sep))
+       | _ ->
+           [""]
+   in
+   let p =
+     find_file ~case_sensitive:false [path_lst; [prg]] exec_ext
+   in
++  if plain then
++    p
++  else
+     OASISHostPath.of_unix p
+ 
+ 
+--- ./src/oasis/OASISFileUtil.mli
++++ ./src/oasis/OASISFileUtil.mli
+@@ -42,7 +42,7 @@
+ 
+ (** Find real filename of an executable.
+   *)
+-val which: ctxt:OASISContext.t -> host_filename -> host_filename
++val which: ?plain:bool -> ?ctxt:OASISContext.t -> host_filename -> host_filename
+ 
+ 
+ (** Copy a file.
+--- ./src/plugins/ocamlbuild/OCamlbuildCommon.ml
++++ ./src/plugins/ocamlbuild/OCamlbuildCommon.ml
+@@ -55,8 +55,11 @@
+           "-classic-display";
+           "-no-log";
+           "-no-links";
+-          "-install-lib-dir";
+-          (OASISHostPath.quote (OASISHostPath.of_unix (Filename.concat (standard_library ()) "ocamlbuild")))
++          (* Fix not longer necassary since at least OCaml 3.11, see #4379.
++             In the future, it's the wrong location, because of the split of
++             ocamlbuild from the main distribution *)
++          (* "-install-lib-dir";
++             (OASISHostPath.quote (OASISHostPath.of_unix (Filename.concat (standard_library ()) "ocamlbuild"))) *)
+         ]
+       else
+         [];
+@@ -251,7 +254,7 @@
+       t.extra_args
+     end else begin
+       match t.plugin_tags with
+-        | Some tags -> "-plugin-tags" :: ("'" ^ tags ^ "'") :: t.extra_args
++        | Some tags -> "-plugin-tags" :: ("\"" ^ tags ^ "\"") :: t.extra_args
+         | None -> t.extra_args
+     end
+   in
