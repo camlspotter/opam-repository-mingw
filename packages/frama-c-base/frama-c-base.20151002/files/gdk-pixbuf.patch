@@ -1,0 +1,21 @@
+diff --git a/src/plugins/gui/gtk_helper.ml b/src/plugins/gui/gtk_helper.ml
+index 8ccfecc..401d751 100644
+--- a/src/plugins/gui/gtk_helper.ml
++++ b/src/plugins/gui/gtk_helper.ml
+@@ -34,9 +34,14 @@ let framac_logo, framac_icon =
+       Some (GdkPixbuf.from_file (Config.datadir ^ "/frama-c." ^ ext))
+     in
+     img "gif", img "ico"
+-  with Glib.GError _ ->
++  with
++  | Glib.GError _ ->
+     Gui_parameters.warning
+-      "Frama-C images not found. Is FRAMAC_SHARE correctly set?";
++      "Frama-C icon/logo not found. Is FRAMAC_SHARE correctly set?";
++    None, None
++  | GdkPixbuf.GdkPixbufError (_, errmsg) ->
++    Gui_parameters.warning
++      "Could not load Frama-C icon/logo: %s" errmsg;
+     None, None
+ 
+ module Icon = struct
