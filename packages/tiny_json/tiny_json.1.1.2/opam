@@ -11,3 +11,4 @@ depends: [
   "omake"
 ]
 ocaml-version: [>= "4.0.0"]
+patches: [ "patch-oasis-tiny_json.1.1.2" { os = "win32" } ]
