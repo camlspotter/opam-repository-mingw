@@ -11,6 +11,8 @@ depexts: [
   [ ["osx" "homebrew"] ["libffi"] ]
   [ ["centos"] ["libffi-devel"] ]
   [ ["win32" "cygwinports"] ["libffi" "pkg-config"] ]
+  [ ["fedora"] ["libffi-devel"] ]
+  [ ["alpine"] ["libffi-dev"] ]
 ]
 tags: ["org:ocamllabs" "org:mirage"]
 post-messages: [
