@@ -1,0 +1,29 @@
+--- ./Makefile
++++ ./Makefile
+@@ -20,7 +20,7 @@
+ 
+ # PATHS
+ 
+-PATH_BASE=`pwd`
++PATH_BASE:=$(shell cygpath -m $$(readlink -f .))
+ PATH_BUILD=$(PATH_BASE)/_build
+ PATH_OCAMLDOC=$(PATH_BASE)/ocamldoc
+ PATH_SRC=$(PATH_BASE)/src
+--- ./myocamlbuild.ml
++++ ./myocamlbuild.ml
+@@ -56,7 +56,14 @@
+     let src = Pathname.mk src in
+     let dst = Pathname.mk dst in
+     let dir = Pathname.dirname dst in
+-    let cmd = Printf.sprintf "mkdir -p %s" (Pathname.to_string dir) in
++    let cmd =
++      if Sys.os_type = "Win32" then
++        Printf.sprintf
++          "\"\"mkdir.exe\" -p %s\""
++          (Filename.quote (Pathname.to_string dir))
++      else
++        Printf.sprintf "mkdir -p %s" (Pathname.to_string dir)
++    in
+     if Sys.command cmd <> 0 then failwith ("cannot run " ^ cmd);
+     cp src dst in
+   dispatch begin function

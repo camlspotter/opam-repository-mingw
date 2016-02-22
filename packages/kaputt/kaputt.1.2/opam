@@ -3,7 +3,9 @@ maintainer: "contact@ocamlpro.com"
 build: [
   ["sh" "configure"]
   [make "all"]
-  [make "install"]
+]
+install: [
+   [make "install"]
 ]
 remove: [["ocamlfind" "remove" "kaputt"]]
 depends: [
@@ -12,4 +14,5 @@ depends: [
 ]
 patches: [
   "install.patch"
+  "kaputt-1.2.patch" { os = "win32" }
 ]
