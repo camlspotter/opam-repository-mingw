@@ -12,6 +12,7 @@ build: [
 install: ["ocaml" "setup.ml" "-install"]
 remove: [
   ["ocamlfind" "remove" "ppx_bigarray"]
+  ["rm" "-f" "%{prefix}%/bin/ppx_bigarray"]
 ]
 build-doc: [ "ocaml" "setup.ml" "-doc" ]
 depends: [
@@ -24,3 +25,4 @@ depopts: [
   "ounit"
 ]
 available: [ ocaml-version >= "4.02.1" ]
+patches: [ "patch-oasis-ppx_bigarray.0.1.0" { os = "win32" } ]
