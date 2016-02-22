@@ -10,4 +10,5 @@ depexts: [
   [["mageia"] ["libcurl-devel"]]
   [["ubuntu"] ["libcurl4-gnutls-dev"]]
   [["win32" "cygwinports"] ["curl"]]
+  [["nixpkgs"] ["curl"]]
 ]
