@@ -15,6 +15,8 @@ depexts: [
   [["ubuntu"] ["libpcre3-dev"]]
   [["centos"] ["pcre-devel"]]
   [["fedora"] ["pcre-devel"]]
+  [["rhel"] ["pcre-devel"]]
+  [["alpine"] ["pcre-dev"]]
   [["osx" "homebrew"] ["pcre"]]
   [["win32" "cygwinports"] ["pcre"]]
 ]
