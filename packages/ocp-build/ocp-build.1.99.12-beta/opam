@@ -31,3 +31,4 @@ depends: [
   ]
 conflicts: [ "typerex"  {< "1.99.7"} ]
 available: [ocaml-version >= "3.12.0"]
+patches: ["patch-ocp-build" { os = "win32" }]
