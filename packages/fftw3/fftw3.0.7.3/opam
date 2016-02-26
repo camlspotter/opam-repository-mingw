@@ -53,4 +53,6 @@ depexts: [
   [ [ "freebsd" ] [ "math/fftw3" ] ]
   [ [ "openbsd" ] [ "math/fftw3" ] ]
   [ [ "osx" "homebrew" ] [ "fftw" ] ]
+  [ [ "win32" "cygwinports" ] [ "fftw3" ] ]
 ]
+patches: [ "ocaml-fftw3-0.7.3.patch" { os = "win32" } ]
