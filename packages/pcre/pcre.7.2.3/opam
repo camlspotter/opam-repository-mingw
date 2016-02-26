@@ -6,7 +6,8 @@ homepage: "http://mmottl.github.io/pcre-ocaml"
 dev-repo: "https://github.com/mmottl/pcre-ocaml.git"
 bug-reports: "https://github.com/mmottl/pcre-ocaml/issues"
 build: [
-  ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
+  ["ocaml" "setup.ml" "-configure" "--prefix" prefix "--with-pcre-config" "bash.exe pcre-config"] { os = "win32" }
+  ["ocaml" "setup.ml" "-configure" "--prefix" prefix] { os != "win32" }
   ["ocaml" "setup.ml" "-build"]
 ]
 install: ["ocaml" "setup.ml" "-install"]
@@ -14,7 +15,8 @@ remove: [
   ["ocamlfind" "remove" "pcre"]
 ]
 build-test: [
-  ["ocaml" "setup.ml" "-configure" "--enable-tests"]
+  ["ocaml" "setup.ml" "-configure" "--enable-tests" "--with-pcre-config" "bash.exe pcre-config"] { os = "win32" }
+  ["ocaml" "setup.ml" "-configure" "--enable-tests"] { os = "win32" }
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-test"]
 ]
