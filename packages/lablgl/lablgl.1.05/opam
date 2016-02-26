@@ -1,13 +1,22 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "contact@ocamlpro.com"
 build: [
   ["cp" "Makefile.config.ex" "Makefile.config"]
   ["cp" "Makefile.config.osx" "Makefile.config"] {os = "darwin"}
+  ["cp" "Makefile.config.w32" "Makefile.config"] {os = "win32"}
   ["mkdir" "-p" bin]
   [make "glut"]
   [make "glutopt"]
+]
+install: [
   [make "install" "-C" "src" "BINDIR=%{bin}%" "INSTALLDIR=%{lib}%/lablgl" "DLLDIR=%{lib}%/stublibs"]
   [make "install" "-C" "LablGlut/src" "BINDIR=%{bin}%" "INSTALLDIR=%{lib}%/lablgl" "DLLDIR=%{lib}%/stublibs"]
+  ["cp" "owner" "%{prefix}%/lib/stublibs/dlllablgl.dll.owner"]  {os = "win32"}
+  ["cp" "owner" "%{prefix}%/lib/stublibs/dlllablglut.dll.owner"]  {os = "win32"}
+]
+remove: [
+  ["rm" "-f" "%{prefix}%/bin/lablglut"]  {os = "win32"}
+  ["ocamlfind" "remove" "lablgl"]
 ]
 depends: [
   "camlp4"
@@ -15,4 +24,6 @@ depends: [
 depexts: [
   [["debian"] ["freeglut3-dev" "libglu1-mesa-dev" "mesa-common-dev"]]
   [["ubuntu"] ["freeglut3-dev" "libglu1-mesa-dev" "mesa-common-dev"]]
+  [["win32" "cygwinports"] ["freeglut"]]
 ]
+patches: [ "patch-lablgl" { os = "win32" } ]

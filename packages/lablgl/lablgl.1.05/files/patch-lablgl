@@ -1,0 +1,27 @@
+--- ./src/ml_gl.c
++++ ./src/ml_gl.c
+@@ -27,6 +27,24 @@
+ #define GL_GENERATE_MIPMAP 0x8191
+ #endif
+ 
++
++#ifndef GL_BGR
++#ifdef GL_BGR_EXT
++#define GL_BGR GL_BGR_EXT
++#else
++#error "GL_BGR is not defined, nor can define GL_BGR from GL_BGR_EXT"
++#endif
++#endif
++
++#ifndef GL_BGRA
++#ifdef GL_BGRA_EXT
++#define GL_BGRA GL_BGRA_EXT
++#else
++#error "GL_BGRA is not defined, nor can define GL_BGRA from GL_BGR_EXTA"
++#endif
++#endif
++
++
+ /* #include <stdio.h> */
+ 
+ void ml_raise_gl(const char *errmsg)
