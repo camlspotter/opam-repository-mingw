@@ -2322,7 +2322,7 @@
 + *   LC_ALL=C make ....
 + *)
 +let is_dubious_char = function
-+  | '~' | ':' | '.' | '-' | '_' | '/' | '\\' -> false
++  | '+' | '~' | ':' | '.' | '-' | '_' | '/' | '\\' -> false
 +  | c ->
 +    OASISString.is_digit c = false &&
 +    OASISString.is_alpha c = false
