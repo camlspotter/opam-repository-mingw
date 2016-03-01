@@ -43,3 +43,14 @@ $ opam init mingw 'https://github.com/fdopen/opam-repository-mingw.git' --comp 4
 $ opam init mingw 'https://github.com/fdopen/opam-repository-mingw.git' --comp 4.02.3+mingw64 --switch 4.02.3+mingw64
 $ eval `opam config env`
 ```
+## Things to remember
+
+* Add `/usr/i686-w64-mingw32/sys-root/mingw/bin` (or
+  `/usr/x86_64-w64-mingw32/sys-root/mingw/bin`) to your $PATH, if you
+  use
+  [depext-cygwinports](https://fdopen.github.io/opam-repository-mingw/depext-cygwin/)
+
+* Consider to use windows symlinks inside cygwin:
+  `export CYGWIN='winsymlinks:native'`. Otherwise ocamlbuild and many build
+  and test scripts will create symlinks, that are only understood by
+  cygwin tools, not the OCaml compiler and other native windows programs.
