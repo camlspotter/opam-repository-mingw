@@ -9,6 +9,7 @@ depexts: [
   [["debian"] ["libcurl4-gnutls-dev"]]
   [["mageia"] ["libcurl-devel"]]
   [["ubuntu"] ["libcurl4-gnutls-dev"]]
-  [["win32" "cygwinports"] ["curl"]]
+  [["centos"] ["libcurl-devel" "openssl-devel"]]
   [["nixpkgs"] ["curl"]]
+  [["win32" "cygwinports"] ["curl"]]
 ]

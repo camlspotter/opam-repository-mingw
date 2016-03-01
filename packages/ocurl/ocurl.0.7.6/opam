@@ -19,14 +19,8 @@ build-test: [
 build-doc: [[make "doc"]]
 remove: [["ocamlfind" "remove" "curl"]]
 depends: [
-  "conf-pkg-config"
   "ocamlfind" {build}
+  "conf-libcurl"
 ]
 depopts: ["lwt"]
-depexts: [
-  [["debian"] ["libcurl4-gnutls-dev"]]
-  [["ubuntu"] ["libcurl4-gnutls-dev"]]
-  [["centos"] ["libcurl-devel" "openssl-devel"]]
-  [["win32" "cygwinports"] ["curl"]]
-]
 patches: [ "examples.diff" ]
