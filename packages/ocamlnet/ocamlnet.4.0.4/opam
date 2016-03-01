@@ -40,7 +40,7 @@ remove: [
 ]
 depends: [
   "ocamlfind" {build}
-  "ocamlbuild"
+  "ocamlbuild" {build}
 ]
 depopts: [
   "conf-gnutls"

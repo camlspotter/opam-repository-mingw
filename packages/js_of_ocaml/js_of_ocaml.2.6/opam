@@ -25,7 +25,7 @@ depends: [
   "camlp4"
   "base64"
   ("base-no-ppx" | "ppx_tools")
-  "ocamlbuild"
+  "ocamlbuild" {build}
 ]
 
 depopts: ["deriving" "tyxml" "reactiveData" ]

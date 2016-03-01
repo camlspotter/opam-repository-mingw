@@ -23,10 +23,11 @@ remove: ["ocamlfind" "remove" "ezjsonm"]
 depends: [
   "ocamlfind" {build}
   "alcotest" {test & >= "0.4.0"}
-  "lwt"      {test}
+  "lwt" {test}
   "jsonm" {>= "0.9.1"}
   "sexplib" {< "113.01.00"}
   "hex"
+  "ocamlbuild" {build}
 ]
 depopts: ["lwt"]
 conflicts: [

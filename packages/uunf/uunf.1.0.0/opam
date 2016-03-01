@@ -8,7 +8,10 @@ bug-reports: "https://github.com/dbuenzli/uunf/issues"
 tags: [ "unicode" "text" "normalization" "org:erratique" ]
 license: "BSD3"
 available: [ ocaml-version >= "4.01.0" ]
-depends: [ "ocamlfind" ]
+depends: [
+  "ocamlfind"
+  "ocamlbuild" {build}
+]
 depopts: [ "uutf" "cmdliner" ]
 build: 
 [
@@ -17,4 +20,5 @@ build:
                            "native-dynlink=%{ocaml-native-dynlink}%"
                            "uutf=%{uutf:installed}%"
                            "cmdliner=%{cmdliner:installed}%" ]
-]patches: [ "patch-aa" ]
+]
+patches: [ "patch-aa" ]

@@ -16,6 +16,7 @@ depends: [
   "camlp4"
   "ocamlbuild"
 ]
+
 depopts: ["deriving"]
 conflicts: ["deriving" {< "0.6"}]
 available: [ ocaml-version <= "4.01.0" ]
