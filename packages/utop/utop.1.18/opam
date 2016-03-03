@@ -22,7 +22,7 @@ remove: [
 depends: [
   "base-unix"
   "base-threads"
-  "ocamlfind" {>= "1.4.0"}
+  "ocamlfind"   {>= "1.4.0" & < "1.5.6"}
   "lambda-term" {>= "1.9"}
   "lwt"
   "react" {>= "1.0.0"}
@@ -32,7 +32,7 @@ depends: [
 depopts: [
   "camlp4"
 ]
-available: [ ocaml-version >= "4.01" ]
+available: [ ocaml-version >= "4.01" & ocaml-version < "4.03" ]
 patches: [ "patch-utop-1.18" ]
 
 post-messages: [
