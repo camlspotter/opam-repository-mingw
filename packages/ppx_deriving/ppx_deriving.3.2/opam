@@ -26,3 +26,7 @@ depends: [
   "ounit"      {test}
 ]
 available: [ ocaml-version >= "4.02.1" & opam-version >= "1.2" ]
+patches: [
+  "opamingw.patch"
+  "opamingw2.patch"
+]
