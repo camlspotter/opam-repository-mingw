@@ -19,3 +19,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 available: [ocaml-version >= "4.02.0"]
+patches: [ "patch-oasis-decompress.0.2" { os = "win32" } ]
