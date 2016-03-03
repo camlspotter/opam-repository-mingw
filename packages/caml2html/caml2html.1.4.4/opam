@@ -10,8 +10,9 @@ dev-repo: "https://github.com/mjambon/caml2html.git"
 license: "GPL"
 build: [
   ["mkdir" "-p" bin]
-  [make]
-  [make "lib"]
+  [make] { os != "win32" }
+  [make "lib"] { os != "win32" }
+  [make "all" "opt"] { os = "win32" }
 ]
 install: [
   [make "install" "PREFIX=%{prefix}%"]
