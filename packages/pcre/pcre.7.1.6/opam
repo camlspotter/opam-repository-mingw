@@ -26,3 +26,6 @@ depends: [
   "conf-libpcre"
 ]
 available: [ ocaml-version >= "3.12" ]
+patches: [
+  "opamingw.patch"
+]
