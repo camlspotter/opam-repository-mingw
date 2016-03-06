@@ -35,34 +35,6 @@
  
  (* The closure algorithm is easy because the dependencies are already closed
  and sorted for each package. We only have to make the union. We could also
---- ./src/main.ml
-+++ ./src/main.ml
-@@ -146,7 +146,13 @@
-             else Pathname.pwd / path_name in
-           ignore (Configuration.parse_file ?dir tags_path);
-         end;
--
-+        let path_normalize p =
-+          let p = Pathname.normalize p in
-+          if Sys.win32 = false then
-+            p
-+          else
-+            String.map ( fun c -> if c = '\\' then '/' else c ) p
-+        in
-         (name <> !Options.build_dir && not (List.mem name !Options.exclude_dirs))
-         && begin
-           not (path_name <> Filename.current_dir_name && Pathname.is_directory path_name)
-@@ -160,8 +166,8 @@
-               || List.exists (Pathname.is_prefix path_name) !Options.include_dirs
-               || List.exists (Pathname.is_prefix path_name) target_dirs)
-             && ((* beware: !Options.build_dir is an absolute directory *)
--                Pathname.normalize !Options.build_dir
--                <> Pathname.normalize (Pathname.pwd/path_name))
-+                path_normalize !Options.build_dir
-+                <> path_normalize (Pathname.pwd/path_name))
-           end
-         end
-       end
 --- ./src/my_std.ml
 +++ ./src/my_std.ml
 @@ -274,7 +274,7 @@
@@ -121,3 +93,33 @@
    else Filename.quote s
  let chdir dir =
    reset_filesys_cache ();
+--- ./src/pathname.ml
++++ ./src/pathname.ml
+@@ -84,6 +84,27 @@ let rec normalize_list = function
+   | x :: xs -> x :: normalize_list xs
+ 
+ let normalize x =
++  let x =
++    if Sys.win32 = false then
++      x
++    else
++      let len = String.length x in
++      let b = Bytes.create len in
++      let use_bs = ref false in
++      for i = 0 to pred len do
++        match x.[i] with
++        | '\\' -> Bytes.set b i '/'
++        | c -> Bytes.set b i c
++      done;
++      if len > 1 then (
++        let c1 = Bytes.get b 0 in
++        let c2 = Bytes.get b 1 in
++        if c2 = ':' && c1 >= 'a' && c1 <= 'z' &&
++           ( len = 2 || Bytes.get b 2 = '/') then
++          Bytes.set b 0 (Char.uppercase_ascii c1)
++      );
++      Bytes.unsafe_to_string b
++  in
+   if Glob.eval not_normal_form_re x then
+     let root, paths = split x in
+     join root (normalize_list paths)
