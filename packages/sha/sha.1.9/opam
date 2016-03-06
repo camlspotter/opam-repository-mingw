@@ -1,11 +1,16 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "dave.scott@eu.citrix.com"
 homepage: "https://github.com/vincenthz/ocaml-sha"
 build: [
   ["sh" "real_configure"]
   [make]
+]
+install: [
   [make "install"]
 ]
 patches: ["patch-sha"]
 remove: [["ocamlfind" "remove" "sha"]]
-depends: ["ocamlfind"]
+depends: [
+ "ocamlfind" {build}
+ "ounit" {build}
+]
