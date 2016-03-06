@@ -1,0 +1,39 @@
+--- ./Makefile
++++ ./Makefile
+@@ -144,11 +144,18 @@
+ 	rm -rf $(DEV_INSTALL_DIR) ocamldoc *.odocl src/*.mlpack $(GH_PAGES)
+ 	make -C tests clean
+ 
+-REWRITER := $(INSTALL_SOURCE_DIR)/bisect_ppx
++OSTYPE:=$(shell ocamlfind ocamlc -config | awk '/^os_type:/ {print $$2}')
++ifeq ($(OSTYPE),$(filter $(OSTYPE),Win32 Cygwin))
++EXTEXE=.exe
++else
++EXTEXE=
++endif
++
++REWRITER := $(INSTALL_SOURCE_DIR)/bisect_ppx$(EXTEXE)
+ REWRITER_BYTE := $(INSTALL_SOURCE_DIR)/src/syntax/bisect_ppx.byte
+ REWRITER_NATIVE := $(INSTALL_SOURCE_DIR)/src/syntax/bisect_ppx.native
+ 
+-REPORTER := $(INSTALL_SOURCE_DIR)/bisect-ppx-report
++REPORTER := $(INSTALL_SOURCE_DIR)/bisect-ppx-report$(EXTEXE)
+ REPORTER_BYTE := $(INSTALL_SOURCE_DIR)/src/report/report.byte
+ REPORTER_NATIVE := $(INSTALL_SOURCE_DIR)/src/report/report.native
+ 
+--- ./myocamlbuild.ml
++++ ./myocamlbuild.ml
+@@ -65,7 +65,12 @@
+   let src = Pathname.mk src in
+   let dst = Pathname.mk dst in
+   let dir = Pathname.dirname dst in
+-  let cmd = Printf.sprintf "mkdir -p %s" (Pathname.to_string dir) in
++  let cmd =
++    if Sys.os_type <> "Win32" then
++      Printf.sprintf "mkdir -p %s" (Pathname.to_string dir)
++    else
++      Printf.sprintf "\"\"mkdir.exe\" -p %s\"" (Pathname.to_string dir)
++  in
+   if Sys.command cmd <> 0 then failwith ("cannot run " ^ cmd);
+   cp src dst
+ 
