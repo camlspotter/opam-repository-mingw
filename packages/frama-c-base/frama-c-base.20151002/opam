@@ -49,6 +49,7 @@ tags: [
 patches: [
   "gdk-pixbuf.patch" { os = "win32" }
   "makefile-ocamldep.patch" { os = "win32" }
+  "cmdline-accept-backslashes.patch" { os = "win32" }
 ]
 
 build: [
