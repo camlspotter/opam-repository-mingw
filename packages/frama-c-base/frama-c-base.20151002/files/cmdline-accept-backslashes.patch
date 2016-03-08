@@ -1,0 +1,37 @@
+diff --git a/src/kernel_services/cmdline_parameters/parameter_builder.ml b/src/kernel_services/cmdline_parameters/parameter_builder.ml
+index d6adc3f..49c8159 100644
+--- a/src/kernel_services/cmdline_parameters/parameter_builder.ml
++++ b/src/kernel_services/cmdline_parameters/parameter_builder.ml
+@@ -606,6 +606,12 @@ struct
+ 	  let read_std_char_in_word c =
+ 	    read_char_in_word (add_char c) (Word false)
+ 	  in
++          let read_backslash_and_char c =
++            (* read '\\' and [c], without considering than '\\' is the escaping
++               character *)
++            read_char_in_word
++              (fun acc -> add_char c (add_char '\\' acc)) (Word false)
++          in
+ 	  match Pervasives_string.get s i, pos with
+           | '+', Start when use_category ->
+             aux (add_action Add acc) (Word true) next s
+@@ -620,15 +626,12 @@ struct
+ 	    read_char_in_word set_category_flag (Word false)
+ 	  | c, (Start | Word _) -> read_std_char_in_word c
+ 	  | (',' | '\\' as c), Escaped -> read_std_char_in_word c
+-	  | ('+' | '-' | '@' | ' ' | '\t' | '\n' | '\r' as c), 
+-	    Escaped when i = 1 ->
++          | ('+' | '-' | '@' | ' ' | '\t' | '\n' | '\r' as c),
++            Escaped when i = 1 ->
+             if use_category then read_std_char_in_word c
+-            else
+-              parse_error
+-                ("invalid escaped char '" ^ Pervasives_string.make 1 c ^ "'")
+-	  | c, Escaped ->
+-	    parse_error
+-              ("invalid escaped char '" ^ Pervasives_string.make 1 c ^ "'")
++            else read_backslash_and_char c
++          | c, Escaped ->
++            read_backslash_and_char c
+       in
+       aux [] Start 0 s
