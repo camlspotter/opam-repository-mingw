@@ -1,0 +1,23 @@
+--- ./myocamlbuild.ml
++++ ./myocamlbuild.ml
+@@ -934,7 +934,6 @@
+           function
+             | After_rules ->
+                 begin
+-                  flag ["ocaml"; "compile"] & S[A"-warn-error"; A"+8"];
+                   try 
+                     let gettext = 
+                       BaseEnvLight.var_get 
+--- ./_tags
++++ ./_tags
+@@ -191,8 +191,8 @@
+ 
+ # Base system and OASIS library 
+ 
+-<test/test.byte>: use_ocamlbuild
+-<src/cli/Main.byte>: use_ocamlbuild
++#<test/test.byte>: use_ocamlbuild
++#<src/cli/Main.byte>: use_ocamlbuild
+ 
+ "src/oasis/OASISGettext.ml": syntax_camlp4o, pkg_camlp4.macro
+ "src/oasis/OASISGettext.ml": cond_pkg_gettext.base

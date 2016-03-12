@@ -28,5 +28,6 @@ patches: [
   "patch-dynrun"
   "patch-oasis-0.4.5"
   "patch-oasis-0.4.5-2"
+  "patch-4_03"
 ]
-available: [ ocaml-version >= "3.11.2" & ocaml-version < "4.03.0" ]
+available: [ ocaml-version >= "3.11.2" ]
