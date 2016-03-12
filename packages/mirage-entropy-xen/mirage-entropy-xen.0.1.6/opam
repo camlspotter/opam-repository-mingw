@@ -13,6 +13,6 @@ depends: [
   "lwt"
   "io-page"
   "ipaddr"
-  "mirage-types" {>= "1.2.0"}
+  "mirage-types" {>= "1.2.0" & < "2.5.0"}
 ]
 ocaml-version: [>="4.01.0"]
