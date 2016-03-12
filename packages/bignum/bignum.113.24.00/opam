@@ -24,7 +24,7 @@ depends: [
   "sexplib"         {>= "113.24.00" & < "113.25.00"}
   "typerep"         {>= "113.24.00" & < "113.25.00"}
   "variantslib"     {>= "113.24.00" & < "113.25.00"}
-  "zarith"
+  "zarith"          {>= "1.4"}
 ]
 available: [ ocaml-version >= "4.02.3" ]
 patches: [ "patch-gen_install_ml" { os = "win32" }
