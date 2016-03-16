@@ -18,3 +18,8 @@ depends: [
   "base-bytes" {build}
 ]
 available: [ os = "win32" ]
+post-messages: [
+ "Don't forget to add either /usr/x86_64-w64-mingw32/sys-root/mingw/bin (or
+ /usr/i686-w64-mingw32/sys-root/mingw/bin for 32-bit builds) to your PATH.
+ Otherwise many packages can't be built." {success & os = "win32" }
+]
