@@ -15,8 +15,8 @@ depends: [
   "deriving"
   "ANSITerminal"
   "base-unix"
-  "camlp4"
-  "ocamlfind"
+  "camlp4" {build}
+  "ocamlfind" {build}
   "ocamlbuild" {build}
 ]
 depexts: [
@@ -25,5 +25,11 @@ depexts: [
   [["gentoo"] ["dev-libs/boost" "sys-devel/llvm-3.4.1-r2" "sys-devel/clang-3.4.0-r100" "sys-devel/binutils"]]
   # archlinux has no package providing llvm and clang 3.4.1
   [["archlinux"] ["boost" "binutils"]]
+]
+available: [
+  os != "darwin"
+]
+post-messages: [
+  "This package requires llvm-3.4, clang-3.4, boost and binutils" {failure}
 ]
 ocaml-version: [>= "4.01.0"]
