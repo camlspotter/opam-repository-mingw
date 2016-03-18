@@ -21,3 +21,4 @@ depends: [
 ]
 patches: ["fix_META.patch"]
 ocaml-version: [< "4.00.0"]
+available: os != "win32"

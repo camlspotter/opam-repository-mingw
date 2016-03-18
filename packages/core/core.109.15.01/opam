@@ -21,3 +21,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 ocaml-version: [>= "4.00.0" & <"4.01.0"]
+available: os != "win32"

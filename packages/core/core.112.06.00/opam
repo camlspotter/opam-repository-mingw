@@ -26,7 +26,9 @@ depends: [
   "variantslib" {>= "109.15.00" & < "109.16.00"}
   "ocamlbuild" {build}
 ]
-available: [ os != "darwin" & ocaml-version >= "4.00.1" & ocaml-version < "4.03" ]
+available:
+  os != "win32" &
+  os != "darwin" & (ocaml-version >= "4.00.1") & (ocaml-version < "4.03")
 patches: [
   "build_with_trunk.patch"
 ]
