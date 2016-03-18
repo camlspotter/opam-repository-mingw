@@ -17,7 +17,7 @@ build-test: [
   ["ocaml" "setup.ml" "-build"]
   ["ocaml" "setup.ml" "-test"]
 ]
-available: [ ocaml-version >= "4.02.0" ]
+available: os != "win32" & (ocaml-version >= "4.02.0")
 remove: ["ocaml" "%{etc}%/valentine/_oasis_remove_.ml" "%{etc}%/valentine"]
 depends: [
   "cmdliner" {build}
