@@ -22,3 +22,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 available: [ ocaml-version >= "4.02" ]
+patches: "menhir-20160303.patch" {os = "win32"}
