@@ -26,9 +26,7 @@ depexts: [
   # archlinux has no package providing llvm and clang 3.4.1
   [["archlinux"] ["boost" "binutils"]]
 ]
-available: [
-  os != "darwin"
-]
+available: os != "win32" & (os != "darwin")
 post-messages: [
   "This package requires llvm-3.4, clang-3.4, boost and binutils" {failure}
 ]
