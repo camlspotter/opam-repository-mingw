@@ -32,4 +32,5 @@ patches: [
   "patch-fnmatch" {os = "win32"}
   "patch-oasis-ppx_expect.113.33.00" {os = "win32"}
   "patch_gen_install.ml" {os = "win32"}
+  "ppx_expect-113.33.00.patch" {os = "win32"}
 ]
