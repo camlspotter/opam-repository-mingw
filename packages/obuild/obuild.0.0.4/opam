@@ -3,3 +3,4 @@ maintainer: "tab@snarc.org"
 build: [
   ["./bootstrap"]
 ]
+available: os != "win32"

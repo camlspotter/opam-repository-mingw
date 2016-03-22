@@ -9,3 +9,4 @@ maintainer: "jmaloberti@gmail.com"
 build: [
   ["./bootstrap"]
 ]
+available: os != "win32"
