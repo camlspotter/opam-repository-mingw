@@ -1,0 +1,13 @@
+--- ./Makefile
++++ ./Makefile
+@@ -8,8 +8,8 @@
+ VERSION = 4.03.0
+ # Don't forget to change META file as well
+ 
+-OCAMLC = ocamlc -bin-annot
+-OCAMLOPT = ocamlopt
++OCAMLC = ocamlc -g -bin-annot
++OCAMLOPT = ocamlopt -g
+ COMPFLAGS = -w +A-4-17-44-45 -I +compiler-libs -safe-string
+ 
+ .PHONY: all
