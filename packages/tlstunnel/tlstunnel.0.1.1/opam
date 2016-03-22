@@ -23,3 +23,4 @@ depends: [
   "cmdliner"
   "ocamlbuild" {build}
 ]
+available: os != "win32"

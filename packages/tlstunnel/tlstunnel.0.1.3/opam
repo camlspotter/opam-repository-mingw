@@ -3,7 +3,6 @@ name:         "tlstunnel"
 homepage:     "https://github.com/hannesm/tlstunnel"
 dev-repo:     "https://github.com/hannesm/tlstunnel.git"
 bug-reports:  "https://github.com/hannesm/tlstunnel/issues"
-author:       ["Hannes Mehnert <hannes@mehnert.org>"]
 maintainer:   ["Hannes Mehnert <hannes@mehnert.org>"]
 license:      "BSD2"
 
@@ -22,3 +21,5 @@ depends: [
   "sexplib"
   "cmdliner"
 ]
+authors: "Hannes Mehnert <hannes@mehnert.org>"
+available: os != "win32"
