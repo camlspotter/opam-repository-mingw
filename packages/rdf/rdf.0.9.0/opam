@@ -37,3 +37,4 @@ conflicts: [
   "lwt" {< "2.4.5"}
   "mysql" {< "1.1.1"}
 ]
+available: os != "win32"

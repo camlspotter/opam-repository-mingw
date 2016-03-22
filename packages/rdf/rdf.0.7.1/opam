@@ -34,3 +34,4 @@ ocaml-version: [>= "4.00.0"]
 conflicts: [
   "mysql" {< "1.1.1"}
 ]
+available: os != "win32"
