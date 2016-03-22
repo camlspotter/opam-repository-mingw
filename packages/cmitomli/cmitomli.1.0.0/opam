@@ -1,11 +1,15 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "martin@mjambon.com"
+authors: "martin@mjambon.com"
 homepage: "https://github.com/mjambon/cmitomli"
-ocaml-version: [>= "4.00.0"]
 build: [
   [make]
+]
+install: [
   [make "install" "BINDIR=%{bin}%"]
 ]
 remove: [
   [make "uninstall" "BINDIR=%{bin}%"]
 ]
+patches: "cmitomli-1.0.0.patch" {os = "win32"}
+available: [ ocaml-version >= "4.00.0" ]

@@ -1,0 +1,28 @@
+--- ./Makefile
++++ ./Makefile
+@@ -1,8 +1,15 @@
+ .PHONY: default
+ default: cmitomli
+ 
++OS_TYPE:=$(shell ocamlfind ocamlc -config | awk '/^os_type:/ {print $$2}')
++ifeq ($(OS_TYPE),$(filter $(OS_TYPE),Win32 Cygwin))
++EXT_EXE=.exe
++else
++EXT_EXE=
++endif
++
+ cmitomli: cmitomli.ml
+-	ocamlopt -o cmitomli -I +compiler-libs ocamlcommon.cmxa cmitomli.ml
++	ocamlopt -o cmitomli$(EXT_EXE) -I +compiler-libs ocamlcommon.cmxa cmitomli.ml
+ 
+ ifndef BINDIR
+   ifdef PREFIX
+@@ -14,7 +21,7 @@
+ 
+ .PHONY: install
+ install:
+-	cp cmitomli $(BINDIR) || cp cmitomli.exe $(BINDIR)
++	cp cmitomli$(EXT_EXE) $(BINDIR)
+ 
+ .PHONY: uninstall
+ uninstall:
