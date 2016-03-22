@@ -24,3 +24,4 @@ depends: [
   "camlp4"
   "ocamlbuild" {build}
 ]
+available: os != "win32"
