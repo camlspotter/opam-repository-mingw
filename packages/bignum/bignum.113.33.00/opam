@@ -27,3 +27,7 @@ depends: [
   "zarith"
 ]
 available: [ ocaml-version >= "4.02.3" ]
+patches: [
+  "patch-oasis-bignum.113.33.00" {os = "win32"}
+  "patch_gen_install.ml" {os = "win32"}
+]
