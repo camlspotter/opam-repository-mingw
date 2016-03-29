@@ -18,3 +18,4 @@ depends: [
   "ocamlfind"
   "ocamlbuild" {build}
 ]
+available: os != "win32"

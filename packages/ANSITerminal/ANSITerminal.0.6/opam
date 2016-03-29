@@ -13,3 +13,4 @@ depends: [
   "oasis" {>= "0.3.0"}
   "ocamlbuild" {build}
 ]
+available: os != "win32"
