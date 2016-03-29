@@ -1,0 +1,25 @@
+--- matcher/fnmatch_stub.c
++++ matcher/fnmatch_stub.c
+@@ -1,4 +1,6 @@
++#ifndef _WIN32
+ #include <fnmatch.h>
++#endif
+ 
+ #include <caml/mlvalues.h>
+ #include <caml/fail.h>
+@@ -8,6 +10,9 @@
+ 
+ CAMLprim value ppx_expect_matches_glob(value v_glob, value v_str)
+ {
++#ifdef _WIN32
++  caml_invalid_argument("fnmatch not implemented on win32");
++#else
+   char *glob = String_val(v_glob);
+   char *str = String_val(v_str);
+   int ret = fnmatch(glob, str, FNMATCH_FLAGS);
+@@ -16,4 +21,5 @@
+   case FNM_NOMATCH : return Val_false;
+   default : caml_failwith("fnmatch");
+   }
++#endif
+ }
