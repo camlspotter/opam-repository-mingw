@@ -1,0 +1,22 @@
+--- ./ocplib-compat/build.ocp
++++ ./ocplib-compat/build.ocp
+@@ -36,7 +36,7 @@
+     pp = [ "%{ocp-pp_FULL_DST_DIR}%/ocp-pp.byte" ];
+     requires = [ "ocp-pp" ];
+     pp_requires += [ "ocp-pp:byte" ];
+-    pp_deps = [ "%{ocp-pp_FULL_DST_DIR}%/ocp-pp.byte" ];
++    pp_deps = [ "%{ocp-pp_FULL_DST_DIR}%/ocp-pp.byte.exe" ];
+   end
+ 
+ }
+--- ./ocplib-unix/onlyUnix_c.c
++++ ./ocplib-unix/onlyUnix_c.c
+@@ -37,7 +37,6 @@
+ UNAVAILABLE_PRIM(unix_umask)
+ UNAVAILABLE_PRIM(unix_chown)
+ UNAVAILABLE_PRIM(unix_fchown)
+-UNAVAILABLE_PRIM(unix_fchown)
+ UNAVAILABLE_PRIM(unix_chroot)
+ UNAVAILABLE_PRIM(unix_mkfifo)
+ UNAVAILABLE_PRIM(unix_readlink)
+
