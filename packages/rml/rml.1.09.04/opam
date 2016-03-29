@@ -1,7 +1,6 @@
 opam-version: "1.2"
 homepage: "http://reactiveml.org"
 maintainer: "devel@reactiveml.org"
-author: "Louis Mandel louis@reactiveml.org"
 bug-reports: "bugs@reactiveml.org"
 build: [
 ["./configure" "--prefix" "%{prefix}%"]
@@ -14,3 +13,5 @@ remove: [
  ["./configure" "--prefix" "%{prefix}%"]
  [make "uninstall"]
 ]
+authors: "Louis Mandel louis@reactiveml.org"
+available: os != "win32"

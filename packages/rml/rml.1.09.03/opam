@@ -11,3 +11,4 @@ remove: [
  [make "uninstall"]
 ]
 depends: ["ocamlbuild"]
+available: os != "win32"
