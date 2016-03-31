@@ -26,3 +26,4 @@ depexts: [
   [["osx" "homebrew"] ["gnupg"]]
 ]
 available: [ ocaml-version >= "4.00.0" ]
+patches: "0install-2.11.patch" {os = "win32"}

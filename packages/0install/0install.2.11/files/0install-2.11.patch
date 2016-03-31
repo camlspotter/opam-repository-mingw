@@ -1,0 +1,108 @@
+--- ./Makefile.build
++++ ./Makefile.build
+@@ -12,12 +12,16 @@
+ EASY_FORMAT = $(shell ocamlfind query easy-format)
+ JSON_LIBS = "${EASY_FORMAT}/easy_format.cmo" "${BINIOU}/bi_util.cmo" "${BINIOU}/bi_share.cmo" "${BINIOU}/bi_outbuf.cmo" "${YOJSON}/yojson.cmo"
+ XMLM = $(shell ocamlfind query xmlm)
+-OS = $(shell uname -s)
++OS_UNAME = $(shell uname -s)
+ MACHINE = $(shell uname -m)
+ VERSION = $(shell sed -n 's/let version = "\(.*\)"/\1/p' ${SRCDIR}/ocaml/zeroinstall/about.ml)
+ 
+ all:
++ifeq ($(OS), Windows_NT)
++	(cd "${SRCDIR}/ocaml" && ocaml build-in.ml "$(shell cygpath -m '${BUILDDIR}/ocaml')" "$(shell cygpath -m '${MAKE}')")
++else
+ 	(cd "${SRCDIR}/ocaml" && ocaml build-in.ml "${BUILDDIR}/ocaml" "${MAKE}")
++endif
+ 	(cd "${SRCDIR}" && cp README.md COPYING "${DISTDIR}/")
+ 	install -d "${DISTDIR}/files"
+ 	install -d "${DISTDIR}/files/share"
+@@ -32,7 +36,7 @@
+ 	install "${SRCDIR}/install.sh.src" "${DISTDIR}/install.sh"
+ 	(cd "${SRCDIR}" && cp -r share/0install.net share/applications share/appdata share/bash-completion share/fish share/icons share/zsh "${DISTDIR}/files/share/")
+ 	install -d "${DISTDIR}/0install"
+-	[ -f "${DISTDIR}/0install/build-environment.xml" ] || sed 's/@ARCH@/${OS}-${MACHINE}/;s/@VERSION@/${VERSION}/' "${SRCDIR}/binary-feed.xml.in" > "${DISTDIR}/0install/feed.xml"
++	[ -f "${DISTDIR}/0install/build-environment.xml" ] || sed 's/@ARCH@/${OS_UNAME}-${MACHINE}/;s/@VERSION@/${VERSION}/' "${SRCDIR}/binary-feed.xml.in" > "${DISTDIR}/0install/feed.xml"
+ 
+ install: install_local
+ 
+--- ./ocaml/build-in.ml
++++ ./ocaml/build-in.ml
+@@ -18,6 +18,26 @@
+     !rel_path
+   ) else path   (* Already relative *)
+ 
++let execvpe =
++  if Sys.os_type <> "Win32" then
++    Unix.execvpe
++  else
++    fun cmd args env ->
++      let pid =
++        Unix.create_process_env
++          cmd
++          args
++          env
++          Unix.stdin
++          Unix.stdout
++          Unix.stderr
++      in
++      match snd (Unix.waitpid [] pid) with
++      | Unix.WEXITED n -> exit n
++      | Unix.WSIGNALED _ -> exit 2 (* like OCaml's uncaught exceptions *)
++      | Unix.WSTOPPED _ -> exit 1
++
++
+ let () =
+   match Sys.argv with
+   | [| _prog; ocaml_build_dir; make_path |] ->
+@@ -31,10 +51,14 @@
+ 
+       (* Hack: when we can depend on a full OCaml feed with the build tools, we can remove this.
+          Until then, we need to avoid trying to compile against the limited runtime environment. *)
+-      let env = Unix.environment ()
+-      |> Array.to_list
++      let env = Unix.environment () in
++      let env =
++        if Sys.os_type = "Win32" then
++          env
++        else
++          Array.to_list env
+       |> List.filter (fun pair -> not (Str.string_match re_OCAMLLIB pair 0))
+-      |> Array.of_list in
+-
+-      Unix.execvpe make_path [| make_path; "OCAML_BUILDDIR=" ^ ocaml_build_dir |] env
++          |> Array.of_list
++      in
++      execvpe make_path [| make_path; "OCAML_BUILDDIR=" ^ ocaml_build_dir |] env
+   | _ -> failwith "usage: ocaml build-in.ml builddir"
+--- ./ocaml/Makefile
++++ ./ocaml/Makefile
+@@ -2,7 +2,6 @@
+ TYPE=native
+ OCAMLBUILD=ocamlbuild -j 0 -build-dir "${OCAML_BUILDDIR}"
+ ifeq ($(OS), Windows_NT)
+-  WINDOWS_LIBS = $(shell dirname $(shell which ocamlc))
+   OCAMLBUILDFLAGS = -lflag -cclib -lflag -lshell32
+ endif
+ TEST_BINARY=${OCAML_BUILDDIR}/tests/test.$(TYPE)
+@@ -13,7 +12,11 @@
+ 
+ .PHONY: all ocaml doc clean tags test
+ 
++ifeq ($(OS), Windows_NT)
++all: build_dir ocaml
++else
+ all: build_dir ocaml test
++endif
+ 
+ build_dir:
+ 	[ -d "${OCAML_BUILDDIR}" ] || mkdir -p "${OCAML_BUILDDIR}"
+@@ -32,7 +35,6 @@
+ 	cp ${OCAML_BUILDDIR}/static_0install.$(TYPE) ${OCAML_BUILDDIR}/0install.exe
+ 	cp ${OCAML_BUILDDIR}/runenv.native ${OCAML_BUILDDIR}/0install-runenv.exe
+ 	ln -f "${OCAML_BUILDDIR}/0install.exe" "${OCAML_BUILDDIR}/0launch.exe"
+-	cp "${WINDOWS_LIBS}/libeay32.dll" "${WINDOWS_LIBS}/ssleay32.dll" "${OCAML_BUILDDIR}"
+ 
+ ocaml_posix:
+ 	cp ${OCAML_BUILDDIR}/static_0install.$(TYPE) ${OCAML_BUILDDIR}/0install
