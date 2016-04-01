@@ -1,0 +1,18 @@
+opam-version: "1.2"
+maintainer: "contact@ocamlpro.com"
+build: [
+  ["./pkgconfigure" "--prefix" prefix] {os = "openbsd"}
+  ["./configure" "--prefix" prefix] {os != "openbsd"}
+  [make]
+  [make "install"]
+]
+patches: ["fix-meta.diff"]
+remove: [["ocamlfind" "remove" "ssl"]]
+depends: ["ocamlfind"]
+depexts: [
+  [["debian"] ["libssl-dev"]]
+  [["ubuntu"] ["libssl-dev"]]
+  [["centos"] ["openssl-devel"]]
+  [["fedora"] ["openssl-devel"]]
+]
+dev-repo: "git://github.com/savonet/ocaml-ssl"

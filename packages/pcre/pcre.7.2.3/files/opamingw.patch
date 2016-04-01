@@ -1,0 +1,20 @@
+diff -c -N -r pcre.7.2.3/myocamlbuild.ml pcre.7.2.3-fix/myocamlbuild.ml
+*** pcre.7.2.3/myocamlbuild.ml	Thu Feb 25 23:20:15 2016
+--- pcre.7.2.3-fix/myocamlbuild.ml	Fri Apr  1 12:39:05 2016
+***************
+*** 682,688 ****
+                in
+                BaseEnvLight.var_get "with_pcre_config" env
+              in
+!             Unix.open_process_in (pcre_config ^ " --cflags --libs") in
+            try
+              let pcre_cflags = input_line ic in
+              let pcre_clibs = input_line ic in
+--- 682,688 ----
+                in
+                BaseEnvLight.var_get "with_pcre_config" env
+              in
+!             Unix.open_process_in ("sh -c \"" ^ pcre_config ^ " --cflags --libs\"") in
+            try
+              let pcre_cflags = input_line ic in
+              let pcre_clibs = input_line ic in

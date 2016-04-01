@@ -1,0 +1,20 @@
+opam-version: "1.2"
+maintainer: "anil@recoil.org"
+tags: [
+  "url"
+  "uri"
+  "org:mirage"
+  "org:xapi-project"
+]
+build: [
+  ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
+  ["ocaml" "setup.ml" "-build"]
+  ["ocaml" "setup.ml" "-install"]
+]
+remove: [["ocamlfind" "remove" "uri"]]
+depends: [
+  "re"
+  "ocamlfind"
+  "ocamlbuild" {build}
+]
+dev-repo: "git://github.com/mirage/ocaml-uri"

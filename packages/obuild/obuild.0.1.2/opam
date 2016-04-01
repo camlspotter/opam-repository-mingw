@@ -1,5 +1,0 @@
-opam-version: "1"
-maintainer: "jmaloberti@gmail.com"
-build: [
-  ["./bootstrap"]
-]

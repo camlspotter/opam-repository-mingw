@@ -1,0 +1,19 @@
+opam-version: "1.2"
+maintainer: "sheets@alum.mit.edu"
+authors: [
+  "David Sheets"
+]
+homepage: "https://github.com/ocamllabs/opamfu"
+license: "ISC"
+build: [
+  [make "build"]
+  [make "install"]
+]
+remove: [[make "uninstall"]]
+depends: [
+  "ocamlfind"
+  "opam-lib" { >= "1.1.1" & < "1.2.0" }
+  "uri"
+]
+depopts: ["cmdliner"]
+dev-repo: "git://github.com/ocamllabs/opamfu"

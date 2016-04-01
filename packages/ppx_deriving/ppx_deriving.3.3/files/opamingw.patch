@@ -1,0 +1,69 @@
+diff -c -r ppx_deriving.3.3/pkg/build.ml ppx_deriving.3.3-fix/pkg/build.ml
+*** ppx_deriving.3.3/pkg/build.ml	Wed Mar 16 15:52:25 2016
+--- ppx_deriving.3.3-fix/pkg/build.ml	Fri Apr  1 16:10:05 2016
+***************
+*** 8,19 ****
+    close_out oc
+  
+  let ocamlbuild =
+!   "ocamlbuild -use-ocamlfind -classic-display -plugin-tag 'package(cppo_ocamlbuild)'"
+  
+  let () =
+    Pkg.describe "ppx_deriving" ~builder:(`Other (ocamlbuild, "_build")) [
+      Pkg.lib "pkg/META";
+!     Pkg.bin ~auto:true "src/ppx_deriving_main" ~dst:"../lib/ppx_deriving/ppx_deriving";
+      Pkg.lib ~exts:Exts.module_library "src/ppx_deriving";
+      Pkg.lib ~exts:Exts.library "src/ppx_deriving_main";
+      Pkg.lib ~exts:Exts.module_library "src/ppx_deriving_runtime";
+--- 8,19 ----
+    close_out oc
+  
+  let ocamlbuild =
+!   "ocamlbuild -use-ocamlfind -classic-display -plugin-tag package(cppo_ocamlbuild)"
+  
+  let () =
+    Pkg.describe "ppx_deriving" ~builder:(`Other (ocamlbuild, "_build")) [
+      Pkg.lib "pkg/META";
+!     Pkg.bin ~auto:true "src/ppx_deriving_main" ~dst:"../lib/ppx_deriving/ppx_deriving.exe";
+      Pkg.lib ~exts:Exts.module_library "src/ppx_deriving";
+      Pkg.lib ~exts:Exts.library "src/ppx_deriving_main";
+      Pkg.lib ~exts:Exts.module_library "src/ppx_deriving_runtime";
+Only in ppx_deriving.3.3-fix/pkg: build.ml~
+diff -c -r ppx_deriving.3.3/pkg/topkg.ml ppx_deriving.3.3-fix/pkg/topkg.ml
+*** ppx_deriving.3.3/pkg/topkg.ml	Wed Mar 16 15:52:25 2016
+--- ppx_deriving.3.3-fix/pkg/topkg.ml	Fri Apr  1 16:11:05 2016
+***************
+*** 152,158 ****
+  module Exts : Exts = struct
+    let interface = [".mli"; ".cmi"; ".cmti"]
+    let interface_opt = ".cmx" :: interface
+!   let c_library = if Sys.win32 then [".lib"] else [".a"]
+    let c_dll_library = if Sys.win32 then [".dll"] else [".so"]
+    let library = [".cma"; ".cmxa"; ".cmxs"] @ c_library
+    let module_library = (interface_opt @ library)
+--- 152,159 ----
+  module Exts : Exts = struct
+    let interface = [".mli"; ".cmi"; ".cmti"]
+    let interface_opt = ".cmx" :: interface
+!   (* let c_library = if Sys.win32 then [".lib"] else [".a"] *)
+!   let c_library = [".a"] (* opamingw *)
+    let c_dll_library = if Sys.win32 then [".dll"] else [".so"]
+    let library = [".cma"; ".cmxa"; ".cmxs"] @ c_library
+    let module_library = (interface_opt @ library)
+***************
+*** 242,248 ****
+        if not Env.native then Exts.c_library @ [".cmx"; ".cmxa"; ".cmxs" ]
+        else []
+      in
+!     mvs ~drop_exts "lib"
+  
+    let share = mvs "share"
+    let share_root = mvs "share_root"
+--- 243,249 ----
+        if not Env.native then Exts.c_library @ [".cmx"; ".cmxa"; ".cmxs" ]
+        else []
+      in
+!     mvs ~drop_exts "libexec" (* Strange override for opamingw to make cmxs files are +x.  It would be better if we could use [libexec] but it is not exactly like [lib] + chmod +x... *)
+  
+    let share = mvs "share"
+    let share_root = mvs "share_root"

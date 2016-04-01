@@ -1,0 +1,37 @@
+opam-version: "1.2"
+homepage:     "https://github.com/mirleft/ocaml-tls"
+dev-repo:     "https://github.com/mirleft/ocaml-tls.git"
+bug-reports:  "https://github.com/mirleft/ocaml-tls/issues"
+authors:      ["David Kaloper <david@numm.org>" "Hannes Mehnert <hannes@mehnert.org>"]
+maintainer:   ["Hannes Mehnert <hannes@mehnert.org>" "David Kaloper <david@numm.org>"]
+license:      "BSD2"
+build: [
+  ["ocaml" "setup.ml" "-configure" "--prefix" prefix
+    "--%{lwt:enable}%-lwt"
+    "--%{mirage-types-lwt+ipaddr:enable}%-mirage" ]
+  ["ocaml" "setup.ml" "-build"]
+]
+install: ["ocaml" "setup.ml" "-install"]
+remove: [
+  ["ocamlfind" "remove" "tls"]
+]
+depends: [
+  "ocamlfind"
+  "camlp4"
+  "cstruct" {>= "1.2.0"}
+  "type_conv"
+  "sexplib" {< "113.01.00"}
+  "nocrypto" {= "0.1.0"}
+  "x509" {= "0.1.0"}
+  "ocamlbuild" {build}
+]
+depopts: [
+  "lwt"
+  "mirage-types-lwt"
+]
+conflicts: [
+  "mirage-types-lwt" {< "1.2.0"}
+  "mirage-types-lwt" {> "2.0.0"}
+]
+tags: [ "org:mirage" ]
+available: [ ocaml-version >= "4.01.0" ]

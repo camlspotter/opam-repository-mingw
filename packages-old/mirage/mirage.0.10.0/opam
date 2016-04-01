@@ -1,0 +1,30 @@
+opam-version: "1.2"
+maintainer: [
+  "anil@recoil.org"
+  "thomas@gazagnaire.org"
+]
+tags: [
+  "org:mirage"
+  "org:xapi-project"
+]
+build: [
+  ["./configure" "--bindir" "%{bin}%"]
+  [make]
+  [make "install"]
+]
+remove: [
+  ["./configure" "--bindir" "%{bin}%"]
+  [make "uninstall"]
+  ["ocamlfind" "remove" "mirage"]
+]
+depends: [
+  "ipaddr"
+  "mirage-types" {>= "0.4.0" & < "1.0.0"}
+  "lwt"
+  "cstruct" {>= "1.0.1"}
+  "re"
+  "cmdliner"
+  "ocamlbuild" {build}
+]
+ocaml-version: [>="4.00.1"]
+dev-repo: "git://github.com/mirage/mirari"

@@ -1,0 +1,18 @@
+opam-version: "1.2"
+build: [
+  ["ocaml" "setup.ml" "-configure" "--prefix" prefix ]
+  ["ocaml" "setup.ml" "-build"]
+  ["ocaml" "setup.ml" "-install"]
+]
+remove: [
+  ["ocamlfind" "remove" "asn1-combinators"]
+]
+depends: [
+  "ocamlfind"
+  "cstruct" {>= "1.2.0" & < "1.6.0"}
+  "zarith"
+  "ocamlbuild" {build}
+]
+tags: [ "org:mirage" ]
+ocaml-version: [>="4.01.0"]
+dev-repo: "git://github.com/mirleft/ocaml-asn1-combinators"

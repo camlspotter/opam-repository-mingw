@@ -1,0 +1,19 @@
+opam-version: "1.2"
+maintainer: "jonathan.ludlam@eu.citrix.com"
+tags: [
+  "org:mirage"
+  "org:xapi-project"
+]
+build: [
+  [make]
+  [make "install" "BINDIR=%{bin}%"]
+]
+remove: [[make "uninstall" "BINDIR=%{bin}%"]]
+depends: [
+  "ocamlfind"
+  "obuild"
+  "lwt"
+  "cstruct" {>= "0.7.1"}
+  "cmdliner"
+]
+dev-repo: "git://github.com/xapi-project/nbd"

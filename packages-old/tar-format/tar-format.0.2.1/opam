@@ -1,0 +1,18 @@
+opam-version: "1.2"
+maintainer: "dave@recoil.org"
+tags: ["org:xapi-project"]
+build: [
+  [make]
+  [make "install"]
+]
+remove: [["ocamlfind" "remove" "tar"]]
+depends: [
+  "ocamlfind"
+  "cstruct" {>= "0.6.0"}
+  "re"
+  "ounit"
+  "cmdliner"
+  "ocamlbuild" {build}
+]
+depopts: ["lwt"]
+dev-repo: "git://github.com/mirage/ocaml-tar"

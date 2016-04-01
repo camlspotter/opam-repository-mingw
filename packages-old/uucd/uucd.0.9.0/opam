@@ -1,0 +1,13 @@
+opam-version: "1.2"
+maintainer: "contact@ocamlpro.com"
+build: [
+  ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
+  ["ocaml" "setup.ml" "-build"]
+  ["ocaml" "setup.ml" "-install"]
+]
+remove: [["ocamlfind" "remove" "uucd"]]
+depends: [
+  "ocamlfind"
+  "xmlm"
+  "ocamlbuild" {build}
+]

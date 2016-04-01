@@ -1,0 +1,21 @@
+opam-version: "1.2"
+maintainer: "anil@recoil.org"
+tags: [
+  "org:mirage"
+  "org:xapi-project"
+]
+build: [
+  [make "install-types"]
+]
+remove: ["ocamlfind" "remove" "mirage-types"]
+depends: [
+  "ocamlfind"
+  "sexplib" {< "113.01.00"}
+  "ocamlbuild" {build}
+]
+depopts: ["lwt" "cstruct" "io-page" "ipaddr"]
+ocaml-version: [>="4.01.0"]
+conflicts: [
+  "ipaddr" {< "2.0.0"}
+]
+dev-repo: "git://github.com/mirage/mirage"
