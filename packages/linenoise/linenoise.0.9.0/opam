@@ -40,3 +40,4 @@ and compile with:
 $ ocamlfind ocamlopt ex.ml -package linenoise -linkpkg -o T
   "
 ]
+available: os != "win32"
