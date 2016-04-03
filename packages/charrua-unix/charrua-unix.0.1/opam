@@ -7,7 +7,7 @@ homepage: "https://github.com/haesbaert/charrua-unix"
 bug-reports: "https://github.com/haesbaert/charrua-unix/issues"
 license: "ISC"
 dev-repo: "https://github.com/haesbaert/charrua-unix.git"
-available: [ocaml-version >= "4.02"]
+available: os != "win32" & (ocaml-version >= "4.02")
 build: [
   ["sh" "build.sh"]
 ]
