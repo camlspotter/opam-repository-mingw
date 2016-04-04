@@ -14,6 +14,7 @@ install: ["ocaml" "setup.ml" "-install"]
 remove: ["ocamlfind" "remove" name]
 depends: [
   "ocamlfind" {build}
+  "ocamlbuild" {build}
   "base-bigarray"
 ]
 patches: [ "patch-zlib.0.5" { os = "win32" } ]
