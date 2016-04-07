@@ -45,7 +45,7 @@ depopts: [
 conflicts: [
  "xen-evtchn" {< "1.0.3"}
  ]
-available: [ocaml-version >= "4.00.1"]
+available: os != "win32" & (ocaml-version >= "4.00.1")
 depexts: [
  [["debian"] ["libxen-dev" "uuid-dev"]]
  [["ubuntu"] ["libxen-dev" "uuid-dev"]]

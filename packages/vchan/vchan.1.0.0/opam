@@ -29,4 +29,4 @@ depends: [
   "type_conv"
   "ocamlbuild" {build}
 ]
-available: [ocaml-version >= "4.00.1"]
+available: os != "win32" & (ocaml-version >= "4.00.1")
