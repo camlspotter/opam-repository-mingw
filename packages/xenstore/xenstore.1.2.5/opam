@@ -11,7 +11,10 @@ homepage:     "https://github.com/mirage/ocaml-xenstore"
 bug-reports:  "https://github.com/mirage/ocaml-xenstore/issues"
 dev-repo:     "https://github.com/mirage/ocaml-xenstore.git"
 
-build: [make "TESTS=--disable-tests" "all"]
+build: [
+ ["ocaml" "setup.ml" "-configure" "--disable-tests"] { os = "win32" }
+ [make "TESTS=--disable-tests" "all"]
+]
 install: [make "install"]
 remove:  ["ocamlfind" "remove" "xenstore"]
 
