@@ -5,6 +5,8 @@ patches:[
 "https://gist.githubusercontent.com/fdopen/33f36b9c7c1d87b3755a/raw/fd829409f01536aa2e61a34e08c5bbdad34eaae4/patch-ocaml-4.03.0+beta1"
 ]
 build: [
+  [ "mkdir" "-p" "%{lib}%/ocaml" ]
+  [ "sh" "-exc" "echo \"* : g = 1\" > %{lib}%/ocaml/ocaml_compiler_internal_params" ]
   [ "cp" "config/m-nt.h" "config/m.h" ]
   [ "cp" "config/s-nt.h" "config/s.h" ]
   [ "cp" "config/Makefile.mingw64" "config/Makefile" ]
