@@ -23,7 +23,11 @@ depexts: [
   [["oraclelinux"] ["gtk2-devel"]]
   [["alpine"] ["gtk+2.0-dev"]]
 ]
-patches: ["lablgldir.patch" "patch-bd" { os = "win32" }]
+patches: [
+  "coq-patch" {os = "win32"}
+  "lablgldir.patch"
+  "patch-bd" {os = "win32"}
+]
 post-messages: [
   "This package requires gtk+ 2.0 development packages installed on your system" {failure}
   "To solve pkg-config issues, you may need to do
