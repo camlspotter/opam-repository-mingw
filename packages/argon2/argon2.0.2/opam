@@ -21,3 +21,4 @@ depends: [
   "ppx_deriving" {>= "2.0"}
 ]
 available: [ocaml-version >= "4.02.1"]
+patches: "patch-topkg-argon2.0.2" {os = "win32"}
