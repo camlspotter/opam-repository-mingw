@@ -30,3 +30,7 @@ depexts: [
   [["fedora"] ["gcc-c++"]]
   [["oraclelinux"] ["gcc-c++"]]
 ]
+patches: [
+  "patch-oasis-re2.113.33.00+4.03" {os = "win32"}
+  "patch_gen_install.ml" {os = "win32"}
+]

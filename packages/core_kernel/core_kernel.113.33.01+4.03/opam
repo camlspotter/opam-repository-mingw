@@ -26,3 +26,8 @@ depends: [
   "variantslib"     {>= "113.24.00" & < "113.25.00"}
 ]
 available: [ ocaml-version >= "4.03.0" ]
+patches: [
+  "patch-oasis-core_kernel.113.33.01+4.03" {os = "win32"}
+  "patch_gen_install.ml" {os = "win32"}
+  "patch-aa" {os = "win32"}
+]
