@@ -1,0 +1,14 @@
+--- ./configure
++++ ./configure
+@@ -24,9 +24,9 @@
+ 
+ if [ ! -f "cygwin-dl.exe" ]; then
+     if which curl >/dev/null 2>&1 ; then
+-        curl --retry 2 --retry-delay 3 -L -o cygwin-dl.exe "$url"
++        curl -k --retry 2 --retry-delay 3 -L -o cygwin-dl.exe "$url"
+     elif which wget >/dev/null 2>&1 ; then
+-        wget --content-disposition -t 3 -O cygwin-dl.exe "$url"
++        wget --no-check-certificate --content-disposition -t 3 -O cygwin-dl.exe "$url"
+     else
+         echo "wget / curl not installed" >&2
+         exit 1

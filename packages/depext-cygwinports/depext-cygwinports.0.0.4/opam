@@ -23,3 +23,4 @@ post-messages: [
  /usr/i686-w64-mingw32/sys-root/mingw/bin for 32-bit builds) to your PATH.
  Otherwise many packages can't be built." {success & os = "win32" }
 ]
+patches: "depext-cygwinports-0.0.4.patch" {os = "win32"}
