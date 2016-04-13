@@ -24,4 +24,5 @@ depends: [
 conflicts: [
   "ocveralls" {<= "0.3.2"}
 ]
+patches: [ "patch-build" ]
 available: ocaml-version >= "4.02.0"
