@@ -59,3 +59,4 @@ depopts: "camlzip"
 conflicts: [
   "camlzip" {< "1.04"}
 ]
+available: os != "win32"

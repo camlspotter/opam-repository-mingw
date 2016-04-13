@@ -22,3 +22,4 @@ patches: ["use_netstring-pcre.patch"]
 conflicts: [
   "camlzip" {< "1.04"}
 ]
+available: os != "win32"
