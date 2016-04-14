@@ -63,7 +63,7 @@ diff -c -r ppx_deriving.3.3/pkg/topkg.ml ppx_deriving.3.3-fix/pkg/topkg.ml
         if not Env.native then Exts.c_library @ [".cmx"; ".cmxa"; ".cmxs" ]
         else []
       in
-!     mvs ~drop_exts "libexec" (* Strange override for opamingw to make cmxs files are +x.  It would be better if we could use [libexec] but it is not exactly like [lib] + chmod +x... *)
+!     mvs ~drop_exts "lib"
   
     let share = mvs "share"
     let share_root = mvs "share_root"
