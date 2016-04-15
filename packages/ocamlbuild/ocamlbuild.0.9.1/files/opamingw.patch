@@ -1,0 +1,21 @@
+diff -c -r ocamlbuild.0.9.1/src/pathname.ml ocamlbuild.0.9.1-opamingw/src/pathname.ml
+*** ocamlbuild.0.9.1/src/pathname.ml	Tue Mar  1 02:05:35 2016
+--- ocamlbuild.0.9.1-opamingw/src/pathname.ml	Fri Apr 15 12:27:23 2016
+***************
+*** 84,90 ****
+    | x :: xs -> x :: normalize_list xs
+  
+  let normalize x =
+!   if Glob.eval not_normal_form_re x then
+      let root, paths = split x in
+      join root (normalize_list paths)
+    else x
+--- 84,90 ----
+    | x :: xs -> x :: normalize_list xs
+  
+  let normalize x =
+!   if Glob.eval not_normal_form_re x || (Sys.os_type = "Win32" && try ignore @@ String.index x '\\'; true with _ -> false) then
+      let root, paths = split x in
+      join root (normalize_list paths)
+    else x
+Only in ocamlbuild.0.9.1-opamingw/src: pathname.ml~
