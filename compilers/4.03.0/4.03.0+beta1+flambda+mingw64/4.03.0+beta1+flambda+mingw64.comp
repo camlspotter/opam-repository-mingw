@@ -1,5 +1,5 @@
 opam-version: "1"
-version: "4.03.0+beta1"
+version: "4.03.0"
 src: "http://caml.inria.fr/pub/distrib/ocaml-4.03/ocaml-4.03.0+beta1.tar.xz"
 patches:[
 "https://gist.githubusercontent.com/fdopen/33f36b9c7c1d87b3755a/raw/fd829409f01536aa2e61a34e08c5bbdad34eaae4/patch-ocaml-4.03.0+beta1"
