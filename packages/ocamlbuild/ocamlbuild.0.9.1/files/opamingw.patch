@@ -1,6 +1,41 @@
-diff -c -r ocamlbuild.0.9.1/src/pathname.ml ocamlbuild.0.9.1-opamingw/src/pathname.ml
-*** ocamlbuild.0.9.1/src/pathname.ml	Tue Mar  1 02:05:35 2016
---- ocamlbuild.0.9.1-opamingw/src/pathname.ml	Fri Apr 15 12:27:23 2016
+diff -c -r ocamlbuild.0.9.1/src/ocamlbuild_where.ml ocamlbuild.0.9.1.opamingw/src/ocamlbuild_where.ml
+*** ocamlbuild.0.9.1/src/ocamlbuild_where.ml	2016-03-01 02:05:35.000000000 +0800
+--- ocamlbuild.0.9.1.opamingw/src/ocamlbuild_where.ml	2016-04-17 03:44:01.024518400 +0800
+***************
+*** 12,20 ****
+  (***********************************************************************)
+  
+  let bindir = ref Ocamlbuild_config.bindir;;
+! let libdir = ref begin
+!   Filename.concat
+!     (try Sys.getenv "OCAMLLIB"
+!      with Not_found -> Ocamlbuild_config.libdir)
+!     "ocamlbuild"
+! end;;
+--- 12,15 ----
+  (***********************************************************************)
+  
+  let bindir = ref Ocamlbuild_config.bindir;;
+! let libdir = ref (Filename.concat Ocamlbuild_config.libdir "ocamlbuild");;
+diff -c -r ocamlbuild.0.9.1/src/options.ml ocamlbuild.0.9.1.opamingw/src/options.ml
+*** ocamlbuild.0.9.1/src/options.ml	2016-03-01 02:05:35.000000000 +0800
+--- ocamlbuild.0.9.1.opamingw/src/options.ml	2016-04-17 03:47:51.835917000 +0800
+***************
+*** 233,239 ****
+--- 233,242 ----
+     "-j", Set_int Command.jobs, "<N> Allow N jobs at once (0 for unlimited)";
+  
+     "-build-dir", String set_build_dir, "<path> Set build directory (implies no-links)";
++ (*
+     "-install-lib-dir", Set_string Ocamlbuild_where.libdir, "<path> Set the install library directory";
++ *)
++    "-install-lib-dir", String (fun _ -> prerr_endline "Warning: ocamlbuild's -install-lib-dir option is disabled in opamingw"), "<path> Set the install library directory (no effect in opamingw)";
+     "-install-bin-dir", Set_string Ocamlbuild_where.bindir, "<path> Set the install binary directory";
+     "-where", Unit (fun () -> print_endline !Ocamlbuild_where.libdir; raise Exit_OK), " Display the install library directory";
+     "-which", String (fun cmd -> print_endline (find_tool cmd); raise Exit_OK), "<command> Display path to the tool command";
+diff -c -r ocamlbuild.0.9.1/src/pathname.ml ocamlbuild.0.9.1.opamingw/src/pathname.ml
+*** ocamlbuild.0.9.1/src/pathname.ml	2016-03-01 02:05:35.000000000 +0800
+--- ocamlbuild.0.9.1.opamingw/src/pathname.ml	2016-04-17 03:48:51.264506400 +0800
 ***************
 *** 84,90 ****
     | x :: xs -> x :: normalize_list xs
@@ -14,8 +49,7 @@ diff -c -r ocamlbuild.0.9.1/src/pathname.ml ocamlbuild.0.9.1-opamingw/src/pathna
     | x :: xs -> x :: normalize_list xs
   
   let normalize x =
-!   if Glob.eval not_normal_form_re x || (Sys.os_type = "Win32" && try ignore @@ String.index x '\\'; true with _ -> false) then
+!   if Glob.eval not_normal_form_re x || (Sys.os_type = "Win32" && try ignore (String.index x '\\'); true with _ -> false) then
       let root, paths = split x in
       join root (normalize_list paths)
     else x
-Only in ocamlbuild.0.9.1-opamingw/src: pathname.ml~
