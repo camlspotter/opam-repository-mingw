@@ -1,0 +1,84 @@
+commit 750756d3380e1b2e567d2052fcd6c3fa0a78aa3c
+Author: samoht <thomas@gazagnaire.org>
+Date:   Tue Feb 9 09:23:53 2016 +0000
+
+    Avoid name conflicts in ocaml-crc
+
+diff --git a/lib/crc.ml b/lib/crc.ml
+index 41cd282..9291d3b 100644
+--- a/lib/crc.ml
++++ b/lib/crc.ml
+@@ -31,10 +31,10 @@ let check_bounds_string str offset length =
+ 	check_bounds (String.length str) offset length
+ 
+ external unsafe_crc32_cstruct : int32 -> Cstruct.buffer -> int -> int -> int32 =
+-	"crc32_cstruct"
++	"caml_crc32_cstruct"
+ 
+ external unsafe_crc32_string : int32 -> string -> int -> int -> int32 =
+-	"crc32_string"
++	"caml_crc32_string"
+ 
+ module Crc32 = struct
+ 	let cstruct ?(crc=0l) t =
+diff --git a/lib/crc_stubs.c b/lib/crc_stubs.c
+index d553e1f..26acf25 100644
+--- a/lib/crc_stubs.c
++++ b/lib/crc_stubs.c
+@@ -24,7 +24,7 @@
+ #include <caml/memory.h>
+ #include <caml/signals.h>
+ 
+-static uint32_t crc32_tab[] = {
++static uint32_t caml_crc32_tab[] = {
+     0x00000000, 0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419, 0x706af48f,
+     0xe963a535, 0x9e6495a3, 0x0edb8832, 0x79dcb8a4, 0xe0d5e91e, 0x97d2d988,
+     0x09b64c2b, 0x7eb17cbd, 0xe7b82d07, 0x90bf1d91, 0x1db71064, 0x6ab020f2,
+@@ -71,7 +71,7 @@ static uint32_t crc32_tab[] = {
+ };
+ 
+ uint32_t
+-crc32(uint32_t crc, const void *buf, size_t size)
++caml_crc32(uint32_t crc, const void *buf, size_t size)
+ {
+     const uint8_t *p;
+ 
+@@ -79,12 +79,12 @@ crc32(uint32_t crc, const void *buf, size_t size)
+     crc = crc ^ ~0U;
+ 
+     while (size--)
+-        crc = crc32_tab[(crc ^ *p++) & 0xFF] ^ (crc >> 8);
++        crc = caml_crc32_tab[(crc ^ *p++) & 0xFF] ^ (crc >> 8);
+ 
+     return crc ^ ~0U;
+ }
+ 
+-CAMLprim value crc32_cstruct(
++CAMLprim value caml_crc32_cstruct(
+         value crc,
+         value buffer,
+         value offset,
+@@ -97,12 +97,12 @@ CAMLprim value crc32_cstruct(
+     data = (unsigned char*) Data_bigarray_val(buffer);
+     data += Int_val(offset);
+ 
+-    result = caml_copy_int32(crc32(Int32_val(crc), data, Int_val(length)));
++    result = caml_copy_int32(caml_crc32(Int32_val(crc), data, Int_val(length)));
+ 
+     CAMLreturn(result);
+ }
+ 
+-CAMLprim value crc32_string(
++CAMLprim value caml_crc32_string(
+         value crc,
+         value string,
+         value offset,
+@@ -115,7 +115,7 @@ CAMLprim value crc32_string(
+     data = (unsigned char*) String_val(string);
+     data += Int_val(offset);
+ 
+-    result = caml_copy_int32(crc32(Int32_val(crc), data, Int_val(length)));
++    result = caml_copy_int32(caml_crc32(Int32_val(crc), data, Int_val(length)));
+ 
+     CAMLreturn(result);
+ }

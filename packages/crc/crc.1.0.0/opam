@@ -5,10 +5,12 @@ bug-reports: "https://github.com/xapi-project/ocaml-crc/issues"
 dev-repo: "git://github.com/xapi-project/ocaml-crc"
 maintainer: "john.else@citrix.com"
 build: [
+  ["oasis" "setup"]
   ["ocaml" "setup.ml" "-configure" "--%{mirage-xen:enable}%-xen"]
   [make]
 ]
 build-test: [
+  ["oasis" "setup"]
   ["ocaml" "setup.ml" "-configure" "--%{ounit:enable}%-tests"]
   [make "test"]
 ]
@@ -29,3 +31,4 @@ depopts: [
   "mirage-xen"
 ]
 available: [ ocaml-version >= "4.00.1"]
+patches: "win.diff" {os = "win32"}
