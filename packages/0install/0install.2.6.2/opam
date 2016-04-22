@@ -22,3 +22,4 @@ depexts: [
   [["ubuntu"] ["unzip"]]
   [["debian"] ["unzip"]]
 ]
+available: os != "win32"

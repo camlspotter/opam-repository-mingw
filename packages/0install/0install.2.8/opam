@@ -22,4 +22,5 @@ depexts: [
   [["ubuntu"] ["unzip"]]
   [["debian"] ["unzip"]]
 ]
-available: [ ocaml-version >= "4.00.0" & ocaml-version < "4.02" ]
+available:
+  os != "win32" & ocaml-version >= "4.00.0" & (ocaml-version < "4.02")
