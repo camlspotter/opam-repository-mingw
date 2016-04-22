@@ -1,8 +1,10 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "sylvain.pogodalla@inria.fr"
 build: [
   ["./configure" "--prefix=%{prefix}%"]
   [make "all"]
+]
+install: [
   [make "install-all"]
 ]
 remove: [
@@ -13,8 +15,7 @@ depends: [
   "dypgen"
   "bolt"
 ]
-
-ocaml-version: [ >= "4.00.0" ]
 homepage: "http://acg.gforge.inria.fr/"
 license: "CeCILL"
 authors: ["Sylvain Pogodalla"]
+available: os != "win32" & ocaml-version >= "4.00.0"
