@@ -1,0 +1,11 @@
+--- ./Makefile
++++ ./Makefile
+@@ -14,7 +14,7 @@
+ all : native-code
+ 
+ install :
+-	ocamlfind install ppx_blob META ppx_blob
++	ocamlfind install ppx_blob META ppx_blob$(EXE)
+ 
+ -include OCamlMakefile
+ 

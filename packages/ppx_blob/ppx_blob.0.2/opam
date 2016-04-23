@@ -19,3 +19,4 @@ depends: [
   "ppx_tools" {build}
 ]
 available: [ocaml-version >= "4.02.0"]
+patches: "ppx_blob-0.2.patch" {os = "win32"}
