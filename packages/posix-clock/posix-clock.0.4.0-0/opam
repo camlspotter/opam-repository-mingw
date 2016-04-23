@@ -23,4 +23,4 @@ depends: [
   "ocamlfind" {>= "1.5"}
   "ocamlbuild" {build}
 ]
-available: [ os != "darwin" ]
+available: os != "win32" & (os != "darwin")
