@@ -24,4 +24,4 @@ depopts: [
   "lwt"
   "base-threads"
 ]
-available: [ ocaml-version >= "4.02.0" ]
+available: os != "win32" & (ocaml-version >= "4.02.0")
