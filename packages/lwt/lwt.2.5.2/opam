@@ -44,3 +44,4 @@ conflicts: [
  "ppx_tools" {< "1.0.0" }
 ]
 available: [ocaml-version >= "4.01.0" & compiler != "4.02.1+BER"]
+patches: "patch-oasis-lwt.2.5.2" {os = "win32"}
