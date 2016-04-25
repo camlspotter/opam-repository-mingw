@@ -1,0 +1,25 @@
+opam-version: "1"
+version: "4.03.0"
+src: "http://caml.inria.fr/pub/distrib/ocaml-4.03/ocaml-4.03.0.tar.xz"
+patches:["https://gist.githubusercontent.com/fdopen/7280fbebb02bcb5d1fb0205960f4163d/raw/381aca3665b8bfeb5b1cad6eee406ae98d7fd8eb/patch-ocaml-4.03.0"]
+build: [
+  [ "mkdir" "-p" "%{lib}%/ocaml" ]
+  [ "sh" "-exc" "echo \"* : g = 1\" > %{lib}%/ocaml/ocaml_compiler_internal_params" ]
+  [ "cp" "config/m-nt.h" "config/m.h" ]
+  [ "cp" "config/s-nt.h" "config/s.h" ]
+  [ "cp" "config/Makefile.mingw" "config/Makefile" ]
+  [ "sed" "-i" "s#@PREFIX@#%{prefix}%#g" "config/Makefile" ]
+  [ "sed" "-i" "s#FLAMBDA=false#FLAMBDA=true#g" "config/Makefile" ]
+  [make "-f" "Makefile.nt" "world.opt"]
+  [make "-f" "Makefile.nt" "install"]
+]
+packages: [
+  "base-unix"
+  "base-bigarray"
+  "base-threads"
+]
+env: [
+[CAML_LD_LIBRARY_PATH = "%{lib}%/stublibs"]
+[CC = "i686-w64-mingw32-gcc.exe"]
+[CPP = "i686-w64-mingw32-cpp.exe"]
+]
