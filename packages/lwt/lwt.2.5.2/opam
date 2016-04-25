@@ -1,5 +1,13 @@
 opam-version: "1.2"
-maintainer: "jerome.vouillon@pps.univ-paris-diderot.fr"
+maintainer: "Jérôme Vouillon <jerome.vouillon@pps.univ-paris-diderot.fr>"
+authors: [
+  "Jérôme Vouillon"
+  "Jérémie Dimino"
+]
+homepage: "http://github.com/ocsigen/lwt"
+dev-repo: "git://github.com/ocsigen/lwt"
+bug-reports: "http://github.com/ocsigen/lwt/issues"
+license: "LGPL with OpenSSL linking exception"
 build: [
   ["./configure"
     "--prefix" prefix
@@ -12,11 +20,12 @@ build: [
     "--%{lablgtk:enable}%-glib"
     "--%{ppx_tools:enable}%-ppx"]
   [make "build"]
-  [make "install"]
 ]
+install: [[make "install"]]
 remove: [["ocamlfind" "remove" "lwt"]]
 depends: [
-  "ocamlfind" {>= "1.5.0"}
+  "ocamlfind" {build & >= "1.5.0"}
+  "base-bytes"
   ("base-no-ppx" | "ppx_tools")
   "ocamlbuild" {build}
 ]
@@ -31,5 +40,7 @@ depopts: [
 ]
 conflicts: [
  "react" {<"1.0.0"}
+ "ssl" {< "0.5.0"}
+ "ppx_tools" {< "1.0.0" }
 ]
-available: [ocaml-version >= "4.01.0" & ocaml-version < "4.03.0" & compiler != "4.02.1+BER"]
+available: [ocaml-version >= "4.01.0" & compiler != "4.02.1+BER"]
