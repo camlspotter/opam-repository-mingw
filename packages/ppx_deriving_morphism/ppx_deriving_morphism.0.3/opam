@@ -26,3 +26,7 @@ depends: [
   "ounit" {test}
   "ppx_import" {test}
 ]
+patches: [
+  "ppx_deriving_morphism-0.3.patch" {os = "win32"}
+  "patch-topkg-ppx_deriving_morphism.0.3" {os = "win32"}
+]
