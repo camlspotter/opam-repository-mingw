@@ -1,0 +1,11 @@
+--- ./config.make.in
++++ ./config.make.in
+@@ -36,7 +36,7 @@
+ RANLIB=@RANLIB@
+ XA=.a
+ XB=
+-XE=
++XE=@EXE@
+ XO=.o
+ XS=@XS@
+ TOOLCHAIN=unix
