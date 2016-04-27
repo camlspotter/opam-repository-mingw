@@ -31,3 +31,4 @@ depexts: [
   [["ubuntu"] ["autoconf"]]
   [["debian"] ["autoconf"]]
 ]
+available: os != "win32"
