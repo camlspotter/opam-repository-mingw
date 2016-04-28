@@ -1,0 +1,18 @@
+--- ./OMakefile
++++ ./OMakefile
+@@ -1,8 +1,14 @@
+ Modules(path) =
+   value $(basename $(removesuffix $(find $(path) -name *.ml)))
+ 
++NULL_DEVICE=
++	if $(equal $(OS),Win32)
++		value $'nul'
++	else
++		value $'/dev/null'
++
+ FindlibExists(packages) =
+-  value $(equal 0,$(shell-code ocamlfind query $(packages) > /dev/null))
++  value $(equal 0,$(shell-code ocamlfind query $(packages) > $(NULL_DEVICE)))
+ 
+ GenMeta() =
+   meta = $(file META)
