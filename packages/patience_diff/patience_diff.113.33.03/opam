@@ -27,3 +27,4 @@ depends: [
   "variantslib"     {>= "113.33.00" & < "113.34.00"}
 ]
 available: [ ocaml-version = "4.02.3" ]
+patches: "patch-oasis-patience_diff.113.33.03" {os = "win32"}

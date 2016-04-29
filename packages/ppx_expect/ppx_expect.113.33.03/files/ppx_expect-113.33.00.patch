@@ -1,0 +1,35 @@
+--- ./myocamlbuild.ml
++++ ./myocamlbuild.ml
+@@ -664,7 +664,8 @@
+   | After_rules ->
+     rule "expectation lifter"
+       ~prod:"src/expectation_lifter.ml"
+-      ~deps:["common/expectation.cmi"
++      ~deps:["common/expect_test_common.cmi"
++            ;"common/expectation.cmi"
+             ;"common/file.cmi"
+             ;"common/std.cmi" ]
+       (fun _ _ ->
+@@ -672,8 +673,12 @@
+                ; A "ppx_tools/genlifter"
+                ; A "-I"
+                ; A "common"
+-               ; A "Expect_test_common.Std.Expectation.Raw.t"
+-               ; Sh ">"
++               ; A "Expect_test_common.Expectation.Raw.t"
++               (* there is something wrong with genlifter on Windows:
++                   '** fatal error: File "typing/env.ml", line 286, characters 28-34: Assertion failed' (location inside ocaml source)
++                  I won't debug it :D
++               *)
++               ; Sh "| sed -e 's@Expect_test_common_Expectation@Expect_test_common_Std_Expectation@g' -e 's@Expect_test_common\\.Expectation@Expect_test_common\\.Std\\.Expectation@g' >"
+                ; A "src/expectation_lifter.ml"
+                ]));
+ 
+@@ -692,6 +697,7 @@
+         ~deps:ordered
+         (fun _ _ ->
+           Cmd (S [ !Options.ocamlopt
++                 ; A "-g"                     
+                  ; A "-linkpkg"
+                  ; A "-predicates"
+                  ; A "ppx_driver"

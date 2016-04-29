@@ -18,3 +18,4 @@ depends: [
   "ppx_tools"      {>= "0.99.3"}
 ]
 available: [ ocaml-version = "4.02.3" ]
+patches: "patch-oasis-ppx_inline_test.113.33.03" {os = "win32"}

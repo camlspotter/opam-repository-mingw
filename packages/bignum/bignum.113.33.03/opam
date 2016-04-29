@@ -28,3 +28,4 @@ depends: [
   "zarith"          {>= "1.4"}
 ]
 available: [ ocaml-version = "4.02.3" ]
+patches: "patch-oasis-bignum.113.33.03" {os = "win32"}

@@ -18,3 +18,4 @@ available: [ ocaml-version = "4.02.3" ]
 depopts: [
   "mirage-xen-ocaml"
 ]
+patches: "patch-oasis-bin_prot.113.33.03" {os = "win32"}

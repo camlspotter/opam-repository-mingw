@@ -15,3 +15,4 @@ depends: [
   "js-build-tools" {build & >= "113.33.00" & < "113.34.00"}
 ]
 available: [ ocaml-version = "4.02.3" ]
+patches: "patch-oasis-typerep.113.33.03" {os = "win32"}

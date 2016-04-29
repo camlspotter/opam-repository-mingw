@@ -31,3 +31,4 @@ depexts: [
  [ ["fedora"] ["gcc-c++"] ]
  [ ["oraclelinux"] ["gcc-c++"] ]
 ]
+patches: "patch-oasis-re2.113.33.03" {os = "win32"}
