@@ -13,6 +13,6 @@ depends: [
   "ocamlfind"
   "obuild"
   "lwt"
-  "cstruct" {>= "0.7.1"}
+  "cstruct" {>= "0.7.1" & <"2.0.0"}
   "cmdliner"
 ]
