@@ -25,3 +25,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 available: [ ocaml-version >= "4.01.0" ]
+patches: "patch-oasis-d3.0.2.1" {os = "win32"}
