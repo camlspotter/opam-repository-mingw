@@ -21,3 +21,4 @@ depends: [
   "ocamlfind" {>= "1.5"}
   "ocamlbuild" {build}
 ]
+available: os != "win32"
