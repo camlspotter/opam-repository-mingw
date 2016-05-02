@@ -14,3 +14,4 @@ depends: [
   "base-unix"
   "ocamlbuild" {build}
 ]
+patches: "patch-oasis-dolog.0.6" {os = "win32"}
