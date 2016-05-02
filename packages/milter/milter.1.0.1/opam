@@ -17,3 +17,4 @@ depexts: [
   [["debian"] ["libmilter-dev"]]
   [["ubuntu"] ["libmilter-dev"]]
 ]
+available: os != "win32"
