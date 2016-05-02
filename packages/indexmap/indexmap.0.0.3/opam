@@ -16,3 +16,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 ocaml-version: [>= "4.00.0"]
+patches: "patch-oasis-indexmap.0.0.3" {os = "win32"}
