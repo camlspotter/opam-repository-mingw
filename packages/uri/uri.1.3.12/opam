@@ -27,3 +27,4 @@ depopts: ["ounit"]
 conflicts: [
   "ounit" {< "1.0.2"}
 ]
+patches: "patch-oasis-uri.1.3.12" {os = "win32"}
