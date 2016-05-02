@@ -47,6 +47,7 @@ tags: [
 ]
 
 patches: [
+  "wp-ocaml-403.patch" {ocaml-version >= "4.03.0"}
   "gdk-pixbuf.patch" { os = "win32" }
   "makefile-ocamldep.patch" { os = "win32" }
   "cmdline-accept-backslashes.patch" { os = "win32" }
