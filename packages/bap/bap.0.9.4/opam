@@ -70,4 +70,4 @@ depexts: [
                 ]]
 ]
 
-available: [ocaml-version >= "4.01"]
+available: os != "win32" & (ocaml-version >= "4.01")
