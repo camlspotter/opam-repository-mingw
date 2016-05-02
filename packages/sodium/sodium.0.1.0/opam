@@ -14,3 +14,4 @@ depends: [
 depexts: [
   [ ["source" "linux"] ["https://gist.github.com/avsm/9037146/raw"] ]
 ]
+available: os != "win32"
