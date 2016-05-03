@@ -1,0 +1,35 @@
+--- ./build.sh
++++ ./build.sh
+@@ -57,7 +57,14 @@
+ 
+ echo "true: config" >> _tags
+ 
+-echo "true: pp($(pwd)/ppx)" >> _tags
++is_win="$(ocamlfind ocamlc -config | awk '/^os_type:/ {print $2}')"
++if [ "$is_win" = "Win32" ] && which cygpath >/dev/null 2>&1 ; then
++    is_win="$(pwd)"
++    is_win="$(cygpath -m "${is_win}/ppx")"
++    echo "true: pp(${is_win})" >> _tags
++else
++    echo "true: pp($(pwd)/ppx)" >> _tags
++fi
+ 
+ if [ "$HAVE_ASYNC" != "" ]; then
+   echo "Building with Async support."
+--- ./Makefile
++++ ./Makefile
+@@ -40,6 +40,13 @@
+ 	opam publish prepare $(NAME).$(VERSION) $(ARCHIVE)
+ 	OPAMYES=1 opam publish submit $(NAME).$(VERSION) && rm -rf $(NAME).$(VERSION)
+ 
++OS_TYPE:=$(shell ocamlfind ocamlc -config | awk '/^os_type:/ {print $$2}')
++ifeq ($(OS_TYPE),$(filter $(OS_TYPE),Win32 Cygwin))
++EXT_EXE=.exe
++else
++EXT_EXE=
++endif
++
+ ppx:
+-	ocamlfind ocamlopt -predicates ppx_driver -o ppx -linkpkg \
++	ocamlfind ocamlopt -predicates ppx_driver -o ppx$(EXT_EXE) -linkpkg \
+ 	  -package ppx_sexp_conv ppx_driver_runner.cmxa
