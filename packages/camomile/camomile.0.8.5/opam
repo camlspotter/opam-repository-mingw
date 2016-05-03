@@ -6,6 +6,7 @@ license: "LGPL-2+ with OCaml linking exception"
 patches: [
   "cmxs.patch"
   "no-camlp4.patch"
+  "cmx.patch"
   "camomile-0.8.5.patch" { os = "win32" }
 ]
 build: [
