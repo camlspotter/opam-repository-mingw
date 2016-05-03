@@ -15,4 +15,4 @@ depends: [
   "ipaddr" {>= "1.0.0"}
   "ocamlbuild" {build}
 ]
-ocaml-version: [>= "4.00.0"]
+available: [ ocaml-version = "0" ] (* memory disclosure *)
