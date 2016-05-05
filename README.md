@@ -38,10 +38,10 @@ either the 32-bit or 64-bit version of cygwin.
 $ tar -xf 'opam32.tar.xz' # or tar -xf 'opam64.tar.xz'
 $ bash opam32/install.sh  # --prefix /usr/foo, the default prefix is /usr/local
                           # maybe you have to add /usr/local/bin to your PATH
-$ opam init mingw 'https://github.com/fdopen/opam-repository-mingw.git' --comp 4.02.3+mingw32 --switch 4.02.3+mingw32
-# or, if you prefer the 64-bit version
-$ opam init mingw 'https://github.com/fdopen/opam-repository-mingw.git' --comp 4.02.3+mingw64 --switch 4.02.3+mingw64
-$ eval `opam config env`
+$ opam init default 'https://github.com/fdopen/opam-repository-mingw.git' --comp 4.03.0+mingw32 --switch 4.03.0+mingw32
+# or, if you prefer the 64-bit version - 'opam switch -a' will list other supported versions
+$ opam init default 'https://github.com/fdopen/opam-repository-mingw.git' --comp 4.03.0+mingw64 --switch 4.03.0+mingw64
+$ eval $(opam config env)
 ```
 ## Things to remember
 
@@ -50,7 +50,11 @@ $ eval `opam config env`
   use
   [depext-cygwinports](https://fdopen.github.io/opam-repository-mingw/depext-cygwin/)
 
-* Consider to use windows symlinks inside cygwin:
-  `export CYGWIN='winsymlinks:native'`. Otherwise ocamlbuild and many build
+* Consider to use windows symlinks inside cygwin: `export
+  CYGWIN='winsymlinks:native'`. Otherwise ocamlbuild and many build
   and test scripts will create symlinks, that are only understood by
-  cygwin tools, not the OCaml compiler and other native windows programs.
+  cygwin tools, but not by the OCaml compiler and other native windows
+  programs.  (Usually only adminstrators are allowed to create
+  symlinks. But you can change the default settings, see
+  [this post](https://cygwin.com/ml/cygwin/2013-05/msg00405.html) for
+  details)
