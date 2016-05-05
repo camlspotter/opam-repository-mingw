@@ -21,4 +21,4 @@ depopts: ["base-unix" "ctypes"]
 conflicts: [
   "ctypes" {< "0.4.0"}
 ]
-available: [ocaml-version >= "4.01.0"]
+available: os != "win32" & (ocaml-version >= "4.01.0")
