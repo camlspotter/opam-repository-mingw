@@ -1,0 +1,20 @@
+--- ./Makefile
++++ ./Makefile
+@@ -169,7 +169,7 @@
+ # Install the library.
+ 	mkdir -p $(libdir)
+ 	install -m 644 $(MLYLIB) $(libdir)
+-	@if `$(BUILDDIR)/menhir.$(TARGET) --suggest-ocamlfind` ; then \
++	@if `$(BUILDDIR)/menhir.$(TARGET) --suggest-ocamlfind | tr -d '\r'` ; then \
+ 	  echo Installing MenhirLib via ocamlfind. ; \
+ 	  ocamlfind install menhirLib src/META $(patsubst %,$(BUILDDIR)/%,$(MENHIRLIB)) ; \
+ 	else \
+@@ -185,7 +185,7 @@
+ 	fi
+ 
+ uninstall:
+-	@if `$(bindir)/$(MENHIREXE) --suggest-ocamlfind` ; then \
++	@if `$(bindir)/$(MENHIREXE) --suggest-ocamlfind | tr -d '\r'` ; then \
+ 	  echo Un-installing MenhirLib via ocamlfind. ; \
+ 	  ocamlfind remove menhirLib ; \
+ 	fi
