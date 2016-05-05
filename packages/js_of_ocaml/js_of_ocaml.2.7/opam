@@ -35,8 +35,8 @@ conflicts: [
   "reactiveData" {< "0.2"}
 ]
 available: [ ocaml-version >= "4.00.0" ]
-
 patches: [
   "opamingw.patch" { os = "win32" }
   "patch-bb" { os = "win32" }
+  "ppx_deriving_4.03.patch" { ocaml-version >= "4.03.0" }
 ]
