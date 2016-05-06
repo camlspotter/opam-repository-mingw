@@ -1,0 +1,221 @@
+--- ./config/Makefile.mingw
++++ ./config/Makefile.mingw
+@@ -0,0 +1,38 @@
++#***********************************************************************
++#*                                                                     *
++#*                              CamlIDL                                *
++#*                                                                     *
++#*            Xavier Leroy, projet Cristal, INRIA Rocquencourt         *
++#*                                                                     *
++#*  Copyright 1999 Institut National de Recherche en Informatique et   *
++#*  en Automatique.  All rights reserved.  This file is distributed    *
++#*  under the terms of the GNU Library General Public License.         *
++#*                                                                     *
++#***********************************************************************
++
++#* $Id: Makefile.win32,v 1.6 2004/07/08 12:21:58 xleroy Exp $
++
++## Configuration section
++
++
++OSTYPE=win32
++
++MCC:=$(shell ocamlfind ocamlc -config 2>/dev/null | awk '/^bytecomp_c_compiler/ { print $$2 }')
++
++CPP:=$(shell echo $(MCC) | sed 's|gcc|cpp|')
++RANLIB:=$(shell echo $(MCC) | sed 's|gcc|ranlib|')
++CXX:=$(shell echo $(MCC) | sed 's|gcc|g++|')
++OCAMLLIB:=$(shell ocamlfind ocamlc -where)
++BINDIR:=$(shell opam config var bin)
++STUBLIBDIR:=$(shell opam config var stublibs)
++
++OCAMLC=ocamlc -w -a -g
++OCAMLOPT=ocamlopt -w -a
++OCAMLYACC=ocamlyacc -v
++OCAMLLEX=ocamllex
++OCAMLDEP=ocamldep
++CFLAGS=-Wall -g
++
++EXE=.exe
++LIBEXT=a
++OBJEXT=o
+--- ./lib/Makefile
++++ ./lib/Makefile
+@@ -20,16 +20,21 @@
+ NATIVELIB=$(BYTELIB:.cma=.cmxa)
+ INTERFACES=$(BYTEOBJS:.cmo=.cmi)
+ 
+-all: $(BYTELIB) $(NATIVELIB)
++all: $(BYTELIB) 
++
++opt: $(NATIVELIB)
+ 
+ $(BYTELIB): $(BYTEOBJS)
+-	$(OCAMLC) -a -o $(BYTELIB) $(BYTEOBJS)
++	ocamlmklib -o $(BYTELIB:.cma=) -oc camlidl $(BYTEOBJS)
+ 
+ $(NATIVELIB): $(NATIVEOBJS)
+-	$(OCAMLOPT) -a -o $(NATIVELIB) $(NATIVEOBJS)
++	ocamlmklib -o $(NATIVELIB:.cmxa=) -oc camlidl $(NATIVEOBJS)
+ 
+ install:
+-	cp $(INTERFACES) $(BYTELIB) $(NATIVELIB) $(NATIVELIB:.cmxa=.$(LIBEXT)) $(OCAMLLIB)
++	cp $(INTERFACES) $(BYTELIB) $(OCAMLLIB)
++
++installopt:
++	cp $(NATIVELIB) $(NATIVELIB:.cmxa=.$(LIBEXT)) $(OCAMLLIB)
+ 	cd $(OCAMLLIB); $(RANLIB) $(NATIVELIB:.cmxa=.$(LIBEXT))
+ 
+ .SUFFIXES: .mli .ml .cmi .cmo .cmx
+--- ./Makefile
++++ ./Makefile
+@@ -20,12 +20,18 @@
+ 	cd lib; $(MAKE) all
+ 	cd tools; $(MAKE) all
+ 
++opt:
++	cd lib; $(MAKE) opt
++
+ install:
+ 	cd compiler; $(MAKE) install
+ 	cd runtime; $(MAKE) install
+ 	cd lib; $(MAKE) install
+ 	cd tools; $(MAKE) install
+ 
++installopt:
++	cd lib; $(MAKE) installopt
++
+ clean:
+ 	cd compiler; $(MAKE) clean
+ 	cd runtime; $(MAKE) clean
+--- ./runtime/comintf.c
++++ ./runtime/comintf.c
+@@ -26,6 +26,19 @@
+ 
+ int camlidl_num_components = 0;
+ 
++#ifndef _WIN32
++IID IID_IUnknown;
++
++static void init_IID_IUnknown (void) {
++    IID_IUnknown.Data1 = -1;
++    IID_IUnknown.Data2 = -1;
++    IID_IUnknown.Data3 = -1;
++    memcpy(IID_IUnknown.Data4, 
++	   "\377\377\377\377\377\377\377\377",
++	   sizeof(IID_IUnknown.Data4));
++}
++#endif
++
+ static void camlidl_finalize_interface(value intf)
+ {
+   interface IUnknown * i = (interface IUnknown *) Field(intf, 1);
+@@ -84,6 +97,9 @@
+ {
+   struct camlidl_component * comp = this->comp;
+   int i;
++#ifndef _WIN32
++  init_IID_IUnknown();
++#endif
+   for (i = 0; i < comp->numintfs; i++) {
+     if (comp->intf[i].iid != NULL && IsEqualIID(iid, comp->intf[i].iid)) {
+       *object = (void *) &(comp->intf[i]);
+--- ./runtime/Makefile.unix
++++ ./runtime/Makefile.unix
+@@ -17,14 +17,13 @@
+ all: libcamlidl.a
+ 
+ libcamlidl.a: $(OBJS)
+-	- rm -f $@
+-	ar rc $@ $(OBJS)
+-	$(RANLIB) $@
++	ocamlmklib -oc camlidl $(OBJS)
+ 
+ install:
+ 	cp camlidlruntime.h $(OCAMLLIB)/caml/camlidlruntime.h
+ 	cp libcamlidl.a $(OCAMLLIB)/libcamlidl.a
+ 	cd $(OCAMLLIB); $(RANLIB) libcamlidl.a
++	test ! -f dll* || cp dll* $(OCAMLLIB)/stublibs
+ 
+ clean:
+ 	rm -f *.a *.o
+--- ./runtime/Makefile.win32
++++ ./runtime/Makefile.win32
+@@ -12,33 +12,37 @@
+ 
+ #* $Id: Makefile.win32,v 1.7 2000/08/19 11:05:00 xleroy Exp $
+ 
+-CC=cl
+-CFLAGS=/nologo /Zi /MT /I$(OCAMLLIB)
++#CC=cl
++#CFLAGS=/nologo /Zi /MT /I$(OCAMLLIB)
+ 
+-OBJS=idlalloc.obj comintf.obj comerror.obj superror.obj \
+-  registry.obj dispatch.obj oletypes.obj
++OBJS=idlalloc.o comintf.o comerror.o superror.o \
++  registry.o dispatch.o oletypes.o
+ 
+-all: libcamlidl.lib cfactory.obj
++all: libcamlidl.a cfactory.o
+ 
+-libcamlidl.lib: $(OBJS)
+-	- rm -f $@
+-	lib /nologo /debugtype:CV /out:$@ $(OBJS)
++libcamlidl.a: $(OBJS)
++	ocamlmklib -oc camlidl $(OBJS) -ldopt -lstdc++
++#	- rm -f $@
++#	lib /nologo /debugtype:CV /out:$@ $(OBJS)
+ 
+ install:
+ 	cp camlidlruntime.h $(OCAMLLIB)/caml/camlidlruntime.h
+-	cp libcamlidl.lib $(OCAMLLIB)/libcamlidl.lib
+-	cp cfactory.obj $(OCAMLLIB)/cfactory.obj
++	cp libcamlidl.a $(OCAMLLIB)/libcamlidl.a
++	cd $(OCAMLLIB); $(RANLIB) libcamlidl.a
++	cp cfactory.o $(OCAMLLIB)/cfactory.o
++	test -d $(STUBLIBDIR) || mkdir -p $(STUBLIBDIR)
++	test ! -f dll* || cp dll* $(STUBLIBDIR)
+ 
+ clean:
+-	rm -f *.lib *.obj
++	rm -f *.a *.o
+ 
+-.SUFFIXES: .c .cpp .obj
++.SUFFIXES: .c .cpp .o
+ 
+-.c.obj:
+-	$(CC) $(CFLAGS) -c $<
+-.cpp.obj:
+-	$(CC) $(CFLAGS) -c $<
++.c.o:
++	ocamlc -c $<
++.cpp.o:
++	$(CXX) -I$(OCAMLLIB) -c $<
+ 
+-$(OBJS) cfactory.obj: camlidlruntime.h comstuff.h registry.h
++$(OBJS) cfactory.o: camlidlruntime.h comstuff.h registry.h
+ 
+ depend:
+--- ./tools/Makefile.win32
++++ ./tools/Makefile.win32
+@@ -10,18 +10,12 @@
+ #*                                                                     *
+ #***********************************************************************
+ 
+-#* $Id: Makefile.win32,v 1.4 2001/06/21 13:17:19 xleroy Exp $
++#* $Id: Makefile.unix,v 1.2 2000/08/19 11:05:00 xleroy Exp $
+ 
+-all: camlidldll
+-
+-camlidldll: camlidldll.tpl ../config/Makefile
+-	sed -e 's|%%CAMLLIB%%|$(OCAMLLIB)|' -e '/^camllib=/s|/|\\|g' camlidldll.tpl > camlidldll
++all:
+ 
+ install:
+-	cp camlidldll $(BINDIR)
+-	cp camlidlcompat.h $(OCAMLLIB)/caml
+ 
+ clean:
+-	rm -f camlidldll
+ 
+ depend:
