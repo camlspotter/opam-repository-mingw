@@ -6,7 +6,8 @@ bug-reports: "https://github.com/ocaml/opam-repository/issues"
 dev-repo: "https://github.com/ocaml/opam-repository.git"
 license: "LGPL"
 build: [
-  ["cc" "test.c" "-I/usr/local/include" "-L/usr/local/lib" "-lgmp" "-lmpfr"]
+  ["cc" "test.c" "-I/usr/local/include" "-L/usr/local/lib" "-lgmp" "-lmpfr"] { os != "win32" }
+  ["./test-win.sh"] { os = "win32" }
 ]
 depexts: [
   [["debian"] ["libmpfr-dev"]]
@@ -14,6 +15,7 @@ depexts: [
   [["osx" "homebrew"] ["mpfr"]]
   [["freebsd"] ["mpfr"]]
   [["openbsd"] ["mpfr"]]
+  [["win32" "cygwinports"] ["mpfr"]]
 ]
 depends: [
   "conf-gmp"
