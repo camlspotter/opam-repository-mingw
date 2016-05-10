@@ -15,3 +15,7 @@ depends: [
   "ocamlbuild"
 ]
 available: [ ocaml-version = "4.02.3" ]
+patches: [
+  "patch-oasis-js-build-tools.113.33.04" {os = "win32"}
+  "js-build-tools-113.33.03.patch" {os = "win32"}
+]
