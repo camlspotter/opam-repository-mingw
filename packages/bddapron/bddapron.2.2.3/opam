@@ -21,4 +21,4 @@ depends: [
   "mlcuddidl"  {>= "2.3.0"}
   "apron"      {>= "20151015"}
 ]
-available: [ ocaml-version >= "4.02.0" ]
+available: os != "win32" & (ocaml-version >= "4.02.0")
