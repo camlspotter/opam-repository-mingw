@@ -2,6 +2,9 @@ opam-version: "1.2"
 version: "1.2.1"
 authors: "Jun Furuse"
 maintainer: "jun.furuse@gmail.com"
+homepage: "http://bitbucket.org/camlspotter/ppx_test"
+bug-reports: "https://bitbucket.org/camlspotter/ppx_test/issues?status=new&status=open"
+dev-repo: "hg://https://bitbucket.org/camlspotter/ppx_test"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix] { os != "win32" }
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix "--use-bash" "dash.exe"] { os = "win32" }
@@ -17,11 +20,10 @@ remove: [
 ]
 depends: [
   "ocamlfind" { >= "1.5.2" }
-  "omake"
+  "omake" { build }
   "re"
 ]
 available: [
-  ocaml-version >= "4.02.0"
+  ocaml-version >= "4.02.0" & ocaml-version < "4.03.0"
 ]
-homepage: "http://bitbucket.org/camlspotter/ppx_test"
 patches: [ "patches-aa" { os = "win32" } ]
