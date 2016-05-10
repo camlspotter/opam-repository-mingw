@@ -20,6 +20,4 @@ depends: [
   "ocamlfind" { build }
   "omake" { build }
 ]
-available: [
-  ocaml-version = "3.12.1"
-]
+available: os != "win32" & (ocaml-version = "3.12.1")
