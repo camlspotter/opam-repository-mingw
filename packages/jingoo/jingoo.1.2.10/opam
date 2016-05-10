@@ -11,3 +11,4 @@ build: [
 install: [make "install"]
 remove: ["ocamlfind" "remove" "jingoo"]
 depends: ["ocamlfind" "pcre" "batteries" "ounit"]
+available: os != "win32"
