@@ -26,3 +26,4 @@ depends: [
 available: [
   ocaml-version >= "4.03.0"
 ]
+patches: "patch-oasis-ppx_monadic.1.0.4" {os = "win32"}
