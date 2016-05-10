@@ -24,3 +24,4 @@ depends: [
 available: [
   ocaml-version >= "4.02.0" & ocaml-version < "4.03.0"
 ]
+patches: "patch-oasis-ppx_test.1.2.0" {os = "win32"}
