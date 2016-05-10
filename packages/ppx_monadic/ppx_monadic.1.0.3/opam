@@ -21,3 +21,4 @@ available: [
   ocaml-version >= "4.02.1" & ocaml-version < "4.03.0"
 ]
 homepage: "https://bitbucket.org/camlspotter/ppx_monadic"
+patches: "patch-oasis-ppx_monadic.1.0.3" {os = "win32"}
