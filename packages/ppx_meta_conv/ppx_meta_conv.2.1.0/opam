@@ -31,3 +31,4 @@ conflicts: [
   "tiny_json" { < "1.1.0" }
   "sexplib" { < "112.24.01" }
 ]
+patches: "patch-oasis-ppx_meta_conv.2.1.0" {os = "win32"}
