@@ -12,19 +12,24 @@ build: [
 ]
 install: [
   [ make "install" ]
+  [ "sh" "-exc" "if [ -f '%{prefix}%/bin/ocp-build.asm' ]; then mv '%{prefix}%/bin/ocp-build.asm' '%{prefix}%/bin/ocp-build.exe' ; fi" ] { os = "win32" }
+  [ "sh" "-exc" "if [ -f '%{prefix}%/bin/ocp-pp.asm' ]; then mv '%{prefix}%/bin/ocp-pp.asm' '%{prefix}%/bin/ocp-pp.exe' ; fi" ] { os = "win32" }
 ]
 remove: [
   [ "rm" "-f" "%{prefix}%/bin/ocp-build" ]
+  [ "rm" "-f" "%{prefix}%/bin/ocp-build.byte" ]
   [ "rm" "-f" "%{prefix}%/bin/ocp-pp" ]
-  [ "rm" "-rf" "%{prefix}%/lib/ocaml/typerex/ocp-build" ]
-  [ "rm" "-rf" "%{prefix}%/lib/ocaml/typerex/ocplib-compat" ]
-  [ "rm" "-rf" "%{prefix}%/lib/ocaml/typerex/ocplib-debug" ]
-  [ "rm" "-rf" "%{prefix}%/lib/ocaml/typerex/ocplib-lang" ]
-  [ "rm" "-rf" "%{prefix}%/lib/ocaml/typerex/ocplib-subcmd" ]
-  [ "rm" "-rf" "%{prefix}%/lib/ocaml/typerex/ocplib-system" ]
-  [ "rm" "-rf" "%{prefix}%/lib/ocaml/typerex/ocplib-unix" ]
-  [ "rm" "-rf" "%{prefix}%/lib/ocaml/typerex/installed.ocp" ]
-  [ "sh" "-exc" "rmdir %{prefix}%/lib/ocaml/typerex || true" ]
+  [ "rm" "-f" "%{prefix}%/bin/ocp-pp.byte" ]
+  [ "rm" "-rf" "%{prefix}%/lib/ocaml/ocp-build" ]
+  [ "rm" "-rf" "%{prefix}%/lib/ocaml/ocp-pp" ]
+  [ "rm" "-rf" "%{prefix}%/lib/ocaml/ocplib-compat" ]
+  [ "rm" "-rf" "%{prefix}%/lib/ocaml/ocplib-config" ]
+  [ "rm" "-rf" "%{prefix}%/lib/ocaml/ocplib-debug" ]
+  [ "rm" "-rf" "%{prefix}%/lib/ocaml/ocplib-lang" ]
+  [ "rm" "-rf" "%{prefix}%/lib/ocaml/ocplib-subcmd" ]
+  [ "rm" "-rf" "%{prefix}%/lib/ocaml/ocplib-system" ]
+  [ "rm" "-rf" "%{prefix}%/lib/ocaml/ocplib-unix" ]
+  [ "rm" "-rf" "%{prefix}%/lib/ocaml/installed.ocp" ]
 ]
 depends: [
     "camlp4" (* for 4.02, for simpleConfig.ml4 *)
@@ -34,3 +39,7 @@ depends: [
   ]
 conflicts: [ "typerex"  {< "1.99.7"} ]
 available: [ocaml-version >= "3.12.0"]
+patches: [
+ "patch-ocp-build" { os = "win32" & ocaml-version < "4.03.0" }
+ "patch-ocp-build-403" { os = "win32" & ocaml-version >= "4.03.0" }
+]
