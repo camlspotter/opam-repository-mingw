@@ -24,4 +24,4 @@ depends: [
     "ocp-build" {>= "1.99.11-beta"}
     "conf-lldb" {= "3.5" }
   ]
-available: [ocaml-version >= "4.01.0" ]
+available: os != "win32" & (ocaml-version >= "4.01.0")
