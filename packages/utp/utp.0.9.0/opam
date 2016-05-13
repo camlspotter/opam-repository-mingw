@@ -8,4 +8,4 @@ dev-repo: "https://www.github.com/nojb/ocaml-utp.git"
 build: [make "all"]
 build-doc: [make "doc"]
 depends: ["base-bytes" "ocamlfind" {build} "lwt"]
-available: [ocaml-version >= "4.02.3"]
+available: os != "win32" & (ocaml-version >= "4.02.3")
