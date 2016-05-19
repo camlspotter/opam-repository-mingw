@@ -1,0 +1,68 @@
+--- ./a/configure
++++ ./a/configure
+@@ -64,6 +64,13 @@
+     apache=""
+     cpp=cpp
+     cpp_set=0
++    if [ -n "$CPP" ]; then
++        if which "$CPP" >/dev/null 2>&1 ; then
++            cpp=$CPP
++            cpp_set=1
++        fi
++    fi
++
+ }
+ 
+ ocamlc=`get_path ocamlc`
+--- ./a/src/netstring/Makefile.def
++++ ./a/src/netstring/Makefile.def
+@@ -124,11 +124,12 @@
+ 	(cd netdb && ls *.netdb) | \
+ 	{ while read f; do echo "$(NET_DB_DIR)/$$f"; done; } >netdb-packlist
+ 
++NET_DB_DIR_CYGWIN=$(shell cygpath "$(NET_DB_DIR)")
+ .PHONY: install-netdb
+ install-netdb:
+-	mkdir -p "$(DESTDIR)$(NET_DB_DIR)"
+-	cp netdb/*.netdb "$(DESTDIR)$(NET_DB_DIR)"
+-	@echo "Installed .netdb files into $(DESTDIR)$(NET_DB_DIR)"
++	mkdir -p "$(DESTDIR)$(NET_DB_DIR_CYGWIN)"
++	cp netdb/*.netdb "$(DESTDIR)$(NET_DB_DIR_CYGWIN)"
++	@echo "Installed .netdb files into $(DESTDIR)$(NET_DB_DIR_CYGWIN)"
+ 
+ tools_done:
+ 	cd tools && $(MAKE)
+--- ./a/src/netstring/netdb.mlp
++++ ./a/src/netstring/netdb.mlp
+@@ -4,7 +4,19 @@
+  *)
+ 
+ 
+-let net_db_dir = ref "@NET_DB_DIR@" ;;
++let net_db_dir = ref (
++  match Sys.os_type with
++  | "Win32" -> 
++    (try 
++      let x = Sys.getenv "OCAMLNET_DB_DIR" in
++      if Sys.is_directory x then
++        x
++      else
++        raise Not_found
++    with
++    | _ -> "@NET_DB_DIR@" )
++  | _ -> "@NET_DB_DIR@" )
++
+ 
+ let net_db_hash = Hashtbl.create 20 ;;
+ 
+--- ./a/src/netsys/netsys_c.c
++++ ./a/src/netsys/netsys_c.c
+@@ -75,6 +75,8 @@
+ CAMLprim value netsys_sysconf_open_max (value unit) {
+ #ifdef HAVE_SYSCONF
+     return Val_long(sysconf(_SC_OPEN_MAX));
++#elif _WIN32
++    return Val_long(_getmaxstdio () );
+ #else
+     invalid_argument("Netsys.sysconf_open_max not available");
+ #endif
