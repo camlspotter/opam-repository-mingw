@@ -8,15 +8,17 @@ dev-repo: "hg://https://bitbucket.org/camlspotter/orakuda"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
+]
+install: [
+  [ "ocaml" "setup.ml" "-install" ]
 ]
 remove: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-uninstall"]
 ]
 depends: [
-  "ocamlfind" { build } "omake" { build } "spotlib" { >= "2.0.0" } "pcre" "ppx_tools"
+  "ocamlfind" { build } "omake" { build } "spotlib" { >= "2.4.0" & < "3.0.0" } "pcre" "ppx_tools"
 ]
 available: [
-  ocaml-version >= "4.02.1"
+  ocaml-version >= "4.02.1" & ocaml-version < "4.03.0"
 ]
