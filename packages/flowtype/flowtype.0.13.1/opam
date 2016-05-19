@@ -17,3 +17,4 @@ depexts: [
  [ ["ubuntu"] ["libelf-dev"] ]
  [ ["centos"] ["elfutils-libelf-devel"] ]
 ]
+available: os != "win32"
