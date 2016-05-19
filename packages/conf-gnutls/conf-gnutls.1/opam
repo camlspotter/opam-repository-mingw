@@ -5,4 +5,5 @@ depends: [ "conf-pkg-config" ]
 depexts: [
   [["debian"] ["libgnutls-dev" "nettle-dev"]]
   [["ubuntu"] ["libgnutls-dev" "nettle-dev"]]
+  [["win32" "cygwinports"] ["gnutls"]]
 ]
