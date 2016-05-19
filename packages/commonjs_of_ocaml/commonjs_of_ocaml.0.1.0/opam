@@ -26,3 +26,4 @@ depends: [
   "cppo" {build}
 ]
 available: [ocaml-version >= "4.02"]
+patches: "patch-oasis-commonjs_of_ocaml.0.1.0" {os = "win32"}
