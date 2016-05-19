@@ -16,7 +16,7 @@ install: [
 remove: [
   [ "rm" "-f" "%{prefix}%/bin/ocp-check-crcs" ]
   [ "rm" "-f" "%{prefix}%/bin/ocp-check-poly" ]
-  [ "rm" "-f" "%{prefix}%/bin/ocp-check-global" ]
+  [ "rm" "-f" "%{prefix}%/bin/ocp-check-globals" ]
   [ "rm" "-f" "%{prefix}%/bin/ocp-check-headers" ]
   [ "rm" "-f" "%{prefix}%/bin/ocp-imports" ]
   [ "rm" "-f" "%{prefix}%/bin/ocp-manager" ]

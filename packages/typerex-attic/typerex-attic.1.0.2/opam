@@ -20,10 +20,11 @@ install: [
 remove: [
   [ "rm" "-f" "%{prefix}%/bin/ocp-check-crcs" ]
   [ "rm" "-f" "%{prefix}%/bin/ocp-check-poly" ]
-  [ "rm" "-f" "%{prefix}%/bin/ocp-check-global" ]
+  [ "rm" "-f" "%{prefix}%/bin/ocp-check-globals" ]
   [ "rm" "-f" "%{prefix}%/bin/ocp-check-headers" ]
   [ "rm" "-f" "%{prefix}%/bin/ocp-imports" ]
   [ "rm" "-f" "%{prefix}%/bin/ocp-manager" ]
+  [ "rm" "-f" "%{prefix}%/bin/opam-archive" ]
   [ "rm" "-f" "%{prefix}%/man/man1/ocp-manager.1" ]
   [ "rm" "-f" "%{prefix}%/bin/ocp-pack" ]
 ]
