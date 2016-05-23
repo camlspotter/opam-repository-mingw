@@ -26,5 +26,5 @@ depends: [
   "ppx_deriving" "ppx_deriving_yojson" {>= "2.3"}
   "cohttp" {>= "0.17.0" } "lwt" "ssl"
   "conduit"
-  "js_of_ocaml" {>= "2.6" } "tyxml" "reactiveData"
+  "js_of_ocaml" {>= "2.6" } "tyxml" {<= "3.5.0"} "reactiveData"
   ]
