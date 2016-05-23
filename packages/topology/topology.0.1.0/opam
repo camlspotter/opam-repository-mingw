@@ -13,3 +13,4 @@ depends: [
   "ocamlgraph" {< "1.8.6"}
   "ocamlbuild" {build}
 ]
+patches: "patch-oasis-topology.0.1.0" {os = "win32"}
