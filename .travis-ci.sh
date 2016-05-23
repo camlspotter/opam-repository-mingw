@@ -59,10 +59,9 @@ function opam_version_compat {
 }
 opam_version_compat
 
-function build_one {
-  pkg=$1
-  echo "build one: $pkg ($OPAM_SWITCH)"
+function build_switch {
   rm -rf ~/.opam
+  echo "build switch: $OPAM_SWITCH"
   if [ -n "${opam_version_11}" ]; then
       # Hide OCaml build log
       if opam init . --comp=$OPAM_SWITCH > build.log 2>&1 ; then
@@ -76,6 +75,11 @@ function build_one {
       opam init . --comp=$OPAM_SWITCH
   fi
   eval `opam config env`
+}
+
+function build_one {
+  pkg=$1
+  echo "build one: $pkg"
   # test for installability
   echo "Checking for availability..."
   if ! opam install $pkg --dry-run; then
@@ -109,7 +113,6 @@ function build_one {
     opam install depext
     depext=$(opam depext -ls $pkg --no-sources)
     opam depext $pkg
-    opam remove depext -a
     echo
     echo "====== Installing package ======"
     opam install $pkg
@@ -127,6 +130,8 @@ function build_one {
     fi
   fi
 }
+
+build_switch
 
 for i in `cat tobuild.txt`; do
   build_one $i
