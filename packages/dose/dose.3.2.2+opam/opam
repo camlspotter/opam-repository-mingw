@@ -38,3 +38,4 @@ patches: [
   "0005-Add-a-check_request-function-allowing-more-control-o.patch"
   "0002-ocamlgraph-1.8.6.diff" {ocamlgraph:version >= "1.8.6"}
 ]
+available: os != "win32"
