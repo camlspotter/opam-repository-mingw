@@ -1,0 +1,19 @@
+*** ppx_import.1.1/pkg/pkg/build.ml	Mon May  9 12:01:33 2016
+--- ppx_import.1.1.fix/pkg/build.ml	Mon May  9 12:01:04 2016
+***************
+*** 3,9 ****
+  #use "topkg.ml"
+  
+  let ocamlbuild =
+!   "ocamlbuild -use-ocamlfind -classic-display -plugin-tag 'package(cppo_ocamlbuild)'"
+  
+  let () =
+    Pkg.describe "ppx_import" ~builder:(`Other (ocamlbuild, "_build")) [
+--- 3,9 ----
+  #use "topkg.ml"
+  
+  let ocamlbuild =
+!   "ocamlbuild -use-ocamlfind -classic-display -plugin-tag package(cppo_ocamlbuild)"
+  
+  let () =
+    Pkg.describe "ppx_import" ~builder:(`Other (ocamlbuild, "_build")) [
