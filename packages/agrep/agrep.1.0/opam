@@ -5,7 +5,7 @@ homepage: "http://forge.ocamlcore.org/projects/ocamlagrep/"
 license: "LGPL"
 build: [
   [make]
-  [make "find-install"]
+  [make "find-install"] {(os != "win32") & (os != "cygwin")}
   [make "find-install" "LIB_EXT=dll"] {(os = "win32") | (os = "cygwin")}
 ]
 remove: [["ocamlfind" "remove" "agrep"]]
