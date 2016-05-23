@@ -1,0 +1,36 @@
+--- ./src/ANSITerminal_win_stubs.c
++++ ./src/ANSITerminal_win_stubs.c
+@@ -29,10 +29,31 @@
+ #include <caml/callback.h>
+ #include <windows.h>
+ 
+-#include "io.h"
++#include <io.h>
++
++/* caml's io.h header is not installed, copy&pasted it here */
++#define IO_BUFFER_SIZE 65536
++typedef __int64 file_offset;
++
++struct channel {
++    int fd;                       /* Unix file descriptor */
++    file_offset offset;           /* Absolute position of fd in the file */
++    char * end;                   /* Physical end of the buffer */
++    char * curr;                  /* Current position in the buffer */
++    char * max;                   /* Logical end of the buffer (for input) */
++    void * mutex;                 /* Placeholder for mutex (for systhreads) */
++    struct channel * next, * prev;/* Double chaining of channels (flush_all) */
++    int revealed;                 /* For Cash only */
++    int old_revealed;             /* For Cash only */
++    int refcount;                 /* For flush_all and for Cash */
++    int flags;                    /* Bitfield */
++    char buff[IO_BUFFER_SIZE];    /* The buffer itself */
++    char * name;                  /* Optional name (to report fd leaks) */
++};
+ 
+ /* From otherlibs/win32unix/channels.c */
+-extern long _get_osfhandle(int);
++
++#define Channel(v) (*((struct channel **) (Data_custom_val(v))))
+ #define HANDLE_OF_CHAN(vchan) ((HANDLE) _get_osfhandle(Channel(vchan)->fd))
+ 
+ static HANDLE hStdout;
