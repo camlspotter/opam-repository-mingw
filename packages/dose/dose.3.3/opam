@@ -16,6 +16,8 @@ license: "LGPL-v3+ with OCaml linking exception"
 dev-repo: "https://gforge.inria.fr/git/dose/dose.git"
 build: [
   ["./configure" "--with-ocamlgraph" "--bindir=%{bin}%"]
+  ["tar" "-chf" "tmp.tar" "doseparseNoRpm"] { os = "win32" }
+  ["tar" "-xf" "tmp.tar"] { os = "win32" }
   [make]
 ]
 install: [make "install"]
@@ -28,6 +30,15 @@ remove: [
     "%{bin}%/debcheck"
     "%{bin}%/rpmcheck"
     "%{bin}%/eclipsecheck"
+    "%{bin}%/apt-cudf"
+    "%{bin}%/ceve"
+    "%{bin}%/challenged"
+    "%{bin}%/deb-buildcheck"
+    "%{bin}%/deb-coinstall"
+    "%{bin}%/dominators-graph"
+    "%{bin}%/outdated"
+    "%{bin}%/smallworld"
+    "%{bin}%/strong-deps"
   ]
 ]
 depends: [
@@ -42,4 +53,3 @@ patches: [
   "0001-Removed-hard-failure-cases-in-favor-of-finer-diagnos.patch"
   "0002-ocamlgraph-1.8.6.diff" {ocamlgraph:version >= "1.8.6"}
 ]
-available: os != "win32"
