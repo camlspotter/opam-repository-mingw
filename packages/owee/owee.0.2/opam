@@ -11,4 +11,4 @@ remove: ["ocamlfind" "remove" "owee"]
 depends: [
   "ocamlfind" {build}
 ]
-available: [ocaml-version >= "4.02"]
+available: os != "win32" & (ocaml-version >= "4.02")
