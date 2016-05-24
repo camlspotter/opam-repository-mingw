@@ -45,3 +45,4 @@ depends: [
   "base-unix"
   "ocamlbuild" {build}
 ]
+available: os != "win32"

@@ -27,3 +27,4 @@ depends: [
   "ounit" {test}
   "ocamlbuild" {build}
 ]
+available: os != "win32"
