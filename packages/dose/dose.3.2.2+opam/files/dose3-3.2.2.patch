@@ -1,0 +1,11 @@
+--- ./Makefile
++++ ./Makefile
+@@ -10,7 +10,7 @@
+ #OBFLAGS := $(OBFLAGS) -tag profile -tag debug
+ #OBFLAGS := $(OBFLAGS) -classic-display
+ 
+-all: $(CAMLP4CMXS) cleandoselib $(BYTELIBS) $(ALIBS) $(OPTLIBS) $(CMXSLIBS) man
++all: $(CAMLP4CMXS) cleandoselib $(BYTELIBS) $(ALIBS) $(OPTLIBS) $(CMXSLIBS) #man
+ 	$(OCAMLBUILD) $(OBFLAGS) $(TARGETS)
+ 
+ fast: $(CAMLP4CMXS) $(OPTLIBS)
