@@ -21,4 +21,4 @@ depends: [
   "expect"
   "ocamlbuild"
 ]
-available: [ ocaml-version < "4.00.0" ]
+available: os != "win32" & (ocaml-version < "4.00.0")
