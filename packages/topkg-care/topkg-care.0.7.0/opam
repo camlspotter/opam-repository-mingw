@@ -24,3 +24,4 @@ build:[[
           "--pkg-name" "%{name}%"
           "--installer" "true"
 ]]
+patches: "topkg-0.7.0.patch" {os = "win32"}
