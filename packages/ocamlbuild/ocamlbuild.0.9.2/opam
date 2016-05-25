@@ -49,13 +49,13 @@ doc: [
 ]
 
 available: [ocaml-version >= "4.03"]
-depends: [ ]
 conflicts: [
   "base-ocamlbuild"
   "ocamlfind" {< "1.5"}
 ]
 patches: [
-  "patch-ocamlbuild" { os = "win32" }
-  "patch-meta" { os = "win32" }
-  "patch-various" { os = "win32" }
+  "patch-ocamlbuild" {os = "win32"}
+  "patch-meta" {os = "win32"}
+  "patch-various" {os = "win32"}
+  "patch-restore-old" {os = "win32"}
 ]
