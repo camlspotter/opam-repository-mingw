@@ -1,0 +1,12 @@
+--- ./lib/Makefile.orm
++++ ./lib/Makefile.orm
+@@ -6,7 +6,8 @@
+ PACKS = sqlite3 dyntype.syntax
+ LIB_PACK_NAME = orm
+ 
+-LIBINSTALL_FILES = orm.cmx orm.cmxa orm.cma orm.cmi orm.a dllorm_stubs.so liborm_stubs.a syntax/pa_orm.cma 
++EXT_DLL:=$(shell ocamlfind ocamlc -config | awk '/^ext_dll:/ {print $$2}')
++LIBINSTALL_FILES = orm.cmx orm.cmxa orm.cma orm.cmi orm.a dllorm_stubs$(EXT_DLL) liborm_stubs.a syntax/pa_orm.cma 
+ 
+ .PHONY: all
+ all: ncl dcl

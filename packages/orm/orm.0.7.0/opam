@@ -1,8 +1,10 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "anil@recoil.org"
 tags: ["org:mirage"]
 build: [
   [make]
+]
+install: [
   [make "install"]
 ]
 remove: [["ocamlfind" "remove" "orm"]]
@@ -10,4 +12,8 @@ depends: [
   "ocamlfind"
   "sqlite3"
   "dyntype" {>= "0.9.0"}
+]
+patches: [
+  "mirage-orm-2f3d980.patch" {os = "win32"}
+  "patch-ocamlmakefile-orm.0.7.0" {os = "win32"}
 ]

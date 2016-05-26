@@ -1,0 +1,299 @@
+--- ./OCamlMakefile
++++ ./OCamlMakefile
+@@ -1,6 +1,6 @@
+ ###########################################################################
+ #                              OCamlMakefile
+-#                  Copyright (C) 1999-2007  Markus Mottl
++#                  Copyright (C) 1999-  Markus Mottl
+ #
+ #                             For updates see:
+ #                http://www.ocaml.info/home/ocaml_sources.html
+@@ -112,15 +112,21 @@
+ 
+ ####################  variables depending on your OCaml-installation
+ 
+-SYSTEM := $(shell ocamlc -config 2>/dev/null | grep system | sed 's/system: //')
++ifndef OCAMLC
++  OCAMLC := ocamlc
++endif
++export OCAMLC
++
++SYSTEM := $(shell $(OCAMLFIND) ocamlc -config | awk '/^system:/ {print $$2}')
+     # This may be
+     # - mingw
++    # - mingw64
+     # - win32
+     # - cygwin
+     # - some other string means Unix
+     # - empty means ocamlc does not support -config
+ 
+-ifeq ($(SYSTEM),mingw)
++ifeq ($(SYSTEM),$(filter $(SYSTEM),mingw mingw64))
+   MINGW=1
+ endif
+ ifeq ($(SYSTEM),win32)
+@@ -130,12 +136,10 @@
+ ifdef MINGW
+   export MINGW
+   WIN32   := 1
+-  CFLAGS_WIN32 := -mno-cygwin
+   # The default value 'cc' makes 'ocamlc -cc "cc"' raises the error 'The
+   # NTVDM CPU has encountered an illegal instruction'.
+-  CC := gcc
+-  # The OCaml C header files use this flag:
+-  CFLAGS += -D__MINGW32__
++  CC:= $(shell $(OCAMLFIND) ocamlc -config | awk '/^bytecomp_c_compiler/ {for(i=2;i<=NF;i++) printf "%s " ,$$i}')
++  AR:= $(shell $(OCAMLFIND) ocamlc -config | awk '/^bytecomp_c_compiler/ {print $$2}' | sed 's|-gcc|-ar|g')
+ endif
+ ifdef MSVC
+   export MSVC
+@@ -218,10 +222,10 @@
+ endif
+ export OCAMLFIND
+ 
+-ifndef OCAMLC
+-  OCAMLC := ocamlc
++ifndef OCAML
++  OCAML := ocaml
+ endif
+-export OCAMLC
++export OCAML
+ 
+ ifndef OCAMLOPT
+   OCAMLOPT := ocamlopt
+@@ -328,8 +332,8 @@
+     ifdef PREDS
+       PRE_OCAML_FIND_PREDICATES := $(subst $(space),$(comma),$(PREDS))
+       PRE_OCAML_FIND_PACKAGES := $(subst $(space),$(comma),$(PACKS))
+-      OCAML_FIND_PREDICATES := -syntax $(PRE_OCAML_FIND_PREDICATES)
+-      OCAML_DEP_PREDICATES := -syntax $(PRE_OCAML_FIND_PREDICATES)
++      OCAML_FIND_PREDICATES := -predicates $(PRE_OCAML_FIND_PREDICATES)
++  #    OCAML_DEP_PREDICATES := -syntax $(PRE_OCAML_FIND_PREDICATES)
+       OCAML_FIND_PACKAGES := $(OCAML_FIND_PREDICATES) -package $(PRE_OCAML_FIND_PACKAGES)
+       OCAML_DEP_PACKAGES := $(OCAML_DEP_PREDICATES) -package $(PRE_OCAML_FIND_PACKAGES)
+     else
+@@ -373,7 +377,7 @@
+ 
+ ifndef OCAMLLIBPATH
+   OCAMLLIBPATH := \
+-    $(shell $(OCAMLC) 2>/dev/null -where || echo /usr/local/lib/ocaml)
++    $(shell $(OCAMLFIND) ocamlc -where 2>/dev/null || echo /usr/local/lib/ocaml | tr -d '\r')
+ endif
+ export OCAMLLIBPATH
+ 
+@@ -501,7 +505,7 @@
+ endif
+ 
+ ifdef WIN32
+-DLLSONAME := $(CLIB_BASE).dll
++DLLSONAME := dll$(CLIB_BASE).dll
+ else
+ DLLSONAME := dll$(CLIB_BASE).so
+ endif
+@@ -509,9 +513,10 @@
+ NONEXECS     := $(INTF) $(IMPL_CMO) $(IMPL_CMX) $(IMPL_ASM) $(IMPL_S) \
+ 		$(OBJ_FILES) $(PRE_TARGETS) $(BCRESULT).cma $(NCRESULT).cmxa \
+ 		$(NCRESULT).$(EXT_LIB) $(BCRESULT).cmi $(BCRESULT).cmo \
+-		$(NCRESULT).cmi $(NCRESULT).cmx $(NCRESULT).o \
++		$(NCRESULT).cmi $(NCRESULT).cmx $(NCRESULT).$(EXT_OBJ) \
+ 		$(RES_CLIB) $(IMPL_CMO:.cmo=.annot) \
+-		$(LIB_PACK_NAME).cmi $(LIB_PACK_NAME).cmo $(LIB_PACK_NAME).cmx $(LIB_PACK_NAME).o
++		$(LIB_PACK_NAME).cmi $(LIB_PACK_NAME).cmo $(LIB_PACK_NAME).cmx \
++		$(LIB_PACK_NAME).$(EXT_OBJ)
+ 
+ ifndef STATIC
+   NONEXECS += $(DLLSONAME)
+@@ -548,8 +553,7 @@
+   CINCFLAGS := -I$(CAMLP4PATH)
+ endif
+ 
+-DINCFLAGS := $(INCFLAGS) $(SOURCE_DIRS:%=-I %) $(OCAML_DEFAULT_DIRS:%=-I %)
+-INCFLAGS := $(DINCFLAGS) $(INCDIRS:%=-I %)
++INCFLAGS := $(INCFLAGS) $(INCDIRS:%=-I %) $(SOURCE_DIRS:%=-I %) $(OCAML_DEFAULT_DIRS:%=-I %)
+ CINCFLAGS += $(SOURCE_DIRS:%=-I%) $(INCDIRS:%=-I%) $(OCAML_DEFAULT_DIRS:%=-I%)
+ 
+ ifndef MSVC
+@@ -856,7 +860,7 @@
+ # generates byte-code libraries with debugging information (native code)
+ debug-native-code-library:	$(PRE_TARGETS)
+ 			$(QUIET)$(MAKE) -r -f $(OCAMLMAKEFILE) \
+-				$(RES_CLIB) $(NCRESULT).cma \
++				$(RES_CLIB) $(NCRESULT).cmxa \
+ 				REAL_RESULT="$(NCRESULT)" make_deps=yes \
+ 				REAL_OCAMLC="$(OCAMLOPT)" \
+ 				CREATE_LIB=yes \
+@@ -910,7 +914,7 @@
+ # packs native-code objects
+ pack-native-code:		$(PRE_TARGETS)
+ 			$(QUIET)$(MAKE) -r -f $(OCAMLMAKEFILE) \
+-				$(NCRESULT).cmx $(NCRESULT).o \
++				$(NCRESULT).cmx $(NCRESULT).$(EXT_OBJ) \
+ 				REAL_RESULT="$(NCRESULT)" \
+ 				REAL_OCAMLC="$(OCAMLOPT)" \
+ 				PACK_LIB=yes make_deps=yes
+@@ -937,7 +941,7 @@
+ $(REAL_RESULT):		$(REAL_IMPL_INTF) $(OBJ_LINK) $(EXTRADEPS) $(RESULTDEPS)
+ 			$(REAL_OCAMLFIND) $(REAL_OCAMLC) \
+ 				$(OCAML_FIND_PACKAGES) $(OCAML_FIND_LINKPKG) \
+-				$(ALL_LDFLAGS) $(OBJS_LIBS) -o $@$(EXE) \
++				$(OBJS_LIBS) $(ALL_LDFLAGS) -o $@$(EXE) \
+ 				$(REAL_IMPL)
+ 
+ nolink:			$(REAL_IMPL_INTF) $(OBJ_LINK)
+@@ -951,7 +955,7 @@
+ %$(TOPSUFFIX):		$(REAL_IMPL_INTF) $(OBJ_LINK) $(EXTRADEPS)
+ 			$(REAL_OCAMLFIND) $(OCAMLMKTOP) \
+ 				$(OCAML_FIND_PACKAGES) $(OCAML_FIND_LINKPKG) \
+-				$(ALL_LDFLAGS) $(OBJS_LIBS) -o $@$(EXE) \
++				$(OBJS_LIBS) $(ALL_LDFLAGS) -o $@$(EXE) \
+ 				$(REAL_IMPL)
+ 
+ .SUFFIXES:		.mli .ml .cmi .cmo .cmx .cma .cmxa .$(EXT_OBJ) \
+@@ -960,15 +964,25 @@
+ 
+ ifndef STATIC
+ ifdef MINGW
++# From OCaml 3.11.0, ocamlmklib is available on windows
++OCAMLMLIB_EXISTS = $(shell which $(OCAMLMKLIB))
++ifeq ($(strip $(OCAMLMLIB_EXISTS)),)
+ $(DLLSONAME):		$(OBJ_LINK)
+ 			$(CC) $(CFLAGS) $(CFLAGS_WIN32) $(OBJ_LINK) -shared -o $@ \
+-			-Wl,--whole-archive $(wildcard $(foreach dir,$(LIBDIRS),$(CLIBS:%=$(dir)/lib%.a))) \
++			$(wildcard $(foreach dir,$(LIBDIRS),$(CLIBS:%=$(dir)/lib%.a))) \
+ 			 '$(OCAMLLIBPATH)/ocamlrun.a' \
++			-Wl,--whole-archive \
+ 			-Wl,--export-all-symbols \
+-			-Wl,--no-whole-archive \
+ 			-Wl,--allow-multiple-definition \
+ 			-Wl,--enable-auto-import
+ else
++$(DLLSONAME):		$(OBJ_LINK)
++			$(OCAMLMKLIB) $(INCFLAGS) $(CLIBFLAGS) \
++				-o $(CLIB_BASE) $(OBJ_LINK) $(CLIBS:%=-l%) \
++				$(CFRAMEWORKS:%=-framework %) \
++				$(OCAMLMKLIB_FLAGS)
++endif
++else
+ ifdef MSVC
+ $(DLLSONAME):		$(OBJ_LINK)
+ 			link /NOLOGO /DLL /OUT:$@ $(OBJ_LINK) \
+@@ -986,27 +1000,35 @@
+ 
+ ifndef LIB_PACK_NAME
+ $(RESULT).cma:		$(REAL_IMPL_INTF) $(MAKEDLL) $(EXTRADEPS) $(RESULTDEPS)
+-			$(REAL_OCAMLFIND) $(REAL_OCAMLC) -a $(ALL_LDFLAGS) $(OBJS_LIBS) -o $@ $(REAL_IMPL)
++			$(REAL_OCAMLFIND) $(REAL_OCAMLC) -a $(OBJS_LIBS) $(ALL_LDFLAGS) -o $@ $(REAL_IMPL)
+ 
+ $(RESULT).cmxa $(RESULT).$(EXT_LIB):	$(REAL_IMPL_INTF) $(EXTRADEPS) $(RESULTDEPS)
+-			$(REAL_OCAMLFIND) $(OCAMLOPT) -a $(ALL_LDFLAGS) $(OBJS_LIBS) -o $@ $(REAL_IMPL)
++			$(REAL_OCAMLFIND) $(OCAMLOPT) -a $(OBJS_LIBS) $(ALL_LDFLAGS) -o $@ $(REAL_IMPL)
+ else
+ # Packing a bytecode library
++LIB_PACK_NAME_MLI = $(wildcard $(LIB_PACK_NAME).mli)
++ifeq ($(LIB_PACK_NAME_MLI),)
++LIB_PACK_NAME_CMI = $(LIB_PACK_NAME).cmi
++else
++# $(LIB_PACK_NAME).mli exists, it likely depends on other compiled interfaces
++LIB_PACK_NAME_CMI =
++$(LIB_PACK_NAME).cmi: $(REAL_IMPL_INTF)
++endif
+ ifdef BYTE_OCAML
+-$(LIB_PACK_NAME).cmi $(LIB_PACK_NAME).cmo: $(REAL_IMPL_INTF)
++$(LIB_PACK_NAME_CMI) $(LIB_PACK_NAME).cmo: $(REAL_IMPL_INTF)
+ 			$(REAL_OCAMLFIND) $(REAL_OCAMLC) -pack -o $(LIB_PACK_NAME).cmo $(OCAMLLDFLAGS) $(REAL_IMPL)
+ # Packing into a unit which can be transformed into a library
+ # Remember the .ml's must have been compiled with -for-pack $(LIB_PACK_NAME)
+ else
+-$(LIB_PACK_NAME).cmi $(LIB_PACK_NAME).cmx: $(REAL_IMPL_INTF)
++$(LIB_PACK_NAME_CMI) $(LIB_PACK_NAME).cmx: $(REAL_IMPL_INTF)
+ 			$(REAL_OCAMLFIND) $(OCAMLOPT) -pack -o $(LIB_PACK_NAME).cmx  $(OCAMLLDFLAGS) $(REAL_IMPL)
+ endif
+ 
+ $(RESULT).cma:		$(LIB_PACK_NAME).cmi $(LIB_PACK_NAME).cmo $(MAKEDLL) $(EXTRADEPS) $(RESULTDEPS)
+-			$(REAL_OCAMLFIND) $(REAL_OCAMLC) -a $(ALL_LDFLAGS) $(OBJS_LIBS) -o $@ $(LIB_PACK_NAME).cmo
++			$(REAL_OCAMLFIND) $(REAL_OCAMLC) -a $(OBJS_LIBS) $(ALL_LDFLAGS) -o $@ $(LIB_PACK_NAME).cmo
+ 
+ $(RESULT).cmxa $(RESULT).$(EXT_LIB):	$(LIB_PACK_NAME).cmi $(LIB_PACK_NAME).cmx $(EXTRADEPS) $(RESULTDEPS)
+-			$(REAL_OCAMLFIND) $(OCAMLOPT) -a $(filter-out -custom, $(ALL_LDFLAGS)) $(OBJS_LIBS) -o $@ $(LIB_PACK_NAME).cmx
++			$(REAL_OCAMLFIND) $(OCAMLOPT) -a $(OBJS_LIBS) $(filter-out -custom, $(ALL_LDFLAGS)) -o $@ $(LIB_PACK_NAME).cmx
+ endif
+ 
+ $(RES_CLIB): 		$(OBJ_LINK)
+@@ -1020,7 +1042,7 @@
+   endif
+ endif
+ 
+-.mli.cmi: $(EXTRADEPS)
++%.cmi:	%.mli $(EXTRADEPS)
+ 			$(QUIET)pp=`sed -n -e '/^#/d' -e 's/(\*pp \([^*]*\) \*)/\1/p;q' $<`; \
+ 			if [ -z "$$pp" ]; then \
+ 			  $(ECHO) $(REAL_OCAMLFIND) $(INTF_OCAMLC) $(OCAML_FIND_PACKAGES) \
+@@ -1038,7 +1060,9 @@
+ 				$(OCAMLFLAGS) $(INCFLAGS) $<; \
+ 			fi
+ 
+-.ml.cmi .ml.$(EXT_OBJ) .ml.cmx .ml.cmo: $(EXTRADEPS)
++%.cmi: %$(IMPL_SUF);
++
++%$(IMPL_SUF) %.$(EXT_OBJ):	%.ml $(EXTRADEPS)
+ 			$(QUIET)pp=`sed -n -e '/^#/d' -e 's/(\*pp \([^*]*\) \*)/\1/p;q' $<`; \
+ 			if [ -z "$$pp" ]; then \
+ 			  $(ECHO) $(REAL_OCAMLFIND) $(REAL_OCAMLC) $(OCAML_FIND_PACKAGES) \
+@@ -1094,17 +1118,17 @@
+ 				$(CAMLIDLFLAGS) $<
+ 			$(QUIET)if [ $(NOIDLHEADER) ]; then touch $*.h; fi
+ 
+-.c.$(EXT_OBJ):
+-			$(OCAMLC) -c -cc "$(CC)" -ccopt "$(CFLAGS) \
++%.$(EXT_OBJ):	%.c
++			$(OCAMLC) -c -ccopt "$(CFLAGS) \
+ 				$(CPPFLAGS) $(CPPFLAGS_WIN32) \
+ 				$(CFLAGS_WIN32) $(CINCFLAGS) $(CFLAG_O)$@ " $<
+ 
+-.m.$(EXT_OBJ):
++%.$(EXT_OBJ):	%.m
+ 			$(CC) -c $(CFLAGS) $(CINCFLAGS) $(CPPFLAGS) \
+ 				-I'$(OCAMLLIBPATH)' \
+ 				$< $(CFLAG_O)$@
+ 
+-.$(EXT_CXX).$(EXT_OBJ):
++%.$(EXT_OBJ): %.$(EXT_CXX)
+ 			$(CXX) -c $(CXXFLAGS) $(CINCFLAGS) $(CPPFLAGS) \
+ 				-I'$(OCAMLLIBPATH)' \
+ 				$< $(CFLAG_O)$@
+@@ -1114,27 +1138,27 @@
+ 			$(QUIET)pp=`sed -n -e '/^#/d' -e 's/(\*pp \([^*]*\) \*)/\1/p;q' $<`; \
+ 			if [ -z "$$pp" ]; then \
+ 			  $(ECHO) $(REAL_OCAMLFIND) $(OCAMLDEP) $(OCAML_DEP_PACKAGES) \
+-				$(DINCFLAGS) $< \> $@; \
++				$(INCFLAGS) $< \> $@; \
+ 			  $(REAL_OCAMLFIND) $(OCAMLDEP) $(OCAML_DEP_PACKAGES) \
+-				$(DINCFLAGS) $< > $@; \
++				$(INCFLAGS) $< > $@; \
+ 			else \
+ 			  $(ECHO) $(REAL_OCAMLFIND) $(OCAMLDEP) $(OCAML_DEP_PACKAGES) \
+-				-pp \"$$pp $(PPFLAGS)\" $(DINCFLAGS) $< \> $@; \
++				-pp \"$$pp $(PPFLAGS)\" $(INCFLAGS) $< \> $@; \
+ 			  $(REAL_OCAMLFIND) $(OCAMLDEP) $(OCAML_DEP_PACKAGES) \
+-				-pp "$$pp $(PPFLAGS)" $(DINCFLAGS) $< > $@; \
++				-pp "$$pp $(PPFLAGS)" $(INCFLAGS) $< > $@; \
+ 			fi
+ 
+ $(BCDIDIR)/%.di $(NCDIDIR)/%.di:	%.mli
+ 			$(QUIET)if [ ! -d $(@D) ]; then mkdir -p $(@D); fi
+ 			$(QUIET)pp=`sed -n -e '/^#/d' -e 's/(\*pp \([^*]*\) \*)/\1/p;q' $<`; \
+ 			if [ -z "$$pp" ]; then \
+-			  $(ECHO) $(REAL_OCAMLFIND) $(OCAMLDEP) $(DEPFLAGS) $(DINCFLAGS) $< \> $@; \
+-			  $(REAL_OCAMLFIND) $(OCAMLDEP) $(DEPFLAGS) $(DINCFLAGS) $< > $@; \
++			  $(ECHO) $(REAL_OCAMLFIND) $(OCAMLDEP) $(DEPFLAGS) $(INCFLAGS) $< \> $@; \
++			  $(REAL_OCAMLFIND) $(OCAMLDEP) $(DEPFLAGS) $(INCFLAGS) $< > $@; \
+ 			else \
+ 			  $(ECHO) $(REAL_OCAMLFIND) $(OCAMLDEP) $(DEPFLAGS) \
+-			    -pp \"$$pp $(PPFLAGS)\" $(DINCFLAGS) $< \> $@; \
++			    -pp \"$$pp $(PPFLAGS)\" $(INCFLAGS) $< \> $@; \
+ 			  $(REAL_OCAMLFIND) $(OCAMLDEP) $(DEPFLAGS) \
+-			    -pp "$$pp $(PPFLAGS)" $(DINCFLAGS) $< > $@; \
++			    -pp "$$pp $(PPFLAGS)" $(INCFLAGS) $< > $@; \
+ 			fi
+ 
+ $(DOC_DIR)/$(RESULT)/html:
