@@ -44,4 +44,9 @@ conflicts: [
  "ppx_tools" {< "1.0.0" }
 ]
 available: [ocaml-version >= "4.01.0" & compiler != "4.02.1+BER"]
-patches: "patch-oasis-lwt.2.5.2" {os = "win32"}
+patches: [
+  # Unix.fstat / Unix.isatty are broken under 4.03.0.
+  # Restore old isatty behaviour to make utop usable.
+  "lwt-2.5.2.patch" {os = "win32" & ocaml-version = "4.03.0"}
+  "patch-oasis-lwt.2.5.2" {os = "win32"}
+]
