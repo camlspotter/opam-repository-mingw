@@ -1,14 +1,15 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "contact@ocamlpro.com"
 build: [
   [make "all"]
   [make "allopt"]
-  [make "install"]
+]
+install:[
+  [make "install"] { ocaml-native }
 ]
 remove: [["ocamlfind" "remove" "expat"]]
-depends: ["ocamlfind"]
-depexts: [
- [["debian"] ["libexpat1-dev"]]
- [["ubuntu"] ["libexpat1-dev"]]
- [["osx" "homebrew"] ["expat"]]
+depends: [
+ "ocamlfind" {build}
+ "conf-expat"
 ]
+patches: "ocaml-expat-0.9.1.patch" {os = "win32"}

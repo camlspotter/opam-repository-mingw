@@ -1,0 +1,85 @@
+--- ./Makefile
++++ ./Makefile
+@@ -2,22 +2,26 @@
+ #
+ 
+ # Change this to match your expat installation.
+-EXPAT_LIB=-lexpat
+-EXPAT_LIBDIR=/usr/local/lib
+-EXPAT_INCDIR=/usr/local/include
++EXPAT_LIB_FLAGS:=$(shell pkg-config --libs expat)
++#EXPAT_LIBDIR=/usr/local/lib
++#EXPAT_INCDIR=/usr/local/include
+ 
+ NAME=expat
+ OBJECTS=expat.cmo
+ XOBJECTS=$(OBJECTS:.cmo=.cmx)
+ C_OBJECTS=expat_stubs.o
++CC:= $(shell ocamlfind ocamlc -config 2>/dev/null | awk '/^bytecomp_c_compiler/ {for(i=2;i<=NF;i++) printf "%s " ,$$i}')
++EXT_DLL:=$(shell ocamlfind ocamlc -config | awk '/^ext_dll:/ {print $$2}')
++EXT_LIB:=$(shell ocamlfind ocamlc -config | awk '/^ext_lib:/ {print $$2}')
++EXT_OBJ:=$(shell ocamlfind ocamlc -config | awk '/^ext_obj:/ {print $$2}')
+ 
+ ARCHIVE=$(NAME).cma
+ XARCHIVE=$(ARCHIVE:.cma=.cmxa)
+ CARCHIVE_NAME=mlexpat
+-CARCHIVE=lib$(CARCHIVE_NAME).a
++CARCHIVE=lib$(CARCHIVE_NAME)$(EXT_LIB)
+ 
+ # Flags for the C compiler.
+-CFLAGS=-DFULL_UNROLL -O2 -I$(EXPAT_INCDIR)
++CFLAGS:=-DFULL_UNROLL -O2 $(shell pkg-config --cflags expat)
+ 
+ OCAMLC=ocamlc
+ OCAMLOPT=ocamlopt
+@@ -32,26 +36,23 @@
+ allopt:  $(XARCHIVE)
+ 
+ depend: *.c *.ml *.mli
+-	gcc -MM *.c > depend	
++	$(CC) -MM *.c > depend	
+ 	$(OCAMLDEP) *.mli *.ml >> depend
+ 
+ ## Library creation
+ $(CARCHIVE): $(C_OBJECTS)
+-	$(OCAMLMKLIB) -oc $(CARCHIVE_NAME) $(C_OBJECTS) \
+-	-L$(EXPAT_LIBDIR) $(EXPAT_LIB)
++	$(OCAMLMKLIB) -oc $(CARCHIVE_NAME) $(C_OBJECTS) $(EXPAT_LIB_FLAGS)
+ $(ARCHIVE): $(CARCHIVE) $(OBJECTS)
+-	$(OCAMLMKLIB) -o $(NAME) $(OBJECTS) -oc $(CARCHIVE_NAME) \
+-	-L$(EXPAT_LIBDIR) $(EXPAT_LIB)
++	$(OCAMLMKLIB) -o $(NAME) $(OBJECTS) -oc $(CARCHIVE_NAME) $(EXPAT_LIB_FLAGS)
+ $(XARCHIVE): $(CARCHIVE) $(XOBJECTS)
+-	$(OCAMLMKLIB) -o $(NAME) $(XOBJECTS) -oc $(CARCHIVE_NAME) \
+-	-L$(EXPAT_LIBDIR) $(EXPAT_LIB)
++	$(OCAMLMKLIB) -o $(NAME) $(XOBJECTS) -oc $(CARCHIVE_NAME) $(EXPAT_LIB_FLAGS)
+ 
+ ## Installation
+ .PHONY: install
+ install: all
+-	{ test ! -f $(XARCHIVE) || extra="$(XARCHIVE) $(NAME).a"; }; \
++	{ test ! -f $(XARCHIVE) || extra="$(XARCHIVE) $(NAME)$(EXT_LIB)"; }; \
+ 	$(OCAMLFIND) install $(NAME) META $(NAME).cmi $(NAME).mli $(ARCHIVE) \
+-	dll$(CARCHIVE_NAME).so lib$(CARCHIVE_NAME).a $$extra
++	dll$(CARCHIVE_NAME)$(EXT_DLL) lib$(CARCHIVE_NAME)$(EXT_LIB) $$extra
+ 
+ .PHONY: uninstall
+ uninstall:
+@@ -81,7 +82,7 @@
+ ## Cleaning up
+ .PHONY: clean
+ clean::
+-	rm -f *~ *.cm* *.o *.a *.so doc/*.html doc/*.css depend \
++	rm -f *~ *.cm* *$(EXT_OBJ) *$(EXT_LIB) *$(EXT_DLL) doc/*.html doc/*.css depend \
+ 	unittest unittest.opt
+ 
+ FORCE:
+@@ -94,7 +95,7 @@
+ 	$(OCAMLC) -c $(COMPLAGS) $<
+ .ml.cmx:
+ 	$(OCAMLOPT) -c $(COMPFLAGS) $<
+-.c.o:
++.c$(EXT_OBJ):
+ 	$(OCAMLC) -c -ccopt "$(CFLAGS)" $<
+ 
+ include depend
