@@ -18,3 +18,4 @@ depends: [
 tags: [
   "org:ocamllabs"
 ]
+patches: "patch-oasis-mpp.0.1.5" {os = "win32"}
