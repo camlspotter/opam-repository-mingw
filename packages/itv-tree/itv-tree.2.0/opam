@@ -10,3 +10,4 @@ depends: [
   "ocamlfind"
   "ocamlbuild" {build}
 ]
+patches: "patch-oasis-itv-tree.2.0" {os = "win32"}
