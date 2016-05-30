@@ -16,3 +16,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 ocaml-version: [>="4.01.0"]
+patches: "patch-oasis-mqtt.0.0.1" {os = "win32"}
