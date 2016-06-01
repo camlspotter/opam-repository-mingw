@@ -1710,7 +1710,7 @@
 +    let exts' =
 +      List.filter
 +        ( fun a -> a <> "" && a.[0] = '.' && a <> ".exe" )
-+        (List.map String.lowercase exts) (* windows file system doesn't care *)
++        (List.map OASISString.lowercase_ascii exts) (* windows file system doesn't care *)
 +    in
 +      ".exe"::exts' (* .exe first, most common *)
 +  end
