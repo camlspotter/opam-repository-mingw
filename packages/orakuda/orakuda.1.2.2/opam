@@ -22,3 +22,4 @@ depends: [
 available: [
   ocaml-version >= "4.01.0"
 ]
+patches: "patch-oasis-orakuda.1.2.2" {os = "win32"}
