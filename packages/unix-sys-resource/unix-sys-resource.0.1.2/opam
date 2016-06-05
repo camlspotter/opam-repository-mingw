@@ -21,3 +21,4 @@ depopts: "base-unix"
 conflicts: [
   "ctypes" {< "0.4.0"}
 ]
+available: os != "win32"
