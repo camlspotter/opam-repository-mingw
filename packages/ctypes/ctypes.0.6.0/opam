@@ -1,6 +1,5 @@
 opam-version: "1.2"
 maintainer: "yallop@gmail.com"
-author: "yallop@gmail.com"
 homepage: "https://github.com/ocamllabs/ocaml-ctypes"
 doc: "http://ocamllabs.github.io/ocaml-ctypes"
 dev-repo: "http://github.com/ocamllabs/ocaml-ctypes.git"
@@ -30,3 +29,5 @@ depopts: [
 ]
 tags: ["org:ocamllabs" "org:mirage"]
 available: [ ocaml-version >= "4.01.0" ]
+authors: "yallop@gmail.com"
+patches: "ocaml-ctypes-0.6.0.patch" {os = "win32"}
