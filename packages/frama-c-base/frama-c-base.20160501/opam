@@ -57,11 +57,12 @@ build: [
                  "--disable-gui" { !conf-gtksourceview:installed |
                                    !conf-gnomecanvas:installed }
 ]
-  [make "-j%{jobs}%"]
+  [make "-j%{jobs}%"] {os!="win32"}
+  [make "FRAMAC_TOP_SRCDIR=%{build}%" "all"] {os="win32"}
 ]
 
 install: [
-  [make "install"]
+  [make "FRAMAC_TOP_SRCDIR=%{build}%" "install"]
 ]
 
 remove: [
@@ -72,17 +73,18 @@ remove: [
                  "--disable-gui" { !conf-gtksourceview:installed |
                                    !conf-gnomecanvas:installed }
 ]
-  [make "uninstall"]
+  [make "FRAMAC_TOP_SRCDIR=%{build}%" "uninstall"]
   ["rm" "-rf" frama-c:doc]
 ]
 
 build-doc: [
-   [make "-C" "doc" "download"]
-   [make "-C" "doc" "FRAMAC_DOCDIR=%{frama-c:doc}%" "install"]
+   [make "FRAMAC_TOP_SRCDIR=%{build}%" "-C" "doc" "download"]
+   [make "FRAMAC_TOP_SRCDIR=%{build}%" "-C" "doc" "FRAMAC_DOCDIR=%{frama-c:doc}%" "install"]
 ]
 
 build-test: [
-  [make "-j%{jobs}%" "PTESTS_OPTS=-error-code" "tests"]
+  [make "-j%{jobs}%" "PTESTS_OPTS=-error-code" "tests"] {os!="win32"}
+  [make "FRAMAC_TOP_SRCDIR=%{build}%" "PTESTS_OPTS=-error-code" "tests"] {os="win32"}
 ]
 
 depends: [
