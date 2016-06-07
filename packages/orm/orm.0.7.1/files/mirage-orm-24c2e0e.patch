@@ -1,0 +1,20 @@
+--- ./lib/Makefile.orm
++++ ./lib/Makefile.orm
+@@ -6,10 +6,16 @@
+ PACKS = sqlite3 dyntype.syntax
+ LIB_PACK_NAME = orm
+ 
+-LIBINSTALL_FILES = orm.cmx orm.cmxa orm.cma orm.cmi orm.a dllorm_stubs.so liborm_stubs.a syntax/pa_orm.cma 
++LIBINSTALL_FILES = orm.cmx orm.cmxa orm.cma orm.cmi orm.$(EXT_LIB) dllorm_stubs.$(EXT_DLL) liborm_stubs.$(EXT_LIB) syntax/pa_orm.cma 
+ 
+ .PHONY: all
+ all: ncl dcl
+ 	@ :
+ 
+ include $(OCAMLMAKEFILE)
++
++ifdef WIN32
++EXT_DLL?=dll
++else
++EXT_DLL?=so
++endif
