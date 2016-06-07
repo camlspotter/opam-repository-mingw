@@ -27,6 +27,5 @@ depends: [
   "spotlib" { >= "2.4.0" & < "3.0.0" }
   "orakuda" { >= "1.1.1" & < "2.0.0" }
 ]
-available: [
-  ocaml-version >= "4.01.0" & ocaml-version < "4.03.0"
-]
+available:
+  os != "win32" & ocaml-version >= "4.01.0" & (ocaml-version < "4.03.0")
