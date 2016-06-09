@@ -1,5 +1,7 @@
 opam-version: "1.2"
 maintainer: "kakadu.hafanana@gmail.com"
+available: [ ocaml-version >= "4.01.0" & ocaml-version < "4.03.0"]
+
 build: [
   ["./configure"]
   [make "generator"]
