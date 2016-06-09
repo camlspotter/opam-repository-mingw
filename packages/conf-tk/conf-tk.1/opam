@@ -2,10 +2,14 @@ opam-version: "1.2"
 maintainer: "tim@gfxmonk.net"
 bug-reports: "https://github.com/ocaml/opam-repository/issues"
 dev-repo: "https://github.com/ocaml/opam-repository.git"
-build: [["sh" "check.sh"]]
+build: [
+ ["sh" "check.sh"] {!depext-cygwinports:installed}
+ ["sh" "-ecx" "%{bin}%/cygwin-install list | grep -q '^tk:'"] {depext-cygwinports:installed}
+]
 depends: ["conf-pkg-config"]
 depexts: [
   [["debian"] ["tk-dev"]]
   [["ubuntu"] ["tk-dev"]]
   [["nixpkgs"] ["tk"]]
+  [["win32" "cygwinports"] ["tk"]]
 ]

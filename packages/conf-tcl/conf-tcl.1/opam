@@ -2,10 +2,14 @@ opam-version: "1.2"
 maintainer: "tim@gfxmonk.net"
 bug-reports: "https://github.com/ocaml/opam-repository/issues"
 dev-repo: "https://github.com/ocaml/opam-repository.git"
-build: [["sh" "check.sh"]]
+build: [
+ ["sh" "check.sh"] {!depext-cygwinports:installed}
+ ["sh" "-ecx" "%{bin}%/cygwin-install list | grep -q '^tcl:'"] {depext-cygwinports:installed}
+]
 depends: ["conf-pkg-config"]
 depexts: [
   [["debian"] ["tcl-dev"]]
   [["ubuntu"] ["tcl-dev"]]
   [["nixpkgs"] ["tcl"]]
+  [["win32" "cygwinports"] ["tcl"]]
 ]
