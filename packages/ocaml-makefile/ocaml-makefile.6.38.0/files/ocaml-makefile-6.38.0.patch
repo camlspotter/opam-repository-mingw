@@ -1,0 +1,64 @@
+--- ./OCamlMakefile
++++ ./OCamlMakefile
+@@ -112,11 +112,12 @@
+ 
+ ####################  variables depending on your OCaml-installation
+ 
+-SYSTEM := $(shell ocamlc -config 2>/dev/null | grep system | sed 's/system: //')
++SYSTEM := $(shell $(OCAMLFIND) ocamlc -config | awk '/^system:/ {print $$2}')
+     # This may be
+     # - mingw
+     # - mingw64
+     # - win32
++    # - win64
+     # - cygwin
+     # - some other string means Unix
+     # - empty means ocamlc does not support -config
+@@ -124,7 +125,7 @@
+ ifeq ($(SYSTEM),$(filter $(SYSTEM),mingw mingw64))
+   MINGW=1
+ endif
+-ifeq ($(SYSTEM),win32)
++ifeq ($(SYSTEM),$(filter $(SYSTEM),win32 win64))
+   MSVC=1
+ endif
+ 
+@@ -133,18 +134,8 @@
+   WIN32 := 1
+   # The default value 'cc' makes 'ocamlc -cc "cc"' raises the error 'The
+   # NTVDM CPU has encountered an illegal instruction'.
+-  ifndef CC
+-    MNO_CYGWIN := $(shell gcc -Wextra -v --help 2>/dev/null | grep -q '\-mno-cygwin'; echo $$?)
+-    CC := gcc
+-  else
+-    MNO_CYGWIN := $(shell $$CC -Wextra -v --help 2>/dev/null | grep -q '\-mno-cygwin'; echo $$?)
+-  endif
+-  # We are compiling with cygwin tools:
+-  ifeq ($(MNO_CYGWIN),0)
+-	CFLAGS_WIN32 := -mno-cygwin
+-  endif
+-  # The OCaml C header files use this flag:
+-  CFLAGS += -D__MINGW32__
++  CC:= $(shell $(OCAMLFIND) ocamlc -config | awk '/^bytecomp_c_compiler/ {for(i=2;i<=NF;i++) printf "%s " ,$$i}')
++  AR:= $(shell $(OCAMLFIND) ocamlc -config | awk '/^bytecomp_c_compiler/ {print $$2}' | sed 's|gcc|ar|g')
+ endif
+ ifdef MSVC
+   export MSVC
+@@ -387,7 +378,7 @@
+ 
+ ifndef OCAMLLIBPATH
+   OCAMLLIBPATH := \
+-    $(shell $(OCAMLC) 2>/dev/null -where || echo /usr/local/lib/ocaml)
++    $(shell $(OCAMLFIND) ocamlc -where 2>/dev/null || echo /usr/local/lib/ocaml | tr -d '\r')
+ endif
+ export OCAMLLIBPATH
+ 
+@@ -1129,7 +1120,7 @@
+ 			$(QUIET)if [ $(NOIDLHEADER) ]; then touch $*.h; fi
+ 
+ %.$(EXT_OBJ):	%.c
+-			$(OCAMLC) -c -cc "$(CC)" -ccopt "$(CFLAGS) \
++			$(OCAMLC) -c -ccopt "$(CFLAGS) \
+ 				$(CPPFLAGS) $(CPPFLAGS_WIN32) \
+ 				$(CFLAGS_WIN32) $(CINCFLAGS) $(CFLAG_O)$@ " $<
+ 
