@@ -16,12 +16,7 @@ remove: [
  ["ocamlfind" "remove" "labltk"]
  ["rm" "-f" "%{bin}%/labltk.bat" "%{bin}%/ocamlbrowser"]
 ]
-depends: ["ocamlfind"]
-depexts: [
-  [["debian"] ["tcl-dev" "tk-dev"]]
-  [["ubuntu"] ["tcl-dev" "tk-dev"]]
-  [["win32" "cygwinports"] ["tk" "tcl"]]
-]
+depends: ["ocamlfind" "conf-tcl" "conf-tk"]
 post-messages: [
   "This package requires Tcl-Tk with its development packages installed on your system" {failure}
   "You must either set the environment variable TK_LIBRARY manually (e.g. to C:\\cygwin\\usr\\x86_64-w64-mingw32\\sys-root\\mingw\\lib\\tk8.5) or copy the tcl-tk-files relative to your executable in a appropriate order" { success & os = "win32"}
