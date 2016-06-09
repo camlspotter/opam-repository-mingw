@@ -1,9 +1,13 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "ogunden@phauna.org"
 build: [
   ["./configure" "--enable-widec"]
+  ["mv" "curses.ml" "curses.ml.in"]
+  [make "curses.ml"]
   [make "byte"]
   [make "opt"]
+]
+install: [
   [make "install"]
 ]
 remove: [["ocamlfind" "remove" "curses"]]
@@ -11,4 +15,9 @@ depends: ["ocamlfind"]
 depexts: [
  [ ["ubuntu"] ["libncurses-dev"] ]
  [ ["debian"] ["libncurses-dev"] ]
+ [ ["win32" "cygwinports"] ["ncurses"] ]
+]
+patches: [
+  "ocaml-curses-1.0.3.patch" {os = "win32"}
+  "patch-ocamlmakefile-curses.1.0.3" {os = "win32"}
 ]

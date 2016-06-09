@@ -10,11 +10,16 @@ install: [
   [make "install"]
 ]
 remove: ["ocamlfind" "remove" "portaudio"]
-depends: ["ocamlfind"]
+depends: ["ocamlfind" "conf-pkg-config"]
 depexts: [
   [["debian"] ["portaudio19-dev" "pkg-config"]]
   [["ubuntu"] ["portaudio19-dev" "pkg-config"]]
+  [["win32" "cygwinports"] ["portaudio"]]
 ]
 
 bug-reports: "https://github.com/savonet/ocaml-portaudio/issues"
 dev-repo: "https://github.com/savonet/ocaml-portaudio.git"
+patches: [
+  "ocaml-portaudio-0.2.1.patch" {os = "win32"}
+  "patch-ocamlmakefile-portaudio.0.2.1" {os = "win32"}
+]

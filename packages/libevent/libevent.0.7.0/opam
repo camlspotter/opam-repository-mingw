@@ -29,4 +29,8 @@ depends: ["ocamlfind"]
 depexts: [
   [ ["debian"] ["libevent-dev"] ]
   [ ["ubuntu"] ["libevent-dev"] ]
+  [ ["win32" "cygwinports"] ["libevent"]]
+]
+patches: [
+  "ocaml-libevent-0.7.0.patch" {os = "win32"}
 ]

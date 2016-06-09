@@ -17,7 +17,12 @@ depends: [
 depexts: [
   [["ubuntu"] ["libspeex-dev"]]
   [["debian"] ["libspeex-dev"]]
+  [["win32" "cygwinports"] ["speex"]]
 ]
 
 bug-reports: "https://github.com/savonet/ocaml-speex/issues"
 dev-repo: "https://github.com/savonet/ocaml-speex.git"
+patches: [
+  "ocaml-speex-0.2.1.patch" {os = "win32"}
+  "patch-ocamlmakefile-speex.0.2.1" {os = "win32"}
+]

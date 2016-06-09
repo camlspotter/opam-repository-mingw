@@ -1,0 +1,12 @@
+--- ./src/Makefile.in
++++ ./src/Makefile.in
+@@ -34,7 +34,8 @@
+ SOURCES = vorbis_stubs.c vorbis.mli vorbis.ml ogg_demuxer_vorbis_decoder.mli ogg_demuxer_vorbis_decoder.ml
+ RES_CLIB_SUF = _stubs
+ RESULT = vorbis
+-LIBINSTALL_FILES = $(wildcard *.mli *.cmi *.cma *.cmxa *.cmx *.a *.so)
++DLL_EXT:=$(shell ocamlfind ocamlc -config | awk '/^ext_dll:/ {print $$2}')
++LIBINSTALL_FILES = $(wildcard *.mli *.cmti *.cmi *.cma *.cmx *.cmxa *.$(EXT_LIB) *$(DLL_EXT))
+ INCDIRS = @INC@ @OCAMLOGG_INC@
+ ACLIBS = @LIBS@
+ CLIBS = $(ACLIBS:-l%=%)

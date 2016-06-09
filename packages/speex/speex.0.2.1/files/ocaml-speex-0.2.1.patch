@@ -1,0 +1,12 @@
+--- ./src/Makefile.in
++++ ./src/Makefile.in
+@@ -28,7 +28,8 @@
+ SOURCES = speex_stubs.c speex.ml speex.mli ogg_demuxer_speex_decoder.mli ogg_demuxer_speex_decoder.ml
+ RESULT = speex
+ OCAMLDOCFLAGS = -stars
+-LIBINSTALL_FILES = $(wildcard *.mli *.cmi *.cma *.cmxa *.cmx *.a *.so)
++DLL_EXT:=$(shell ocamlfind ocamlc -config | awk '/^ext_dll:/ {print $$2}')
++LIBINSTALL_FILES = $(wildcard *.mli *.cmti *.cmi *.cma *.cmx *.cmxa *.$(EXT_LIB) *$(DLL_EXT))
+ ACLIBS = @LIBS@
+ LDFLAGS = @LDFLAGS@
+ CLIBS = $(ACLIBS:-l%=%)

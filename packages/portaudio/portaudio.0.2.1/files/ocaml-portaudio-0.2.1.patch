@@ -1,0 +1,12 @@
+--- ./src/Makefile.in
++++ ./src/Makefile.in
+@@ -29,7 +29,8 @@
+ RESULT = portaudio
+ THREADS = yes
+ OCAMLDOCFLAGS = -stars
+-LIBINSTALL_FILES = $(wildcard *.mli *.cmi *.cma *.cmxa *.cmx *.a *.so)
++DLL_EXT:=$(shell ocamlfind ocamlc -config | awk '/^ext_dll:/ {print $$2}')
++LIBINSTALL_FILES = $(wildcard *.mli *.cmti *.cmi *.cma *.cmx *.cmxa *.$(EXT_LIB) *$(DLL_EXT))
+ ACLIBS = @LIBS@
+ LDFLAGS = @LDFLAGS@
+ CLIBS = $(ACLIBS:-l%=%)

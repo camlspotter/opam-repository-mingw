@@ -1,0 +1,14 @@
+--- ./lib/Makefile
++++ ./lib/Makefile
+@@ -2,6 +2,11 @@
+ 
+ ifeq ($(UNAME),Linux)
+ 	CLIBS += crypt
++else
++OS_TYPE:=$(shell ocamlfind ocamlc -config | awk '/^os_type:/ {print $$2}')
++ifeq ($(OS_TYPE),Win32)
++	CLIBS += crypt
++endif
+ endif
+ 
+ NO_CUSTOM = y

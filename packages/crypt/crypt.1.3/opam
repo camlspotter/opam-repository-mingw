@@ -1,11 +1,17 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "vb@luminar.eu.org"
 build: [
   [make]
+]
+install: [
   [make "install"]
 ]
 remove: [[make "uninstall"]]
 depends: [
-  "ocamlfind"
-  "ocaml-makefile"
+  "ocamlfind" {build}
+  "ocaml-makefile" {build}
 ]
+depexts: [
+ [["win32" "cygwinports"] ["crypt"]]
+]
+patches: "ocaml-crypt-1.3.patch" {os = "win32"}

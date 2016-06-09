@@ -14,6 +14,11 @@ depends: ["ocamlfind" "ogg"]
 depexts: [
   [["debian"] ["libflac-dev"]]
   [["ubuntu"] ["libflac-dev"]]
+  [["win32" "cygwinports"] ["flac"]]
 ]
 bug-reports: "https://github.com/savonet/ocaml-flac/issues"
 dev-repo: "https://github.com/savonet/ocaml-flac.git"
+patches: [
+  "ocaml-flac-0.1.2.patch" {os = "win32"}
+  "patch-ocamlmakefile-flac.0.1.2" {os = "win32"}
+]

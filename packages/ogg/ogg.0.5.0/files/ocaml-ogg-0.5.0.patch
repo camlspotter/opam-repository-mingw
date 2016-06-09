@@ -1,0 +1,13 @@
+--- ./src/Makefile.in
++++ ./src/Makefile.in
+@@ -28,7 +28,9 @@
+ SOURCES = ogg.mli ogg.ml ogg_stubs.c ogg_demuxer.mli ogg_demuxer.ml
+ RESULT = ogg
+ OCAMLDOCFLAGS = -stars
+-LIBINSTALL_FILES = $(wildcard *.mli *.cmi *.cma *.cmxa *.a *.so *.h)
++
++DLL_EXT:=$(shell ocamlfind ocamlc -config | awk '/^ext_dll:/ {print $$2}')
++LIBINSTALL_FILES = $(wildcard *.mli *.cmti *.cmi *.cma *.cmx *.cmxa *.$(EXT_LIB) *$(DLL_EXT) *.h)
+ ACLIBS = @LIBS@
+ LDFLAGS = @LDFLAGS@
+ CLIBS = $(ACLIBS:-l%=%)

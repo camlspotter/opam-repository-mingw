@@ -18,6 +18,11 @@ depexts: [
  [["ubuntu"]["libschroedinger-dev"]]
  [["debian"]["libschroedinger-dev"]]
  [["osx" "homebrew"]["schroedinger"]]
+ [["win32" "cygwinports"] ["schroedinger1.0"]]
 ]
 bug-reports: "https://github.com/savonet/ocaml-schroedinger/issues"
 dev-repo: "https://github.com/savonet/ocaml-schroedinger.git"
+patches: [
+  "ocaml-schroedinger-0.1.1.patch" {os = "win32"}
+  "patch-ocamlmakefile-schroedinger.0.1.1" {os = "win32"}
+]

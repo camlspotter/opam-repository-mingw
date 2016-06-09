@@ -26,4 +26,8 @@ depends: [
 conflicts: [
   "ocaml-zmq"
 ]
+depexts: [
+  [["win32" "cygwinports"] ["zeromq"]]
+]
 available: [ ocaml-version < "4.03.0" ]
+patches: "ocaml-zmq-4.0-4.patch" {os = "win32"}

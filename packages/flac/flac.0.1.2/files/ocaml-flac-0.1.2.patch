@@ -1,0 +1,12 @@
+--- ./src/Makefile.in
++++ ./src/Makefile.in
+@@ -24,7 +24,8 @@
+ SOURCES = flac_stubs.c flac.ml flac.mli @OCAMLOGG_FILES@
+ RESULT = flac
+ OCAMLDOCFLAGS = -stars
+-LIBINSTALL_FILES = $(wildcard *.mli *.cmi *.cma *.cmxa *.cmx *.a *.so)
++DLL_EXT:=$(shell ocamlfind ocamlc -config | awk '/^ext_dll:/ {print $$2}')
++LIBINSTALL_FILES = $(wildcard *.mli *.cmti *.cmi *.cma *.cmx *.cmxa *.$(EXT_LIB) *$(DLL_EXT))
+ ACLIBS = @LIBS@ @OCAMLOGG_LIBS@
+ LDFLAGS = @LDFLAGS@
+ CLIBS = $(ACLIBS:-l%=%)

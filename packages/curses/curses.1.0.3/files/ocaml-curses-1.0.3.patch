@@ -1,0 +1,25 @@
+--- ./Makefile.in
++++ ./Makefile.in
+@@ -12,8 +12,9 @@
+ CC = @CC@
+ CFLAGS = -g -Wall $(DEFS)
+ LDFLAGS = @LDFLAGS@
+-RANLIB = @RANLIB@
+-LIBINSTALL_FILES = $(wildcard *.mli *.cmi *.cma *.cmxa *.a *.so)
++RANLIB:=$(shell ocamlfind ocamlc -config | awk '/^ranlib:/ {print $$2}')
++DLL_EXT:=$(shell ocamlfind ocamlc -config | awk '/^ext_dll:/ {print $$2}')
++LIBINSTALL_FILES = $(wildcard *.mli *.cmti *.cmi *.cma *.cmx *.cmxa *.$(EXT_LIB) *$(DLL_EXT))
+ OCAMLDOCFLAGS = -stars
+ 
+ all: byte
+@@ -34,6 +35,10 @@
+ test.opt: test.ml opt
+ 	$(OCAMLOPT) -I . -o $@ curses.cmxa $<
+ 
++CC1:= $(shell ocamlfind ocamlc -config 2>/dev/null | awk '/^bytecomp_c_compiler/ {print $$2}')
++curses.ml: curses.ml.in
++	sed 's|^(\*pp gcc|(*pp $(CC1)|' curses.ml.in >curses.ml
++
+ META: META.in
+ 	sed \
+ 	  -e 's/@PACKAGE@/curses/' \

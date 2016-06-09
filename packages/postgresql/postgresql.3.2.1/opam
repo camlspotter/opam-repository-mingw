@@ -38,4 +38,5 @@ available: [ ocaml-version >= "3.12" ]
 depexts: [
   [["debian"] ["libpq-dev"]]
   [["ubuntu"] ["libpq-dev"]]
+  [["win32" "cygwinports"] ["postgresql"]]
 ]
