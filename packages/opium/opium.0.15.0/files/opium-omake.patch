@@ -1,0 +1,11 @@
+--- ./omake/OCaml.om
++++ ./omake/OCaml.om
+@@ -98,7 +98,7 @@
+ #   of build speed (\verb+true+ or \verb+false+).
+ # \end{doc}
+ #
+-public.USE_OCAMLFIND = false
++public.USE_OCAMLFIND = true
+ 
+ .STATIC: :value: $(PATH)
+     OCAMLFIND_EXISTS = $(CheckProg ocamlfind)
