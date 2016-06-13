@@ -22,3 +22,4 @@ available: [
   ocaml-version >= "4.02.2" & ocaml-version < "4.03.0"
 ]
 homepage: "http://bitbucket.org/camlspotter/ppx_implicits"
+patches: "patch-oasis-ppx_implicits.0.1.0" {os = "win32"}
