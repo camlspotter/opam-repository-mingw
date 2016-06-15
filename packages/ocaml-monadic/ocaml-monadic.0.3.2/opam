@@ -20,3 +20,6 @@ depends: [
   "ocamlfind" {build}
   "ppx_tools" {build}
 ]
+patches:
+  "ocaml-monadic-16a58948594661ce5d3e4e64229f97d830b12db2.patch"
+    {os = "win32"}

@@ -1,0 +1,7 @@
+--- ./ocaml-monadic.install
++++ ./ocaml-monadic.install
+@@ -1,3 +1,3 @@
+ lib: "lib/META" { "META" }
+-bin: "ocaml_monadic.native" { "ocaml_monadic" }
++bin: "_build/src/ocaml_monadic.native" { "ocaml_monadic" }
+ 
