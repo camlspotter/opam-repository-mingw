@@ -21,3 +21,4 @@ depends: [
   "unix-type-representations"
 ]
 depopts: ["base-unix" "lwt"]
+available: os != "win32"
