@@ -1,0 +1,57 @@
+--- ./compiler/Makefile
++++ ./compiler/Makefile
+@@ -45,11 +45,11 @@
+ 	mv -f $< $@
+ 
+ 
+-man: man/$(MINIFIER).1 man/$(COMPILER).1
+-man/$(MINIFIER).1: $(MINIFIER)
++man: man/jsoo_minify.1 man/js_of_ocaml.1
++man/jsoo_minify.1: $(MINIFIER)
+ 	mkdir -p man
+ 	./$(MINIFIER) --help=groff >$@
+-man/$(COMPILER).1: $(COMPILER)
++man/js_of_ocaml.1: $(COMPILER)
+ 	mkdir -p man
+ 	./$(COMPILER) --help=groff >$@
+ 
+--- ./Makefile.conf
++++ ./Makefile.conf
+@@ -4,6 +4,16 @@
+ 
+ ####
+ 
++OS_TYPE:=$(shell ocamlfind ocamlc -config | awk '/^os_type:/ {print $$2}')
++ifeq ($(OS_TYPE),$(filter $(OS_TYPE),Win32 Cygwin))
++EXEEXT := .exe
++else
++EXEEXT :=
++endif
++OBJEXT := $(shell ocamlfind ocamlc -config | awk '/^ext_obj:/ {print $$2}')
++LIBEXT := $(shell ocamlfind ocamlc -config | awk '/^ext_lib:/ {print $$2}')
++DLLEXT := $(shell ocamlfind ocamlc -config | awk '/^ext_dll:/ {print $$2}')
++
+ LIBRARY  := js_of_ocaml
+ LIBNAME  := js_of_ocaml$(LIBEXT)
+ COMPILER := js_of_ocaml$(EXEEXT)
+@@ -11,7 +21,7 @@
+ MKTOP    := jsoo_mktop$(EXEEXT)
+ MKCMIS   := jsoo_mkcmis$(EXEEXT)
+ 
+-PPX   := ppx_js$(EXEXT)
++PPX   := ppx_js$(EXEEXT)
+ # opt/byte
+ BEST := opt
+ 
+@@ -20,11 +30,6 @@
+ 
+ ####
+ 
+-EXEEXT :=
+-OBJEXT := .o
+-LIBEXT := .a
+-DLLEXT := .so
+-
+ ifeq ($(shell ocamlc -version | grep -q "^4."; echo $$?),0)
+ WITH_TOPLEVEL =YES
+ endif
