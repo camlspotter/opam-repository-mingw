@@ -1,0 +1,30 @@
+--- ./Makefile
++++ ./Makefile
+@@ -17,7 +17,7 @@
+ 	ocamlopt.opt -o $@ $< || ocamlopt -o $@ $< || ocamlc -o $@ $<
+ 	rm -f setup.cmx setup.cmi setup.o setup.obj setup.cmo
+ 
+-build: $(SETUP) setup.data
++build: $(SETUP) setup.data lib/pre_sexp.ml.x
+ 	./$(SETUP) -build $(BUILDFLAGS)
+ 
+ doc: $(SETUP) setup.data build
+@@ -51,3 +51,8 @@
+ 	./$(SETUP) -configure $(CONFIGUREFLAGS)
+ 
+ .PHONY: default build doc test all install uninstall reinstall clean distclean configure
++
++lib/pre_sexp.ml.x: lib/pre_sexp.ml
++	cp $< $<.orig
++	`ocamlc -config | grep bytecomp_c_compiler: | sed -e 's/.*: //'` -E -undef -traditional -Isyntax -w - < $< > $@
++	cp $@ $<
+--- ./_tags
++++ ./_tags
+@@ -73,7 +73,6 @@
+ <lib_test/*.ml{,i}>: use_sexplib
+ <lib_test/*.ml{,i}>: use_sexplib_num
+ # OASIS_STOP
+-<lib/pre_sexp.ml>: pp(cpp -undef -traditional -Isyntax -w)
+ <lib/conv.ml>: syntax_camlp4o, package(camlp4.macro), use_macro
+ <lib_test/*.ml{,i}>: syntax_camlp4o
+ <syntax/pa_sexp_conv.ml>: syntax_camlp4o
