@@ -17,3 +17,4 @@ bug-reports: "https://github.com/janestreet/bin_prot/issues"
 dev-repo: "https://github.com/janestreet/bin_prot.git"
 install: [[make "install"]]
 authors: ["Jane Street Group, LLC <opensource@janestreet.com>"]
+patches: "bin_prot-111.03.00.patch" {os = "win32"}
