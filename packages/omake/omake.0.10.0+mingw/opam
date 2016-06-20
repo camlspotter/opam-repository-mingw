@@ -20,3 +20,4 @@ patches: [
   "patch-mm" { os = "win32" }
   "patch-chmod"
 ]
+available: [ ocaml-version >= "4.02.0" ]

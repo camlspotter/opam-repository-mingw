@@ -28,3 +28,4 @@ patches: [
   "omake-0.10.0-test2.patch" {os = "win32"}
   "omake-faster-build.patch" {os = "win32"}
 ]
+available: [ ocaml-version >= "4.02.0" ]

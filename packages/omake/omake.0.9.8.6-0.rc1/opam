@@ -12,3 +12,4 @@ patches: [
   "readline.patch"
   "netbsd_fam.patch"
 ]
+available: os != "win32"
