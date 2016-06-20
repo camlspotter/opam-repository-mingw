@@ -2,7 +2,7 @@ opam-version: "1"
 version: "4.01.0"
 src: "http://caml.inria.fr/pub/distrib/ocaml-4.01/ocaml-4.01.0.tar.xz"
 patches:[
-  "https://gist.githubusercontent.com/fdopen/8043611b56ecb6b49dae/raw/783c82241ada7cefdff9d8bf7ba76e0419d6641a/gistfile1.txt"
+  "https://gist.githubusercontent.com/fdopen/bea85e92003c2f85dff490523799ecd1/raw/71d5ee10a6979651982139da60448b8dbfd9be0a/patch-ocaml-4.01.0"
 ]
   
 build: [
@@ -17,6 +17,7 @@ packages: [
   "base-unix"
   "base-bigarray"
   "base-threads"
+  "base-ocamlbuild"
 ]
 env: [
 [CAML_LD_LIBRARY_PATH = "%{lib}%/stublibs"]
