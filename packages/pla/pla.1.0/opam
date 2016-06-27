@@ -18,3 +18,4 @@ depends: [
   "cppo" {build}
 ]
 available: [ocaml-version >= "4.02.1" & opam-version >= "1.2"]
+patches: "patch-oasis-pla.1.0" {os = "win32"}
