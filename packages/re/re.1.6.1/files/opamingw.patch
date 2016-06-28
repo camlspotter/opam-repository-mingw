@@ -1,0 +1,24 @@
+Common subdirectories: re.1.6.1/_build and re.1.6.1.fixed/_build
+Common subdirectories: re.1.6.1/lib and re.1.6.1.fixed/lib
+Common subdirectories: re.1.6.1/lib_test and re.1.6.1.fixed/lib_test
+diff -c re.1.6.1/setup.ml re.1.6.1.fixed/setup.ml
+*** re.1.6.1/setup.ml	Tue Jun 21 07:49:47 2016
+--- re.1.6.1.fixed/setup.ml	Tue Jun 28 12:07:55 2016
+***************
+*** 6827,6833 ****
+       BaseSetup.configure = InternalConfigurePlugin.configure;
+       build =
+         OCamlbuildPlugin.build
+!          ["-cflags '-w +a-40-42-44-3-4-48 -warn-error +1..49'"];
+       test =
+         [
+            ("re_test_re",
+--- 6827,6833 ----
+       BaseSetup.configure = InternalConfigurePlugin.configure;
+       build =
+         OCamlbuildPlugin.build
+!          ["-cflags \"-w +a-40-42-44-3-4-48 -warn-error +1..49\""];
+       test =
+         [
+            ("re_test_re",
+Only in re.1.6.1.fixed: setup.ml~

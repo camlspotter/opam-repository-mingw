@@ -1,0 +1,20 @@
+diff -r -c -N sexplib.113.33.00/js-utils/gen_install.ml sexplib.113.33.00-fix/js-utils/gen_install.ml
+*** sexplib.113.33.00/js-utils/gen_install.ml	Fri Apr  1 12:06:04 2016
+--- sexplib.113.33.00-fix/js-utils/gen_install.ml	Fri Apr  1 12:10:51 2016
+***************
+*** 31,37 ****
+    |> List.map (fun line -> Scanf.sscanf line "%[^=]=%S" (fun k v -> (k, v)))
+  
+  let remove_cwd =
+!   let prefix = Sys.getcwd () ^ "/" in
+    let len_prefix = String.length prefix in
+    fun fn ->
+      let len = String.length fn in
+--- 31,37 ----
+    |> List.map (fun line -> Scanf.sscanf line "%[^=]=%S" (fun k v -> (k, v)))
+  
+  let remove_cwd =
+!   let prefix = Sys.getcwd () ^ Filename.dir_sep in
+    let len_prefix = String.length prefix in
+    fun fn ->
+      let len = String.length fn in
