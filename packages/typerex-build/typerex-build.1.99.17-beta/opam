@@ -1,11 +1,3 @@
-(**************************************************************)
-(*                                                            *)
-(*      This file is managed by ocp-autoconf                  *)
-(*  Remove it from `manage_files` in 'ocp-autoconf.config'    *)
-(*  if you want to modify it manually (or use 'opam.trailer') *)
-(*                                                            *)
-(**************************************************************)
-
 opam-version: "1.2"
 maintainer: "Fabrice Le Fessant <fabrice.le_fessant@ocamlpro.com>"
 authors: [
@@ -37,14 +29,7 @@ remove: [
   [ "rm" "-rf" "%{prefix}%/lib/ocaml/typerex/installed.ocp"   ]
   [ "sh" "-exc" "rmdir %{prefix}%/lib/ocaml/typerex || true"   ]
 ]
-available: [ocaml-version >= "3.12.1"]
-
-(**************************************************************)
-(*                                                            *)
-(* From opam.trailer:                                         *)
-(*                                                            *)
-(**************************************************************)
-
+available: os != "win32" & (ocaml-version >= "3.12.1")
 conflicts: [ "typerex"  {< "1.99.7"} ]
 depends: [
     "ocamlfind" (* not strictly needed by ocp-build, but
