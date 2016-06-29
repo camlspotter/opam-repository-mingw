@@ -12,6 +12,7 @@ license: "LGPL-2 with OCaml linking exception"
 dev-repo: "https://github.com/ocaml/ocamlbuild.git"
 homepage: "https://github.com/ocaml/ocamlbuild/"
 bug-reports: "https://github.com/ocaml/ocamlbuild/issues"
+doc: "https://github.com/ocaml/ocamlbuild/blob/master/manual/manual.adoc"
 
 build: [
   [make "-f" "configure.make" "Makefile.config" "src/ocamlbuild_config.ml"
@@ -34,10 +35,6 @@ remove: [
   ["rm" "-f" "%{bin}%/ocamlbuild.byte.exe" "%{bin}%/ocamlbuild.exe" "%{bin}%/ocamlbuild.native.exe"]
   ["rm" "-rf" "%{lib}%/ocaml/ocamlbuild"]
   ["rm" "-rf" "%{lib}%/ocamlbuild"]
-]
-doc: [
-  "http://caml.inria.fr/pub/docs/manual-ocaml/ocamlbuild.html"
-  "https://github.com/gasche/manual-ocamlbuild/blob/master/manual.md"
 ]
 
 available: [ocaml-version >= "4.03"]
