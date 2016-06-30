@@ -30,7 +30,7 @@ remove: [
   [ "sh" "-exc" "rmdir %{prefix}%/lib/ocaml/typerex || true"   ]
 ]
 available: os != "win32" & (ocaml-version >= "3.12.1")
-conflicts: [ "typerex"  {< "1.99.7"} ]
+conflicts: [ "typerex"  {< "1.99.7"} "ocp-build" {< "1.99.17-beta"} ]
 depends: [
     "ocamlfind" (* not strictly needed by ocp-build, but
                   since opam installs packages in a non-standard
