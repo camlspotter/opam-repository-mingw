@@ -28,4 +28,5 @@ depends: [
 depexts: [
   [["debian"] ["liblz4-dev"]]
   [["ubuntu"] ["liblz4-dev"]]
+  [["win32" "cygwinports"] ["lz4"]]
 ]
