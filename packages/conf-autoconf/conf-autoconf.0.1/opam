@@ -26,4 +26,5 @@ depexts: [
   [["alpine"] ["autoconf"]]
   [["oraclelinux"] ["autoconf"]]
   [["rhel"] ["autoconf"]]
+  [["win32" "cygwinports"] ["system:autoconf"]]
 ]
