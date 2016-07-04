@@ -18,4 +18,8 @@ depends: [
   "lablgtk"
   "conf-gtksourceview"
 ]
-patches: "coq-8.5pl1.patch" {os = "win32"}
+
+patches: [
+ "fix-idedeps-double-linking.patch"
+ "coq-8.5pl1.patch" {os = "win32"}
+]
