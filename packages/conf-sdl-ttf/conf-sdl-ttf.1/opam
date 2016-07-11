@@ -7,4 +7,5 @@ depexts: [
   [["debian"] ["libsdl-ttf2.0-dev"]]
   [["ubuntu"] ["libsdl-ttf2.0-dev"]]
   [["mageia"] ["libSDL_ttf-devel"]]
+  [["win32" "cygwinports"] ["SDL_ttf"]]
 ]
