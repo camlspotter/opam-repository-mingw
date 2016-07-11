@@ -47,3 +47,4 @@ conflicts: [
   "js_of_ocaml" {< "2.6"}
 ]
 available: [ocaml-version >= "4.01.0"]
+patches: "patch-oasis-cohttp.0.21.0" {os = "win32"}
