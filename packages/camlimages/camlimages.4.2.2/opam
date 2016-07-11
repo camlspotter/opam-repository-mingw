@@ -30,5 +30,5 @@ available: [
 license: "LGPL-2 with OCaml linking exception"
 patches: [ "patch-camlimages-4.2.2" { os = "win32" } ]
 depexts: [
-  [["win32" "cygwinports"] ["freetype2" "libpng" "libjpeg-turbo" "tiff"]]
+  [["win32" "cygwinports"] ["freetype2" "libpng" "libjpeg-turbo" "tiff" "libXpm" "giflib" "libexif"]]
 ]
