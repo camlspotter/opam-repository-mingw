@@ -34,5 +34,6 @@ depexts: [
   [["centos"] ["sqlite-devel"]]
   [["rhel"] ["sqlite-devel"]]
   [["fedora"] ["sqlite-devel"]]
+  [["alpine"] ["sqlite-dev"]]
   [["win32" "cygwinports"] ["sqlite3"]]
 ]
