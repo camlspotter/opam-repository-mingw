@@ -1,0 +1,161 @@
+--- ./configure.in
++++ ./configure.in
+@@ -29,6 +29,7 @@
+    CFLAGS="-g -O"
+ fi
+ AC_PROG_CC
++# AC_PROG_AR
+ AC_OBJEXT
+ AC_PROG_RANLIB
+ AC_FUNC_ALLOCA
+--- ./configure
++++ ./configure
+@@ -2299,6 +2299,7 @@
+      # If OCAMLLIB is set, use it
+      if test "$OCAMLLIB" = ""; then
+         OCAMLLIB=`$OCAMLC -where 2>/dev/null || $OCAMLC -v|tail -1|cut -d ' ' -f 4`
++	OCAMLLIB=`echo "$OCAMLLIB" | tr -d '\r'`
+      else
+         { $as_echo "$as_me:${as_lineno-$LINENO}: result: OCAMLLIB previously set; preserving it." >&5
+ $as_echo "OCAMLLIB previously set; preserving it." >&6; }
+@@ -4110,6 +4111,7 @@
+ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ ac_compiler_gnu=$ac_cv_c_compiler_gnu
+ 
++#AC_PROG_AR
+ 
+ if test -n "$ac_tool_prefix"; then
+   # Extract the first word of "${ac_tool_prefix}ranlib", so it can be a program name with args.
+--- ./Makefile
++++ ./Makefile
+@@ -26,13 +26,14 @@
+ include makefile.platform
+ include makefile.config.$(OCAML_C_BACKEND)
+ 
+-ifeq ($(OCAML_C_BACKEND),gcc)
+-makefile.config.gcc : makefile.config.gcc.in configure
+-	$(error "please run ./configure or edit makefile.platform")
+-configure : configure.in
+-	aclocal -I support
+-	autoconf
+-endif
++# no autotools dependency for installation!
++#ifeq ($(OCAML_C_BACKEND),gcc)
++#makefile.config.gcc : makefile.config.gcc.in configure
++#	$(error "please run ./configure or edit makefile.platform")
++#configure : configure.in
++#	aclocal -I support
++#	autoconf
++#endif
+ 
+ DISTSRC := AUTHORS COPYING INSTALL INSTALL.win32 README README.macosx NEWS \
+            Makefile META.in \
+--- ./makefile.config.gcc.in
++++ ./makefile.config.gcc.in
+@@ -12,6 +12,8 @@
+ PARTS = 	@PARTS@
+ 
+ CC =            @CC@
++# no AC_PROG_AR support ?
++AR := $(shell echo "$(CC)" | sed 's|gcc|ar|g')
+ CPPFLAGS =	@CPPFLAGS@
+ CFLAGS =	@CFLAGS@ 
+ RANLIB =        @RANLIB@
+@@ -36,7 +38,17 @@
+ # 4 -> C libs & ld flags
+ MKCMA  = $(OCAMLC) -a -o $(1).cma -cclib -l$(2) -custom $(3) $(addprefix -cclib ,$(filter -l%,$(4))) $(addprefix -ccopt ,$(filter-out -l%,$(4)))
+ MKCMXA = $(OCAMLOPT) -a -o $(1).cmxa -cclib -l$(2) $(3) $(addprefix -cclib ,$(filter -l%,$(4))) $(addprefix -ccopt ,$(filter-out -l%,$(4)))
+-MKCLIB  = ar cr lib$(2).$(A) $(3) ; $(RANLIB) lib$(2).$(A)
++MKCLIB  = $(AR) cr lib$(2).$(A) $(3) ; $(RANLIB) lib$(2).$(A)
++
++OSTYPE=$(shell $(OCAMLC) -config | grep '^os_type: ' | awk '{print $$2}')
++
++ifeq ($(OSTYPE),$(filter $(OSTYPE),Win32 Cygwin))
++EXE=.exe
++DLL=.dll
++else
++EXE=
++DLL=.so 
++endif
+ 
+ else
+ 
+--- ./src/Makefile
++++ ./src/Makefile
+@@ -27,35 +27,35 @@
+ 	$(call MKCMA,sdl,sdlstub,$^,$(SDL_LIBS))
+ sdl.cmxa : $(call ML_OPT_OBJS,sdl)
+ 	$(call MKCMXA,sdl,sdlstub,$^,$(SDL_LIBS))
+-libsdlstub.$(A) dllsdlstub.so : $(call STUB_OBJS,sdl)
++libsdlstub.$(A) dllsdlstub$(DLL) : $(call STUB_OBJS,sdl)
+ 	$(call MKCLIB,sdl,sdlstub,$^,$(SDL_LIBS))
+ 
+ sdlloader.cma : $(call ML_OBJS,loader)
+ 	$(call MKCMA,sdlloader,sdlloaderstub,$^,$(call SYSLIB,SDL_image))
+ sdlloader.cmxa : $(call ML_OPT_OBJS,loader)
+ 	$(call MKCMXA,sdlloader,sdlloaderstub,$^,$(call SYSLIB,SDL_image))
+-libsdlloaderstub.$(A) dllsdlloaderstub.so : $(call STUB_OBJS,loader)
++libsdlloaderstub.$(A) dllsdlloaderstub$(DLL) : $(call STUB_OBJS,loader)
+ 	$(call MKCLIB,sdlloader,sdlloaderstub,$^,$(call SYSLIB,SDL_image))
+ 
+ sdlmixer.cma : $(call ML_OBJS,mixer)
+ 	$(call MKCMA,sdlmixer,sdlmixerstub,$^,$(call SYSLIB,SDL_mixer))
+ sdlmixer.cmxa : $(call ML_OPT_OBJS,mixer)
+ 	$(call MKCMXA,sdlmixer,sdlmixerstub,$^,$(call SYSLIB,SDL_mixer))
+-libsdlmixerstub.$(A) dllsdlmixerstub.so : $(call STUB_OBJS,mixer)
++libsdlmixerstub.$(A) dllsdlmixerstub$(DLL) : $(call STUB_OBJS,mixer)
+ 	$(call MKCLIB,sdlmixer,sdlmixerstub,$^,$(call SYSLIB,SDL_mixer))
+ 
+ sdlttf.cma : $(call ML_OBJS,ttf)
+ 	$(call MKCMA,sdlttf,sdlttfstub,$^,$(call SYSLIB,SDL_ttf))
+ sdlttf.cmxa : $(call ML_OPT_OBJS,ttf)
+ 	$(call MKCMXA,sdlttf,sdlttfstub,$^,$(call SYSLIB,SDL_ttf))
+-libsdlttfstub.$(A) dllsdlttfstub.so : $(call STUB_OBJS,ttf)
++libsdlttfstub.$(A) dllsdlttfstub$(DLL) : $(call STUB_OBJS,ttf)
+ 	$(call MKCLIB,sdlttf,sdlttfstub,$^,$(call SYSLIB,SDL_ttf))
+ 
+ sdlgfx.cma : $(call ML_OBJS,gfx)
+ 	$(call MKCMA,sdlgfx,sdlgfxstub,$^,$(call SYSLIB,SDL_gfx))
+ sdlgfx.cmxa : $(call ML_OPT_OBJS,gfx)
+ 	$(call MKCMXA,sdlgfx,sdlgfxstub,$^,$(call SYSLIB,SDL_gfx))
+-libsdlgfxstub.$(A) dllsdlgfxstub.so : $(call STUB_OBJS,gfx)
++libsdlgfxstub.$(A) dllsdlgfxstub$(DLL) : $(call STUB_OBJS,gfx)
+ 	$(call MKCLIB,sdlgfx,sdlgfxstub,$^,$(call SYSLIB,SDL_gfx))
+ 
+ 
+@@ -81,14 +81,14 @@
+ endif
+ install-dll:
+ 	$(INSTALL) -d $(DESTDIR)$(OCAMLLIBDIR)/stublibs
+-	$(INSTALL) dll*.so $(DESTDIR)$(OCAMLLIBDIR)/stublibs
++	$(INSTALL) dll*$(DLL) $(DESTDIR)$(OCAMLLIBDIR)/stublibs
+ 
+ ifdef OCAMLFIND
+ install-findlib :
+ 	$(OCAMLFIND) install sdl ../META \
+           *.cma lib*.$(A) *.cmi *.mli \
+           $(if $(OCAMLOPT),*.cmxa sdl*.$(A) *.cmx) \
+-          $(if $(OCAMLMKLIB),dll*.so)
++          $(if $(OCAMLMKLIB),dll*$(DLL))
+ ifeq ($(PLATFORM),Apple)
+ 	$(RANLIB) $$($(OCAMLFIND) printconf destdir)/sdl/*.$(A)
+ endif
+@@ -115,7 +115,7 @@
+ endif
+ 
+ clean:
+-	rm -f *.cm* *.$(OBJEXT) *.$(A) *.so *.do
++	rm -f *.cm* *.$(OBJEXT) *.$(A) *.so *.dll *.do
+ 
+ depend: .depend .depend.c
+ 
+--- ./support/ocaml.m4
++++ ./support/ocaml.m4
+@@ -19,6 +19,7 @@
+      # If OCAMLLIB is set, use it
+      if test "$OCAMLLIB" = ""; then
+         OCAMLLIB=`$OCAMLC -where 2>/dev/null || $OCAMLC -v|tail -1|cut -d ' ' -f 4`
++	OCAMLLIB=`echo "$OCAMLLIB" | tr -d '\r'`
+      else
+         AC_MSG_RESULT([OCAMLLIB previously set; preserving it.])
+      fi
