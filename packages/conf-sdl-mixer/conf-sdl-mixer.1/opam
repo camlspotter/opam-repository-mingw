@@ -7,4 +7,5 @@ depexts: [
   [["debian"] ["libsdl-mixer1.2-dev"]]
   [["ubuntu"] ["libsdl-mixer1.2-dev"]]
   [["mageia"] ["libSDL_mixer-devel"]]
+  [["win32" "cygwinports"] ["SDL_mixer"]]
 ]
