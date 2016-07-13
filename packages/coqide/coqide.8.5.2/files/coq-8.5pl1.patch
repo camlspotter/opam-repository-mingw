@@ -1,0 +1,15 @@
+--- ./Makefile.build
++++ ./Makefile.build
+@@ -965,9 +965,11 @@
+ 	$(SHOW)'OCAMLC    $<'
+ 	$(HIDE)cd $(dir $<) && $(OCAMLC) -ccopt "$(CFLAGS)" -c $(notdir $<)
+ 
++WINDRES:=$(shell $(OCAMLC) -config | awk '/^bytecomp_c_compiler:/ { print $$2}' | sed 's|gcc|windres|g')
++
+ %.o: %.rc
+ 	$(SHOW)'WINDRES    $<'
+-	$(HIDE)i686-w64-mingw32-windres -i $< -o $@
++	$(HIDE)$(WINDRES) -i $< -o $@
+ 
+ %.cmi: %.mli | %.mli.d
+ 	$(SHOW)'OCAMLC    $<'

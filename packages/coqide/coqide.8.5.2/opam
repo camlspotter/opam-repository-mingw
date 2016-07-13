@@ -37,3 +37,4 @@ install: [
   "install-ide-info"
   "install-ide-devfiles"
 ]
+patches: "coq-8.5pl1.patch" {os = "win32"}
