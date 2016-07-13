@@ -12,7 +12,7 @@ build: [
     "-%{conf-gssapi:enable}%-gssapi"
     "-%{conf-gnutls:enable}%-gnutls"
     "-%{pcre:enable}%-pcre"
-    "-%{lablgtk:enable}%-gtk2"
+    "-disable-gtk2"
     "-%{camlzip:enable}%-zip"
     "-with-nethttpd"
   ]
@@ -22,7 +22,6 @@ build: [
 authors: ["Gerd Stolpmann"]
 remove: [
   ["ocamlfind" "remove" "equeue"]
-  ["ocamlfind" "remove" "equeue-gtk2"] {"%{lablgtk:installed}%"}
   ["ocamlfind" "remove" "netcamlbox"]
   ["ocamlfind" "remove" "netcgi2"]
   ["ocamlfind" "remove" "netcgi2-plex"]
@@ -48,14 +47,14 @@ remove: [
 ]
 depends: [
   "ocamlfind" {build}
-  "ocamlbuild"
+  "ocamlbuild" {build}
 ]
 depopts: [
   "conf-gnutls"
   "conf-gssapi"
-  "lablgtk"
   "pcre"
   "camlzip"
 ]
 available: [ ocaml-version >= "4.00.0"]
 install: [make "install"]
+patches: [ "patch-aa" { os = "win32"} ]

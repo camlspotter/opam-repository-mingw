@@ -1,0 +1,18 @@
+--- configure.orig	2015-06-21 15:26:40.000000000 +0000
++++ configure	2015-10-31 11:05:36.915600000 +0000
+@@ -60,8 +60,13 @@
+     disable_core=0
+     apxs=""
+     apache=""
+-    cpp=cpp
+-    cpp_set=0
++    if [ -z "$CPP" ]; then
++        cpp=cpp
++        cpp_set=0
++    else
++        cpp=$CPP
++        cpp_set=1
++    fi
+     gnutls_cflags=""
+     gnutls_libs=""
+     gnutls_system_trust_file=""
