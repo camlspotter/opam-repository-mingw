@@ -17,7 +17,8 @@ depends: [
   "ocamlfind" {build}
   "lwt" { >= "2.5.1" }
 ]
-available: os != "win32" & (os != "darwin" | (ocaml-version >= "4.02.0"))
+available: [ os = "linux" & ocaml-version >= "4.02.0" ]
+
 depexts:[
   [[ "ubuntu"] ["librdmacm-dev"] ]
   [[ "debian"] ["librdmacm-dev"] ]
