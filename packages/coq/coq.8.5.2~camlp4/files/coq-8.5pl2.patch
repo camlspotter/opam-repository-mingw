@@ -1,0 +1,23 @@
+--- ./configure.ml
++++ ./configure.ml
+@@ -599,6 +599,8 @@
+       let version_line, _ = run ~err:StdOut camlp4orf ["-v"] in
+       let camlp4_version = List.nth (string_split ' ' version_line) 2 in
+       check_caml_version_for_camlp4 ();
++      (* avoid quoting hell under windows, camlp4orf must be in PATH *)
++      let camlp4orf = if Sys.win32 then Filename.basename camlp4orf else camlp4orf in
+       "camlp4", camlp4orf, Filename.dirname camlp4orf, camlp4libdir, camlp4mod, camlp4_version
+     with _ -> die "No Camlp4 installation found.\n"
+ 
+@@ -1152,7 +1154,10 @@
+   pr "# Camlp4 : flavor, binaries, libraries ...\n";
+   pr "# NB : avoid using CAMLP4LIB (conflict under Windows)\n";
+   pr "CAMLP4=%s\n" camlpX;
+-  pr "CAMLP4O=%S\n" camlpXo;
++  if not Sys.win32 then
++    pr "CAMLP4O=%S\n" camlpXo
++  else
++    pr "CAMLP4O=%s\n" camlpXo;
+   pr "CAMLP4COMPAT=%s\n" camlp4compat;
+   pr "MYCAMLP4LIB=%S\n\n" camlpXlibdir;
+   pr "# Your architecture\n";
