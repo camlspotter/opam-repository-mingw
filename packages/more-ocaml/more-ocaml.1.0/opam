@@ -6,3 +6,4 @@ build: [
 ]
 remove: [["ocamlfind" "remove" "more"]]
 depends: ["ocamlfind"]
+patches: "patch-ocamlmakefile-more-ocaml.1.0" {os = "win32"}

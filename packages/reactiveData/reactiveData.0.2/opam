@@ -20,3 +20,4 @@ build:
 build-doc: ["ocamlbuild" "-use-ocamlfind" "src/api.docdir/index.html"]
 
 available: ocaml-version >= "3.11.0"
+patches: "reactiveData-0.2.patch" {os = "win32"}

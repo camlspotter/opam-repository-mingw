@@ -22,3 +22,4 @@ build:
                            "native-dynlink=%{ocaml-native-dynlink}%"
                            "cmdliner=%{cmdliner:installed}%" ]
 ]
+patches: "uutf-0.9.4.patch" {os = "win32"}

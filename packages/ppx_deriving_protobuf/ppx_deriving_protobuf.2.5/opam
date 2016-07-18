@@ -26,4 +26,7 @@ depends: [
   "ounit"        {test}
   "uint"         {test}
 ]
-patches: "ppx_deriving_protobuf-2.4.patch" {os = "win32"}
+patches: [
+  "patch-topkg-ppx_deriving_protobuf.2.5" {os = "win32"}
+  "ppx_deriving_protobuf-2.4.patch" {os = "win32"}
+]

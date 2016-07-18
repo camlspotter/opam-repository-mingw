@@ -1,0 +1,38 @@
+--- ./Makefile
++++ ./Makefile
+@@ -5,6 +5,8 @@
+ OCAMLC=ocamlc
+ OCAMLFIND=ocamlfind
+ 
++EXT_LIB:=$(shell ocamlfind ocamlc -config | awk '/^ext_lib:/ {print $$2}')
++
+ .SUFFIXES : .ml .mli .cmo .cmx .cmi .mll .mly
+ 
+ INSTALLDIR=`$(OCAMLC) -where`
+@@ -30,7 +32,7 @@
+ 	cp xml-light.cma $(INSTALLDIR)
+ 
+ installopt: opt installcommon
+-	cp xml-light.a xml-light.cmxa $(CMXS) xml.cmx dtd.cmx xmlParser.cmx $(INSTALLDIR)
++	cp xml-light$(EXT_LIB) xml-light.cmxa $(CMXS) xml.cmx dtd.cmx xmlParser.cmx $(INSTALLDIR)
+ 
+ install: installbyte installopt
+ 
+@@ -41,7 +43,7 @@
+ 	cp META.in META
+ 	sed -itmp "s|@VERSION@|$(VERSION)|g" META
+ 	rm -rf METAtmp
+-	$(OCAMLFIND) install xml-light META xml-light.a xml-light.cma xml-light.cmxa $(CMXS) xml.cmx dtd.cmx xmlParser.cmx xml.mli xmlParser.mli dtd.mli xml.cmi xmlParser.cmi dtd.cmi
++	$(OCAMLFIND) install xml-light META xml-light$(EXT_LIB) xml-light.cma xml-light.cmxa $(CMXS) xml.cmx dtd.cmx xmlParser.cmx xml.mli xmlParser.mli dtd.mli xml.cmi xmlParser.cmi dtd.cmi
+ 
+ doc:
+ 	mkdir doc
+@@ -94,7 +96,7 @@
+ 
+ clean:
+ 	rm -f xml-light.cma test.exe dtd.cmo dtd.cmi test.cmo test.cmi xml.cmo xml.cmi xmlParser.cmo xmlParser.cmi dtd.cmi xml.cmi xmlParser.cmi xml_lexer.cmi xml_lexer.cmo xml_lexer.ml xml_parser.mli xml_parser.cmi xml_parser.ml xml_parser.cmo
+-	rm -f xml-light.lib xml-light.a xml-light.cmxa test_opt.exe dtd.cmx dtd.obj dtd.o test.cmx test.obj test.o xml.cmx xml.obj xml.o xmlParser.cmx xmlParser.obj xmlParser.o xml_lexer.cmx xml_lexer.obj xml_lexer.o xml_parser.cmx xml_parser.obj xml_parser.o
++	rm -f xml-light.lib xml-light$(EXT_LIB) xml-light.cmxa test_opt.exe dtd.cmx dtd.obj dtd.o test.cmx test.obj test.o xml.cmx xml.obj xml.o xmlParser.cmx xmlParser.obj xmlParser.o xml_lexer.cmx xml_lexer.obj xml_lexer.o xml_parser.cmx xml_parser.obj xml_parser.o
+ 
+ 
+ # SUFFIXES

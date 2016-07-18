@@ -1,0 +1,29 @@
+--- ./Makefile
++++ ./Makefile
+@@ -1,6 +1,8 @@
+ VERSION = 1.2.0
+ export VERSION
+ 
++EXT_OBJ:=$(shell ocamlfind ocamlc -config | awk '/^ext_obj:/ {print $$2}')
++
+ NATDYNLINK := $(shell if [ -f `ocamlfind ocamlc -where`/dynlink.cmxa ]; \
+                       then echo YES; else echo NO; fi)
+ 
+@@ -53,7 +55,7 @@
+ 	caml2html easy_format_example.ml -t -o easy_format_example.html
+ 
+ soft-clean:
+-	rm -f *.cm[iox] *.cmxs *.o *.annot \
++	rm -f *.cm[iox] *.cmxs *$(EXT_OBJ) *.annot \
+ 		test_easy_format lambda_example simple_example \
+ 		bytecode nativecode
+ 
+@@ -65,7 +67,7 @@
+ 
+ COMMON_INSTALL_FILES = META easy_format.cmi easy_format.mli
+ BC_INSTALL_FILES = easy_format.cmo
+-NC_INSTALL_FILES = easy_format.cmx easy_format.o $(CMXS)
++NC_INSTALL_FILES = easy_format.cmx easy_format$(EXT_OBJ) $(CMXS)
+ 
+ install:
+ 	echo "version = \"$(VERSION)\"" > META; cat META.tpl >> META

@@ -1,8 +1,5 @@
 opam-version: "1.2"
-name: "deriving"
-version: "0.7.1"
 maintainer: "dev@ocsigen.org"
-author: "Jeremy Yallop <yallop@gmail.com>"
 homepage: "http://github.com/ocsigen/deriving/"
 bug-reports: "https://github.com/ocsigen/deriving/issues/"
 dev-repo: "https://github.com/ocsigen/deriving.git"
@@ -25,3 +22,5 @@ depends: [
 ]
 depopts: ["type_conv"]
 conflicts: ["type_conv" {< "108.07.00"}]
+authors: "Jeremy Yallop <yallop@gmail.com>"
+patches: "deriving-0.7.1.patch" {os = "win32"}

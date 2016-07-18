@@ -24,4 +24,4 @@ build:
                            "uutf=%{uutf:installed}%"
                            "cmdliner=%{cmdliner:installed}%" ]
 ]
-patches: [ "patch-aa" ]
+patches: "patch-topkg-uunf.1.0.0" {os = "win32"}

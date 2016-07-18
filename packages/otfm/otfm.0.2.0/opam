@@ -20,3 +20,4 @@ build:
                            "native-dynlink=true" # TODO fixme
                            ]
 ]
+patches: "patch-topkg-otfm.0.2.0" {os = "win32"}

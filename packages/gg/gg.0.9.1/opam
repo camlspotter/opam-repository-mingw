@@ -19,4 +19,4 @@ build:
   [ "ocaml" "pkg/build.ml" "native=%{ocaml-native}%"
                            "native-dynlink=%{ocaml-native-dynlink}%" ]
 ]
-patches: [ "patch-aa" ]
+patches: "patch-topkg-gg.0.9.1" {os = "win32"}

@@ -1,16 +1,47 @@
-diff -r -b -B -u ../core_kernel-113.24.00.orig/config/detect.sh ./config/detect.sh
 --- ./config/detect.sh
 +++ ./config/detect.sh
-@@ -4,7 +4,7 @@
+@@ -4,14 +4,27 @@
  
  set -e
  
 -if ld -lm -shared --wrap caml_modify -o /dev/null 2>/dev/null; then
-+if "$LD" -lm -shared --wrap caml_modify -o /dev/null 2>/dev/null; then
++
++system="$( ocamlfind ocamlc -config | awk '/^system:/ {print $2}')"
++case "$system" in
++    win*)
++        ld_wrap_possible=false
++        posix_timers_possible=false
++        ;;
++    mingw*)
++        ld_wrap_possible=false
++        posix_timers_possible=false
++        ;;
++    *)
++
++        if ld -lm -shared --wrap caml_modify -o /dev/null 2>/dev/null; then
      ld_wrap_possible=true
- else
+-else
++        else
      ld_wrap_possible=false
-diff -r -b -B -u ../core_kernel-113.24.00.orig/config/discover.sh ./config/discover.sh
+-fi
++        fi
+ 
+-ptimer=`getconf _POSIX_TIMERS || echo undefined`
+-case $ptimer in
++        ptimer=`getconf _POSIX_TIMERS || echo undefined`
++        case $ptimer in
+     undefined)
+         posix_timers_possible=false
+         ;;
+@@ -22,6 +35,8 @@
+             posix_timers_possible=false
+         fi
+         ;;
++        esac
++        ;;
+ esac
+ 
+ if [ -e setup.data ]; then
 --- ./config/discover.sh
 +++ ./config/discover.sh
 @@ -7,7 +7,7 @@
@@ -22,19 +53,38 @@ diff -r -b -B -u ../core_kernel-113.24.00.orig/config/discover.sh ./config/disco
  ML_OUTFILE="$2"
  C_OUTFILE="$3"
  shift 3
-@@ -20,7 +20,7 @@
+@@ -18,9 +18,18 @@
+ 
+ SRC=config/test.c
  OUT=config/test.out
- trap "rm -f $OUT" EXIT
+-trap "rm -f $OUT" EXIT
++trap "rm -f $OUT test.i" EXIT
  
 -$OCAMLC -ccopt -E $OCAML_CFLAGS -c $SRC | grep '^"OUT:[^"]*"$' | sed 's/"OUT:\([^"]*\)"/\1/' | tee > $OUT
-+"$OCAMLC" -ccopt -E $OCAML_CFLAGS -c $SRC | grep '^"OUT:[^"]*"$' | sed 's/"OUT:\([^"]*\)"/\1/' | tee > $OUT
++system="$( "$OCAMLC" -config | awk '/^system:/ {print $2}')"
++case "$system" in
++    win*)
++        "$OCAMLC" -ccopt /P $OCAML_CFLAGS -c $SRC
++        cat test.i | grep '^"OUT:[^"]*"$' | sed 's/"OUT:\([^"]*\)"/\1/' | tee > $OUT
++        ;;
++    *)
++        "$OCAMLC" -ccopt -E $OCAML_CFLAGS -c $SRC | grep '^"OUT:[^"]*"$' | sed 's/"OUT:\([^"]*\)"/\1/' | tee > $OUT
++        ;;
++esac
  
  mv "$OUT" "$ML_OUTFILE"
  
-diff -r -b -B -u ../core_kernel-113.24.00.orig/src/bigstring_marshal_stubs.c ./src/bigstring_marshal_stubs.c
 --- ./src/bigstring_marshal_stubs.c
 +++ ./src/bigstring_marshal_stubs.c
-@@ -30,12 +30,12 @@
+@@ -1,5 +1,7 @@
+ #include <string.h>
++#ifndef _MSC_VER
+ #include <unistd.h>
++#endif
+ #include <errno.h>
+ 
+ #include <caml/alloc.h>
+@@ -30,12 +32,12 @@
  }
  
  extern CAMLprim void
@@ -49,10 +99,26 @@ diff -r -b -B -u ../core_kernel-113.24.00.orig/src/bigstring_marshal_stubs.c ./s
    int alloc_flags = CAML_BA_CHAR | CAML_BA_C_LAYOUT | CAML_BA_MANAGED;
    caml_output_value_to_malloc(v, v_flags, &buf, &len);
    return caml_ba_alloc(alloc_flags, 1, buf, &len);
-diff -r -b -B -u ../core_kernel-113.24.00.orig/src/bigstring_stubs.c ./src/bigstring_stubs.c
 --- ./src/bigstring_stubs.c
 +++ ./src/bigstring_stubs.c
-@@ -21,6 +21,13 @@
+@@ -11,16 +11,33 @@
+ #endif
+ 
+ #include <string.h>
++#ifndef _MSC_VER
+ #include <unistd.h>
++#include <stdint.h>
++#else
++#include <stdlib.h>
++#endif
++
+ #include <errno.h>
+ #include <assert.h>
+-#include <stdint.h>
++
+ 
+ #ifdef __APPLE__
+ #include <libkern/OSByteOrder.h>
  #define bswap_16 OSSwapInt16
  #define bswap_32 OSSwapInt32
  #define bswap_64 OSSwapInt64
@@ -63,10 +129,14 @@ diff -r -b -B -u ../core_kernel-113.24.00.orig/src/bigstring_stubs.c ./src/bigst
 +}
 +#define bswap_32 __builtin_bswap32
 +#define bswap_64 __builtin_bswap64
++#elif _MSC_VER
++#define bswap_16 _byteswap_ushort
++#define bswap_32 _byteswap_ulong
++#define bswap_64 _byteswap_uint64
  #elif __GLIBC__
  #include <byteswap.h>
  #include <malloc.h>
-@@ -148,7 +155,7 @@
+@@ -152,7 +169,7 @@
                                value v_pos, value v_len)
  {
    char *start, *r;
@@ -75,10 +145,9 @@ diff -r -b -B -u ../core_kernel-113.24.00.orig/src/bigstring_stubs.c ./src/bigst
  
    start = get_bstr(v_str, v_pos);
    r = (char*) memchr(start, Int_val(v_needle), Long_val(v_len));
-diff -r -b -B -u ../core_kernel-113.24.00.orig/src/core_gc_stubs.c ./src/core_gc_stubs.c
 --- ./src/core_gc_stubs.c
 +++ ./src/core_gc_stubs.c
-@@ -16,9 +16,9 @@
+@@ -16,63 +16,69 @@
  extern intnat caml_stat_compactions;
  extern intnat caml_stat_heap_chunks;
  
@@ -90,7 +159,15 @@ diff -r -b -B -u ../core_kernel-113.24.00.orig/src/core_gc_stubs.c ./src/core_gc
              (double) Wsize_bsize (caml_young_end - caml_young_ptr));
  }
  
-@@ -27,9 +27,9 @@
+-CAMLprim value core_kernel_gc_minor_words(value unit __attribute__((unused)))
++#ifndef _MSC_VER
++#define UNUSED __attribute__((unused))
++#else
++#define UNUSED
++#endif
++
++CAMLprim value core_kernel_gc_minor_words(value unit UNUSED)
+ {
    return Val_long(minor_words());
  }
  
@@ -101,13 +178,121 @@ diff -r -b -B -u ../core_kernel-113.24.00.orig/src/core_gc_stubs.c ./src/core_gc
 +  return (intnat) (caml_stat_major_words + (double) caml_allocated_words);
  }
  
- CAMLprim value core_kernel_gc_major_words(value unit __attribute__((unused)))
-@@ -39,7 +39,7 @@
+-CAMLprim value core_kernel_gc_major_words(value unit __attribute__((unused)))
++CAMLprim value core_kernel_gc_major_words(value unit UNUSED)
+ {
+   return Val_long(major_words());
+ }
  
- CAMLprim value core_kernel_gc_promoted_words(value unit __attribute__((unused)))
+-CAMLprim value core_kernel_gc_promoted_words(value unit __attribute__((unused)))
++CAMLprim value core_kernel_gc_promoted_words(value unit UNUSED)
  {
 -  return Val_long((long) caml_stat_promoted_words);
 +  return Val_long((intnat) caml_stat_promoted_words);
  }
  
- CAMLprim value core_kernel_gc_minor_collections(value unit __attribute__((unused)))
+-CAMLprim value core_kernel_gc_minor_collections(value unit __attribute__((unused)))
++CAMLprim value core_kernel_gc_minor_collections(value unit UNUSED)
+ {
+   return Val_long(caml_stat_minor_collections);
+ }
+ 
+-CAMLprim value core_kernel_gc_major_collections(value unit __attribute__((unused)))
++CAMLprim value core_kernel_gc_major_collections(value unit UNUSED)
+ {
+   return Val_long(caml_stat_major_collections);
+ }
+ 
+-CAMLprim value core_kernel_gc_heap_words(value unit __attribute__((unused)))
++CAMLprim value core_kernel_gc_heap_words(value unit UNUSED)
+ {
+   return Val_long(caml_stat_heap_wsz);
+ }
+ 
+-CAMLprim value core_kernel_gc_heap_chunks(value unit __attribute__((unused)))
++CAMLprim value core_kernel_gc_heap_chunks(value unit UNUSED)
+ {
+   return Val_long(caml_stat_heap_chunks);
+ }
+ 
+-CAMLprim value core_kernel_gc_compactions(value unit __attribute__((unused)))
++CAMLprim value core_kernel_gc_compactions(value unit UNUSED)
+ {
+   return Val_long(caml_stat_compactions);
+ }
+ 
+-CAMLprim value core_kernel_gc_top_heap_words(value unit __attribute__((unused)))
++CAMLprim value core_kernel_gc_top_heap_words(value unit UNUSED)
+ {
+   return Val_long(caml_stat_top_heap_wsz);
+ }
+ 
+-CAMLprim value core_kernel_gc_major_plus_minor_words(value unit __attribute__((unused)))
++CAMLprim value core_kernel_gc_major_plus_minor_words(value unit UNUSED)
+ {
+   return Val_long(minor_words() + major_words());
+ }
+--- ./src/exn_stubs.c
++++ ./src/exn_stubs.c
+@@ -2,7 +2,13 @@
+ 
+ extern int caml_backtrace_pos;
+ 
+-CAMLprim value clear_caml_backtrace_pos (value __attribute__((unused)) unit) {
++#ifndef _MSC_VER
++#define UNUSED __attribute__((unused))
++#else
++#define UNUSED
++#endif
++
++CAMLprim value clear_caml_backtrace_pos (value UNUSED unit) {
+   caml_backtrace_pos = 0;
+   return Val_unit;
+ }
+--- ./src/time_ns_stubs.c
++++ ./src/time_ns_stubs.c
+@@ -11,8 +11,9 @@
+ #include <caml/signals.h>
+ #include <caml/unixsupport.h>
+ 
+-#include <time.h>
++#ifndef _MSC_VER
+ #include <stdint.h>
++#endif
+ 
+ #include "ocaml_utils.h"
+ #include "config.h"
+@@ -47,7 +48,33 @@
+ #else
+ 
+ #include <sys/types.h>
++#ifndef _MSC_VER
+ #include <sys/time.h>
++#endif
++#ifdef _MSC_VER
++#include <time.h>
++
++#define DELTA_EPOCH_IN_MICROSECS  116444736000000000Ui64
++
++static int gettimeofday(struct timeval *tp, void *tz)
++{
++  FILETIME    file_time;
++  SYSTEMTIME  system_time;
++  ULARGE_INTEGER ularge;
++  (void)tz;
++
++  GetSystemTime(&system_time);
++  SystemTimeToFileTime(&system_time, &file_time);
++  ularge.LowPart = file_time.dwLowDateTime;
++  ularge.HighPart = file_time.dwHighDateTime;
++
++  tp->tv_sec = (long) ((ularge.QuadPart - DELTA_EPOCH_IN_MICROSECS) / 10000000L);
++  tp->tv_usec = (long) (system_time.wMilliseconds * 1000);
++
++  return 0;
++}
++
++#endif
+ 
+ CAMLprim value core_kernel_time_ns_gettime_or_zero()
+ {

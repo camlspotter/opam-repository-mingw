@@ -15,6 +15,7 @@ depends: [
 ]
 available: [ ocaml-version >= "4.03.0" ]
 patches: [
+  "bin_prot-113.33.00+4.03.patch" {os = "win32"}
   "patch-oasis-bin_prot.113.33.00+4.03" {os = "win32"}
   "patch_gen_install.ml" {os = "win32"}
 ]

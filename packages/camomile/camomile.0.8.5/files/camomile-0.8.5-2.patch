@@ -1,0 +1,37 @@
+--- ./Makefile.in
++++ ./Makefile.in
+@@ -21,6 +21,7 @@
+ # You can contact the authour by sending email to
+ # yori@users.sourceforge.net
+ 
++EXT_LIB:=$(shell ocamlfind ocamlc -config | awk '/^ext_lib:/ {print $$2}')
+ 
+ # where to install the binaries
+ prefix=@prefix@
+@@ -396,7 +397,7 @@
+ 	if [ -f camomile.cma ]; then cp -f camomile.cma '$(OCAMLLIB)'; fi
+ 	if [ -f camomile.cmxa ]; then cp -f camomile.cmxa '$(OCAMLLIB)'; fi
+ 	if [ -f camomile.cmxs ]; then cp -f camomile.cmxs '$(OCAMLLIB)'; fi
+-	if [ -f camomile.a ]; then cp -f camomile.a '$(OCAMLLIB)'; fi
++	if [ -f camomile$(EXT_LIB) ]; then cp -f camomile$(EXT_LIB) '$(OCAMLLIB)'; fi
+ 
+ install-with-ocamlfind:
+ 	files="$(wildcard public/*.cmx internal/*.cmx)" &&\
+@@ -408,7 +409,7 @@
+ 	if [ -f camomile.cma ]; then files="camomile.cma $$files"; fi&& \
+ 	if [ -f camomile.cmxa ]; then files="camomile.cmxa $$files"; fi&& \
+ 	if [ -f camomile.cmxs ]; then files="camomile.cmxs $$files"; fi&& \
+-	if [ -f camomile.a ]; then files="camomile.a $$files"; fi && \
++	if [ -f camomile$(EXT_LIB) ]; then files="camomile$(EXT_LIB) $$files"; fi && \
+ 	ocamlfind install camomile $$files META $(MLI) camomileLibrary.cmi camomileLibraryDyn.cmi -optional public/*.cmx #camomileLibraryDefault.cmi
+ 
+ install-data:
+@@ -504,7 +505,7 @@
+ 	otags */*.ml */*.mli *.ml *.mli
+ 
+ clean :
+-	rm -f *.cm[ioxa] *.cmxa *.cmxs *.o *.so *.a */*.cm[iox] */*.o pocaml\
++	rm -f *.cm[ioxa] *.cmxa *.cmxs *.o *.so *$(EXT_LIB) */*.cm[iox] */*.o pocaml\
+ 	*/*.byte */*.opt
+ 	rm -f database/*.mar
+ 	rm -f charmaps/*.mar

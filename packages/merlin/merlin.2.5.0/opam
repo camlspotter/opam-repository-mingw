@@ -44,3 +44,4 @@ Take a look at https://github.com/the-lambda-church/merlin for more information
   "
     {success}
 ]
+patches: "patch-ocamlmakefile-merlin.2.5.0" {os = "win32"}

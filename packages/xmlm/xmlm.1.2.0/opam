@@ -17,3 +17,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 ocaml-version: [>= "4.00.0"]
+patches: "xmlm-1.2.0.patch" {os = "win32"}

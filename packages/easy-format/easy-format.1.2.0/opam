@@ -13,3 +13,4 @@ install: [
 ]
 remove: [["ocamlfind" "remove" "easy-format"]]
 depends: ["ocamlfind"]
+patches: "easy-format-1.2.0.patch" {os = "win32"}

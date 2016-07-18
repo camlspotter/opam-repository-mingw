@@ -1,7 +1,11 @@
 opam-version: "1"
 maintainer: "contact@ocamlpro.com"
 build: [
+ [make "all" "opt"]
+]
+install: [
   [make "install_ocamlfind"]
 ]
 remove: ["ocamlfind" "remove" "xml-light"]
 depends: ["ocamlfind"]
+patches: "xml-light-2.4.patch" {os = "win32"}

@@ -28,3 +28,4 @@ build:
                            "uutf=%{uutf:installed}%"
                            "cmdliner=%{cmdliner:installed}%" ]
 ]
+patches: "patch-topkg-uuseg.0.9.0" {os = "win32"}

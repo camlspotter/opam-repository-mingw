@@ -1,0 +1,17 @@
+--- ./myocamlbuild.ml
++++ ./myocamlbuild.ml
+@@ -651,7 +651,13 @@
+   | After_rules ->
+     let env = BaseEnvLight.load () in
+     let cc = BaseEnvLight.var_get "bytecomp_c_compiler" env in
+-    let cpp = S [A "-pp"; P (cc ^ " -E -xc -undef -w")] in
++    let msystem = BaseEnvLight.var_get "system" env in
++    let cpp =
++      if msystem = "win32" || msystem = "win64" then
++        S [A "-pp"; P ("cpp -undef -w")]
++      else
++        S [A "-pp"; P (cc ^ " -E -xc -undef -w")]
++    in
+     flag ["ocamldep"; "ocaml"; "cpp"] cpp;
+     flag ["compile";  "ocaml"; "cpp"] cpp;
+     flag ["doc";      "ocaml"; "cpp"] cpp;

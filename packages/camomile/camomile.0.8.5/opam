@@ -8,6 +8,7 @@ patches: [
   "no-camlp4.patch" { os != "win32" }
   "cmx.patch" { os != "win32" }
   "camomile-0.8.5.patch" { os = "win32" }
+  "camomile-0.8.5-2.patch" { os = "win32" }
 ]
 build: [
   ["./configure" "--prefix" prefix]

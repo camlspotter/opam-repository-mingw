@@ -1,0 +1,56 @@
+--- ./libs/ocplib-unix/build.ocp
++++ ./libs/ocplib-unix/build.ocp
+@@ -25,7 +25,7 @@
+     "onlyWin32.ml" "onlyWin32_c.c"
+   ]
+   if system = "win64" then {
+-    requires = [ "unix" ]
++    requires = [ "unix" string_compat ]
+     link = [ "-cclib"; "user32.lib"; ]
+   } else {
+ (* We require "Unix", but do not use it directly !!! *)
+--- ./Makefile
++++ ./Makefile
+@@ -4,6 +4,7 @@
+ include $(MAKE_CONFIG)
+ 
+ OBUILD_DSTDIR=_obuild
++EXT_OBJ:=$(shell ocamlfind ocamlc -config | awk '/^ext_obj:/ {print $$2}')
+ 
+ # If you add a library ocplib-xxx:
+ # 1/ Update this list with xxx_SRCDIR=
+@@ -137,13 +138,13 @@
+ OCP_BUILD_CMOS= $(OCP_BUILD_MLS:.ml=.cmo)
+ OCP_BUILD_MLIS= $(OCP_BUILD_MLS:.ml=.mli)
+ OCP_BUILD_CMIS= $(OCP_BUILD_MLS:.ml=.cmi)
+-OCP_BUILD_STUBS= $(OCP_BUILD_CS:.c=.o)
++OCP_BUILD_STUBS= $(OCP_BUILD_CS:.c=$(EXT_OBJ))
+ OCP_BUILD_TMPS= $(OCP_BUILD_MLYS:.mly=.mli) $(OCP_BUILD_MLYS:.mly=.ml) \
+ 	$(OCP_BUILD_MLLS:.mll=.ml) $(OCP_BUILD_ML4S:.ml4=.ml) \
+ 	$(OCP_BUILD_SRCDIR)/buildVersion.ml \
+ 	$(compat_SRCDIR)/stringCompat.ml
+ 
+-OCP_BUILD_OS= $(OCP_BUILD_STUBS) $(OCP_BUILD_CMXS:.cmx=.o)
++OCP_BUILD_OS= $(OCP_BUILD_STUBS) $(OCP_BUILD_CMXS:.cmx=$(EXT_OBJ))
+ 
+ all: build-ocps
+ 	@echo Libraries will be installed in ${ocamldir}
+@@ -271,7 +272,7 @@
+ 
+ include .depend
+ 
+-.SUFFIXES: .ml .mll .mli .mly .c .o .cmo .cmi .cmx
++.SUFFIXES: .ml .mll .mli .mly .c $(EXT_OBJ) .cmo .cmi .cmx
+ 
+ .mll.ml:
+ 	$(OCAMLLEX) $<
+@@ -288,7 +289,7 @@
+ .ml.cmo:
+ 	$(OCAMLC) -c -o $*.cmo $(INCLUDES) $<
+ 
+-.c.o:
++.c$(EXT_OBJ):
+ 	$(OCAMLC) -c $(INCLUDES) $<
+-	mv `basename $*.o` $*.o
++	mv `basename $*$(EXT_OBJ)` $*$(EXT_OBJ)
+ 

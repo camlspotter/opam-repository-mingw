@@ -1,0 +1,11 @@
+--- ./Makefile
++++ ./Makefile
+@@ -39,7 +39,7 @@
+ 
+ setup.exe: setup.ml
+ 	ocamlfind ocamlopt -o $@ -linkpkg -package oasis.dynrun $< || ocamlfind ocamlc -o $@ -linkpkg -package oasis.dynrun $< || true
+-	$(RM) setup.cmi setup.cmo setup.cmx setup.o
++	$(RM) -f setup.cmi setup.cmo setup.cmx setup.o setup.obj
+ 
+ .PHONY: build doc test all install uninstall reinstall clean distclean configure
+ 

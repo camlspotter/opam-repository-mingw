@@ -32,3 +32,4 @@ depopts: [
   "lablgtk"
   "conf-gnomecanvas"
 ]
+patches: "ocamlgraph-1.8.6.patch" {os = "win32"}

@@ -19,3 +19,4 @@ build:
                            "native-dynlink=true" # TODO fixme
  ]
 ]
+patches: "react-1.2.0.patch" {os = "win32"}

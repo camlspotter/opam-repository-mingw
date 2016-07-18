@@ -1,0 +1,31 @@
+--- ./Makefile.in
++++ ./Makefile.in
+@@ -64,8 +64,8 @@
+ # bytecode and native-code compilation
+ ######################################
+ 
+-LIB= unionfind heap bitv
+-LIB:=$(patsubst %, $(LIBDIR)/%.cmo, $(LIB))
++OLIB= unionfind heap bitv
++OLIB:=$(patsubst %, $(LIBDIR)/%.cmo, $(OLIB))
+ 
+ CMO = 	version util blocks persistent imperative \
+ 	delaunay builder classic rand oper \
+@@ -73,7 +73,7 @@
+         prim dominator graphviz gml dot_parser dot_lexer dot pack \
+ 	gmap minsep cliquetree mcs_m md strat fixpoint leaderlist contraction \
+ 	graphml merge mincut clique
+-CMO := $(LIB) $(patsubst %, $(SRCDIR)/%.cmo, $(CMO))
++CMO := $(OLIB) $(patsubst %, $(SRCDIR)/%.cmo, $(CMO))
+ 
+ CMX = $(CMO:.cmo=.cmx)
+ CMA = graph.cma
+@@ -453,7 +453,7 @@
+ 
+ NODOC	= blocks dot_parser dot_lexer version
+ NODOC	:= $(patsubst %, $(SRCDIR)/%.cmo, $(NODOC))
+-DOC_CMO	= $(filter-out $(NODOC) $(LIB), $(CMO))
++DOC_CMO	= $(filter-out $(NODOC) $(OLIB), $(CMO))
+ DOC_SRC	= $(CMI:.cmi=.mli) $(DOC_CMO:.cmo=.mli) $(DOC_CMO:.cmo=.ml)
+ ifeq (@LABLGNOMECANVAS@,yes)
+ DOC_SRC := $(DOC_SRC) $(DGRAPH_CMI:.cmi=.mli)

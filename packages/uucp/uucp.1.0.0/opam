@@ -19,4 +19,4 @@ build:
   [ "ocaml" "pkg/build.ml" "native=%{ocaml-native}%"
                            "native-dynlink=%{ocaml-native}%" ]
 ]
-patches: [ "patch-aa" ]
+patches: "patch-topkg-uucp.1.0.0" {os = "win32"}
