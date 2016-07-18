@@ -3,11 +3,13 @@ maintainer: "francois.berenger@inria.fr"
 homepage: "http://zeromq.org/"
 license: "LGPL"
 build: [
-  ["cc" "test.c" "-I/usr/local/include" "-L/usr/local/lib" "-lzmq"]
+  ["cc" "test.c" "-I/usr/local/include" "-L/usr/local/lib" "-lzmq"] { os != "win32" }
+  ["dash" "-ecx" "cc=$(ocamlc -config | awk '/^bytecomp_c_compiler/ {for(i=2;i<=NF;i++) printf \"%s \" ,$i}') ; $cc test.c -lzmq" ] { os = "win32" }
 ]
 depexts: [
   [["debian"] ["libzmq3-dev"]]
   [["ubuntu"] ["libzmq3-dev"]]
   [["osx" "homebrew"] ["zeromq"]]
   [["alpine"] ["zeromq-dev"]]
+  [["win32" "cygwinports"] ["zeromq"]]
 ]
