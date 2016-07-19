@@ -29,6 +29,7 @@ depexts: [
   [["fedora"] ["gtk2-devel"]]
   [["oraclelinux"] ["gtk2-devel"]]
   [["alpine"] ["gtk+2.0-dev"]]
+  [["win32" "cygwinports"] ["gtk2.0"]]
 ]
 patches: [
  "lablgldir.patch"
