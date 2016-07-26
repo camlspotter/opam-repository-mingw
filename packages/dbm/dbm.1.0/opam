@@ -15,6 +15,7 @@ depends: ["ocamlfind"]
 depexts: [
   [["debian"] ["libgdbm-dev"]]
   [["ubuntu"] ["libgdbm-dev"]]
+  [["nixpkgs"] ["gdbm"]]
 ]
 patches: [
   "hasgotfix.patch"
