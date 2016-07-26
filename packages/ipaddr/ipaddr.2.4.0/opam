@@ -21,3 +21,4 @@ depends: [
   "ocamlfind"
   "ocamlbuild" {build}
 ]
+patches: "patch-oasis-ipaddr.2.4.0" {os = "win32"}
