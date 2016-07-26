@@ -18,3 +18,4 @@ depends: [
 ]
 dev-repo: "https://github.com/OCamlPro/ocplib-endian.git"
 bug-reports: "https://github.com/OCamlPro/ocplib-endian/issues"
+patches: ["ocplib-endian-0.8.patch" {os = "win32"}]
