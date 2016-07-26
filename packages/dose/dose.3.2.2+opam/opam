@@ -42,3 +42,6 @@ patches: [
   "0004-Remove-broken-assert.patch"
   "0005-Add-a-check_request-function-allowing-more-control-o.patch"
 ]
+depexts: [
+ [["fedora"] ["perl-Pod-Html"]]
+]
