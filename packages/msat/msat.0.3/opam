@@ -14,6 +14,8 @@ tags: ["sat" "smt"]
 dev-repo: "https://github.com/Gbury/mSAT.git"
 build: [
   [make "disable_log"]
+  ["tar" "-chf" "util.tar" "util"] {os="win32"}
+  ["tar" "-xf" "util.tar"] {os="win32"}
   [make "lib"]
 ]
 install: [make "install"]
