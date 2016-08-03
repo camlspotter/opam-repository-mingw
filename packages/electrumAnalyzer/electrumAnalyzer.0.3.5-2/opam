@@ -25,4 +25,4 @@ depends: [
   "ocamlfind" {build}
   "pprint" {build}
 ]
-available: [ocaml-version >= "4.02"]
+available: os != "win32" & (ocaml-version >= "4.02")
