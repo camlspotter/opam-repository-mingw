@@ -8,3 +8,4 @@ build: [
 ]
 remove: [["ocamlfind" "remove" "oclock"]]
 depends: ["ocamlfind"]
+available: os != "win32"
