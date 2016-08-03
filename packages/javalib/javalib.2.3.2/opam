@@ -7,12 +7,10 @@ build: [
   [make]
 ]
 bug-reports: "sawja@inria.fr"
-author: "Javalib development team"
-licence: "LGPL-2.1 with OCaml linking exception"
 install: [
   [make "install"]
 ]
-bug-reports: "https://gforge.inria.fr/tracker/?atid=2815&group_id=686&func=browse"
+bug-reports: "sawja@inria.fr"
 remove: [
   ["ocamlfind" "remove" "javalib"]
   ["ocamlfind" "remove" "ptrees"]
@@ -25,5 +23,5 @@ depends: [
   "camlp4" 
   "extlib-compat"
 ]
-
-
+authors: "Javalib development team"
+patches: "javalib-2.3.2.patch" {os = "win32"}
