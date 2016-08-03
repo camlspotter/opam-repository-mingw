@@ -12,3 +12,4 @@ remove:
     ["ocaml" "please.ml" "uninstall"]
     ]
 depends: ["ocamlfind"]
+available: os != "win32"
