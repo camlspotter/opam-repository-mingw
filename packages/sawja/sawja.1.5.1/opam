@@ -11,3 +11,4 @@ remove: [
   ["ocamlfind" "remove" "sawja"]
 ]
 depends: [ "ocamlfind" "javalib" {= "2.3.1"} ]
+available: os != "win32"

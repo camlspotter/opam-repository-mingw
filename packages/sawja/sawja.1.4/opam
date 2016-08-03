@@ -10,3 +10,4 @@ depends: [
   "ocamlfind"
   "javalib" {= "2.2.2"}
 ]
+available: os != "win32"

@@ -8,12 +8,11 @@ remove: [
   ["ocamlfind" "remove" "sawja"]
 ]
 bug-reports: "sawja@inria.fr"
-author: "Sawja development team"
-licence: "GPLv3"
 install: [
   [make "install"]
 ]
-bug-reports: "https://gforge.inria.fr/tracker/?atid=2815&group_id=686&func=browse"
+bug-reports: "sawja@inria.fr"
 homepage: "http://sawja.inria.fr"
-available: ocaml-version >= "4.00" 
+available: os != "win32" & (ocaml-version >= "4.00")
 depends: [ "ocamlfind" "javalib" {>= "2.3.2"} ]
+authors: "Sawja development team"
