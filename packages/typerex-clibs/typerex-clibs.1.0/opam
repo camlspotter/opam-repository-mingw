@@ -23,3 +23,15 @@ authors: [
 dev-repo: "https://github.com/OCamlPro/typerex-clibs.git"
 bug-reports: "https://github.com/OCamlPro/typerex-clibs/issues"
 homepage: "http://github.com/OCamlPro/typerex-clibs"
+
+(**************************************************************)
+(*                                                            *)
+(* From opam.trailer:                                         *)
+(*                                                            *)
+(**************************************************************)
+
+remove: [
+  [ "ocp-build" "uninstall" "-install-lib" lib "ocplib-zlib" ]
+  [ "ocp-build" "uninstall" "-install-lib" lib "ocplib-digest" ]
+  [ "ocp-build" "uninstall" "-install-lib" lib "ocplib-bz2" ]
+]
