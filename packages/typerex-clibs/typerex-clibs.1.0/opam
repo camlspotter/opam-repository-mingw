@@ -1,11 +1,3 @@
-(**************************************************************)
-(*                                                            *)
-(*      This file is managed by ocp-autoconf                  *)
-(*  Remove it from `manage_files` in 'ocp-autoconf.config'    *)
-(*  if you want to modify it manually (or use 'opam.trailer') *)
-(*                                                            *)
-(**************************************************************)
-
 opam-version: "1.2"
 build: [
   [     "./configure"
@@ -19,13 +11,11 @@ build: [
 install: [
   [ make "install" ]
 ]
-remove: [
-]
 depends: [
      "ocamlfind"
      "ocp-build" {>= "1.99.17-beta" }
 ]
-available: [ocaml-version >= "3.12.1"]
+available: os != "win32" & (ocaml-version >= "3.12.1")
 maintainer: "Fabrice Le Fessant <fabrice.le_fessant@ocamlpro.com>"
 authors: [
   "Fabrice Le Fessant <fabrice.le_fessant@ocamlpro.com>"
