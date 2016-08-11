@@ -32,9 +32,9 @@ depexts: [
                "sys-devel/binutils-libs"]]
   [["archlinux"] ["boost" "binutils"]]
 ]
-available: [
-  ocaml-version >= "4.03.0" & !preinstalled & os != "darwin"
-]
+available:
+  os != "win32" &
+  ocaml-version >= "4.03.0" & (!preinstalled) & (os != "darwin")
 post-messages: [
   "This package requires llvm-3.7, clang-3.7, boost and binutils" {failure}
 ]
