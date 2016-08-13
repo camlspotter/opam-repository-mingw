@@ -1,0 +1,16 @@
+--- ./please.ml
++++ ./please.ml
+@@ -13,8 +13,11 @@
+      )
+  let args = Array.to_list Sys.argv
+  let in_build_directory f =
+-   cmdf "mkdir -p _build/";
+-   Sys.chdir "_build/";
++   if Sys.os_type <> "Win32" then
++     cmdf "mkdir -p _build/"
++   else
++     ignore (Sys.command (Filename.quote "mkdir.exe" ^ " -p _build"));
++   Sys.chdir "_build";
+    begin try
+      f ();
+    with

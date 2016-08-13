@@ -1,15 +1,15 @@
 opam-version: "1"
 maintainer: "seb@mondet.org"
 homepage: "https://bitbucket.org/smondet/nonstd"
-ocaml-version: [>= "4.00.0"]
+available: [ocaml-version >= "4.00.0"]
 build:
     [
     ["ocaml" "please.ml" "build"]
-    ["ocaml" "please.ml" "install"]
     ]
+install: [["ocaml" "please.ml" "install"]]
 remove:
     [
     ["ocaml" "please.ml" "uninstall"]
     ]
 depends: ["ocamlfind"]
-available: os != "win32"
+patches: "smondet-nonstd-606d5af16596.patch" {os = "win32"}
