@@ -10,7 +10,6 @@ tags: ["terminal"]
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 build-doc: [["ocaml" "setup.ml" "-doc"]]
 remove: [["ocamlfind" "remove" "ANSITerminal"]]
@@ -18,4 +17,6 @@ depends: [
   "ocamlfind"
   "ocamlbuild" {build}
 ]
+install: ["ocaml" "setup.ml" "-install"]
+available: [ocaml-version < "4.05.0" & os = "win32"]
 patches: "ANSITerminal-0.6.5.patch" {os = "win32"}
