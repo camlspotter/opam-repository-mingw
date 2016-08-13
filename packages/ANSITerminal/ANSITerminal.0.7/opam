@@ -27,3 +27,4 @@ depends: [
   "ocamlbuild" {build}
   "ocamlfind" {build & >= "1.5"}
 ]
+patches: "ANSITerminal-0.7.patch" {os = "win32"}
