@@ -35,5 +35,5 @@ depopts: [
   "camlp4"
   "ppx_tools" {build}
 ]
-available: [ ocaml-version >= "4.01" ]
+available: [ ocaml-version >= "4.01" & ocaml-version < "4.04" ]
 patches: "patch-oasis-utop.1.19.2" {os = "win32"}
