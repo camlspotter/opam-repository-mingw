@@ -10,7 +10,7 @@ build: [
   [make]
 ]
 install: [make "install"]
-remove: ["ocamlfind" "remove" "csvprovider"]
+remove: ["ocamlfind" "remove" "csv_provider"]
 depends: [
   "ocamlfind" {build}
   "ocamlbuild" {build}
