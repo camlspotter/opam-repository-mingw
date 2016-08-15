@@ -16,3 +16,4 @@ post-messages: [
 depends: [
   "ocamlbuild" {build}
 ]
+available: os != "win32"
