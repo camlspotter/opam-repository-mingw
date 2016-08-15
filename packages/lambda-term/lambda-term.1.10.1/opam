@@ -20,3 +20,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 available: [ ocaml-version >= "4.01" ]
+patches: "lambda-term-1.10.patch" {os = "win32"}
