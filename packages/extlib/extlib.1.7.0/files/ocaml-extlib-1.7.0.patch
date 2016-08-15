@@ -1,0 +1,25 @@
+--- ./src/bitSet.ml
++++ ./src/bitSet.ml
+@@ -24,7 +24,7 @@
+ 
+ let bcreate : int -> intern = Obj.magic Bytes.create
+ external fast_get : intern -> int -> int = "%string_unsafe_get"
+-external fast_set : intern -> int -> int -> unit = "%string_unsafe_set"
++let fast_set : intern -> int -> int -> unit = Obj.magic Bytes.unsafe_set
+ external fast_bool : int -> bool = "%identity"
+ let fast_blit : intern -> int -> intern -> int -> int -> unit = Obj.magic Bytes.blit
+ let fast_fill : intern -> int -> int -> int -> unit = Obj.magic Bytes.fill
+--- ./src/extString.mli
++++ ./src/extString.mli
+@@ -195,8 +195,8 @@
+ 	(**/**)
+ 
+ 	external unsafe_get : string -> int -> char = "%string_unsafe_get"
+-	external unsafe_set : Bytes.t -> int -> char -> unit = "%string_unsafe_set"
+-	external unsafe_blit : string -> int -> Bytes.t -> int -> int -> unit = "caml_blit_string" "noalloc"
+-	external unsafe_fill : Bytes.t -> int -> int -> char -> unit = "caml_fill_string" "noalloc"
++  val unsafe_set : Bytes.t -> int -> char -> unit
++  val unsafe_blit : string -> int -> Bytes.t -> int -> int -> unit
++  val unsafe_fill : Bytes.t -> int -> int -> char -> unit
+ 
+   end
