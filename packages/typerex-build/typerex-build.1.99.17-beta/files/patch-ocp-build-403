@@ -1,0 +1,36 @@
+--- ./libs/ocplib-compat/build.ocp
++++ ./libs/ocplib-compat/build.ocp
+@@ -38,7 +38,7 @@
+     pp = [ "%{ocp-pp_FULL_DST_DIR}%/ocp-pp.byte" ];
+     requires = [ "ocp-pp" ];
+     pp_requires += [ "ocp-pp:byte" ];
+-    pp_deps = [ "%{ocp-pp_FULL_DST_DIR}%/ocp-pp.byte" ];
++    pp_deps = [ "%{ocp-pp_FULL_DST_DIR}%/ocp-pp.byte.exe" ];
+   end
+ 
+ }
+--- ./libs/ocplib-unix/onlyUnix_c.c
++++ ./libs/ocplib-unix/onlyUnix_c.c
+@@ -13,6 +13,7 @@
+ #include <caml/memory.h>
+ #include <caml/signals.h>
+ #include <caml/fail.h>
++#include <caml/version.h>
+ 
+ #ifndef CAML_UNIXSUPPORT_H
+ #include <caml/unixsupport.h>
+@@ -37,12 +38,13 @@
+ UNAVAILABLE_PRIM(unix_umask)
+ UNAVAILABLE_PRIM(unix_chown)
+ UNAVAILABLE_PRIM(unix_fchown)
+-UNAVAILABLE_PRIM(unix_fchown)
+ UNAVAILABLE_PRIM(unix_chroot)
+ UNAVAILABLE_PRIM(unix_mkfifo)
++#if OCAML_VERSION_MAJOR < 4 || ( OCAML_VERSION_MAJOR == 4 && OCAML_VERSION_MINOR < 3 )
+ UNAVAILABLE_PRIM(unix_readlink)
+ UNAVAILABLE_PRIM(unix_symlink)
+ #endif
++#endif
+ 
+ UNAVAILABLE_PRIM(unix_clear_close_on_exec)
+ UNAVAILABLE_PRIM(unix_closedir)

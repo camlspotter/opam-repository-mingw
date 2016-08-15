@@ -15,10 +15,16 @@ build: [
 ]
 install: [
   [ make "install" ]
+  [ "sh" "-exc" "if [ -f '%{prefix}%/bin/ocp-build.asm' ]; then mv '%{prefix}%/bin/ocp-build.asm' '%{prefix}%/bin/ocp-build.exe' ; fi" ] { os = "win32" }
+  [ "sh" "-exc" "if [ -f '%{prefix}%/bin/ocp-pp.asm' ]; then mv '%{prefix}%/bin/ocp-pp.asm' '%{prefix}%/bin/ocp-pp.exe' ; fi" ] { os = "win32" }
+  [ "sh" "-exc" "if [ -f '%{prefix}%/bin/ocp-autoconf.asm' ]; then mv '%{prefix}%/bin/ocp-autoconf.asm' '%{prefix}%/bin/ocp-autoconf.exe' ; fi" ] { os = "win32" }
 ]
 remove: [
-  [ "rm" "-f" "%{prefix}%/bin/ocp-build"   ]
-  [ "rm" "-f" "%{prefix}%/bin/ocp-pp"   ]
+  [ "rm" "-f" "%{prefix}%/bin/ocp-build" "%{prefix}%/bin/ocp-build.byte" ]
+  [ "rm" "-f" "%{prefix}%/bin/ocp-pp" "%{prefix}%/bin/ocp-pp.byte" ]
+  [ "rm" "-f" "%{prefix}%/bin/ocp-autoconf" "%{prefix}%/bin/ocp-autoconf.byte" ]
+  [ "rm" "-f" "%{prefix}%/lib/META.ocp-autoconf" "%{prefix}%/lib/META.ocplib-file" ]
+  [ "rm" "-rf" "%{prefix}%/lib/ocaml/ocp-build" "%{prefix}%/lib/ocaml/ocp-pp" "%{prefix}%/lib/ocaml/ocplib-compat" "%{prefix}%/lib/ocaml/ocplib-config" "%{prefix}%/lib/ocaml/ocplib-debug" "%{prefix}%/lib/ocaml/ocplib-file" "%{prefix}%/lib/ocaml/ocplib-lang" "%{prefix}%/lib/ocaml/ocplib-subcmd" "%{prefix}%/lib/ocaml/ocplib-system" "%{prefix}%/lib/ocaml/ocplib-unix" ]
   [ "rm" "-rf" "%{prefix}%/lib/ocaml/typerex/ocp-build"   ]
   [ "rm" "-rf" "%{prefix}%/lib/ocaml/typerex/ocplib-compat"   ]
   [ "rm" "-rf" "%{prefix}%/lib/ocaml/typerex/ocplib-debug"   ]
@@ -29,10 +35,15 @@ remove: [
   [ "rm" "-rf" "%{prefix}%/lib/ocaml/typerex/installed.ocp"   ]
   [ "sh" "-exc" "rmdir %{prefix}%/lib/ocaml/typerex || true"   ]
 ]
-available: os != "win32" & (ocaml-version >= "3.12.1")
+available: ocaml-version >= "3.12.1"
 conflicts: [ "typerex"  {< "1.99.7"} "ocp-build" {< "1.99.17-beta"} ]
 depends: [
     "ocamlfind" (* not strictly needed by ocp-build, but
                   since opam installs packages in a non-standard
                   repository, we need it... *)
+]
+patches: [
+  "typerex-build-1.99.17-beta.patch" {os = "win32"}
+  "patch-ocp-build" {os = "win32" & (ocaml-version < "4.03.0")}
+  "patch-ocp-build-403" {os = "win32" & (ocaml-version >= "4.03.0")}
 ]
