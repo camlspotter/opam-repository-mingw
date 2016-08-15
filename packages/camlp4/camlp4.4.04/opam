@@ -24,4 +24,6 @@ remove: [
 available: [ (ocaml-version >= "4.04") & (ocaml-version < "4.05") ]
 bug-reports: "https://github.com/ocaml/camlp4/issues"
 dev-repo: "https://github.com/ocaml/camlp4.git"
-patches: [ "camlp4-4.03.patch" { os = "win32"} ]
+patches: [
+  "patch-camlp4.4.04" {os = "win32"}
+]
