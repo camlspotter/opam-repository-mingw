@@ -1,11 +1,3 @@
-(**************************************************************)
-(*                                                            *)
-(*      This file is managed by ocp-autoconf                  *)
-(*  Remove it from `manage_files` in 'ocp-autoconf.config'    *)
-(*  if you want to modify it manually (or use 'opam.trailer') *)
-(*                                                            *)
-(**************************************************************)
-
 opam-version: "1.2"
 maintainer: "Fabrice Le Fessant <fabrice.le_fessant@ocamlpro.com>"
 authors: [
@@ -31,14 +23,7 @@ depends: [
      "ocp-build" {>= "1.99.17-beta" }
      "typerex-clibs"
 ]
-available: [ocaml-version >= "3.12.1"]
-
-(**************************************************************)
-(*                                                            *)
-(* From opam.trailer:                                         *)
-(*                                                            *)
-(**************************************************************)
-
+available: os != "win32" & (ocaml-version >= "3.12.1")
 remove: [
   [ "ocp-build" "uninstall" "-install-lib" lib "ocp-cpbackup" ]
   [ "ocp-build" "uninstall" "-install-lib" lib "ocp-fdupes" ]
