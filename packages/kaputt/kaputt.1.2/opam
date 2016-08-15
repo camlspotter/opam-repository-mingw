@@ -4,9 +4,6 @@ build: [
   ["sh" "configure"]
   [make "all"]
 ]
-install: [
-   [make "install"]
-]
 remove: [["ocamlfind" "remove" "kaputt"]]
 depends: [
   "ocamlfind"
@@ -14,5 +11,7 @@ depends: [
 ]
 patches: [
   "install.patch"
+  "install2.patch"
   "kaputt-1.2.patch" { os = "win32" }
 ]
+install: [make "install"]
