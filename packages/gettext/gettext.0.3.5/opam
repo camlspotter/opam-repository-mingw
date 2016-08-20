@@ -16,4 +16,5 @@ depends: [
   "ounit"
   "fileutils"
   "camomile"
+  "camlp4"
 ]

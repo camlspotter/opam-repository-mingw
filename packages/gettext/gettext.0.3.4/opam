@@ -16,5 +16,6 @@ depends: [
   "ounit"
   "fileutils"
   "camomile"
+  "camlp4"
 ]
 ocaml-version: [<"4.02.0"]
