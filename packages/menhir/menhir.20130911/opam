@@ -4,5 +4,5 @@ build: [[make "install" "PREFIX=%{prefix}%" "docdir=%{doc}%/menhir" "libdir=%{li
 remove: [["ocamlfind" "remove" "menhirLib"]]
 depends: [
   "ocamlfind"
-  "ocamlbuild" {build}
+  "ocamlbuild" {build & < "0.9.1"}
 ]
