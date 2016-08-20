@@ -35,3 +35,4 @@ depends: [
   "cppo" {build & >= "1.1.2"}
 ]
 patches: "dose3-5.0~rc1.patch" {os = "win32"}
+conflicts: "dose"
