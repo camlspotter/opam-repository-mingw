@@ -1,7 +1,7 @@
 opam-version: "1"
 version: "4.03.0"
 src: "http://caml.inria.fr/pub/distrib/ocaml-4.03/ocaml-4.03.0.tar.xz"
-patches:["https://gist.githubusercontent.com/fdopen/8937a7eb67d2f6da052e93dc2e85eeb9/raw"]
+patches:["https://gist.githubusercontent.com/fdopen/02ba238a9f69000a51c41fa46a05af21/raw"]
 build: [
   [ "mkdir" "-p" "%{lib}%/ocaml" ]
   [ "sh" "-exc" "echo \"* : g = 1\" > %{lib}%/ocaml/ocaml_compiler_internal_params" ]

@@ -2,7 +2,7 @@ opam-version: "1"
 version: "4.04.0"
 src: "https://github.com/ocaml/ocaml/tarball/4.04.0+beta1"
 patches:[
-  "https://gist.githubusercontent.com/fdopen/e220552bdab13ebd3005100e388cb552/raw"
+  "https://gist.githubusercontent.com/fdopen/fa462a532216a6a6090231b3f6b605e2/raw"
 ]
 build: [
   [ "mkdir" "-p" "%{lib}%/ocaml" ]
