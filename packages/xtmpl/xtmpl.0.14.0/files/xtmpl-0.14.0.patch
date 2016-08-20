@@ -1,0 +1,51 @@
+--- ./Makefile
++++ ./Makefile
+@@ -31,9 +31,9 @@
+ JS_PACKAGES=$(PACKAGES),js_of_ocaml
+ COMPFLAGS=-annot -rectypes -safe-string -g
+ OCAMLPP=
+-OCAMLLIB:=`$(OCAMLC) -where`
++#OCAMLLIB:=`$(OCAMLC) -where`
+ 
+-INSTALLDIR=$(OCAMLLIB)
++#INSTALLDIR=$(OCAMLLIB)
+ 
+ RM=rm -f
+ CP=cp -f
+@@ -59,9 +59,17 @@
+ LIB_JS_CMOFILES=xtmpl_js.cmo
+ LIB_JS_CMIFILES=$(LIB_JS_CMOFILES:.cmo=.cmi)
+ 
++OS_TYPE:=$(shell ocamlfind ocamlc -config | awk '/^os_type:/ {print $$2}')
++
++ifeq ($(OS_TYPE),$(filter $(OS_TYPE),Win32 Cygwin))
++EXT_EXE=.exe
++else
++EXT_EXE=
++endif
++
+ all: byte opt
+ byte: $(LIB_BYTE) $(LIB_JS) ppx_xtmpl.byte
+-opt: $(LIB) $(LIB_CMXS) ppx_xtmpl
++opt: $(LIB) $(LIB_CMXS) ppx_xtmpl$(EXT_EXE)
+ 
+ $(LIB): $(LIB_CMIFILES) $(LIB_CMXFILES)
+ 	$(OCAMLFIND) ocamlopt -o $@ -a -package $(PACKAGES) $(LIB_CMXFILES)
+@@ -84,7 +92,7 @@
+ %.cmi: %.mli
+ 	$(OCAMLFIND) ocamlc -c -package $(PACKAGES) $(COMPFLAGS) $<
+ 
+-ppx_xtmpl: $(LIB) ppx_xtmpl.ml
++ppx_xtmpl$(EXT_EXE): $(LIB) ppx_xtmpl.ml
+ 	$(OCAMLFIND) ocamlopt -o $@ -package ppx_tools.metaquot,str,$(PACKAGES) \
+ 	$(COMPFLAGS) -linkpkg $(LIB) ppx_xtmpl.ml
+ 
+@@ -136,7 +144,7 @@
+ 		$(LIB) $(LIB_CMXS) $(LIB_OFILES) $(LIB_CMXFILES) $(LIB_A) \
+ 		$(LIB_BYTE) $(LIB_CMIFILES) \
+ 		$(LIB_JS) $(LIB_JS_CMIFILES) \
+-		ppx_xtmpl ppx_xtmpl.byte
++		ppx_xtmpl$(EXT_EXE) ppx_xtmpl.byte
+ 
+ uninstall:
+ 	ocamlfind remove xtmpl
