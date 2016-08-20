@@ -35,4 +35,4 @@ depexts: [
 post-messages: [
   "This package requires libelf to be installed on your system" {failure}
 ]
-available: os != "win32" & (ocaml-version >= "4.01.0")
+available: [os != "win32" & (ocaml-version >= "4.01.0" & ocaml-version < "4.03.0")]
