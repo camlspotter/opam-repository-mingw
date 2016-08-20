@@ -20,3 +20,4 @@ depends: [
   "ounit"        {test}
 ]
 available: [ocaml-version >= "4.02.0"]
+patches: "ppx_getenv-1.2.patch" {os = "win32"}
