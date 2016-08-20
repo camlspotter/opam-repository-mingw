@@ -45,4 +45,4 @@ depends: [
   "base-unix"
   "ocamlbuild" {build}
 ]
-available: os != "win32"
+available: [os != "win32" & ocaml-version < "4.04.0"]
