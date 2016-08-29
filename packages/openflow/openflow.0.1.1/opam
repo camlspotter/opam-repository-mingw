@@ -11,5 +11,6 @@ depends: [
   "lwt"
   "cstruct"
   "packet"
+  "camlp4"
   "ocamlbuild" {build}
 ]
