@@ -19,6 +19,6 @@ depends: [
   "lwt"
   "ocamlfind"
   ("sqlite3" {>= "2.0.4"} | "sqlite3" {= "2.0.3"})
-  "oasis"
+  "oasis" {< "0.4.7"}
   "ocamlbuild" {build}
 ]
