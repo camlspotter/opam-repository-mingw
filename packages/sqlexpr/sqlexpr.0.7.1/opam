@@ -28,3 +28,4 @@ depends: [
   "re" {build & >= "1.3.0"}
   "ounit" {test}
 ]
+patches: "patch-oasis-sqlexpr.0.7.1" {os = "win32"}
