@@ -39,7 +39,10 @@ remove: [
 
 available: [ocaml-version >= "4.03"]
 depends: [ ]
-conflicts: [ "base-ocamlbuild" ]
+conflicts: [
+  "base-ocamlbuild"
+  "ocamlfind" {< "1.6.2"}
+]
 patches: [
   "patch-ocamlbuild" { os = "win32" }
   "patch-meta" { os = "win32" }
