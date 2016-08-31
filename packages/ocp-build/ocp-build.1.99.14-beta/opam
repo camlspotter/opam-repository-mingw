@@ -34,7 +34,7 @@ depends: [
                   repository, we need it... *)
   ]
 conflicts: [ "typerex"  {< "1.99.7"} ]
-available: [ocaml-version >= "3.12.0"]
+available: [ocaml-version >= "3.12.0" & ocaml-version < "4.04.0"]
 patches: [
  "patch-ocp-build" { os = "win32" & ocaml-version < "4.03.0" }
  "patch-ocp-build-403" { os = "win32" & ocaml-version >= "4.03.0" }
