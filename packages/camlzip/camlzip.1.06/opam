@@ -20,10 +20,12 @@ depexts: [
   [["rhel"]   ["zlib-devel"]]
   [["fedora"] ["zlib-devel"]]
   [["alpine"] ["zlib-dev"]]
+  [["win32" "cygwinports"] ["zlib"]]
 ]
 patches: [
-  "fix-install.patch"
-  "build_with_trunk.patch"
+  "camlzip-1.06.patch" {os = "win32"}
+  "fix-install.patch" {os != "win32"}
+  "build_with_trunk.patch" {os != "win32"}
 ]
 install: [make "install-findlib"]
 available: [ ocaml-version >= "4.02.0" ]
