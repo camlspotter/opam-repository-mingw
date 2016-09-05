@@ -18,7 +18,8 @@ depends: [
   "base-bytes"
   "ocamlbuild" {build}
 ]
-available: [ocaml-version >= "4.01.0" & ocaml-version < "4.04.0"]
+available:
+  os != "win32" & ocaml-version >= "4.01.0" & (ocaml-version < "4.04.0")
 build: [ [ make ] ]
 depexts: [
  [ ["debian"] ["libelf-dev"] ]
