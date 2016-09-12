@@ -24,4 +24,5 @@ conflicts: [
   "lwt" {>= "2.4.7"}
   "lwt" {< "2.4.3"}
   "mirage-net" {< "0.5.0"}
+  "mirage-net" {>= "0.9.4"}
 ]
