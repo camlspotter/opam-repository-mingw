@@ -4,7 +4,9 @@ authors: ["Daniel Stenberg"]
 homepage: "http://curl.haxx.se/"
 license: "BSD-like"
 depends: [ "conf-pkg-config" ]
-build: [["pkg-config" "libcurl"]]
+build: [
+  ["pkg-config" "libcurl"] { os != "darwin" }
+]
 depexts: [
   [["debian"] ["libcurl4-gnutls-dev"]]
   [["mageia"] ["libcurl-devel"]]
