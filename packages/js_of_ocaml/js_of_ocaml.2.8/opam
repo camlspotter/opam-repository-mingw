@@ -29,5 +29,5 @@ conflicts: [
   "reactiveData" {< "0.2"}
   "async_kernel" {< "113.33.00"}
 ]
-available: [ ocaml-version >= "4.02.0" ]
+available: [ ocaml-version >= "4.02.0" & ocaml-version < "4.04.0" ]
 patches: "js_of_ocaml-2.8.patch" {os = "win32"}
