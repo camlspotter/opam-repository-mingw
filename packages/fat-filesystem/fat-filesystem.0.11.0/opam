@@ -6,12 +6,12 @@ bug-reports:  "https://github.com/mirage/ocaml-fat/issues"
 dev-repo:     "https://github.com/mirage/ocaml-fat.git"
 build: [
   ["./configure" "--bindir" "%{bin}%"]
-  [make]
+  [make "BINDIR=%{bin}%"]
 ]
-install: [ [make "install"] ]
+install: [ [make "install" "BINDIR=%{bin}%"] ]
 remove: [
   ["./configure" "--bindir" "%{bin}%"]
-  [make "uninstall"]
+  [make "uninstall" "BINDIR=%{bin}%"]
 ]
 depends: [
   "ocamlfind" {build}
