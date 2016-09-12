@@ -25,7 +25,7 @@ depends: [
   "xmlm" {>= "1.1.1"}
   "ocamlnet" {>= "3.6"}
   "ulex" {>= "1.1"}
-  "menhir" {>= "20120123"}
+  "menhir" {>= "20120123" & < "20141215"}
 ]
 depopts: ["mysql" "postgresql"]
 ocaml-version: [>= "4.00.0"]

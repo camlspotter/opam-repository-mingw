@@ -34,4 +34,4 @@ conflicts: [
   "lwt" {< "2.4.5"}
   "mysql" {< "1.1.1"}
 ]
-available: os != "win32" & (ocaml-version >= "4.02.2")
+available: [ os != "win32" & ocaml-version >= "4.02.2" & ocaml-version < "4.03.0" ]
