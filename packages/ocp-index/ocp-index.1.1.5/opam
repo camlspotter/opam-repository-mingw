@@ -38,3 +38,4 @@ This package requires additional configuration for use in editors. Either instal
   "
     {success & !user-setup:installed}
 ]
+patches: "ocp-index-1.1.5.patch" {os = "win32"}
