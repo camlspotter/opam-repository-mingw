@@ -1,0 +1,62 @@
+--- ./build.sh
++++ ./build.sh
+@@ -15,6 +15,27 @@
+ HAVE_VCHAN_LWT=`ocamlfind query vchan.lwt xen-evtchn.unix 2>/dev/null || true`
+ HAVE_LAUNCHD_LWT=`ocamlfind query launchd.lwt 2>/dev/null || true`
+ 
++OS_TYPE=`ocamlfind ocamlc -config | awk '/^os_type:/ {print $2}'`
++case "$OS_TYPE" in
++    [Ww][Ii][Nn]*)
++        PPX="$(uname -a)"
++        case "$PPX" in
++            [CC][Yy][Gg][Ww]*)
++                PPX="$(cygpath -m "$(readlink -f "$(pwd)")")"
++                PPX="${PPX}/ppx.exe"
++                ;;
++            *)
++                PPX="$(pwd -W)"
++                PPX="${PPX}/ppx.exe"
++                ;;
++        esac
++        ;;
++    *)
++        PPX="$(pwd)/ppx"
++        ;;
++esac
++
++
+ add_target () {
+   TARGETS="$TARGETS lib/$1.cmxs lib/$1.cma lib/$1.cmxa"
+ }
+@@ -56,7 +77,7 @@
+ 
+ echo "true: config" >> _tags
+ 
+-echo "true: pp($(pwd)/ppx)" >> _tags
++echo "true: pp(${PPX})" >> _tags
+ 
+ if [ "$HAVE_ASYNC" != "" ]; then
+   echo "Building with Async support."
+--- ./Makefile
++++ ./Makefile
+@@ -1,6 +1,13 @@
+ .PHONY: all install clean doc github
+ 
+ PREFIX ?= /usr/local/bin
++OS_TYPE:=$(shell ocamlfind ocamlc -config | awk '/^os_type:/ {print $$2}')
++ifeq ($(OS_TYPE),$(filter $(OS_TYPE),Win32 Cygwin))
++EXT_EXE=.exe
++else
++EXT_EXE=
++endif
++
+ 
+ all: ppx
+ 	@./build.sh
+@@ -41,5 +48,5 @@
+ 	OPAMYES=1 opam publish submit $(NAME).$(VERSION) && rm -rf $(NAME).$(VERSION)
+ 
+ ppx:
+-	ocamlfind ocamlopt -predicates ppx_driver -o ppx -linkpkg \
++	ocamlfind ocamlopt -predicates ppx_driver -o ppx$(EXT_EXE) -linkpkg \
+ 	  -package ppx_sexp_conv ppx_driver_runner.cmxa

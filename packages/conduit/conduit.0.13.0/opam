@@ -45,3 +45,4 @@ conflicts: [
   "nocrypto" {<"0.4.0"}
 ]
 available: [ocaml-version >= "4.02.3"]
+patches: "ocaml-conduit-0.13.0.patch" {os = "win32"}
