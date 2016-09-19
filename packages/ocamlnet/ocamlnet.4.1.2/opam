@@ -48,6 +48,7 @@ remove: [
 depends: [
   "ocamlfind" {build}
   "ocamlbuild" {build}
+  "base-bytes"
 ]
 depopts: [
   "conf-gnutls"
