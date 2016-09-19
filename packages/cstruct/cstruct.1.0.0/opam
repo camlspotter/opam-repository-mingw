@@ -7,10 +7,7 @@ tags: [
   "org:mirage"
   "org:xapi-project"
 ]
-build: [
-  [make]
-  [make "install"]
-]
+build: make
 remove: [["ocamlfind" "remove" "cstruct"]]
 depends: [
   "ocamlfind"
@@ -22,3 +19,4 @@ depopts: [
   "async"
   "lwt"
 ]
+install: [make "install"]

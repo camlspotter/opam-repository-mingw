@@ -9,7 +9,6 @@ tags: [
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 remove: [
   ["ocamlfind" "remove" "plugin-loader"]
@@ -25,3 +24,4 @@ depends: [
   "ocamlbuild" { < "0.9.0" }
 ]
 conflicts: ["oasis"]
+install: ["ocaml" "setup.ml" "-install"]

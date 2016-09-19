@@ -3,10 +3,7 @@ maintainer: "anil@recoil.org"
 tags: [
   "org:mirage"
 ]
-build: [
-  [make]
-  [make "install"]
-]
+build: make
 remove: ["ocamlfind" "remove" "conduit"]
 depends: [
   "ocamlfind"
@@ -42,3 +39,4 @@ conflicts: [
   "vchan" {< "2.0.0"}
 ]
 available: [ocaml-version >= "4.01.0"]
+install: [make "install"]

@@ -1,9 +1,6 @@
 opam-version: "1.2"
 maintainer: "dave.scott@eu.citrix.com"
-build: [
-  [make "all"]
-  [make "install"]
-]
+build: [make "all"]
 remove: [
   ["ocamlfind" "remove" "xcp"]
 ]
@@ -20,3 +17,4 @@ depends: [
   "xapi-inventory"
   "ocamlbuild" {build}
 ]
+install: [make "install"]

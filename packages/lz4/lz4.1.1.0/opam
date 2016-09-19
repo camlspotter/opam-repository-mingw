@@ -10,7 +10,6 @@ dev-repo: "git://github.com/whitequark/ocaml-lz4.git"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 build-test: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix "--enable-tests"]
@@ -31,3 +30,4 @@ depexts: [
   [["ubuntu"] ["liblz4-dev"]]
   [["win32" "cygwinports"] ["lz4"]]
 ]
+install: ["ocaml" "setup.ml" "-install"]

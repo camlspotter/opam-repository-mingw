@@ -3,7 +3,6 @@ maintainer: "markus.mottl@gmail.com"
 build: [
   ["./configure" "--prefix" prefix]
   [make]
-  [make "install"]
 ]
 depends: [
   "ocamlfind"
@@ -16,3 +15,4 @@ depexts: [
   [["debian"] ["libgsl0-dev"]]
   [["ubuntu"] ["libgsl0-dev"]]
 ]
+install: [make "install"]

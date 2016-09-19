@@ -6,7 +6,6 @@ license: "LGPL-2.1+ with OCaml linking exception"
 build: [
   [make "all"]
   [make "allopt"]
-  [make "install-findlib"]
 ]
 remove: [
   ["ocamlfind" "remove" "zip"]
@@ -27,3 +26,4 @@ patches: [
   "build_with_trunk.patch"
   "patch-aa" { os = "win32" }
 ]
+install: [make "install-findlib"]

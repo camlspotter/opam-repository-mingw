@@ -6,8 +6,6 @@ build: [
   ["./configure" "--prefix=%{prefix}%" "--mandir=%{prefix}%/man"]
   [make "META"]
   [make "compile"]
-  [make "libinstall"]
-  ["rm" "opam.install"]
 ]
 remove: [["ocamlfind" "remove" "opam"]]
 depends: [
@@ -18,4 +16,8 @@ depends: [
   "re"
   "ocamlfind"
   "ocamlbuild" {build}
+]
+install: [
+  [make "libinstall"]
+  ["rm" "opam.install"]
 ]

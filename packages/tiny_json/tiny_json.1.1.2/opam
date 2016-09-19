@@ -3,12 +3,12 @@ maintainer: "jun.furuse@gmail.com"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 remove: ["ocamlfind" "remove" "tiny_json"]
 depends: [
   "ocamlfind"
   "omake"
 ]
-ocaml-version: [>= "4.0.0"]
 patches: [ "patch-oasis-tiny_json.1.1.2" { os = "win32" } ]
+available: ocaml-version >= "4.0.0"
+install: ["ocaml" "setup.ml" "-install"]

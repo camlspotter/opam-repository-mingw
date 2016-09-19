@@ -4,10 +4,7 @@ tags: [
   "org:mirage"
   "org:xapi-project"
 ]
-build: [
-  [make]
-  [make "install"]
-]
+build: make
 remove: [
   ["ocamlfind" "remove" "vhd-format"]
   [make "uninstall"]
@@ -20,4 +17,5 @@ depends: [
   "ounit"
   "ocamlbuild" {build}
 ]
-os: ["linux"]
+available: os = "linux"
+install: [make "install"]

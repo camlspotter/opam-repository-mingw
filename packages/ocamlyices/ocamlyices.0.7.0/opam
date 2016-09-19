@@ -5,10 +5,10 @@ license: "ISC license"
 build: [
   ["./configure"]
   [make "all"]
-  [make "install"]
 ]
 remove: [["ocamlfind" "remove" "ocamlyices"]]
 depends: [
   "ocamlfind"
   "camlidl"
 ]
+install: [make "install"]

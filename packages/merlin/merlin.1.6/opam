@@ -3,7 +3,6 @@ maintainer: "defree@gmail.com"
 build: [
   ["./configure" "--prefix" prefix]
   [make]
-  [make "install"]
 ]
 remove: [[make "uninstall"]]
 depends: [
@@ -12,4 +11,5 @@ depends: [
   "menhir"
   "ocamlbuild" {build}
 ]
-ocaml-version: [>= "4.00.1" & < "4.02.0"]
+available: ocaml-version >= "4.00.1" & ocaml-version < "4.02.0"
+install: [make "install"]

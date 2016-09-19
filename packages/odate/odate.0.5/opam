@@ -7,7 +7,6 @@ build: [
   ["oasis" "setup"]
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 remove: [
   ["ocamlfind" "remove" "odate"]
@@ -19,4 +18,5 @@ depends: [
   "menhir"
   "ocamlbuild" {build}
 ]
-ocaml-version: [ >= "4.00.0" ]
+available: ocaml-version >= "4.00.0"
+install: ["ocaml" "setup.ml" "-install"]

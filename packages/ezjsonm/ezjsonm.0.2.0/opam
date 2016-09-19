@@ -5,7 +5,6 @@ license: "ISC"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix "--%{lwt:enable}%-lwt"]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 remove: [
   ["ocamlfind" "remove" "ezjsonm"]
@@ -23,3 +22,4 @@ tags: [
   "org:mirage"
   "org:ocamllabs"
 ]
+install: ["ocaml" "setup.ml" "-install"]

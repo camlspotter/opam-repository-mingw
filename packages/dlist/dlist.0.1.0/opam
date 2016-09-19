@@ -6,7 +6,6 @@ license: "BSD3"
 build: [
   ["ocp-build" "-init"]
   ["ocp-build" "build"]
-  ["ocp-build" "install"]
 ]
 remove: [
   ["ocp-build" "-init"]
@@ -17,7 +16,8 @@ depends: [
   "ocp-build" {>= "1.99.6-beta"}
 ]
 depopts: ["core_bench" "ounit"]
-ocaml-version: [>= "4.00.1"]
 conflicts: [
   "core_bench" {< "109.41.00"}
 ]
+available: ocaml-version >= "4.00.1"
+install: ["ocp-build" "install"]

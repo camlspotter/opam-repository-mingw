@@ -3,7 +3,6 @@ maintainer: "mort@cantab.net"
 build: [
   ["./configure"]
   [make "all"]
-  [make "install"]
 ]
 remove: [
   ["./configure"]
@@ -14,4 +13,5 @@ depends: [
   "camlp4"
   "ocamlbuild" {build}
 ]
-ocaml-version: [<"4.02.0"]
+available: ocaml-version < "4.02.0"
+install: [make "install"]

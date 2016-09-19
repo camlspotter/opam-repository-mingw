@@ -6,7 +6,6 @@ homepage: "https://github.com/hcarty/indexmap"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 remove: [
   ["ocamlfind" "remove" "indexMap"]
@@ -15,5 +14,6 @@ depends: [
   "ocamlfind"
   "ocamlbuild" {build}
 ]
-ocaml-version: [>= "4.00.0"]
 patches: "patch-oasis-indexmap.0.0.3" {os = "win32"}
+available: ocaml-version >= "4.00.0"
+install: ["ocaml" "setup.ml" "-install"]

@@ -1,10 +1,6 @@
 opam-version: "1"
 maintainer: "mmatalka@gmail.com"
-build: [
-  [make]
-  [make "PREFIX=%{prefix}%" "-j" jobs "install"]
-]
-
+build: make
 remove: [
   ["rm" "-v" "%{prefix}%/bin/opass"]
 ]
@@ -15,4 +11,5 @@ depends: [
   "csv"
 ]
 
-ocaml-version: [>= "4.0.0"]
+available: ocaml-version >= "4.0.0"
+install: [make "PREFIX=%{prefix}%" "-j" jobs "install"]

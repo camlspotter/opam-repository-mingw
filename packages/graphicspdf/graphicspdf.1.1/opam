@@ -1,11 +1,9 @@
 opam-version: "1"
 maintainer: "contact@coherentgraphics.co.uk"
-build: [
-  [make]
-  [make "install"]
-]
+build: make
 remove: [["ocamlfind" "remove" "graphicspdf"]]
 depends: [
   "ocamlfind"
   "camlpdf"
 ]
+install: [make "install"]

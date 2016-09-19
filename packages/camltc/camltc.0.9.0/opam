@@ -2,10 +2,7 @@ opam-version: "1.2"
 maintainer: "dev@domoco.fr"
 authors: ["Incubaid Team"]
 homepage: "https://github.com/toolslive/camltc"
-build: [
-  [make "-C" "src"]
-  [make "-C" "src" "install" "DESTDIR=%{prefix}%"]
-]
+build: [make "-C" "src"]
 remove: [
   [make "-C" "src" "uninstall" "DESTDIR=%{prefix}%"]
 ]
@@ -16,3 +13,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 available: [ ocaml-version > "4.00.0" ]
+install: [make "-C" "src" "install" "DESTDIR=%{prefix}%"]

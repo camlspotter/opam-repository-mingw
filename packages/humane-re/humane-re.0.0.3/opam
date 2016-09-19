@@ -7,9 +7,7 @@ homepage: "https://github.com/rgrinberg/humane-re"
 build: [
   [make "configure-no-tests"]
   [make "build"]
-  [make "install"]
 ]
-
 remove: [
   ["ocamlfind" "remove" "humane_re"]
 ]
@@ -21,4 +19,5 @@ depends: [
   "ounit"
   "ocamlbuild" {build}
 ]
-ocaml-version: [>="4.01.0"]
+available: ocaml-version >= "4.01.0"
+install: [make "install"]

@@ -4,10 +4,7 @@ tags: [
   "org:mirage"
   "org:xapi-project"
 ]
-build: [
-  [make]
-  [make "install"]
-]
+build: make
 remove: [["ocamlfind" "remove" "rpc"]]
 depends: [
   "ocamlfind"
@@ -15,3 +12,4 @@ depends: [
   "xmlm"
 ]
 conflicts: ["ocamlnet"]
+install: [make "install"]

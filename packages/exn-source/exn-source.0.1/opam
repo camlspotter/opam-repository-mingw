@@ -1,10 +1,8 @@
 opam-version: "1"
 maintainer: "contact@coherentgraphics.co.uk"
-build: [
-  [make]
-  [make "install"]
-]
+build: make
 remove: [["ocamlfind" "remove" "exnsource"]]
 available: [ocaml-version >= "4.02.0"]
 depends: ["ocamlfind"]
 patches: "patch-ocamlmakefile-exn-source.0.1" {os = "win32"}
+install: [make "install"]

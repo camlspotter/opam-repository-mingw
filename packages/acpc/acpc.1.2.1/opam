@@ -6,17 +6,6 @@ license: "BSD"
 build: [
   ["obuild" "configure"]
   ["obuild" "build"]
-  ["cp" "dist/build/acpc/acpc" bin]
-  ["cp" "dist/build/acpc_par/acpc_par" bin]
-  ["cp" "dist/build/acpc_consrank/acpc_consrank" bin]
-  ["cp" "dist/build/acpc_scorer/acpc_scorer" bin]
-  ["cp" "dist/build/acpc_ertool/acpc_ertool" bin]
-  ["cp" "dist/build/acpc_auctool/acpc_auctool" bin]
-  ["cp" "dist/build/acpc_mol2reader/acpc_mol2reader" bin]
-  ["cp" "dist/build/acpc_codec/acpc_codec" bin]
-  ["cp" "dist/build/acpc_mol2tool/acpc_mol2tool" bin]
-  ["cp" "dist/build/acpc_pqrtool/acpc_pqrtool" bin]
-  ["cp" "dist/build/acpc_pltool/acpc_pltool" bin]
 ]
 remove: [
   ["rm" "-f"
@@ -48,4 +37,17 @@ depexts: [
   [["debian"] ["autoconf"]]
   [["ubuntu"] ["autoconf"]]
 ]
-ocaml-version: [>= "4.00.1"]
+available: ocaml-version >= "4.00.1"
+install: [
+  ["cp" "dist/build/acpc/acpc" bin]
+  ["cp" "dist/build/acpc_par/acpc_par" bin]
+  ["cp" "dist/build/acpc_consrank/acpc_consrank" bin]
+  ["cp" "dist/build/acpc_scorer/acpc_scorer" bin]
+  ["cp" "dist/build/acpc_ertool/acpc_ertool" bin]
+  ["cp" "dist/build/acpc_auctool/acpc_auctool" bin]
+  ["cp" "dist/build/acpc_mol2reader/acpc_mol2reader" bin]
+  ["cp" "dist/build/acpc_codec/acpc_codec" bin]
+  ["cp" "dist/build/acpc_mol2tool/acpc_mol2tool" bin]
+  ["cp" "dist/build/acpc_pqrtool/acpc_pqrtool" bin]
+  ["cp" "dist/build/acpc_pltool/acpc_pltool" bin]
+]

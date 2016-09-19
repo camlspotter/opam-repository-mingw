@@ -4,10 +4,7 @@ tags: [
   "org:mirage"
   "org:xapi-project"
 ]
-build: [
-  [make "PREFIX=%{prefix}%"]
-  [make "PREFIX=%{prefix}%" "install"]
-]
+build: [make "PREFIX=%{prefix}%"]
 remove: [["ocamlfind" "remove" "cohttp"]]
 depends: [
   "ocamlfind"
@@ -27,3 +24,4 @@ conflicts: [
   "async" {<"109.15.00"}
   "async" {>= "113.00.00"}
 ]
+install: [make "PREFIX=%{prefix}%" "install"]

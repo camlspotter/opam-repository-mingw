@@ -7,7 +7,6 @@ tags: [
 build: [
   ["./configure" "--bindir=%{bin}%" "--libexecdir=%{lib}%/xapi"]
   [make]
-  [make "install"]
 ]
 remove: [[make "uninstall"]]
 depends: [
@@ -29,3 +28,4 @@ depends: [
 conflicts: [
   "tls"
 ]
+install: [make "install"]

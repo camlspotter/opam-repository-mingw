@@ -1,10 +1,8 @@
 opam-version: "1"
 maintainer: "komamitsu@gmail.com"
-build: [
-    [make]
-    [make "install"]
-]
+build: make
 remove: [
     [make "uninstall"]
 ]
 depends: ["ocamlfind" "msgpack" {< "1.1.0"}]
+install: [make "install"]

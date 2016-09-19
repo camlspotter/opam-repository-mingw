@@ -8,7 +8,6 @@ tags: [ "clib:png" "clib:openjpeg" "clib:m" "clib:jpeg" "clib:jasper"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 remove: [
   ["ocamlfind" "remove" "grib"]
@@ -29,3 +28,4 @@ depexts: [
     ["libjpeg-dev" "libjasper-dev" "libopenjpeg-dev" "libgrib-api-dev" "libpng-dev"]
   ]
 ]
+install: ["ocaml" "setup.ml" "-install"]

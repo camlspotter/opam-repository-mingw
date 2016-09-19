@@ -4,7 +4,6 @@ build: [
   [make "configure"]
   ["./configure" "--bindir" "%{bin}%"]
   [make]
-  [make "install"]
 ]
 remove: [
   ["ocamlfind" "remove" "message_switch"]
@@ -23,3 +22,4 @@ depends: [
   "oclock"
   "ocamlbuild" {build}
 ]
+install: [make "install"]

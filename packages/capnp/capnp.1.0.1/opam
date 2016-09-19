@@ -1,9 +1,6 @@
 opam-version: "1"
 maintainer: "pelzlpj@gmail.com"
-build: [
-  ["env" "PREFIX=%{prefix}%" "omake"]
-  ["env" "PREFIX=%{prefix}%" "omake" "install"]
-]
+build: ["env" "PREFIX=%{prefix}%" "omake"]
 remove: [["env" "PREFIX=%{prefix}%" "omake" "uninstall"]]
 depends: [
   "omake"
@@ -13,4 +10,5 @@ depends: [
   "res"
   "uint"
 ]
-ocaml-version: [>= "4.01.0"]
+available: ocaml-version >= "4.01.0"
+install: ["env" "PREFIX=%{prefix}%" "omake" "install"]

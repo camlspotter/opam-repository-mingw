@@ -1,10 +1,8 @@
 opam-version: "1.2"
 maintainer: "kakadu.hafanana@gmail.com"
-ocaml-version: [>= "4.02.0"]
 build: [
   ["./configure"]
   [make]
-  [make "install" "PREFIX=%{prefix}%" ]
 ]
 remove: [
   [make "uninstall"]
@@ -14,3 +12,5 @@ depends: [
   "conf-qt" {>= "5.2.1"}
   "ocamlbuild" {build}
 ]
+available: ocaml-version >= "4.02.0"
+install: [make "install" "PREFIX=%{prefix}%"]

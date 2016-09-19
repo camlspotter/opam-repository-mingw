@@ -2,12 +2,12 @@ opam-version: "1.2"
 homepage: "http://reactiveml.org"
 maintainer: "devel@reactiveml.org"
 build: [
-["./configure" "--prefix" "%{prefix}%"]
-[make]
-[make "install"]
+  ["./configure" "--prefix" "%{prefix}%"]
+  [make]
 ]
 remove: [
 [make "uninstall"]
 ]
 depends: ["ocamlfind" "ocamlbuild"]
 available: os != "win32"
+install: [make "install"]

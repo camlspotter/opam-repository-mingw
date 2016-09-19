@@ -3,7 +3,6 @@ maintainer: "markus.mottl@gmail.com"
 build: [
   ["./configure" "--prefix" prefix]
   [make "all"]
-  [make "install"]
 ]
 remove: [[make "remove"]]
 depends: [
@@ -15,3 +14,4 @@ depexts: [
   [["ubuntu"] ["libsqlite3-dev"]]
 ]
 patches: ["opam.patch"]
+install: [make "install"]

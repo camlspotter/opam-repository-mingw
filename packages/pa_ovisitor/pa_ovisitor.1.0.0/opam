@@ -1,10 +1,10 @@
 opam-version: "1"
 maintainer: "jun.furuse@gmail.com"
 build: [
-  ["ocaml" "setup.ml" "-configure" "--prefix" prefix] { os != "win32" }
-  ["ocaml" "setup.ml" "-configure" "--prefix" prefix "--use-bash" "dash.exe"] { os = "win32" }
+  ["ocaml" "setup.ml" "-configure" "--prefix" prefix] {os != "win32"}
+  ["ocaml" "setup.ml" "-configure" "--prefix" prefix "--use-bash" "dash.exe"]
+    {os = "win32"}
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 remove: [
  ["ocamlfind" "remove" "pa_ovisitor"]
@@ -14,5 +14,6 @@ depends: [
   "omake"
   "type_conv"
 ]
-ocaml-version: [>= "4.0.1"]
 patches: [ "patch-pa_ovisitor-1.0.0" ]
+available: ocaml-version >= "4.0.1"
+install: ["ocaml" "setup.ml" "-install"]

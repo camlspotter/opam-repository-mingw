@@ -1,9 +1,6 @@
 opam-version: "1.2"
 maintainer: "jonathan.ludlam@eu.citrix.com"
-build: [
-  [make]
-  [make "install" "BINDIR=%{bin}%"]
-]
+build: make
 remove: [
   [make "uninstall" "BINDIR=%{bin}%"]
   ["ocamlfind" "remove" "stdext"]
@@ -16,3 +13,4 @@ depends: [
   "xapi-backtrace"
   "ocamlbuild" {build}
 ]
+install: [make "install" "BINDIR=%{bin}%"]

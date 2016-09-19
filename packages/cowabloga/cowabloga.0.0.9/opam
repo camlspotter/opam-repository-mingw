@@ -4,10 +4,7 @@ license: "ISC"
 tags: [
   "org:mirage"
 ]
-build: [
-  [make "all"]
-  [make "install"]
-]
+build: [make "all"]
 remove: [["ocamlfind" "remove" "cowabloga"]]
 depends: [
   "ocamlfind"
@@ -18,3 +15,4 @@ depends: [
   "cstruct" {>= "1.0.1"}
   "ocamlbuild" {build}
 ]
+install: [make "install"]

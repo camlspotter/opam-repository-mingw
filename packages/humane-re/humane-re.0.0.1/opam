@@ -6,9 +6,7 @@ license: "LGPL-2.0 with OCaml linking exception"
 build: [
   [make "configure-no-tests"]
   [make "build"]
-  [make "install"]
 ]
-
 remove: [
   ["ocamlfind" "remove" "humane_re"]
 ]
@@ -19,4 +17,5 @@ depends: [
   "re"
   "ocamlbuild" {build}
 ]
-ocaml-version: [>="4.01.0"]
+available: ocaml-version >= "4.01.0"
+install: [make "install"]

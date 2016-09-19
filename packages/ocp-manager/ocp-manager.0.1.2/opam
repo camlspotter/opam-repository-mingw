@@ -3,9 +3,8 @@ maintainer: "Fabrice Le Fessant <fabrice.le_fessant@ocamlpro.com>"
 authors: "OcamlPro"
 homepage: "http://www.typerex.org/ocp-manager.html"
 build: [
-  [ "./configure" "--prefix" prefix  ]
-  [ make ]
-  [ make "install.opam" ]
+  ["./configure" "--prefix" prefix]
+  [make]
 ]
 remove: [
   [ "rm" "-f" "%{prefix}%/ocp-manager" ]
@@ -14,3 +13,4 @@ remove: [
 depends: [ "ocp-build" {>= "1.99.6" & < "1.99.17"} ]
 
 available: [ocaml-version < "4.03.0"]
+install: [make "install.opam"]

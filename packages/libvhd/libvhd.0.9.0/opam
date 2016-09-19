@@ -4,10 +4,7 @@ tags: [
   "org:mirage"
   "org:xapi-project"
 ]
-build: [
-  [make]
-  [make "install" "BINDIR=%{bin}%"]
-]
+build: make
 remove: [[make "uninstall" "BINDIR=%{bin}%"]]
 depends: [
   "ocamlfind"
@@ -18,3 +15,4 @@ depexts: [
  [ ["debian"] ["blktap-dev" "uuid-dev"] ]
  [ ["centos"] ["blktap-devel" "libuuid-devel" ] ]
 ]
+install: [make "install" "BINDIR=%{bin}%"]

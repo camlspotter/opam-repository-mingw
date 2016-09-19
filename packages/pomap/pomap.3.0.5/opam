@@ -6,7 +6,6 @@ dev-repo: "git://github.com/mmottl/pomap"
 build: [
   ["./configure" "--prefix" prefix]
   [make]
-  [make "install"]
 ]
 remove: [["ocamlfind" "remove" "pomap"]]
 depends: [
@@ -14,3 +13,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 available: [ocaml-version < "4.04.0"]
+install: [make "install"]

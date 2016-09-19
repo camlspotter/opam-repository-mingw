@@ -9,7 +9,6 @@ build: [
   ["oasis" "setup"]
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 build-doc: [["ocaml" "setup.ml" "-doc"]]
 remove: [["ocamlfind" "remove" "lbfgs"]]
@@ -30,3 +29,4 @@ depexts: [
   [["cygwin"] ["mingw64-x86_64-gcc-fortran"]]
   [["osx" "homebrew"] ["gcc"]]
 ]
+install: ["ocaml" "setup.ml" "-install"]

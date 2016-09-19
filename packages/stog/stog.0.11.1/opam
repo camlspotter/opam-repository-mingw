@@ -5,10 +5,7 @@ homepage: "http://zoggy.github.io/stog/"
 license: "GNU General Public License version 3"
 doc: ["http://zoggy.github.io/stog/doc.html"]
 tags: ["publication" "web" "blog"]
-build: [
-  [make "all"]
-  [make "install-lib"]
-]
+build: [make "all"]
 remove: [["ocamlfind" "remove" "stog"]]
 depends: [
   "ocamlfind"
@@ -18,4 +15,5 @@ depends: [
   "ocamlnet" {>= "3.6"}
   "higlo" { >= "0.2" }
 ]
-ocaml-version: [>= "4.01.0"]
+available: ocaml-version >= "4.01.0"
+install: [make "install-lib"]

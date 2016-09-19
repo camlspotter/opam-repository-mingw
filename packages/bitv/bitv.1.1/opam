@@ -6,8 +6,8 @@ license: "LGPL v2"
 build: [
   ["./configure"]
   [make]
-  [make "install"]
 ]
 remove: [["ocamlfind" "remove" "bitv"]]
 depends: ["ocamlfind"]
 patches: [ "patch-aa" ]
+install: [make "install"]

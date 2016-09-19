@@ -4,10 +4,7 @@ tags: [
   "org:ocamllabs"
   "org:mirage"
 ]
-build: [
-  [make]
-  [make "install"]
-]
+build: make
 remove: [["ocamlfind" "remove" "ctypes"]]
 depends: [
   "ocamlfind"
@@ -16,3 +13,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 available: [ (ocaml-version >= "4.00.0") & (ocaml-version < "4.03.0") ]
+install: [make "install"]

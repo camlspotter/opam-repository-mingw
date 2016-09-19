@@ -6,11 +6,9 @@ license: "New BSD License"
 doc: ["https://github.com/zoggy/findlib-lint"]
 tags: ["findlib" "ocamlfind" "check" "META"]
 
-build: [
-  [make "all"]
-  [make "install-lib"]
-]
+build: [make "all"]
 remove: [["ocamlfind" "remove" "findlib-lint"]]
 depends: [
   "ocamlfind"
 ]
+install: [make "install-lib"]

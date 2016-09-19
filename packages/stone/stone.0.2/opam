@@ -3,7 +3,6 @@ maintainer: "armael.gueneau@ens-lyon.fr"
 build: [
   ["./configure" "--bin-dir" bin]
   [make]
-  [make "install"]
 ]
 remove: [
   ["./configure" "--bin-dir" bin]
@@ -14,3 +13,4 @@ depends: [
   "cow" {< "0.6.0"}
   "config-file"
 ]
+install: [make "install"]

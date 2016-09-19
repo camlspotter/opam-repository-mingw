@@ -10,7 +10,6 @@ tags: [
 build: [
   ["./configure" "--bindir" "%{bin}%"]
   [make]
-  [make "install"]
 ]
 remove: [
   ["rm" "-f" "%{bin}%/mirage"]
@@ -26,4 +25,5 @@ depends: [
   "io-page" {>= "1.0.0"}
   "ocamlbuild" {build}
 ]
-ocaml-version: [>="4.00.1"]
+available: ocaml-version >= "4.00.1"
+install: [make "install"]

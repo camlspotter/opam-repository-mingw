@@ -3,7 +3,6 @@ maintainer: "xavier.allamigeon (at) inria.fr"
 build: [
   ["./configure" "--prefix" prefix]
   [make]
-  [make "install"]
 ]
 remove: [
   ["./configure" "--prefix" prefix]
@@ -17,7 +16,8 @@ depopts: [
   "zarith"
   "mlgmp"
 ]
-ocaml-version: [>= "3.12.0"]
 patches: [
   "fix-makefile.diff"
 ]
+available: ocaml-version >= "3.12.0"
+install: [make "install"]

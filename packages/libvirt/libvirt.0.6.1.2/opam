@@ -8,7 +8,6 @@ build: [
   ["./configure"]
   [make "all"]
   [make "opt"]
-  [make "install-opt"]
 ]
 remove: [["ocamlfind" "remove" "libvirt"]]
 depends: ["ocamlfind"]
@@ -17,3 +16,4 @@ depexts: [
   [["ubuntu"] ["libvirt-dev"]]
 ]
 available: [ocaml-version < "4.03.0"]
+install: [make "install-opt"]

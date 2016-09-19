@@ -4,10 +4,7 @@ tags: [
   "org:mirage"
   "org:xapi-project"
 ]
-build: [
-  [make]
-  [make "install" "BINDIR=%{bin}%"]
-]
+build: make
 remove: [[make "uninstall" "BINDIR=%{bin}%"]]
 depends: [
   "ocamlfind"
@@ -15,3 +12,4 @@ depends: [
   "lwt"
   "bitstring"
 ]
+install: [make "install" "BINDIR=%{bin}%"]

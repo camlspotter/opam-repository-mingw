@@ -3,7 +3,6 @@ maintainer: "seliopou@gmail.com"
 build: [
   ["ocaml" "setup.ml" "-configure"]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 remove: [["ocamlfind" "remove" "ox"]]
 depends: [
@@ -14,3 +13,4 @@ depends: [
   "openflow" {>= "0.5.0" & < "0.8.0"}
   "ocamlbuild" {build}
 ]
+install: ["ocaml" "setup.ml" "-install"]

@@ -2,10 +2,7 @@ opam-version: "1.2"
 maintainer: "romain.slootmaekers@incubaid.com"
 homepage: "http://incubaid.github.io/baardskeerder/"
 license: "LGPL v3"
-build: [
-  ["sh" "-exc" "cd src && %{make}%"]
-  ["sh" "-exc" "cd src && %{make}% install"]
-]
+build: ["sh" "-exc" "cd src && %{make}%"]
 remove: [["ocamlfind" "remove" "baardskeerder"]]
 depends: [
   "ocamlfind"
@@ -14,4 +11,5 @@ depends: [
   "lwt"
   "ocamlbuild" {build}
 ]
-ocaml-version: [<"4.01.0"]
+available: ocaml-version < "4.01.0"
+install: ["sh" "-exc" "cd src && %{make}% install"]

@@ -7,7 +7,6 @@ build: [
   [make "setup.exe"]
   ["./setup.exe" "-configure" "--%{pcre:enable}%-pcre"]
   [make]
-  [make "install"]
 ]
 remove: [["ocamlfind" "remove" "text"]]
 depends: [
@@ -16,3 +15,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 depopts: ["pcre"]
+install: [make "install"]

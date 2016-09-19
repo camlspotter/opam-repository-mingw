@@ -3,7 +3,6 @@ maintainer: "dparfitt@basho.com"
 build: [
   ["./configure"]
   [make]
-  [make "install"]
 ]
 remove: [["ocamlfind" "remove" "riak"]]
 depends: [
@@ -14,3 +13,4 @@ depends: [
   "lwt"
   "ocamlbuild" {build}
 ]
+install: [make "install"]

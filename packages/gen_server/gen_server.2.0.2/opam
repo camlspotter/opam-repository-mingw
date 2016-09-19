@@ -1,13 +1,10 @@
 opam-version: "1"
 maintainer: "mmatalka@gmail.com"
-build: [
-  [make]
-  [make "install"]
-]
+build: make
 remove: [["ocamlfind" "remove" "gen_server"]]
 depends: [
   "ocamlfind"
   "core" {>= "109.12.00"}
   "async"
 ]
-
+install: [make "install"]

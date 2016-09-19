@@ -11,7 +11,6 @@ build: [
   ["oasis" "setup"] {ocaml-version >= "4.00.0"}
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 remove: [["ocamlfind" "remove" "ANSITerminal"]]
 depends: [
@@ -20,3 +19,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 available: os != "win32"
+install: ["ocaml" "setup.ml" "-install"]

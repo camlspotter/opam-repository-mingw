@@ -1,8 +1,6 @@
 opam-version: "1"
 maintainer: "markus.mottl@gmail.com"
-build: [
-  [make]
-  [make "install"]
-]
+build: make
 remove: [["ocamlfind" "remove" "res"]]
 depends: ["ocamlfind"]
+install: [make "install"]

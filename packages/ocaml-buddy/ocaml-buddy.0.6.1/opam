@@ -3,7 +3,6 @@ maintainer: "pietro.abate@pps.jussieu.fr"
 build: [
   [make "all"]
   [make "opt"]
-  [make "install"]
 ]
 remove: [[make "uninstall"]]
 depends: [
@@ -14,3 +13,4 @@ depexts: [
  [["debian"] ["libbdd-dev"]]
  [["ubuntu"] ["libbdd-dev"]]
 ]
+install: [make "install"]

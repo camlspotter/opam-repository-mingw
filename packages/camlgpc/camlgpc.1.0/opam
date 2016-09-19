@@ -1,9 +1,7 @@
 opam-version: "1"
 maintainer: "contact@coherentgraphics.co.uk"
-build: [
-  [make]
-  [make "install"]
-]
+build: make
 remove: [["ocamlfind" "remove" "camlgpc"]]
 depends: ["ocamlfind"]
 patches: "patch-ocamlmakefile-camlgpc.1.0" {os = "win32"}
+install: [make "install"]

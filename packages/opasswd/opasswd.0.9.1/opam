@@ -7,11 +7,11 @@ tags: ["org:xapi-project"]
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 remove: [["ocamlfind" "remove" "oPasswd"]]
 depends: [
   "ocamlfind"
   "ocamlbuild" {build}
 ]
-ocaml-version: [>= "4.01.0"]
+available: ocaml-version >= "4.01.0"
+install: ["ocaml" "setup.ml" "-install"]

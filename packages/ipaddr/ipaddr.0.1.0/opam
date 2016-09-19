@@ -13,10 +13,10 @@ tags: [
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   [make "build"]
-  [make "install"]
 ]
 remove: [["ocamlfind" "remove" "ipaddr"]]
 depends: [
   "ocamlfind"
   "ocamlbuild" {build}
 ]
+install: [make "install"]

@@ -5,9 +5,8 @@ homepage: "https://github.com/mirage/xentropyd"
 bug-reports: "https://github.com/mirage/xentropyd/issues"
 license: "ISC"
 build: [
-  [ "ocaml" "setup.ml" "-configure" ]
-  [ "ocaml" "setup.ml" "-build" ]
-  [ "cp" "main.native" "%{bin}%/xentropyd" ]
+  ["ocaml" "setup.ml" "-configure"]
+  ["ocaml" "setup.ml" "-build"]
 ]
 depends: [
   "cstruct" {>= "0.6.0"}
@@ -34,3 +33,4 @@ depexts: [
   [["xenserver"] ["xen-dom0-libs-devel" "xen-libs-devel"]]
 ]
 available: [ ocaml-version >= "4.01.0" ]
+install: ["cp" "main.native" "%{bin}%/xentropyd"]

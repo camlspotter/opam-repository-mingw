@@ -6,7 +6,6 @@ license: "BSD3"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 remove: [["ocamlfind" "remove" "dlist"]]
 depends: [
@@ -14,8 +13,9 @@ depends: [
   "ocamlbuild" {build}
 ]
 depopts: ["core" "core_bench" "ounit"]
-ocaml-version: [>= "4.00.1"]
 conflicts: [
   "core" {< "109.42.00"}
   "core_bench" {< "109.41.00"}
 ]
+available: ocaml-version >= "4.00.1"
+install: ["ocaml" "setup.ml" "-install"]

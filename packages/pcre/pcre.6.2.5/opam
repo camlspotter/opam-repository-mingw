@@ -1,11 +1,9 @@
 opam-version: "1"
 maintainer: "markus.mottl@gmail.com"
-build: [
-  [make]
-  [make "install"]
-]
+build: make
 remove: [["ocamlfind" "remove" "pcre"]]
 depends: [
   "ocamlfind"
   "conf-libpcre"
 ]
+install: [make "install"]

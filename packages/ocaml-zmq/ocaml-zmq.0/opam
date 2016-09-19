@@ -4,7 +4,6 @@ homepage: "https://github.com/pdhborges/ocaml-zmq"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 remove: [["ocamlfind" "remove" "ZMQ"]]
 depends: [
@@ -19,3 +18,4 @@ depexts: [
   [["rhel"] ["zeromq-devel"]]
 ]
 conflicts: ["zmq"]
+install: ["ocaml" "setup.ml" "-install"]

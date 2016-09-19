@@ -3,7 +3,6 @@ maintainer: "contact@ocamlpro.com"
 build: [
   ["./configure.sh"]
   [make]
-  [make "install"]
 ]
 remove: [["ocamlfind" "remove" "sawja"]]
 depends: [
@@ -11,3 +10,4 @@ depends: [
   "javalib" {= "2.2.2"}
 ]
 available: os != "win32"
+install: [make "install"]

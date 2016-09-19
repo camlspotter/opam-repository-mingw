@@ -5,7 +5,6 @@ build: [
   ["oasis" "setup"]
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 remove: [["ocamlfind" "remove" "ZMQ"]]
 depends: [
@@ -20,3 +19,4 @@ depexts: [
   [["ubuntu"] ["libzmq3-dev"]]
 ]
 conflicts: ["ocaml-zmq"]
+install: ["ocaml" "setup.ml" "-install"]

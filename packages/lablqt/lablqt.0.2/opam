@@ -5,8 +5,7 @@ available: [ ocaml-version >= "4.01.0" & ocaml-version < "4.03.0"]
 build: [
   ["./configure"]
   [make "generator"]
-  ["bash" "-c" "cd lablqml && ./configure --datarootdir=%{lib}% && %{make}%" ]
-  [make "opam.install" ]
+  ["bash" "-c" "cd lablqml && ./configure --datarootdir=%{lib}% && %{make}%"]
 ]
 remove: [
   ["ocamlfind" "remove" "lablqml"]
@@ -18,3 +17,4 @@ depends: [
   "conf-qt" {>= "5.2"}
   "ocamlbuild" {build}
 ]
+install: [make "opam.install"]

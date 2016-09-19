@@ -5,12 +5,10 @@ maintainer: "dominic.price@nottingham.ac.uk"
 homepage: "https://github.com/dominicjprice/facebook-sdk"
 authors: [ "Dominic Price" ]
 license: "GPL-3"
-ocaml-version: [ >= "4.01.0" ]
 build: [
   ["oasis" "setup"]
   ["./configure" "--prefix" prefix]
   [make "build"]
-  [make "install"]
 ]
 remove: [
   [make "uninstall"]
@@ -29,3 +27,5 @@ depends: [
   "yojson"
   "ocamlbuild" {build}
 ]
+available: ocaml-version >= "4.01.0"
+install: [make "install"]

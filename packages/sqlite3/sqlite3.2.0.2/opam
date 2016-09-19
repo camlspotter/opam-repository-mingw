@@ -3,7 +3,6 @@ maintainer: "markus.mottl@gmail.com"
 build: [
   ["ocaml" "setup.ml" "-configure"]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 remove: [["ocaml" "setup.ml" "-uninstall"]]
 depends: [
@@ -16,3 +15,4 @@ depexts: [
   [["centos"] ["pkgconfig" "sqlite-devel"]]
   [["osx" "homebrew"] ["pkg-config"]]
 ]
+install: ["ocaml" "setup.ml" "-install"]

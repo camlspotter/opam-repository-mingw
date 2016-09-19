@@ -4,9 +4,7 @@ tags: [
   "org:mirage"
   "org:xapi-project"
 ]
-build: [
-  [make "all"]
-  [make "install"]
-]
+build: [make "all"]
 remove: ["ocamlfind" "remove" "mirage-types"]
 depends: ["ocamlfind"]
+install: [make "install"]

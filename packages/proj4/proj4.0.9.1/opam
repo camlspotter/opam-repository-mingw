@@ -7,7 +7,6 @@ tags: [ "clib:proj" "clib:m"  ]
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 remove: [
   ["ocamlfind" "remove" "proj4"]
@@ -20,3 +19,4 @@ depexts: [
   [["debian"] ["libproj-dev"]]
   [["ubuntu"] ["libproj-dev"]]
 ]
+install: ["ocaml" "setup.ml" "-install"]

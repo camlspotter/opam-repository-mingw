@@ -14,7 +14,6 @@ tags: [
 build: [
   ["./configure" "--prefix" prefix]
   [make "all"]
-  [make "install"]
 ]
 remove: [
   ["./configure" "--prefix" prefix]
@@ -28,8 +27,8 @@ depends: [
   "menhir" {>= "20120123" & < "20141215"}
 ]
 depopts: ["mysql" "postgresql"]
-ocaml-version: [>= "4.00.0"]
 conflicts: [
   "mysql" {< "1.1.1"}
 ]
-available: os != "win32"
+available: ocaml-version >= "4.00.0" & os != "win32"
+install: [make "install"]

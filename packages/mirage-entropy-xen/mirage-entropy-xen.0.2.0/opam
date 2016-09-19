@@ -1,9 +1,6 @@
 opam-version: "1"
 maintainer: "hannes@mehnert.org"
-build: [
-  [make "xen-build"]
-  [make "xen-install"]
-]
+build: [make "xen-build"]
 remove: [
   ["ocamlfind" "remove" "mirage-entropy-xen"]
 ]
@@ -17,4 +14,5 @@ depends: [
   "xen-evtchn"
   "xenstore"
 ]
-ocaml-version: [>="4.01.0"]
+available: ocaml-version >= "4.01.0"
+install: [make "xen-install"]

@@ -5,7 +5,6 @@ homepage: "https://github.com/savonet/ocaml-mm"
 build: [
   ["./configure" "--prefix" prefix]
   [make]
-  [make "install"]
 ]
 remove: [["ocamlfind" "remove" "mm"]]
 depends: ["ocamlfind"]
@@ -20,3 +19,4 @@ depopts: [
   "theora"
 ]
 available: [ocaml-version < "4.03"]
+install: [make "install"]

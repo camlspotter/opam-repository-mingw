@@ -9,7 +9,6 @@ build: [
   ["./configure" "--prefix" prefix]
   [make "stog_filter_parser.mli"]
   [make "all"]
-  [make "install-lib" "install-share"]
 ]
 remove: [["ocamlfind" "remove" "stog"]]
 depends: [
@@ -21,7 +20,6 @@ depends: [
   "higlo" { >= "0.4" }
 ]
 depopts: ["js_of_ocaml" "xmldiff" "lwt" "websocket" "cstruct" "crunch"]
-ocaml-version: [>= "4.02.0"]
 conflicts: [
   "crunch" {< "1.1.0"}
   "cstruct" {< "0.3.1"}
@@ -30,3 +28,5 @@ conflicts: [
   "websocket" {< "0.8.1"}
   "xmldiff" {< "0.3.0"}
 ]
+available: ocaml-version >= "4.02.0"
+install: [make "install-lib" "install-share"]

@@ -6,7 +6,7 @@ license: "BSD3"
 build: [
   [make "all"]
   [make "opt"]
-  [make "install"]
 ]
 remove: [["ocamlfind" "remove" "statsd-client"]]
 depends: ["ocamlfind" "lwt"]
+install: [make "install"]

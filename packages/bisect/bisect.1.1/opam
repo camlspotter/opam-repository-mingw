@@ -5,7 +5,6 @@ homepage: "http://bisect.x9c.fr/"
 build: [
   ["sh" "configure" "-ocaml-prefix" prefix "-ocamlfind" "%{bin}%/ocamlfind"]
   [make]
-  [make "install"]
 ]
 remove: [["ocamlfind" "remove" "bisect"]]
 depends: [
@@ -15,3 +14,4 @@ depends: [
 ]
 patches: ["opam.patch"]
 available: [ocaml-version < "4.02"]
+install: [make "install"]

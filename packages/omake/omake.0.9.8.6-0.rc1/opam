@@ -3,7 +3,6 @@ maintainer: "contact@ocamlpro.com"
 build: [
   [make "bootstrap" "PREFIX=%{prefix}%"]
   [make "all" "PREFIX=%{prefix}%"]
-  [make "install" "PREFIX=%{prefix}%"]
 ]
 depends: ["ocamlfind"]
 patches: [
@@ -13,3 +12,4 @@ patches: [
   "netbsd_fam.patch"
 ]
 available: os != "win32"
+install: [make "install" "PREFIX=%{prefix}%"]

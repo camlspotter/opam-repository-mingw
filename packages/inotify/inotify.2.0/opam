@@ -3,7 +3,6 @@ maintainer: "whitequark@whitequark.org"
 build: [
   ["ocaml" "setup.ml" "-configure" "--%{lwt:enable}%-lwt" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 remove: [["ocamlfind" "remove" "inotify"]]
 depends: [
@@ -12,4 +11,5 @@ depends: [
   "ocamlbuild" {build}
 ]
 depopts: ["lwt"]
-os: ["linux" | "darwin"]
+available: os = "linux" | os = "darwin"
+install: ["ocaml" "setup.ml" "-install"]

@@ -8,15 +8,15 @@ homepage: "http://mjambon.com/caml2html.html"
 license: "GPL"
 build: [
   ["mkdir" "-p" bin]
-  [make] { os != "win32" }
-  [make "lib"] { os != "win32" }
-  [make "all" "opt"] { os = "win32" }
-  [make "install" "PREFIX=%{prefix}%"]
+  [make] {os != "win32"}
+  [make "lib"] {os != "win32"}
+  [make "all" "opt"] {os = "win32"}
 ]
 remove: [["ocamlfind" "remove" "caml2html"]]
 depends: [
   "ocamlfind"
   "camlmix"
 ]
-ocaml-version: [>= "4.00.0"]
 patches: [ "patch-aa" ]
+available: ocaml-version >= "4.00.0"
+install: [make "install" "PREFIX=%{prefix}%"]

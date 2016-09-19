@@ -4,7 +4,6 @@ homepage: "https://github.com/OCamlPro/ocplib-endian"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 remove: [["ocamlfind" "remove" "ocplib-endian"]]
 depends: [
@@ -13,3 +12,4 @@ depends: [
   "camlp4"
   "ocamlbuild" {build}
 ]
+install: ["ocaml" "setup.ml" "-install"]

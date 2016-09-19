@@ -8,7 +8,6 @@ build: [
   ["make" "clean"]
   ["make" "rebuild"]
   ["make"]
-  ["make" "install"]
 ]
 remove: [
   ["ocamlfind" "-remove" "apron"]
@@ -26,4 +25,5 @@ depopts: [
 conflicts: [
   "mlgmp"
 ]
-os: ["linux"]
+available: os = "linux"
+install: ["make" "install"]

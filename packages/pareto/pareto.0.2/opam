@@ -6,7 +6,6 @@ license: "MIT"
 build: [
   ["./configure" "--prefix" prefix]
   [make]
-  [make "install"]
 ]
 remove: [["ocamlfind" "remove" "pareto"]]
 depends: [
@@ -14,4 +13,5 @@ depends: [
   "gsl" {>= "1.13.0"}
   "ocamlbuild" {build}
 ]
-ocaml-version: [>= "4.00.1"]
+available: ocaml-version >= "4.00.1"
+install: [make "install"]

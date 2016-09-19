@@ -5,7 +5,6 @@ homepage: "http://mmottl.github.io/pomap/"
 build: [
   ["./configure" "--prefix" prefix]
   [make]
-  [make "install"]
 ]
 remove: [["ocamlfind" "remove" "pomap"]]
 depends: [
@@ -13,3 +12,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 available: ocaml-version < "4.02.0"
+install: [make "install"]

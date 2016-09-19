@@ -7,9 +7,7 @@ homepage: "https://github.com/rgrinberg/asynz-zmq"
 build: [
   [make "configure-no-tests"]
   [make "build"]
-  [make "install"]
 ]
-
 remove: [
   ["ocamlfind" "remove" "async_zmq"]
 ]
@@ -22,3 +20,4 @@ depends: [
   "oasis"
   "ocamlbuild" {build}
 ]
+install: [make "install"]

@@ -9,7 +9,6 @@ build: [
   ["oasis" "setup"]
   ["./configure" "--prefix" prefix]
   [make "build"]
-  [make "install"]
 ]
 remove: [
   [make "uninstall"]
@@ -20,3 +19,4 @@ depends: [
   "ocamlfind"
   "ocamlbuild" {build}
 ]
+install: [make "install"]

@@ -6,14 +6,12 @@ license: "GNU Lesser General Public License version 3"
 doc: ["https://zoggy.github.io/higlo/doc.html"]
 tags: ["syntax highlighting" "xml"]
 
-build: [
-  [make "all"]
-  [make "install-lib"]
-]
+build: [make "all"]
 remove: [["ocamlfind" "remove" "higlo"]]
 depends: [
   "ocamlfind"
   "ulex"
   "xtmpl" {>= "0.10"}
 ]
-ocaml-version: [>= "4.02.0"]
+available: ocaml-version >= "4.02.0"
+install: [make "install-lib"]

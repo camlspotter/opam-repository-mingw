@@ -1,8 +1,11 @@
 opam-version: "1.2"
 maintainer: "opam-devel@lists.ocaml.org"
 build: [
-  [make "PREFIX=%{prefix}%" "docdir=%{doc}%/menhir" "libdir=%{lib}%/menhir" "mandir=%{man}%/man1"]
-  [make "install" "PREFIX=%{prefix}%" "docdir=%{doc}%/menhir" "libdir=%{lib}%/menhir" "mandir=%{man}%/man1"]
+  make
+  "PREFIX=%{prefix}%"
+  "docdir=%{doc}%/menhir"
+  "libdir=%{lib}%/menhir"
+  "mandir=%{man}%/man1"
 ]
 remove: [["ocamlfind" "remove" "menhirLib"]]
 depends: [
@@ -13,4 +16,12 @@ available: [ ocaml-version >= "4.02" ]
 patches: [
   "warn_error.patch"
   "opamingw.patch"
+]
+install: [
+  make
+  "install"
+  "PREFIX=%{prefix}%"
+  "docdir=%{doc}%/menhir"
+  "libdir=%{lib}%/menhir"
+  "mandir=%{man}%/man1"
 ]

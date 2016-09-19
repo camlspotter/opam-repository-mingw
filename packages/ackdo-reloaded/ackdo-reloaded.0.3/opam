@@ -1,9 +1,6 @@
 opam-version: "1.2"
 maintainer: "rudi.grinberg@gmail.com"
-build: [
-  [make build]
-  [make "opaminstall" "BINDIR=%{bin}%"]
-]
+build: [make build]
 remove: [[make "opamuninstall"]]
 depends: [
   "core"
@@ -11,3 +8,4 @@ depends: [
   "textutils"
   "ocamlbuild" {build}
 ]
+install: [make "opaminstall" "BINDIR=%{bin}%"]

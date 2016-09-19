@@ -5,12 +5,7 @@ authors: [
 ]
 homepage: "https://github.com/ocamllabs/opamfu"
 license: "ISC"
-tags: [
-]
-build: [
-  [make "build"]
-  [make "install"]
-]
+build: [make "build"]
 remove: [[make "uninstall"]]
 depends: [
   "ocamlfind"
@@ -18,3 +13,4 @@ depends: [
   "uri"
 ]
 depopts: ["cmdliner"]
+install: [make "install"]

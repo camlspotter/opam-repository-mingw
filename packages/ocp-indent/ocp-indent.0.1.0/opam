@@ -4,7 +4,6 @@ homepage: "https://github.com/OCamlPro/ocp-indent"
 build: [
   ["./configure" "--prefix" prefix]
   [make]
-  [make "install"]
 ]
 remove: [
   ["./configure" "--prefix=%{prefix}%"]
@@ -13,3 +12,4 @@ remove: [
 depends: [
   "ocamlbuild" {build}
 ]
+install: [make "install"]

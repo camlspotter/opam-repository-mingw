@@ -1,9 +1,6 @@
 opam-version: "1"
 maintainer: "rob.hoes@citrix.com"
-build: [
-  [make]
-  [make "install"]
-]
+build: make
 remove: [
   [make "uninstall"]
 ]
@@ -12,8 +9,9 @@ depends: [
   "ocamlfind"
   "ctypes" {< "0.2.3"} | ("ctypes" {< "0.4.0"} & "obuild" {< "0.1.2"})
 ]
-os: [ "linux" ]
 depexts: [
  [ ["debian"] ["libnl-3" ] ]
  [ ["ubuntu"] ["libnl-3-200" ] ]
 ]
+available: os = "linux"
+install: [make "install"]

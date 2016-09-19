@@ -4,7 +4,6 @@ build: [
   ["oasis" "setup"]
   ["ocaml" "setup.ml" "-configure" "--enable-tests" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 remove: [["ocamlfind" "remove" "omonad"]]
 depends: [
@@ -12,4 +11,5 @@ depends: [
   "oasis"
   "ocamlbuild" {build}
 ]
-ocaml-version: [>= "4.01.0" & < "4.02"]
+available: ocaml-version >= "4.01.0" & ocaml-version < "4.02"
+install: ["ocaml" "setup.ml" "-install"]

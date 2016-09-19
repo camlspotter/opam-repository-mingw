@@ -1,10 +1,7 @@
 opam-version: "1"
 maintainer: "francois.berenger@inria.fr"
 homepage: "https://github.com/Antique-team/clangml"
-build: [
-  [make]
-  [make "install"]
-]
+build: make
 remove: [
   [make "uninstall"]
 ]
@@ -26,8 +23,8 @@ depexts: [
   # archlinux has no package providing llvm and clang 3.4.1
   [["archlinux"] ["boost" "binutils"]]
 ]
-available: os != "win32" & (os != "darwin")
+available: ocaml-version >= "4.01.0" & os != "win32" & os != "darwin"
 post-messages: [
   "This package requires llvm-3.4, clang-3.4, boost and binutils" {failure}
 ]
-ocaml-version: [>= "4.01.0"]
+install: [make "install"]

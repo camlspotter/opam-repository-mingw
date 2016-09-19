@@ -5,12 +5,10 @@ maintainer: "dominic.price@nottingham.ac.uk"
 homepage: "https://github.com/dominicjprice/sociaml-tumblr-api"
 authors: [ "Dominic Price" ]
 license: "ISC"
-ocaml-version: [ >= "4.01.0" ]
 build: [
   ["oasis" "setup"]
   ["./configure" "--prefix" prefix]
   [make "build"]
-  [make "install"]
 ]
 remove: [
   [make "uninstall"]
@@ -29,3 +27,5 @@ depends: [
   "sociaml-oauth-client" {< "0.5.0"}
   "ocamlbuild" {build}
 ]
+available: ocaml-version >= "4.01.0"
+install: [make "install"]

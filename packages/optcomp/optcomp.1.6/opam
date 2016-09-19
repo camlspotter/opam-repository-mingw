@@ -6,7 +6,6 @@ license: "BSD3"
 build: [
   ["./configure" "--prefix" prefix]
   [make]
-  [make "install"]
 ]
 build-doc: [["ocaml" "setup.ml" "-doc"]]
 remove: [
@@ -19,4 +18,5 @@ depends: [
   "camlp4"
   "ocamlbuild" {build}
 ]
-ocaml-version: [>= "3.12"]
+available: ocaml-version >= "3.12"
+install: [make "install"]

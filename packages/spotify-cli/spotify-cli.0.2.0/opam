@@ -3,7 +3,6 @@ maintainer: "john.else@gmail.com"
 build: [
   ["./configure"]
   [make]
-  [make "PREFIX=%{prefix}%" "install"]
 ]
 remove: [
   [make "PREFIX=%{prefix}%" "uninstall"]
@@ -15,3 +14,4 @@ depends: [
   "spotify-web-api"
   "ocamlbuild" {build}
 ]
+install: [make "PREFIX=%{prefix}%" "install"]

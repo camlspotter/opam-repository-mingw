@@ -3,7 +3,6 @@ maintainer: "armael.gueneau@ens-lyon.fr"
 build: [
   ["./configure" "--bin-dir" bin]
   [make]
-  [make "install"]
 ]
 remove: [
   ["./configure" "--bin-dir" bin]
@@ -18,3 +17,4 @@ patches: [
   "configure.diff"
   "configure2.diff"
 ]
+install: [make "install"]

@@ -6,8 +6,6 @@ build: [
   ["./configure" "--prefix=%{prefix}%" "--mandir=%{prefix}%/man"]
   [make "META"]
   [make "LOCAL_OCPBUILD=ocp-build" "compile"]
-  [make "libinstall"]
-  ["rm" "opam.install"]
 ]
 remove: [["ocamlfind" "remove" "opam"]]
 depends: [
@@ -18,4 +16,8 @@ depends: [
   "re" {>= "1.2.0"}
   "ocamlfind"
   "ocamlbuild" {build}
+]
+install: [
+  [make "libinstall"]
+  ["rm" "opam.install"]
 ]

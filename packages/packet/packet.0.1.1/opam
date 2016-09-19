@@ -3,7 +3,6 @@ maintainer: "arjun@cs.umass.edu"
 build: [
   ["ocaml" "setup.ml" "-configure"]
   ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-install"]
 ]
 remove: [["ocamlfind" "remove" "packet"]]
 depends: [
@@ -11,3 +10,4 @@ depends: [
   "cstruct" {>= "0.7.0" & <"2.0.0"}
   "ocamlbuild" {build}
 ]
+install: ["ocaml" "setup.ml" "-install"]

@@ -6,10 +6,10 @@ tags: [
   "async"
   "graphics"
 ]
-build: [["./install.sh"]]
 remove: [["ocamlfind" "remove" "async_graphics"]]
 depends: [
   "ocamlfind"
   "async" {>= "109.09.00"}
   "ocamlbuild" {build}
 ]
+install: "./install.sh"

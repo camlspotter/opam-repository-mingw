@@ -3,7 +3,6 @@ maintainer: "vb@luminar.eu.org"
 build: [
   ["./configure" "--%{pcre:enable}%-pcre"]
   [make]
-  [make "install"]
 ]
 remove: [["ocamlfind" "remove" "text"]]
 depends: [
@@ -11,3 +10,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 depopts: ["pcre"]
+install: [make "install"]

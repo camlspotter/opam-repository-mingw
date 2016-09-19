@@ -10,10 +10,9 @@ tags: [
   "configuration"
 ]
 build: [
-  ["./configure" "--prefix" prefix] { os != "win32" }
-  ["./configure" "--prefix" prefix "--enable-windows"] { os = "win32" }
+  ["./configure" "--prefix" prefix] {os != "win32"}
+  ["./configure" "--prefix" prefix "--enable-windows"] {os = "win32"}
   [make "all"]
-  [make "install"]
 ]
 remove: [["ocamlfind" "remove" "lablgtk2-extras"]]
 depends: [
@@ -23,6 +22,6 @@ depends: [
   "lablgtk" {>= "2.16.0"}
   "conf-gtksourceview" {= "2"}
 ]
-ocaml-version: [>= "4.02.0"]
-
 patches: [ "patch-lablgtk2-extras-1.5" { os = "win32" } ]
+available: ocaml-version >= "4.02.0"
+install: [make "install"]

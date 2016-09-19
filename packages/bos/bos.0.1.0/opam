@@ -20,4 +20,4 @@ depends: [
   "logs"
   "mtime" {test}
 ]
-build: ["ocaml" "pkg/pkg.ml" "build" "--installer" "true"]
+build: ["ocaml" "pkg/pkg.ml" "build" "--pinned" "%{pinned}%"]

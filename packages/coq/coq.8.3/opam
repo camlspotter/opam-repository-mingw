@@ -1,9 +1,16 @@
 opam-version: "1.2"
 maintainer: "contact@ocamlpro.com"
 build: [
-  ["./configure" "-camlp5dir" "%{lib}%/camlp5" "--prefix" prefix "-docdir" doc]
+  [
+    "./configure"
+    "-camlp5dir"
+    "%{lib}%/camlp5"
+    "--prefix"
+    prefix
+    "-docdir"
+    doc
+  ]
   [make "-j%{jobs}%" "world"]
-  [make "install"]
 ]
 depends: [
   "camlp5"
@@ -11,4 +18,5 @@ depends: [
 ]
 depopts: ["lablgtk"]
 patches: ["configure.patch"]
-ocaml-version: [< "4.02.0"]
+available: ocaml-version < "4.02.0"
+install: [make "install"]
