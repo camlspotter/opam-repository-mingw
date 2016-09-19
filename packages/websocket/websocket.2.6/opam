@@ -40,3 +40,4 @@ conflicts: [
 ]
 
 available: [ ocaml-version >="4.02.0" ]
+patches: "patch-topkg-quote-websocket.2.6" {os = "win32"}
