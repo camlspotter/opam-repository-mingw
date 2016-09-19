@@ -16,5 +16,5 @@ depexts: [
   [["debian"] ["libmilter-dev"]]
   [["ubuntu"] ["libmilter-dev"]]
 ]
-available: ocaml-version < "4.02.0" & os != "win32"
+available: os != "win32" & ocaml-version < "4.02.0" & (os != "win32")
 install: ["ocaml" "setup.ml" "-install"]

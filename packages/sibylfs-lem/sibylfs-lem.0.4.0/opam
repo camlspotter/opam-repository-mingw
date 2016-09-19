@@ -31,3 +31,4 @@ depends: [
 depopts: [
   "coq"
 ]
+available: os != "win32"

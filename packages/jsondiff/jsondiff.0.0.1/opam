@@ -9,3 +9,4 @@ depends: [
   "yojson"
 ]
 install: [make "install" "PREFIX=%{prefix}%"]
+available: os != "win32"

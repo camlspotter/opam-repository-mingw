@@ -13,3 +13,4 @@ build: [
   [make]
 ]
 install: [make "install"]
+available: os != "win32"

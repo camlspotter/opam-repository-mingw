@@ -15,5 +15,5 @@ build: [
 remove: [
   ["ocamlfind" "remove" "mezzo"]
 ]
-available: ocaml-version >= "4.00.1"
+available: os != "win32" & (ocaml-version >= "4.00.1")
 install: [make "install"]

@@ -1,12 +1,14 @@
 opam-version: "1.2"
 maintainer: "gregoire.henry@ocamlpro.com"
-substs: ["opam.patch"]
+substs: ["opam.patch" "wopam.patch"]
 build: [
   ["aclocal" "-I" "support"]
   ["autoconf"]
   ["./configure" "LABLGTKDIR=%{lib}%/lablgtk2" "--prefix" prefix "--sbindir=%{lib}%/cairo/sbin" "--libexecdir=%{lib}%/cairo/libexec" "--sysconfdir=%{lib}%/cairo/etc" "--sharedstatedir=%{lib}%/cairo/com" "--localstatedir=%{lib}%/cairo/var" "--libdir=%{lib}%/cairo/lib" "--includedir=%{lib}%/cairo/include" "--datarootdir=%{lib}%/cairo/share"]
+  ["sed" "-i" "s|.so|.dll|g" "src/Makefile"] {os = "win32"}
   [make]
-  ["ocamlopt.opt" "-shared" "-linkall" "-I" "src" "-ccopt" "-I/usr/include/cairo" "-ccopt" "-I/usr/include/glib-2.0" "-ccopt" "-I/usr/lib/x86_64-linux-gnu/glib-2.0/include" "-ccopt" "-I/usr/include/pixman-1" "-ccopt" "-I/usr/include/freetype2" "-ccopt" "-I/usr/include/libpng12" "-o" "src/cairo.cmxs" "-cclib" "-Lsrc/" "-cclib" "-lcairo" "src/cairo.cmxa"]
+  ["ocamlopt.opt" "-shared" "-linkall" "-I" "src" "-ccopt" "-I/usr/include/cairo" "-ccopt" "-I/usr/include/glib-2.0" "-ccopt" "-I/usr/lib/x86_64-linux-gnu/glib-2.0/include" "-ccopt" "-I/usr/include/pixman-1" "-ccopt" "-I/usr/include/freetype2" "-ccopt" "-I/usr/include/libpng12" "-o" "src/cairo.cmxs" "-cclib" "-Lsrc/" "-cclib" "-lcairo" "src/cairo.cmxa"]  {os != "win32"}
+  ["ocamlopt.opt" "-shared" "-linkall" "-I" "src" "-o" "src/cairo.cmxs" "-cclib" "-Lsrc/" "-cclib" "-lcairo" "src/cairo.cmxa"]  {os = "win32"}
 ]
 install: [
   [make "install"]
@@ -21,13 +23,17 @@ depends: [
   "conf-autoconf" {build}
 ]
 patches: [
-  "opam.patch"
+  "opam.patch" {os != "win32"}
+  "wopam.patch" {os = "win32"}
   "configure_fontconfig.patch"
   "configure_lablgtkdir.patch"
 ]
 authors: [
   "Olivier Andrieu"
   "Richard Jones"
+]
+depexts: [
+  [["win32" "cygwinports"] ["system:autoconf-archive" "system:pkg-config"]]
 ]
 homepage: "http://cairographics.org/cairo-ocaml/"
 dev-repo: "git+http://anongit.freedesktop.org/git/cairo-ocaml.git"

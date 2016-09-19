@@ -1,0 +1,20 @@
+--- ./Makefile
++++ ./Makefile
+@@ -42,8 +42,15 @@
+ LEXERS_BYTE=$(LEXERS:.cmx=.cmo)
+ LEXERS_CMXS=$(LEXERS:.cmx=.cmxs)
+ 
+-HIGLO=higlo
+-HIGLO_BYTE=$(HIGLO).byte
++OS_TYPE:=$(shell ocamlfind ocamlc -config | awk '/^os_type:/ {print $$2}')
++ifeq ($(OS_TYPE),$(filter $(OS_TYPE),Win32 Cygwin))
++EXT_EXE=.exe
++else
++EXT_EXE=
++endif
++
++HIGLO=higlo$(EXT_EXE)
++HIGLO_BYTE=higlo.byte
+ MK_HIGLO=mk-higlo
+ 
+ RM=rm -f

@@ -26,3 +26,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 available: [ ocaml-version >="4.02.0" ]
+patches: "patch-topkg-websocket.2.1" {os = "win32"}

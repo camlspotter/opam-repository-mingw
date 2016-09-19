@@ -1,0 +1,10 @@
+--- ./libs/ocplib-digest/unix32_c.h
++++ ./libs/ocplib-digest/unix32_c.h
+@@ -20,6 +20,7 @@
+ #define FD_SETSIZE 256
+ 
+ #include <winsock.h>
++#include <stdint.h>
+ 
+ struct filedescr {
+   union {

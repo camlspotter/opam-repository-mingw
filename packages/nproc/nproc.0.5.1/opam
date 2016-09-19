@@ -16,4 +16,4 @@ depends: [
   "ocamlfind" {build}
   "lwt"
 ]
-
+available: os != "win32"

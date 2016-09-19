@@ -35,3 +35,4 @@ remove: [
   [ "ocp-build" "uninstall" "-install-lib" lib "ocplib-digest" ]
   [ "ocp-build" "uninstall" "-install-lib" lib "ocplib-bz2" ]
 ]
+patches: "typerex-clibs-1.0.patch" {os = "win32"}

@@ -17,3 +17,7 @@ depends: [
 ]
 bug-reports: "https://github.com/savonet/ocaml-duppy/issues"
 dev-repo: "https://github.com/savonet/ocaml-duppy.git"
+patches: [
+  "ocaml-duppy-0.5.2.patch" {os = "win32"}
+  "patch-ocamlmakefile-duppy.0.5.2" {os = "win32"}
+]

@@ -12,7 +12,7 @@
 +    Bytes.set b i (if c = '\\' then '/' else c)
 +  done;
 +  if l > 1 && s.[1] = ':' && (s.[0] >= 'a' && s.[0] <= 'z') &&
-+     (l = 2 || Bytes.get b 1 = '/' ) then (
++     (l = 2 || Bytes.get b 2 = '/' ) then (
 +    Bytes.set b 1 (Char.uppercase s.[0])
 +  );
 +  Bytes.unsafe_to_string b

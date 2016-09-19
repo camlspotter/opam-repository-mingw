@@ -1,6 +1,4 @@
 opam-version: "1.2"
-name: "wamp"
-version: "1.0"
 authors: "Vincent Bernardoff <vb@luminar.eu.org>"
 maintainer: "Vincent Bernardoff <vb@luminar.eu.org>"
 homepage: "https://github.com/vbmithr/ocaml-wamp"
@@ -34,3 +32,4 @@ build: [[ "ocaml" "pkg/pkg.ml" "build"
           "--with-yojson" "%{yojson:installed}%"
           "--with-msgpck" "%{msgpck:installed}%"
 ]]
+patches: "ocaml-wamp-1.0.patch" {os = "win32"}

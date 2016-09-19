@@ -25,3 +25,4 @@ depends: [
 ]
 conflicts: ["oasis"]
 install: ["ocaml" "setup.ml" "-install"]
+available: os != "win32"

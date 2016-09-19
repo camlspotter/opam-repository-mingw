@@ -29,3 +29,7 @@ available: [ ocaml-version >= "4.02.1" & ocaml-version < "4.03" ]
 bug-reports: "https://github.com/janestreet/core_kernel/issues"
 dev-repo: "https://github.com/janestreet/core_kernel.git"
 install: [[make "install"]]
+patches: [
+  "patch-oasis-core_kernel.112.35.00" {os = "win32"}
+  "core_kernel-112.35.00.patch" {os = "win32"}
+]

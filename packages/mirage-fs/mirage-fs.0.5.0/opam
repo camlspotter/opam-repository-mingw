@@ -9,3 +9,4 @@ depends: [
   "cstruct" {>= "0.6.0"}
   "ocamlbuild" {build}
 ]
+available: os != "win32"

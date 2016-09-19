@@ -17,3 +17,4 @@ available: [ ocaml-version >= "4.02.1" & ocaml-version < "4.03" ]
 bug-reports: "https://github.com/janestreet/bin_prot/issues"
 dev-repo: "https://github.com/janestreet/bin_prot.git"
 install: [[make "install"]]
+patches: "patch-oasis-bin_prot.112.35.00" {os = "win32"}

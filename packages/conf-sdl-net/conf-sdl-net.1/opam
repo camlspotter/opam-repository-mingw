@@ -7,4 +7,5 @@ depexts: [
   [["debian"] ["libsdl-net1.2-dev"]]
   [["ubuntu"] ["libsdl-net1.2-dev"]]
   [["mageia"] ["libSDL_net-devel"]]
+  [["win32" "cygwinports"] ["SDL_net"]]
 ]

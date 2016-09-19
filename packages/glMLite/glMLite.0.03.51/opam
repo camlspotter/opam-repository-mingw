@@ -11,4 +11,4 @@ depexts: [
   [ ["ubuntu"] [ "freeglut3-dev"] ]
   [ ["osx" "homebrew"] ["homebrew/x11/freeglut"] ]
 ]
-available: [ocaml-version < "4.04.0"]
+available: os != "win32" & (ocaml-version < "4.04.0")

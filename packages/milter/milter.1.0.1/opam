@@ -18,4 +18,4 @@ depexts: [
   [["debian"] ["libmilter-dev"]]
   [["ubuntu"] ["libmilter-dev"]]
 ]
-available: [os != "win32" & ocaml-version < "4.04.0"]
+available: os != "win32" & os != "win32" & (ocaml-version < "4.04.0")

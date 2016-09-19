@@ -1,4 +1,4 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "byvoid@byvoid.com"
 authors: ["BYVoid <byvoid@byvoid.com>"]
 homepage: "https://github.com/BYVoid/Dlist"
@@ -13,7 +13,7 @@ remove: [
   ["ocp-build" "uninstall"]
 ]
 depends: [
-  "ocp-build" {>= "1.99.6-beta"}
+  "ocp-build" {>= "1.99.7-beta"}
 ]
 depopts: ["core_bench" "ounit"]
 conflicts: [

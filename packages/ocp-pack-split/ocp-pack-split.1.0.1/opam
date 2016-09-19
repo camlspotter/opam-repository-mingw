@@ -5,3 +5,4 @@ homepage: "http://www.ocamlpro.com/blog/2011/08/10/ocaml-pack-functors.html"
 build: [
   [make]
 ]
+available: os != "win32"

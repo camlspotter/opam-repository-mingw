@@ -22,3 +22,4 @@ depexts: [
   [["oraclelinux"] ["bmake"]]
   [["rhel"] ["bmake"]]
 ]
+available: os != "win32"

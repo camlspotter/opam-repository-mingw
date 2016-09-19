@@ -1,5 +1,4 @@
 opam-version: "1.2"
-name: "qcow-format"
 maintainer: "dave@recoil.org"
 authors: [ "David Scott" ]
 license: "ISC"
@@ -51,3 +50,4 @@ build-test: [
 ]
 
 available: [ocaml-version >= "4.02.0"]
+patches: "ocaml-qcow-0.4.1.patch" {os = "win32"}

@@ -18,3 +18,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 install: ["ocaml" "setup.ml" "-install"]
+patches: "patch-oasis-weberizer.0.7.7" {os = "win32"}

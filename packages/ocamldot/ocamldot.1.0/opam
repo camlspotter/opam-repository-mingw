@@ -13,3 +13,4 @@ depends: [
 ]
 authors: "Maxence Guesdon"
 install: [make "install"]
+available: os != "win32"

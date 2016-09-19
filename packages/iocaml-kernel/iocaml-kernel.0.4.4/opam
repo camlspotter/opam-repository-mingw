@@ -24,5 +24,6 @@ depexts: [
   [["osx" "homebrew"] ["zeromq"]]
   [["centos"] ["zeromq3-devel"]]
 ]
-available: ocaml-version >= "4.01.0" & ocaml-version < "4.02.0"
+available:
+  os != "win32" & ocaml-version >= "4.01.0" & (ocaml-version < "4.02.0")
 install: [make "install"]

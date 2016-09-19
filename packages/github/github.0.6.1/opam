@@ -19,3 +19,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 install: [make "PREFIX=%{prefix}%" "install"]
+available: os != "win32"

@@ -27,3 +27,7 @@ depends: [
   "variantslib"     {>= "113.24.00" & < "113.25.00"}
 ]
 available: [ ocaml-version >= "4.02.3" ]
+patches: [
+  "patch_gen_install.ml" {os = "win32"}
+  "patch-oasis-async_rpc_kernel.113.33.00" {os = "win32"}
+]

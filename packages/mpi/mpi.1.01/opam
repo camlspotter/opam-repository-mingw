@@ -11,3 +11,4 @@ depexts: [
   [["ubuntu"] ["mpi-default-dev"]]
 ]
 install: [make "install"]
+available: os != "win32"

@@ -26,6 +26,4 @@ depends: [
   "tiny_json_conv" { >= "1.3.0" }
   "spotlib" { >= "2.1.1" & <= "2.1.2" }
 ]
-available: [
-  ocaml-version = "4.00.1"
-]
+available: os != "win32" & (ocaml-version = "4.00.1")

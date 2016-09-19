@@ -29,5 +29,5 @@ depexts: [
 conflicts: [
   "ocp-index" {< "1.0.1"}
 ]
-available: ocaml-version >= "4.00.1"
+available: os != "win32" & (ocaml-version >= "4.00.1")
 install: [make "install"]

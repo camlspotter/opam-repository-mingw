@@ -12,3 +12,4 @@ depends: [
   "ocamlfind"
 ]
 install: [make "install-lib"]
+available: os != "win32"

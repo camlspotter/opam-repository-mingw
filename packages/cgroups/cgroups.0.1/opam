@@ -14,6 +14,4 @@ depends: [
   "base-unix"
   "ocamlbuild" {build}
 ]
-available: [
-  ocaml-version >= "4.02.1"
-  ]
+available: os != "win32" & (ocaml-version >= "4.02.1")

@@ -25,3 +25,4 @@ build: [
   "ocaml/src/camera.ml"
   "ocaml/src/minilight.ml"
 ]
+available: os != "win32"

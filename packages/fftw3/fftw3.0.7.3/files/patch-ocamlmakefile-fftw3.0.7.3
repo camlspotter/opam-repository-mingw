@@ -1,20 +1,16 @@
 --- ./OCamlMakefile
 +++ ./OCamlMakefile
-@@ -112,15 +112,21 @@
+@@ -112,31 +112,30 @@
  
  ####################  variables depending on your OCaml-installation
  
 -SYSTEM := $(shell ocamlc -config 2>/dev/null | grep system | sed 's/system: //')
-+ifndef OCAMLC
-+  OCAMLC := ocamlc
-+endif
-+export OCAMLC
-+
-+SYSTEM := $(shell $(OCAMLC) -config 2>/dev/null | grep system | sed 's/system: //')
++SYSTEM := $(shell $(OCAMLFIND) ocamlc -config | awk '/^system:/ {print $$2}')
      # This may be
      # - mingw
 +    # - mingw64
      # - win32
++    # - win64
      # - cygwin
      # - some other string means Unix
      # - empty means ocamlc does not support -config
@@ -23,8 +19,11 @@
 +ifeq ($(SYSTEM),$(filter $(SYSTEM),mingw mingw64))
    MINGW=1
  endif
- ifeq ($(SYSTEM),win32)
-@@ -130,13 +136,9 @@
+-ifeq ($(SYSTEM),win32)
++ifeq ($(SYSTEM),$(filter $(SYSTEM),win32 win64))
+   MSVC=1
+ endif
+ 
  ifdef MINGW
    export MINGW
    WIN32 := 1
@@ -35,32 +34,21 @@
 -  CC := gcc
 -  # The OCaml C header files use this flag:
 -  CFLAGS += -D__MINGW32__
-+  CC:= $(shell $(OCAMLC) -config | grep '^bytecomp_c_compiler' | awk '{for(i=2;i<=NF;i++) printf "%s " ,$$i}')
++  CC:= $(shell $(OCAMLFIND) ocamlc -config | awk '/^bytecomp_c_compiler/ {for(i=2;i<=NF;i++) printf "%s " ,$$i}')
++  AR:= $(shell $(OCAMLFIND) ocamlc -config | awk '/^bytecomp_c_compiler/ {print $$2}' | sed 's|gcc|ar|g')
  endif
  ifdef MSVC
    export MSVC
-@@ -224,11 +226,6 @@
- endif
- export OCAML
- 
--ifndef OCAMLC
--  OCAMLC := ocamlc
--endif
--export OCAMLC
--
- ifndef OCAMLOPT
-   OCAMLOPT := ocamlopt
- endif
-@@ -379,7 +376,7 @@
+@@ -379,7 +378,7 @@
  
  ifndef OCAMLLIBPATH
    OCAMLLIBPATH := \
 -    $(shell $(OCAMLC) 2>/dev/null -where || echo /usr/lib/ocaml)
-+    $(shell $(OCAMLC) 2>/dev/null -where || echo /usr/local/lib/ocaml | tr -d '\r')
++    $(shell $(OCAMLFIND) ocamlc -where 2>/dev/null || echo /usr/local/lib/ocaml | tr -d '\r')
  endif
  export OCAMLLIBPATH
  
-@@ -550,7 +547,7 @@
+@@ -550,7 +549,7 @@
  
  ifdef USE_CAMLP4
    CAMLP4PATH := \
@@ -69,7 +57,28 @@
    INCFLAGS := -I $(CAMLP4PATH)
    CINCFLAGS := -I$(CAMLP4PATH)
  endif
-@@ -1121,7 +1118,7 @@
+@@ -985,20 +984,12 @@
+ 				$(OCAMLMKLIB_FLAGS)
+ endif
+ else
+-ifdef MSVC
+-$(DLLSONAME):		$(OBJ_LINK)
+-			link /NOLOGO /DLL /OUT:$@ $(OBJ_LINK) \
+-			 $(wildcard $(foreach dir,$(LIBDIRS),$(CLIBS:%=$(dir)/%.lib))) \
+-			 '$(OCAMLLIBPATH)/ocamlrun.lib'
+-
+-else
+ $(DLLSONAME):		$(OBJ_LINK)
+ 			$(OCAMLMKLIB) $(INCFLAGS) $(CLIBFLAGS) \
+ 				-o $(CLIB_BASE) $(OBJ_LINK) $(CLIBS:%=-l%) $(CFRAMEWORKS:%=-framework %) \
+ 				$(OCAMLMKLIB_FLAGS)
+ endif
+ endif
+-endif
+ 
+ ifndef LIB_PACK_NAME
+ $(RESULT).cma:		$(REAL_IMPL_INTF) $(MAKEDLL) $(EXTRADEPS) $(RESULTDEPS)
+@@ -1121,7 +1112,7 @@
  			$(QUIET)if [ $(NOIDLHEADER) ]; then touch $*.h; fi
  
  %.$(EXT_OBJ):	%.c

@@ -17,3 +17,7 @@ depends: [
 ]
 available: [ocaml-version >= "4.01"]
 tags: [ "flags:plugin" ]
+patches: [
+  "opam-query-1.2.patch" {os = "win32"}
+  "patch-topkg-opam-query.1.2" {os = "win32"}
+]

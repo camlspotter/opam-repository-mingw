@@ -13,3 +13,4 @@ depends: [
     "pxp"
     "xstrp4"
 ]
+available: os != "win32"

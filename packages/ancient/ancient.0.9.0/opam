@@ -6,5 +6,5 @@ build: [
 ]
 remove: [["ocamlfind" "remove" "ancient"]]
 depends: ["ocamlfind"]
-available: ocaml-version < "4.03.0"
+available: os != "win32" & (ocaml-version < "4.03.0")
 install: [make "install" "DESTDIR=%{lib}%"]

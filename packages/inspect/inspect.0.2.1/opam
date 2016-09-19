@@ -4,3 +4,4 @@ build: make
 remove: [[make "uninstall"]]
 depends: ["ocamlfind"]
 install: [make "install"]
+available: os != "win32"

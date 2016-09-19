@@ -55,4 +55,4 @@ depexts: [
   [ [ "osx" "homebrew" ] [ "fftw" ] ]
   [ [ "win32" "cygwinports" ] [ "fftw3" ] ]
 ]
-patches: [ "ocaml-fftw3-0.7.3.patch" { os = "win32" } ]
+patches: "patch-ocamlmakefile-fftw3.0.7.3" {os = "win32"}

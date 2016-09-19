@@ -29,6 +29,4 @@ depends: [
   "tiny_json"
   "ppx_monadic" { >= "1.0.2" }
 ]
-available: [
-  ocaml-version = "4.02.1"
-]
+available: os != "win32" & (ocaml-version = "4.02.1")

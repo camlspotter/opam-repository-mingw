@@ -1,0 +1,174 @@
+--- ./config/detect.sh
++++ ./config/detect.sh
+@@ -4,11 +4,7 @@
+ 
+ set -e
+ 
+-if ld -lm -shared --wrap caml_modify -o /dev/null 2>/dev/null; then
+-    ld_wrap_possible=true
+-else
+-    ld_wrap_possible=false
+-fi
++ld_wrap_possible=false
+ 
+ if [ -e setup.data ]; then
+     sed '/^ld_wrap_possible=/d' setup.data > setup.data.new
+--- ./config/discover.sh
++++ ./config/discover.sh
+@@ -7,7 +7,7 @@
+     exit 2
+ fi
+ 
+-OCAMLC="$1"
++OCAMLC="$(cygpath -m "$1")"
+ ML_OUTFILE="$2"
+ C_OUTFILE="$3"
+ shift 3
+@@ -16,7 +16,7 @@
+ OUT=config/test.out
+ trap "rm -f $OUT" EXIT
+ 
+-$OCAMLC -ccopt -E $OCAML_CFLAGS -c $SRC | grep '^"OUT:[^"]*"$' | sed 's/"OUT:\([^"]*\)"/\1/' | tee > $OUT
++"$OCAMLC" -ccopt -E $OCAML_CFLAGS -c $SRC | grep '^"OUT:[^"]*"$' | sed 's/"OUT:\([^"]*\)"/\1/' | tee > $OUT
+ 
+ OCAML_VERSION="`ocamlc -version`"
+ case "$OCAML_VERSION" in
+--- ./src/bigstring_marshal_stubs.c
++++ ./src/bigstring_marshal_stubs.c
+@@ -30,12 +30,12 @@
+ }
+ 
+ extern CAMLprim void
+-caml_output_value_to_malloc(value v, value v_flags, char **buf_p, long *len);
++caml_output_value_to_malloc(value v, value v_flags, char **buf_p, intnat *len);
+ 
+ CAMLprim value bigstring_marshal_stub(value v, value v_flags)
+ {
+   char *buf;
+-  long len;
++  intnat len;
+   int alloc_flags = CAML_BA_CHAR | CAML_BA_C_LAYOUT | CAML_BA_MANAGED;
+   caml_output_value_to_malloc(v, v_flags, &buf, &len);
+   return caml_ba_alloc(alloc_flags, 1, buf, &len);
+--- ./src/bigstring_stubs.c
++++ ./src/bigstring_stubs.c
+@@ -21,6 +21,13 @@
+ #define bswap_16 OSSwapInt16
+ #define bswap_32 OSSwapInt32
+ #define bswap_64 OSSwapInt64
++#elif __MINGW32__
++static inline uint16_t bswap_16 (uint16_t x)
++{
++    return (x << 8) | (x >> 8);
++}
++#define bswap_32 __builtin_bswap32
++#define bswap_64 __builtin_bswap64
+ #elif __GLIBC__
+ #include <byteswap.h>
+ #include <malloc.h>
+@@ -129,7 +136,7 @@
+                               value v_pos, value v_len)
+ {
+   char *start, *r;
+-  long ret;
++  intnat ret;
+ 
+   start = get_bstr(v_str, v_pos);
+   r = (char*) memchr(start, Int_val(v_needle), Long_val(v_len));
+--- ./src/byte_units.ml
++++ ./src/byte_units.ml
+@@ -188,7 +188,7 @@
+   TEST = f (`Specific `Bytes)     "3k" "3072b"
+   TEST = f (`Specific `Kilobytes) "3k" "3k"
+   TEST = f (`Specific `Megabytes) "3k" "0.00292969m"
+-  TEST = f (`Specific `Gigabytes) "3k" "2.86102e-06g"
++  TEST = f (`Specific `Gigabytes) "3k" (match Sys.os_type with |"Win32" -> "2.86102e-006g" | _ -> "2.86102e-06g")
+   TEST = f (`Specific `Words)     "3k" (sprintf "%gw" ((3.0 *. kbyte) /. bytes_per_word))
+ 
+ end
+--- ./src/core_gc_stubs.c
++++ ./src/core_gc_stubs.c
+@@ -16,9 +16,9 @@
+ extern intnat caml_stat_compactions;
+ extern intnat caml_stat_heap_chunks;
+ 
+-static long minor_words(void)
++static intnat minor_words(void)
+ {
+-  return (long) (caml_stat_minor_words +
++  return (intnat) (caml_stat_minor_words +
+             (double) Wsize_bsize (caml_young_end - caml_young_ptr));
+ }
+ 
+@@ -27,9 +27,9 @@
+   return Val_long(minor_words());
+ }
+ 
+-static long major_words(void)
++static intnat major_words(void)
+ {
+-  return (long) (caml_stat_major_words + (double) caml_allocated_words);
++  return (intnat) (caml_stat_major_words + (double) caml_allocated_words);
+ }
+ 
+ CAMLprim value core_kernel_gc_major_words(value unit __attribute__((unused)))
+@@ -39,7 +39,7 @@
+ 
+ CAMLprim value core_kernel_gc_promoted_words(value unit __attribute__((unused)))
+ {
+-  return Val_long((long) caml_stat_promoted_words);
++  return Val_long((intnat) caml_stat_promoted_words);
+ }
+ 
+ CAMLprim value core_kernel_gc_minor_collections(value unit __attribute__((unused)))
+--- ./src/float.ml
++++ ./src/float.ml
+@@ -290,7 +290,7 @@
+ TEST = to_string_round_trippable 3.1400000000000004               = "3.1400000000000006"
+ TEST = to_string_round_trippable 8.000000000000002                = "8.0000000000000018"
+ TEST = to_string_round_trippable 9.992                            = "9.992"
+-TEST = to_string_round_trippable (2.**63. *. (1. +. 2.** (-52.))) = "9.2233720368547779e+18"
++TEST = to_string_round_trippable (2.**63. *. (1. +. 2.** (-52.))) = (match Sys.os_type with |"Win32" -> "9.2233720368547779e+018" | _ -> "9.2233720368547779e+18" )
+ TEST = to_string_round_trippable (-3.)                            = "-3."
+ TEST = to_string_round_trippable nan                              = "nan"
+ TEST = to_string_round_trippable infinity                         = "inf"
+--- ./src/time_ns_stubs.c
++++ ./src/time_ns_stubs.c
+@@ -88,6 +88,26 @@
+   return v_str;
+ }
+ 
++#ifdef _WIN32
++int nanosleep(const struct timespec *req, struct timespec *rem){
++  HANDLE timer;
++  LARGE_INTEGER li;
++  if (!(timer = CreateWaitableTimer(NULL, TRUE, NULL))) {
++    return -1;
++  }
++  li.QuadPart = req->tv_sec * 1000000000 + req->tv_nsec / 100;
++  if (!SetWaitableTimer(timer, &li, 0, NULL, NULL, FALSE)) {
++    CloseHandle(timer);
++    return -1;
++  }
++  if (WaitForSingleObject (timer, INFINITE) != WAIT_OBJECT_0) {
++    CloseHandle(timer);
++    return -1;
++  }
++  CloseHandle(timer);
++  return 0;
++}
++#endif
+ 
+ CAMLprim value core_kernel_time_ns_format(value t, value v_fmt)
+ {
+--- ./test/pool_caml_modify_check.ml
++++ ./test/pool_caml_modify_check.ml
+@@ -4,7 +4,7 @@
+    This can be very easily broken, and as such we're adding these tests to detect when
+    this may have happened. *)
+ 
+-open Core.Std
++open Core_kernel.Std
+ open Check_caml_modify
+ 
+ (* Big enough length so an array goes directly into the major heap. *)

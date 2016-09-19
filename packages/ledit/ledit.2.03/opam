@@ -9,3 +9,4 @@ install: [
   "MANDIR=%{man}%/man1"
   "BINDIR=%{bin}%"
 ]
+available: os != "win32"

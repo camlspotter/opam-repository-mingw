@@ -25,7 +25,8 @@ depends: [
   "variantslib" {>= "109.15.00" & < "109.16.00"}
   "ocamlbuild" {build}
 ]
-available: [ ocaml-version >= "4.02.1" & ocaml-version < "4.03" ]
+available:
+  os != "win32" & ocaml-version >= "4.02.1" & (ocaml-version < "4.03")
 bug-reports: "https://github.com/janestreet/core_kernel/issues"
 dev-repo: "https://github.com/janestreet/core_kernel.git"
 install: [[make "install"]]

@@ -11,4 +11,4 @@ remove: [["ocamlfind" "remove" "delimcc"]]
 depends: ["ocamlfind"]
 patches: ["makefile_fix.patch"]
 install: [make "findlib-install"]
-available: [ ocaml-version < "4.03.0" ]
+available: os != "win32" & (ocaml-version < "4.03.0")

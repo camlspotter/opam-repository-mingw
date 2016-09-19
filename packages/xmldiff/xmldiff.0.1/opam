@@ -11,3 +11,4 @@ depends: [
   "xmlm"
 ]
 install: [make "install"]
+available: os != "win32"

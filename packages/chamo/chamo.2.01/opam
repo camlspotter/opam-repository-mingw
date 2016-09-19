@@ -12,5 +12,6 @@ depends: [
   "lablgtk" {>= "2.16.0" & < "2.18"}
   "pcre"
 ]
-available: ocaml-version >= "4.00.0" & ocaml-version < "4.02.0"
+available:
+  os != "win32" & ocaml-version >= "4.00.0" & (ocaml-version < "4.02.0")
 install: [make "install"]

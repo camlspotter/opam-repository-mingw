@@ -1,0 +1,19 @@
+--- ./src/Makefile.in
++++ ./src/Makefile.in
+@@ -4,6 +4,7 @@
+ # by Samuel Mimram and Romain Beauxis
+ 
+ # $Id: Makefile.in 2383 2006-04-09 16:21:04Z smimram $
++EXT_DLL:=$(shell ocamlfind ocamlc -config | awk '/^ext_dll:/ {print $$2}')
+ 
+ OCAMLMAKEFILE = OCamlMakefile
+ 
+@@ -28,7 +29,7 @@
+ RESULT = duppy
+ OCAMLDOCFLAGS = -stars
+ DOC_FILES = $(filter %.mli, $(SOURCES)) @PA_DOC@
+-LIBINSTALL_FILES = $(wildcard *pa_duppy.cm* *.mli *.cmi *.cma *.cmxa *.cmx *.a *.so)
++LIBINSTALL_FILES = $(wildcard *pa_duppy.cm* *.mli *.cmi *.cma *.cmxa *.cmx *.$(EXT_LIB) *$(EXT_DLL))
+ ACLIBS = @LIBS@
+ LDFLAGS = @LDFLAGS@
+ CLIBS = $(ACLIBS:-l%=%)

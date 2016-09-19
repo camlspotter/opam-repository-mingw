@@ -19,8 +19,8 @@ depends: [
   "depext" {build}
   "ocamlbuild" {build}
 ]
-available: [ocaml-version >= "4.02.1" & opam-version >= "1.2"]
-
+available:
+  os != "win32" & ocaml-version >= "4.02.1" & (opam-version >= "1.2")
 depexts:[
   [[ "debian"] ["g++-4.8" "libgflags-dev" "libsnappy-dev" "libbz2-dev" ] ]
   [[ "ubuntu"] ["g++-4.8" "libgflags-dev" "libsnappy-dev" "libbz2-dev" ] ]

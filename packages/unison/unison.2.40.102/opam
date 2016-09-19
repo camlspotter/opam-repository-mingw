@@ -8,4 +8,4 @@ homepage: "https://www.cis.upenn.edu/~bcpierce/unison/"
 depends: ["lablgtk"]
 patches: ["opam.patch"]
 install: [make "install" "OCAMLLIBDIR=%{lib}%" "HOME=%{prefix}%"]
-available: [ocaml-version < "4.03.0"]
+available: os != "win32" & (ocaml-version < "4.03.0")

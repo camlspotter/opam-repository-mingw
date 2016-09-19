@@ -18,5 +18,5 @@ depends: [
   "ocamlbuild" {build}
 ]
 install: ["ocaml" "setup.ml" "-install"]
-available: [ocaml-version < "4.05.0" & os = "win32"]
+available: ocaml-version < "4.05.0"
 patches: "ANSITerminal-0.6.5.patch" {os = "win32"}
