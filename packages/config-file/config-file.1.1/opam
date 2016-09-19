@@ -5,6 +5,8 @@ authors: ["Jean-Baptiste Rouquier" "Fabrice Le Fessant" "Maxence Guesdon"]
 build: [
   ["./configure" "--prefix" prefix]
   [make "all"]
+]
+install: [
   [make "install"]
 ]
 remove: [
