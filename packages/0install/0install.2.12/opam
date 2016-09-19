@@ -24,5 +24,7 @@ depexts: [
   [["ubuntu"] ["unzip"]]
   [["debian"] ["unzip"]]
   [["osx" "homebrew"] ["gnupg"]]
+  [["win32" "cygwinports"] ["system:gnupg" "system:unzip"]]
 ]
 available: [ ocaml-version >= "4.00.0" ]
+patches: "0install-2.12-1.patch" {os = "win32"}

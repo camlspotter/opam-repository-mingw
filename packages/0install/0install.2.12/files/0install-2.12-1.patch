@@ -1,0 +1,11 @@
+--- ./ocaml/Makefile
++++ ./ocaml/Makefile
+@@ -20,7 +20,7 @@
+ 
+ .PHONY: all ocaml doc clean tags test
+ 
+-all: build_dir ocaml test
++all: build_dir ocaml #test
+ 
+ build_dir:
+ 	[ -d "${OCAML_BUILDDIR}" ] || mkdir -p "${OCAML_BUILDDIR}"
