@@ -9,9 +9,10 @@ depends: [
   "react" {>= "1.0.0"}
   "ocamlbuild" {build}
 ]
-ocaml-version: [>= "3.11.0"]
 build:
 [
   [ "ocaml" "pkg/build.ml" "native=true"
                            "native-dynlink=true" ]
 ]
+available: ocaml-version >= "3.11.0"
+dev-repo: "git://github.com/hhugo/reactiveData"

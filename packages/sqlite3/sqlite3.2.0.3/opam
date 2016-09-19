@@ -16,3 +16,4 @@ depexts: [
   [["osx" "homebrew"] ["pkg-config"]]
 ]
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/mmottl/sqlite3-ocaml"

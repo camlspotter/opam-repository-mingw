@@ -18,3 +18,4 @@ depends: [
 patches: ["opam.patch"]
 available: ocaml-version < "4.02.0"
 install: [make "install" "DESTDIR=%{prefix}%"]
+dev-repo: "git://github.com/Incubaid/arakoon"

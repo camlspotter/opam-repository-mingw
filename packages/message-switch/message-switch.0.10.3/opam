@@ -24,3 +24,4 @@ depends: [
 ]
 install: [make "install"]
 available: os != "win32"
+dev-repo: "git://github.com/xapi-project/message-switch"

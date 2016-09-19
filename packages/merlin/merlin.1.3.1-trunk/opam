@@ -14,3 +14,4 @@ depends: [
 depopts: ["sexplib"]
 available: ocaml-version > "4.00.1" & ocaml-version < "4.02.0"
 install: [make "install"]
+dev-repo: "git://github.com/the-lambda-church/merlin"

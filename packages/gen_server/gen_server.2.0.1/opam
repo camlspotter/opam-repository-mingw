@@ -1,4 +1,4 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "mmatalka@gmail.com"
 build: make
 remove: [["ocamlfind" "remove" "gen_server"]]
@@ -8,3 +8,4 @@ depends: [
   "async"
 ]
 install: [make "install"]
+dev-repo: "git://github.com/orbitz/gen_server"

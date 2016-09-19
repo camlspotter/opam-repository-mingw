@@ -1,4 +1,4 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "dave.scott@citrix.com"
 build: [
   [
@@ -65,3 +65,4 @@ depexts: [
   [["ubuntu"] ["libpam-dev"]]
 ]
 install: ["install" "-m" "0755" "ocaml/xapi/xapi.opt" "%{bin}%/xapi"]
+dev-repo: "git://github.com/xapi-project/xen-api"

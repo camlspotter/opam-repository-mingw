@@ -10,3 +10,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 available: os != "win32"
+dev-repo: "git://github.com/mirage/mirage-fs"

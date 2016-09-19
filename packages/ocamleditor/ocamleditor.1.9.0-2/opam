@@ -1,4 +1,4 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "contact@ocamlpro.com"
 authors: ["Francesco Tovagliari"]
 homepage: "https://forge.ocamlcore.org/projects/ocamleditor/"
@@ -15,3 +15,4 @@ conflicts: [
 ]
 available: ocaml-version >= "4.00.0" & ocaml-version <= "4.00.1"
 install: ["ocaml" "tools/install.ml" "-prefix" prefix]
+dev-repo: "git://github.com/AltGr/ocamleditor"

@@ -18,3 +18,4 @@ depends: [
 ]
 available: ocaml-version >= "4.00.0"
 install: [make "install" "BINDIR=%{bin}%"]
+dev-repo: "git://github.com/mirage/ocaml-mbr"

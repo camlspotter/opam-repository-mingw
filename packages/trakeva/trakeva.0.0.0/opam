@@ -33,3 +33,4 @@ depopts: [
   "sqlite3"
 ]
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/smondet/trakeva"

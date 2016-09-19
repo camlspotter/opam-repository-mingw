@@ -12,3 +12,4 @@ depends: [
 ]
 available: os != "win32"
 install: [make "install"]
+dev-repo: "git://github.com/xen-org/ocaml-fd-send-recv"

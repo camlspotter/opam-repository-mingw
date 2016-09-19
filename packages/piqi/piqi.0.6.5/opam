@@ -21,3 +21,4 @@ install: [
   [make "install"]
   [make "ocaml-install"]
 ]
+dev-repo: "git://github.com/alavrik/piqi"

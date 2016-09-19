@@ -12,3 +12,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 install: [make "BINDIR=%{bin}%" "install"]
+dev-repo: "git://github.com/c-cube/datalog"

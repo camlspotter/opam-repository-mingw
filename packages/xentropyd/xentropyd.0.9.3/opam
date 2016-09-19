@@ -37,3 +37,4 @@ depexts: [
 ]
 available: [ocaml-version >= "4.01.0"]
 install: ["cp" "main.native" "%{bin}%/xentropyd"]
+dev-repo: "git://github.com/mirage/xentropyd"

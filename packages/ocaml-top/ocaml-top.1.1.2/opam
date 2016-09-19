@@ -1,4 +1,4 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "contact@ocamlpro.com"
 authors: "Louis Gesbert <louis.gesbert@ocamlpro.com>"
 homepage: "http://www.typerex.org/ocaml-top.html"
@@ -20,3 +20,4 @@ depends: [
   "ocp-index" {>= "1.0.1"}
 ]
 patches: [ "patch-aa" { os = "win32" } ]
+dev-repo: "git://github.com/OCamlPro/ocaml-top"

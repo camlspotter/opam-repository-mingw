@@ -20,3 +20,4 @@ depexts: [
 ]
 conflicts: ["ocaml-zmq"]
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/issuu/ocaml-zmq"

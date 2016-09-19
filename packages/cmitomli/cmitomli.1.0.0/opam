@@ -13,3 +13,4 @@ remove: [
 ]
 patches: "cmitomli-1.0.0.patch" {os = "win32"}
 available: [ ocaml-version >= "4.00.0" ]
+dev-repo: "git://github.com/mjambon/cmitomli"

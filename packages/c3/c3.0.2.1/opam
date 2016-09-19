@@ -19,3 +19,4 @@ available: [ocaml-version >= "4.01.0"]
 authors: [ "Dave Scott" ]
 homepage: "https://github.com/djs55/ocaml-c3"
 bug-reports: "https://github.com/djs55/ocaml-c3/issues"
+dev-repo: "git://github.com/djs55/ocaml-c3"

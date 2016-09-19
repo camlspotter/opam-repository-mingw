@@ -21,3 +21,4 @@ conflicts: [
   "mirage-xen" {< "1.1.0"}
 ]
 install: [make "install"]
+dev-repo: "git://github.com/mirage/mirage-console"

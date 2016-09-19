@@ -12,3 +12,4 @@ depends: [
 ]
 available: [ ocaml-version = "0" ] (* insecure, not installable! *)
 install: [make "install"]
+dev-repo: "git://github.com/mirage/mirage-fs-unix"

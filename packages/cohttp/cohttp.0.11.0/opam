@@ -27,3 +27,4 @@ conflicts: [
   "lwt" {>= "2.5.0"}
 ]
 install: [make "PREFIX=%{prefix}%" "install"]
+dev-repo: "git://github.com/mirage/ocaml-cohttp"

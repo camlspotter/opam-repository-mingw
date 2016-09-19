@@ -13,3 +13,4 @@ depends: [
 ]
 conflicts: ["mirage-net-socket"]
 install: [make "direct-install" "PREFIX=%{prefix}%"]
+dev-repo: "git://github.com/mirage/mirage-net"

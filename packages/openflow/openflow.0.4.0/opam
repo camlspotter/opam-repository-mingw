@@ -24,3 +24,4 @@ depopts: [ "async" "quickcheck" ]
 conflicts: [ "async_extra" {>= "111.25.00"} ]
 available: ocaml-version >= "4.01.0"
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/frenetic-lang/ocaml-openflow"

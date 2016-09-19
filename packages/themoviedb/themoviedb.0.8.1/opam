@@ -28,3 +28,4 @@ conflicts: [
   "ounit" {< "2.0.0"}
 ]
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/msimon/the_movie_db"

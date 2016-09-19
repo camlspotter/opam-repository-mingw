@@ -18,3 +18,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 install: [make "opam.install"]
+dev-repo: "git://github.com/Kakadu/lablqt"

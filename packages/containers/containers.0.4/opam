@@ -27,3 +27,4 @@ homepage: "https://github.com/c-cube/ocaml-containers/"
 doc: "http://cedeela.fr/~simon/software/containers/"
 available: ocaml-version >= "4.00.0"
 install: [make "build" "install"]
+dev-repo: "git://github.com/c-cube/ocaml-containers"

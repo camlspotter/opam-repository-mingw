@@ -25,3 +25,4 @@ conflicts: [
   "async" {>= "113.00.00"}
 ]
 install: [make "PREFIX=%{prefix}%" "install"]
+dev-repo: "git://github.com/mirage/ocaml-cohttp"

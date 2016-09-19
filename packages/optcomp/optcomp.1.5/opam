@@ -20,3 +20,4 @@ depends: [
 ]
 available: ocaml-version >= "3.12"
 install: [make "install"]
+dev-repo: "git://github.com/diml/optcomp"

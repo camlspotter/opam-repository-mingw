@@ -19,3 +19,4 @@ depends: [
 tags: [ "org:mirage" ]
 available: ocaml-version >= "4.01.0"
 install: [make "install" "BINDIR=%{bin}%"]
+dev-repo: "git://github.com/mirage/ocaml-mbr"

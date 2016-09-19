@@ -30,3 +30,4 @@ conflicts: [
 ]
 patches: "patch-oasis-uri.1.4.0" {os = "win32"}
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/mirage/ocaml-uri"

@@ -20,3 +20,4 @@ install: [
   "lwt=%{lwt:installed}%"
   "ssl=%{ssl:installed}%"
 ]
+dev-repo: "git://github.com/nojb/ocaml-imap"

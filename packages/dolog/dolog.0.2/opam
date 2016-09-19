@@ -11,3 +11,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/HappyCrow/dolog"

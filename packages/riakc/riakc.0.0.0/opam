@@ -1,4 +1,4 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "mmatalka@gmail.com"
 build: make
 remove: [["ocamlfind" "remove" "riakc"]]
@@ -13,3 +13,4 @@ depexts: [
   [["ubuntu"] ["protobuf-compiler"]]
 ]
 install: [make "install"]
+dev-repo: "git://github.com/orbitz/ocaml-riakc"

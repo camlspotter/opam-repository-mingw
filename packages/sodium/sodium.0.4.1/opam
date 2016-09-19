@@ -27,3 +27,4 @@ depexts: [
 ]
 available: os != "win32" & (ocaml-version >= "4.01.0")
 install: [make "PREFIX=%{prefix}%" "install"]
+dev-repo: "git://github.com/dsheets/ocaml-sodium"

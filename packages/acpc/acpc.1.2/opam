@@ -1,4 +1,4 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "francois.berenger@inria.fr"
 authors: ["Francois Berenger"]
 homepage: "https://github.com/UnixJunkie/ACPC"
@@ -51,3 +51,4 @@ install: [
   ["cp" "dist/build/acpc_pqrtool/acpc_pqrtool" bin]
   ["cp" "dist/build/acpc_pltool/acpc_pltool" bin]
 ]
+dev-repo: "git://github.com/UnixJunkie/ACPC"

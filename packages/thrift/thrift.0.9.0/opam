@@ -7,3 +7,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 install: [make "install"]
+dev-repo: "git://github.com/vbmithr/ocaml-thrift-lib"

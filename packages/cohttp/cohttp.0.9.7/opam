@@ -24,3 +24,4 @@ conflicts: [
   "mirage-net" {>= "0.9.4"}
 ]
 install: [make "PREFIX=%{prefix}%" "install"]
+dev-repo: "git://github.com/mirage/ocaml-cohttp"

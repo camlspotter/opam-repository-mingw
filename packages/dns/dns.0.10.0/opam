@@ -47,3 +47,4 @@ conflicts: [
 ]
 available: ocaml-version >= "4.00.0"
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/mirage/ocaml-dns"

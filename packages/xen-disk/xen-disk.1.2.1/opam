@@ -20,3 +20,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 install: [make "install" "BINDIR=%{bin}%"]
+dev-repo: "git://github.com/mirage/xen-disk"

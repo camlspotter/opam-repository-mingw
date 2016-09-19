@@ -1,4 +1,4 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "anil@recoil.org"
 tags: [
   "org:mirage"
@@ -8,3 +8,4 @@ build: [make "all"]
 remove: ["ocamlfind" "remove" "mirage-types"]
 depends: ["ocamlfind"]
 install: [make "install"]
+dev-repo: "git://github.com/mirage/mirage-types"

@@ -10,3 +10,4 @@ depends: [
 ]
 available: os = "linux"
 install: [make "install"]
+dev-repo: "git://github.com/janestreet/ocaml_plugin"

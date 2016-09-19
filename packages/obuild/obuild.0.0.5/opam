@@ -1,6 +1,7 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "tab@snarc.org"
 build: [
   ["./bootstrap"]
 ]
 available: os != "win32"
+dev-repo: "git://github.com/ocaml-obuild/obuild"

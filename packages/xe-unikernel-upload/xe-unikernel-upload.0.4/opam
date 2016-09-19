@@ -17,3 +17,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 install: ["make" "install" "BINDIR=%{bin}%" "MANDIR=%{man}%/man1"]
+dev-repo: "git://github.com/djs55/xe-unikernel-upload"

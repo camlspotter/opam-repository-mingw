@@ -13,3 +13,4 @@ depends: [
 ]
 available: ocaml-version < "4.02.0"
 install: [make "install"]
+dev-repo: "git://github.com/mmottl/pomap"

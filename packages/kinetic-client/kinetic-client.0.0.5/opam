@@ -23,4 +23,5 @@ depexts: [
          [["ubuntu"] ["protobuf-compiler"]]
          [["osx" "homebrew"] ["protobuf"]]
 ]
-ocaml-version: [>= "4.02.0"]
+available: ocaml-version >= "4.02.0"
+dev-repo: "git://github.com/CloudFounders/kinetic-ocaml-client"

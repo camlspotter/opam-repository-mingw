@@ -11,3 +11,4 @@ depends: [
 ]
 patches: "patch-oasis-itv-tree.2.0" {os = "win32"}
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/UnixJunkie/interval-tree"

@@ -1,4 +1,4 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "martin@mjambon.com"
 homepage: "https://github.com/mjambon/atdgen"
 build: make
@@ -17,3 +17,4 @@ depends: [
 # https://github.com/OCamlPro/opam-publish/issues/40
 available: [ocaml-version < "4.03"]
 install: [make "install" "BINDIR=%{bin}%"]
+dev-repo: "git://github.com/mjambon/atdgen"

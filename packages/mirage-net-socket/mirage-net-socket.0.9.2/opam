@@ -16,3 +16,4 @@ conflicts: [
   "mirage-net-direct"
 ]
 install: [make "socket-install" "PREFIX=%{prefix}%"]
+dev-repo: "git://github.com/mirage/mirage-net"

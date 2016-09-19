@@ -31,3 +31,4 @@ conflicts: [
   "ounit" {< "1.0.2"}
 ]
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/mirage/ocaml-uri"

@@ -15,3 +15,4 @@ conflicts: [
 ]
 available: ocaml-version >= "4.00.0"
 install: [make "install-types"]
+dev-repo: "git://github.com/mirage/mirage"

@@ -1,4 +1,4 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "contact@ocamlpro.com"
 build: [
   ["./pkgconfigure" "--prefix" prefix] {os = "openbsd"}
@@ -16,3 +16,4 @@ depexts: [
   [["win32" "cygwinports"] ["openssl"]]
 ]
 install: [make "install"]
+dev-repo: "git://github.com/savonet/ocaml-ssl"

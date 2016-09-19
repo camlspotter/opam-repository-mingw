@@ -27,3 +27,4 @@ depexts: [
 ]
 available: ocaml-version >= "3.12"
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/mmottl/lacaml"

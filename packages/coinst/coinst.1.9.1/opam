@@ -1,4 +1,4 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "roberto@dicosmo.org"
 build: [
   [make "depend"]
@@ -16,3 +16,4 @@ available: ocaml-version < "4.02.0"
 install: [
   "install" "-c" "coinst" "coinst-upgrades" "comigrate" "%{prefix}%/bin"
 ]
+dev-repo: "git://github.com/vouillon/coinst"

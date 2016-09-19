@@ -22,3 +22,4 @@ conflicts: [
   "lwt" {< "2.4.1"}
 ]
 install: [make "PREFIX=%{prefix}%" "install"]
+dev-repo: "git://github.com/avsm/ocaml-cohttp"

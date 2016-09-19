@@ -25,3 +25,4 @@ tags: [
   "org:ocamllabs"
 ]
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/mirage/ezjsonm"

@@ -1,4 +1,4 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "anil@recoil.org"
 tags: [
   "org:mirage"
@@ -9,3 +9,4 @@ remove: ["ocamlfind" "remove" "mirage-types"]
 depends: ["ocamlfind"]
 available: ocaml-version >= "4.00.0"
 install: [make "install"]
+dev-repo: "git://github.com/mirage/mirage-types"

@@ -16,3 +16,4 @@ depends: [
 ]
 depopts: ["quickcheck"]
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/frenetic-lang/ocaml-packet"

@@ -16,3 +16,4 @@ depends: [
 ]
 available: ocaml-version >= "4.00.1"
 install: ["cp" "share/profound/wash_form.tex" "%{share}%/profound/"]
+dev-repo: "git://github.com/chaudhuri/profound"

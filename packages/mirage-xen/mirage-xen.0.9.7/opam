@@ -15,3 +15,4 @@ conflicts: ["mirage-unix"]
 available:
   os = "linux" & ocaml-version >= "4.00.1" & ocaml-version < "4.02.0"
 install: [make "xen-install" "PREFIX=%{prefix}%"]
+dev-repo: "git://github.com/mirage/mirage-platform"

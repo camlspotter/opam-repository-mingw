@@ -16,3 +16,4 @@ depends: [
 depopts: ["kaputt"]
 available: os != "win32"
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/mlin/forkwork"

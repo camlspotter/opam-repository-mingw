@@ -49,3 +49,4 @@ Take a look at https://github.com/the-lambda-church/merlin for more information
 ]
 available: ocaml-version >= "4.00.1" & ocaml-version < "4.02.0"
 install: [make "merlin.install"]
+dev-repo: "git://github.com/the-lambda-church/merlin"

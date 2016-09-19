@@ -29,3 +29,4 @@ conflicts: [
   "tls"
 ]
 install: [make "install"]
+dev-repo: "git://github.com/djs55/vhd-tool"

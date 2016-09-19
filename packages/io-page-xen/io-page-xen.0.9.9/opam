@@ -12,3 +12,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 install: [make "xen-install"]
+dev-repo: "git://github.com/mirage/io-page"

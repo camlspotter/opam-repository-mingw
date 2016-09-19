@@ -16,3 +16,4 @@ depends: [
 ]
 conflicts: ["io-page-xen" "io-page-unix"]
 install: [make "install"]
+dev-repo: "git://github.com/mirage/io-page"

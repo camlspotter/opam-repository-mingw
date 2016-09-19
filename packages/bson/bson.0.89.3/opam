@@ -24,3 +24,4 @@ depopts: [
   "js_of_ocaml"
 ]
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/MassD/bson"

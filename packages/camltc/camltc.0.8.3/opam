@@ -14,3 +14,4 @@ depends: [
 ]
 available: [ ocaml-version > "4.00.0" ]
 install: [make "-C" "src" "install" "DESTDIR=%{prefix}%"]
+dev-repo: "git://github.com/toolslive/camltc"

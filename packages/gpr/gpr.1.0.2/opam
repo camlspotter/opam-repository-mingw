@@ -16,3 +16,4 @@ depexts: [
   [["ubuntu"] ["libgsl0-dev"]]
 ]
 install: [make "install"]
+dev-repo: "git://github.com/mmottl/gpr"

@@ -16,3 +16,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 install: [make "install"]
+dev-repo: "git://github.com/mirage/cowabloga"

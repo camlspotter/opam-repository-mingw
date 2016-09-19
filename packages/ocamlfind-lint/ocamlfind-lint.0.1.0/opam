@@ -1,4 +1,4 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "zoggy@bat8.org"
 authors: ["Maxence Guesdon"]
 homepage: "https://github.com/zoggy/findlib-lint"
@@ -13,3 +13,4 @@ depends: [
 ]
 install: [make "install-lib"]
 available: os != "win32"
+dev-repo: "git://github.com/zoggy/findlib-lint"

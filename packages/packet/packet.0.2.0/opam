@@ -14,3 +14,4 @@ depends: [
 depopts: ["quickcheck"]
 available: ocaml-version >= "4.00.0"
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/frenetic-lang/ocaml-packet"

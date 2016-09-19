@@ -11,3 +11,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 install: [make "install" "BINDIR=%{bin}%"]
+dev-repo: "git://github.com/xapi-project/xenops-cli"

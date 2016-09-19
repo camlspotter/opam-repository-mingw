@@ -16,3 +16,4 @@ depends: [
 ]
 patches: "patch-oasis-lacc.0.2" {os = "win32"}
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/UnixJunkie/lacc"

@@ -13,3 +13,4 @@ depends: [
 ]
 available: [ preinstalled & (ocaml-version = "4.01.0") ]
 install: [make "install"]
+dev-repo: "git://github.com/ocamllabs/opam-doc"

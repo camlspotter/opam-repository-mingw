@@ -16,3 +16,4 @@ depends: [
 ]
 patches: [ "patch-oasis-lazy-trie.1.0.0" { os = "win32" } ]
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/mirage/ocaml-lazy-trie"

@@ -13,3 +13,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 install: [make "PREFIX=%{prefix}%" "install"]
+dev-repo: "git://github.com/xapi-project/rrd-transport"

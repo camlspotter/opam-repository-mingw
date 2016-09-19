@@ -11,8 +11,6 @@ depends: [
   "menhir"
   "ocamlbuild" {build}
 ]
-ocaml-version: [>= "4.00.1" & < "4.02.0"]
-
 post-messages: [
   "merlin installed.
 
@@ -49,3 +47,5 @@ Take a look at https://github.com/the-lambda-church/merlin for more information
 "
   {success}
 ]
+available: ocaml-version >= "4.00.1" & ocaml-version < "4.02.0"
+dev-repo: "git://github.com/the-lambda-church/merlin"

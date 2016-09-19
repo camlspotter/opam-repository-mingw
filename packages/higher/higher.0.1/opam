@@ -1,4 +1,4 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "yallop@gmail.com"
 homepage: "https://github.com/ocamllabs/higher"
 license: "MIT"
@@ -9,3 +9,4 @@ remove: [
 depends: [ "ocamlfind" ]
 tags: ["org:ocamllabs"]
 install: [make "install"]
+dev-repo: "git://github.com/ocamllabs/higher"

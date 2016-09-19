@@ -18,3 +18,4 @@ depends: [
 ]
 available: ocaml-version >= "4.01"
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/diml/lambda-term"

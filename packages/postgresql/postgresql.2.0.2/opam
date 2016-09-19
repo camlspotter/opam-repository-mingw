@@ -14,3 +14,4 @@ depexts: [
   [["ubuntu"] ["libpq-dev"]]
 ]
 install: [make "install"]
+dev-repo: "git://github.com/mmottl/postgresql-ocaml"

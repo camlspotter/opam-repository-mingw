@@ -1,4 +1,4 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "byvoid@byvoid.com"
 authors: ["BYVoid <byvoid@byvoid.com>"]
 homepage: "https://github.com/BYVoid/Dlist"
@@ -19,3 +19,4 @@ conflicts: [
 ]
 available: ocaml-version >= "4.00.1"
 install: ["ocp-build" "install" "dlist"]
+dev-repo: "git://github.com/BYVoid/Dlist"

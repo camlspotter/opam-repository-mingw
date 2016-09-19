@@ -1,6 +1,7 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "john@coherentgraphics.co.uk"
 build: make
 remove: [["ocamlfind" "remove" "more-ocaml"]]
 depends: ["ocamlfind"]
 install: [make "install"]
+dev-repo: "git://github.com/johnwhitington/more-ocaml"

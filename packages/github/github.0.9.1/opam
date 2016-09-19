@@ -39,3 +39,4 @@ conflicts: [
 ]
 install: ["ocaml" "setup.ml" "-install"]
 available: os != "win32"
+dev-repo: "git://github.com/avsm/ocaml-github"

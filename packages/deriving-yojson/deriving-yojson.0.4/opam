@@ -18,3 +18,4 @@ depends: [
 ]
 available: ocaml-version >= "3.12.1"
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/hhugo/deriving-yojson"

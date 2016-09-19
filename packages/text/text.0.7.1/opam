@@ -11,3 +11,4 @@ depends: [
 ]
 depopts: ["pcre"]
 install: [make "install"]
+dev-repo: "git://github.com/vbmithr/ocaml-text"

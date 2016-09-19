@@ -35,3 +35,4 @@ depexts: [
 ]
 available: os = "linux"
 install: [make "install" "BINDIR=%{bin}%"]
+dev-repo: "git://github.com/xapi-project/xen-api-libs-transitional"

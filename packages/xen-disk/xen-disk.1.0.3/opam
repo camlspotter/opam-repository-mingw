@@ -1,4 +1,4 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "dave.scott@eu.citrix.com"
 tags: [
   "org:mirage"
@@ -18,3 +18,4 @@ depends: [
   "cmdliner"
 ]
 install: [make "install" "BINDIR=%{bin}%"]
+dev-repo: "git://github.com/mirage/xen-disk"

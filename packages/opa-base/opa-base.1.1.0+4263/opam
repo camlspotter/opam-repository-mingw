@@ -18,4 +18,5 @@ patches: [
   "rm_deps.patch"
   "ocamlfind.patch"
 ]
-ocaml-version: [ < "4.01.0" ]
+available: ocaml-version < "4.01.0"
+dev-repo: "git://github.com/MLstate/opalang"

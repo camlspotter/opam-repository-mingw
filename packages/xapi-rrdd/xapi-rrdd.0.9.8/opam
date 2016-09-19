@@ -29,3 +29,4 @@ install: [
   "SCRIPTSDIR=%{bin}%"
   "ETCDIR=%{prefix}%/etc"
 ]
+dev-repo: "git://github.com/xapi-project/xcp-rrdd"

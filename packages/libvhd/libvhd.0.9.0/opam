@@ -16,3 +16,4 @@ depexts: [
  [ ["centos"] ["blktap-devel" "libuuid-devel" ] ]
 ]
 install: [make "install" "BINDIR=%{bin}%"]
+dev-repo: "git://github.com/xen-org/libvhd"

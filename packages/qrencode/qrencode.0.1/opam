@@ -13,3 +13,4 @@ depexts: [
 [ ["debian"] ["libqrencode-dev" "libpng-dev"] ]
 ]
 install: [make "install"]
+dev-repo: "git://github.com/vbmithr/qrencode-ocaml"

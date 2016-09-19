@@ -21,3 +21,4 @@ install: [
   [make "libinstall"]
   ["rm" "opam.install"]
 ]
+dev-repo: "git://github.com/OCamlPro/opam"

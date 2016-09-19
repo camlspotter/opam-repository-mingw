@@ -27,3 +27,4 @@ depends: [
 ]
 available: ocaml-version >= "4.00.1"
 install: [make "install"]
+dev-repo: "git://github.com/mirage/mirari"

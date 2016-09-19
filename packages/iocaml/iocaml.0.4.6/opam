@@ -21,4 +21,5 @@ depends: [
   "iocamljs-kernel" {= "0.4.6"}
   "ocamlbuild" {build}
 ]
-ocaml-version: [ >= "4.00.1" ]
+available: ocaml-version >= "4.00.1"
+dev-repo: "git://github.com/andrewray/iocamlserver"

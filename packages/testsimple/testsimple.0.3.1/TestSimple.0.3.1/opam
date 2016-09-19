@@ -21,3 +21,4 @@ depexts: [
 ]
 patches: "patch-oasis-testsimple.0.3.1" {os = "win32"}
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/hcarty/ocaml-testsimple"

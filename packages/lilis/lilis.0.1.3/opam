@@ -34,3 +34,4 @@ depopts: [
   "lablgtk"
 ]
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/Drup/LILiS"

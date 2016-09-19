@@ -13,3 +13,4 @@ depends: [
 ]
 install: ["ocaml" "setup.ml" "-install"]
 available: os != "win32"
+dev-repo: "git://github.com/smondet/simple_pam"

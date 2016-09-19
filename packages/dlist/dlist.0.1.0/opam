@@ -21,3 +21,4 @@ conflicts: [
 ]
 available: ocaml-version >= "4.00.1"
 install: ["ocp-build" "install"]
+dev-repo: "git://github.com/BYVoid/Dlist"

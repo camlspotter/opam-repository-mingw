@@ -35,3 +35,4 @@ conflicts: [
 ]
 patches: "patch-oasis-lwt.2.4.5" {os = "win32"}
 install: [make "install"]
+dev-repo: "git://github.com/ocsigen/lwt"

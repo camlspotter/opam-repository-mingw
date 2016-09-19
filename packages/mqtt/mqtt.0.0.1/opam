@@ -17,3 +17,4 @@ depends: [
 patches: "patch-oasis-mqtt.0.0.1" {os = "win32"}
 available: ocaml-version >= "4.01.0"
 install: [make "install"]
+dev-repo: "git://github.com/j0sh/ocaml-mqtt"

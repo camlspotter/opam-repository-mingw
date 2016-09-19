@@ -24,3 +24,4 @@ depopts: [
   "pcre"
 ]
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/cakeplus/mparser"

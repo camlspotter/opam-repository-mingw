@@ -20,3 +20,4 @@ depends: [
 conflicts: ["ocamlgsl" {= "0.6.0"}]
 available: ocaml-version >= "3.12"
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/mmottl/gsl-ocaml"

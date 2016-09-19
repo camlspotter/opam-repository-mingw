@@ -11,3 +11,4 @@ depends: [
 ]
 depopts: ["lwt"]
 install: [make "PREFIX=%{prefix}%" "install"]
+dev-repo: "git://github.com/dsheets/ocaml-dnscurve"

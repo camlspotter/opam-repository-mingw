@@ -1,4 +1,4 @@
-opam-version: "1.1"
+opam-version: "1.2"
 maintainer: "Max Mouratov <mmouratov@gmail.com>"
 homepage: "https://github.com/cakeplus/pa_qualified/"
 license: "LGPL-2.1 with OCaml linking exception"
@@ -13,3 +13,4 @@ depends: [
 ]
 available: ocaml-version >= "4.01.0"
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/cakeplus/pa_qualified"

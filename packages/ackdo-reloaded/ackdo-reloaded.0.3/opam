@@ -9,3 +9,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 install: [make "opaminstall" "BINDIR=%{bin}%"]
+dev-repo: "git://github.com/rgrinberg/ackdo-reloaded"

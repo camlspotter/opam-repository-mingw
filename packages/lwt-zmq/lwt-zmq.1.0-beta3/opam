@@ -18,3 +18,4 @@ depexts: [
   [["ubuntu"] ["libzmq-dev"]]
 ]
 install: [make "install"]
+dev-repo: "git://github.com/hcarty/lwt-zmq"

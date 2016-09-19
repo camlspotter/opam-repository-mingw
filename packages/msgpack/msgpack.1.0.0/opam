@@ -22,3 +22,4 @@ depopts: ["meta_conv"]
 conflicts: ["meta_conv" {>= "1.1.1"}]
 available: ocaml-version >= "4.00.0"
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/msgpack/msgpack-ocaml"

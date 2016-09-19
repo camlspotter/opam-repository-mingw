@@ -13,3 +13,4 @@ depends: [
 ]
 depopts: ["lwt"]
 install: [make "install"]
+dev-repo: "git://github.com/mirage/ocaml-tar"

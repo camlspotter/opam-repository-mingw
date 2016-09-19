@@ -1,4 +1,4 @@
-opam-version: "1"
+opam-version: "1.2"
 name: "sundialsml"
 maintainer: "tim@tbrk.org"
 authors: [
@@ -39,3 +39,4 @@ depexts: [
 ]
 available: ocaml-version >= "3.12.1"
 install: [make "install-findlib"]
+dev-repo: "git://github.com/inria-parkas/sundialsml"

@@ -18,3 +18,4 @@ remove: [
 ]
 available: [ ocaml-version >= "4.02.1" ]
 install: [make "PREFIX=%{prefix}%" "-C" "src/ocaml-output" "install"]
+dev-repo: "git://github.com/FStarLang/FStar"

@@ -18,5 +18,6 @@ depends: [
 depexts: [
 [ ["source" "linux"] ["https://gist.github.com/andrewray/179832b0ea39481d0f2c/raw"] ]
 ]
-ocaml-version: [ >= "4.01.0" & < "4.02.0" ]
-available: os != "win32"
+available:
+  ocaml-version >= "4.01.0" & ocaml-version < "4.02.0" & os != "win32"
+dev-repo: "git://github.com/andrewray/iocaml"

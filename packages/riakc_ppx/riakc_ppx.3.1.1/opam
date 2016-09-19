@@ -20,3 +20,4 @@ depends: [
 ]
 authors: "Carmelo Piccione carmelo.piccione+riakc_ppx@gmail.com"
 install: ["omake" "install"]
+dev-repo: "git://github.com/struktured/riakc_ppx"

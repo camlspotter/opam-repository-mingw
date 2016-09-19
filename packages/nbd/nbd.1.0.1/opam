@@ -22,3 +22,4 @@ depends: [
 ]
 patches: "patch-oasis-nbd.1.0.1" {os = "win32"}
 install: [make "install"]
+dev-repo: "git://github.com/xapi-project/nbd"

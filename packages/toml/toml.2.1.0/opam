@@ -10,3 +10,4 @@ remove: [ "ocamlfind" "remove" "toml"]
 depends: ["ocamlfind" "menhir"]
 available: ocaml-version >= "4.02.0"
 install: [make "install"]
+dev-repo: "git://github.com/sagotch/To.ml"

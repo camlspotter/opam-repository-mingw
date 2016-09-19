@@ -13,3 +13,4 @@ depends: [
 depopts: ["lwt"]
 available: os = "linux" | os = "darwin"
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/whitequark/ocaml-inotify"

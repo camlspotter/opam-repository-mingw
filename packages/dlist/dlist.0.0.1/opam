@@ -19,3 +19,4 @@ conflicts: [
 ]
 available: ocaml-version >= "4.00.1"
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/BYVoid/Dlist"

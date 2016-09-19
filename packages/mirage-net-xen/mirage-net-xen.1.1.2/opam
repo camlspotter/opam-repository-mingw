@@ -14,3 +14,4 @@ depends: [
 ]
 available: [ ocaml-version = "0" ] (* memory disclosure *)
 install: [make "install"]
+dev-repo: "git://github.com/mirage/mirage-net-xen"

@@ -1,7 +1,8 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "contact@coherentgraphics.co.uk"
 build: make
 remove: [["ocamlfind" "remove" "ppx_blob"]]
 depends: ["ocamlfind" {>= "1.5.2"}]
 available: [ocaml-version >= "4.02.0"]
 install: [make "install"]
+dev-repo: "git://github.com/johnwhitington/ppx_blob"

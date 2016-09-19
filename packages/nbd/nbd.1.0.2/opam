@@ -19,3 +19,4 @@ depends: [
 ]
 tags: [ "org:mirage" "org:xapi-project" ]
 install: [make "install" "BINDIR=%{bin}%"]
+dev-repo: "git://github.com/xapi-project/nbd"

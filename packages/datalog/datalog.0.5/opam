@@ -20,3 +20,4 @@ install: [
   [make "all" "install_file"]
   [make "install"]
 ]
+dev-repo: "git://github.com/c-cube/datalog"

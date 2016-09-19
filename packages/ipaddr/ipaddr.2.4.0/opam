@@ -22,3 +22,4 @@ depends: [
 ]
 patches: "patch-oasis-ipaddr.2.4.0" {os = "win32"}
 install: [make "install"]
+dev-repo: "git://github.com/mirage/ocaml-ipaddr"

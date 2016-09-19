@@ -21,3 +21,4 @@ patches: [
   "patch-chmod"
 ]
 available: [ ocaml-version >= "4.02.0" ]
+dev-repo: "git://github.com/camlspotter/omake-fork"

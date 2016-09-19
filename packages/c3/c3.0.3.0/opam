@@ -20,3 +20,4 @@ authors: [ "Dave Scott" ]
 homepage: "https://github.com/djs55/ocaml-c3"
 bug-reports: "https://github.com/djs55/ocaml-c3/issues"
 patches: "patch-oasis-c3.0.3.0" {os = "win32"}
+dev-repo: "git://github.com/djs55/ocaml-c3"

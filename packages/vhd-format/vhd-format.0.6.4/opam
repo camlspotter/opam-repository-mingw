@@ -19,3 +19,4 @@ depends: [
 ]
 available: os = "linux"
 install: [make "install"]
+dev-repo: "git://github.com/djs55/ocaml-vhd"

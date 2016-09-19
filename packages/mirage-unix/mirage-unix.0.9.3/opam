@@ -13,3 +13,4 @@ depends: [
 ]
 conflicts: ["mirage-xen"]
 install: [make "unix-install" "PREFIX=%{prefix}%"]
+dev-repo: "git://github.com/mirage/mirage-platform"

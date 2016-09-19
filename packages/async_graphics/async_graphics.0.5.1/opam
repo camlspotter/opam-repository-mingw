@@ -13,3 +13,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 install: "./install.sh"
+dev-repo: "git://github.com/lpw25/async_graphics"

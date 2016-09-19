@@ -1,4 +1,4 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "seb@mondet.org"
 homepage: "https://github.com/smondet/pbs"
 build: "omake"
@@ -9,3 +9,4 @@ remove:
 depends: ["ocamlfind" "omake" "nonstd" "sosa" "pvem"]
 available: ocaml-version >= "4.00.0"
 install: ["omake" "install"]
+dev-repo: "git://github.com/smondet/pbs"

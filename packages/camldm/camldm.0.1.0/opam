@@ -17,3 +17,4 @@ depexts: [
 ]
 available: os = "linux"
 install: [make "install" "BINDIR=%{bin}%"]
+dev-repo: "git://github.com/jonludlam/camldm"

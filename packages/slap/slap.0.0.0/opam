@@ -25,3 +25,4 @@ depopts: [
 ]
 available: [ ocaml-version <= "4.02.3" & ocaml-version >= "3.12.1" ]
 bug-reports: "https://github.com/akabe/slap/issues"
+dev-repo: "git://github.com/akabe/slap"

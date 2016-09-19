@@ -17,3 +17,4 @@ depends: [
 ]
 patches: "patch-oasis-mstruct.1.3.0" {os = "win32"}
 install: ["ocaml" "setup.ml" "-install"]
+dev-repo: "git://github.com/mirage/ocaml-mstruct"
