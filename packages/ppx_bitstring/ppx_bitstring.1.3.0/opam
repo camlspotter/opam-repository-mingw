@@ -27,3 +27,4 @@ depends: [
 ]
 remove: ["ocamlfind" "remove" "ppx_bitstring"]
 available: ocaml-version >= "4.03"
+patches: "patch-oasis-ppx_bitstring.1.3.0" {os = "win32"}
