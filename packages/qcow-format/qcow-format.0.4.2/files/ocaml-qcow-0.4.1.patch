@@ -1,0 +1,25 @@
+--- ./Makefile
++++ ./Makefile
+@@ -9,6 +9,13 @@
+ #LWT_UNIX ?= $(shell if ocamlfind query lwt.unix >/dev/null 2>&1; then echo --enable-lwt-unix; fi)
+ #ASYNC ?= $(shell if ocamlfind query async >/dev/null 2>&1; then echo --enable-async; fi)
+ #JS ?= $(shell if ocamlfind query js_of_ocaml >/dev/null 2>&1; then echo --enable-js; fi)
++OS_TYPE:=$(shell ocamlfind ocamlc -config | awk '/^os_type:/ {print $$2}')
++ifeq ($(OS_TYPE),$(filter $(OS_TYPE),Win32 Cygwin))
++EXT_EXE=.exe
++else
++EXT_EXE=
++endif
++
+ 
+ setup.ml: _oasis
+ 	oasis setup
+@@ -28,7 +35,7 @@
+ 
+ install: setup.bin
+ 	./setup.bin -install
+-	install -m 755 main.native ${BINDIR}/qcow-tool
++	install -m 755 _build/cli/main.native ${BINDIR}/qcow-tool$(EXT_EXE)
+ 
+ test: setup.bin build
+ 	./setup.bin -test -runner sequential
