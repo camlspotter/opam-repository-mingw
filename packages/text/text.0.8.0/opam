@@ -13,6 +13,7 @@ depends: [
   "ocamlfind" {build}
   "base-bytes"
   "ocamlbuild" {build}
+  "camlp4"
 ]
 depopts: ["pcre"]
 install: [make "install"]
