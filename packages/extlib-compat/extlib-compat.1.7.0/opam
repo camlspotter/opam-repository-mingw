@@ -34,4 +34,4 @@ depends: [
   "cppo" {build}
   "base-bytes" {build}
 ]
-patches: "ocaml-extlib-1.7.0.patch" {ocaml-version > "4.03.0"}
+available: [ ocaml-version < "4.05.0" ]
