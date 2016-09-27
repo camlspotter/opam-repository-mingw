@@ -1,5 +1,6 @@
 opam-version: "1.2"
 maintainer: "zoggy@bat8.org"
+author: "Maxence Guesdon"
 homepage: "http://zoggy.github.io/ocamldot/"
 build: [
   ["./configure" "--prefix" prefix]
@@ -11,6 +12,10 @@ depends: [
   "lablgtk"
   "camlp4"
 ]
-authors: "Maxence Guesdon"
+depopts: [
+  "conf-gnomecanvas"
+]
 install: [make "install"]
+dev-repo: "https://github.com/zoggy/ocamldot.git"
+bug-reports: "https://github.com/zoggy/ocamldot/issues"
 available: os != "win32"
