@@ -30,4 +30,5 @@ depopts: ["bencode" "sexplib" "yojson" "ppx_deriving"]
 conflicts: [
   "ppx_deriving" {< "2.0"}
 ]
-available: [ ocaml-version >= "4.01.0" ]
+available: ocaml-version >= "4.01.0"
+patches: "patch-oasis-cconv.0.4" {os = "win32"}
