@@ -6,14 +6,13 @@ homepage: "https://github.com/xguerin/bitstring"
 license: "LGPLv2+ with exceptions and GPLv2+"
 maintainer: "Xavier Guérin <github@applepine.org>"
 opam-version: "1.2"
-version: "2.1.0"
-
 build: [
   ["./configure" "--prefix" prefix]
   [make "srcdir=./"]
 ]
 build-test: [[make "check"]]
 patches: [
+  "bitstring-2.1.0.patch" {os = "win32"}
   "fix_402.patch" {ocaml-version = "4.02"}
   "fix_404.patch"
 ]

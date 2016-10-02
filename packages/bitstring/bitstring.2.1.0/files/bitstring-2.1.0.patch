@@ -1,0 +1,34 @@
+--- ./Makefile.in
++++ ./Makefile.in
+@@ -31,8 +31,12 @@
+ 
+ BYTESWAP_H	= @BYTESWAP_H@
+ 
+-OCAMLLIB	= @OCAMLLIB@
++OCAMLLIB	= $(shell echo "@OCAMLLIB@" | tr -d '\15')
++EXT_DLL:=$(shell $(OCAMLFIND) ocamlc -config | awk '/^ext_dll:/ {print $$2}')
++EXT_LIB:=$(shell $(OCAMLFIND) ocamlc -config | awk '/^ext_lib:/ {print $$2}')
++
+ top_srcdir	= @top_srcdir@
++srcdir		= @srcdir@
+ 
+ pkg_cil		= @OCAML_PKG_cil@
+ pkg_extlib	= @OCAML_PKG_extlib@
+@@ -56,7 +60,7 @@
+ OCAMLDOCFLAGS	= -html -sort
+ 
+ CC		= @CC@
+-CFLAGS		= @CFLAGS@ -Wall -Werror -fPIC -I$(top_srcdir) -I$(OCAMLLIB)
++CFLAGS		= @CFLAGS@ -Wall -fPIC -I "$(top_srcdir)" -I "$(OCAMLLIB)"
+ 
+ LIBRARY_PATH	= @abs_top_builddir@
+ LD_LIBRARY_PATH	= @abs_top_builddir@
+@@ -271,7 +275,7 @@
+ # Install.
+ 
+ install:
+-	ocamlfind install bitstring META *.mli *.cmx *.cma *.cmxa *.a *.so \
++	ocamlfind install bitstring META *.mli *.cmx *.cma *.cmxa *$(EXT_LIB) *$(EXT_DLL) \
+ 		bitstring.cmi \
+ 		bitstring_persistent.cmi \
+ 		pa_bitstring.cmo
