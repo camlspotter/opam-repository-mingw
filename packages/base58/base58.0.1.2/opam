@@ -13,7 +13,7 @@ build-test: [make "test"]
 remove: ["ocamlfind" "remove" "base58"]
 depends: [
   "ocamlfind" {build}
-  "testsimple" {test}
+  "TestSimple" {test}
   "bisect" {test}
   "bisect_ppx" {test}
   "ocamlbuild" {build}

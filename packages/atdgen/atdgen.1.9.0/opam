@@ -10,10 +10,11 @@ build: [ [make] ]
 
 install: [make "findlib-install"]
 
-build-test: [
-  [make]
-  [make "test"]
-]
+# seems broken on *nix, too. It will only work after installation
+#build-test: [
+#  [make]
+#  [make "test"]
+#]
 
 remove: [
     ["ocamlfind" "remove" "atdgen"]

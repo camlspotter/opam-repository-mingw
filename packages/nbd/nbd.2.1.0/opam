@@ -14,7 +14,9 @@ build: [
 ]
 build-test: [
   ["./configure" "--enable-tests"]
-  [make "test"]
+  [make "test"]{os!="win32"}
+  [make] {os="win32"}
+  ["./_build/lib_test/test.native" "-runner" "sequential"] {os="win32"}
 ]
 install: [
   [make "install" "BINDIR=%{bin}%"]

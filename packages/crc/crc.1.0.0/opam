@@ -12,7 +12,9 @@ build: [
 build-test: [
   ["oasis" "setup"]
   ["ocaml" "setup.ml" "-configure" "--%{ounit:enable}%-tests"]
-  [make "test"]
+  [make "test"] {os != "win32"}
+  ["ocaml" "setup.ml" "-build"] {os = "win32"}
+  ["dash.exe" "-ecx" "CAML_LD_LIBRARY_PATH=\"$(cygpath -m $(readlink -f _build/lib));$CAML_LD_LIBRARY_PATH\"  ./_build/test/crc_test.byte"] {os = "win32"}
 ]
 install: [
   [make "PREFIX=%{prefix}%" "install"]
