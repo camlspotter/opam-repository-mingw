@@ -18,4 +18,4 @@ depends: [
   "camlidl"
   "ocamlbuild" {build}
 ]
-available: [ ocaml-version >= "4.02.0" ]
+available: os != "win32" & (ocaml-version >= "4.02.0")
