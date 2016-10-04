@@ -58,11 +58,11 @@ build: [
                                    !conf-gnomecanvas:installed }
 ]
   [make "-j%{jobs}%"] {os!="win32"}
-  [make "FRAMAC_TOP_SRCDIR=%{build}%" "all"] {os="win32"}
+  [make "-j%{jobs}%" "FRAMAC_TOP_SRCDIR=%{build}%" "all"] {os="win32"}
 ]
 
 install: [
-  [make "FRAMAC_TOP_SRCDIR=%{build}%" "install"]
+  [make "install"]
 ]
 
 remove: [
@@ -73,22 +73,23 @@ remove: [
                  "--disable-gui" { !conf-gtksourceview:installed |
                                    !conf-gnomecanvas:installed }
 ]
-  [make "FRAMAC_TOP_SRCDIR=%{build}%" "uninstall"]
+  [make "uninstall"] {os!="win32"}
+  [make "FRAMAC_TOP_SRCDIR=%{build}%" "uninstall"] {os="win32"}
   ["rm" "-rf" frama-c:doc]
 ]
 
 build-doc: [
-   [make "FRAMAC_TOP_SRCDIR=%{build}%" "-C" "doc" "download"]
-   [make "FRAMAC_TOP_SRCDIR=%{build}%" "-C" "doc" "FRAMAC_DOCDIR=%{frama-c:doc}%" "install"]
+   [make "-C" "doc" "download"]
+   [make "-C" "doc" "FRAMAC_DOCDIR=%{frama-c:doc}%" "install"]
 ]
 
 build-test: [
   [make "-j%{jobs}%" "PTESTS_OPTS=-error-code" "tests"] {os!="win32"}
-  [make "FRAMAC_TOP_SRCDIR=%{build}%" "PTESTS_OPTS=-error-code" "tests"] {os="win32"}
+  [make "-j%{jobs}%" "FRAMAC_TOP_SRCDIR=%{build}%" "PTESTS_OPTS=-error-code" "tests"] {os="win32"}
 ]
 
 depends: [
-  "ocamlgraph" { = "1.8.5" | = "1.8.6" }
+  "ocamlgraph" {>= "1.8.5" & < "1.9~"}
   "ocamlfind"
 ]
 
@@ -105,6 +106,11 @@ messages: [
    "Coq can be used with the WP plug-in for proving interactively proof obligations" { !coq:installed }
 ]
 
+patches: [
+  "ocamlgraph-1.8.7.patch"
+  "fix-cygwin.patch" {os="win32"}
+]
+
 conflicts: [
   "why3-base" { < "0.86" } #for WP plug-in
   "coq"      { < "8.4.6" } #for WP plug-in
@@ -112,4 +118,4 @@ conflicts: [
 ]
 
 available: [ ocaml-version >= "4.00.1" & ocaml-version != "4.02.0" &
-             ocaml-version != "4.02.2" & ocaml-version < "4.04.0" ]
+             ocaml-version != "4.02.2" & ocaml-version < "4.04~" ]

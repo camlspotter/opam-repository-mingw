@@ -1,5 +1,5 @@
 #!/bin/sh -eux
 
 if [ ! -f "configure" ]; then
-  autoconf
+  autoconf -f
 fi
