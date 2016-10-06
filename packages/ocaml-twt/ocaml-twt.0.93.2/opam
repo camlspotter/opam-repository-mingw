@@ -4,5 +4,6 @@ authors: ["Mike Lin"]
 homepage: "https://github.com/mlin/twt"
 license: "MIT"
 remove: [[make "uninstall" "PREFIX=%{prefix}%"]]
-install: [make "install" "PREFIX=%{prefix}%"]
 dev-repo: "git://github.com/mlin/twt"
+install: [make "install" "PREFIX=%{prefix}%"]
+conflicts: "ocaml+twt"
