@@ -1,9 +1,12 @@
 --- ./build.sh
 +++ ./build.sh
-@@ -15,6 +15,27 @@
+@@ -15,6 +15,30 @@
  HAVE_VCHAN_LWT=`ocamlfind query vchan.lwt xen-evtchn.unix 2>/dev/null || true`
  HAVE_LAUNCHD_LWT=`ocamlfind query launchd.lwt 2>/dev/null || true`
  
++EXT_OBJ=`ocamlfind ocamlc -config | awk '/^ext_obj:/ {print $2}'`
++EXT_LIB=`ocamlfind ocamlc -config | awk '/^ext_lib:/ {print $2}'`
++
 +OS_TYPE=`ocamlfind ocamlc -config | awk '/^os_type:/ {print $2}'`
 +case "$OS_TYPE" in
 +    [Ww][Ii][Nn]*)
@@ -28,7 +31,7 @@
  add_target () {
    TARGETS="$TARGETS lib/$1.cmxs lib/$1.cma lib/$1.cmxa"
  }
-@@ -56,7 +77,7 @@
+@@ -56,7 +80,7 @@
  
  echo "true: config" >> _tags
  
@@ -37,6 +40,18 @@
  
  if [ "$HAVE_ASYNC" != "" ]; then
    echo "Building with Async support."
+@@ -152,9 +176,9 @@
+     -e "s/@LAUNCHD_LWT_REQUIRES@/${LAUNCHD_LWT_REQUIRES}/g" \
+     META.in > META
+   B=_build/lib
+-  ls $B/*.cmi $B/*.cmt $B/*.cmti $B/*.cmx $B/*.cmxa $B/*.cma $B/*.cmxs $B/*.a $B/*.o $B/*.cmo > _install/lib
++  ls $B/*.cmi $B/*.cmt $B/*.cmti $B/*.cmx $B/*.cmxa $B/*.cma $B/*.cmxs $B/*$(EXT_LIB) $B/*$(EXT_OBJ) $B/*.cmo > _install/lib
+   ocamlfind remove conduit || true
+-  FILES=`ls -1 lib/intro.html $B/*.mli $B/*.cmi $B/*.cmt $B/*.cmti $B/*.cmx $B/*.cmxa $B/*.cma $B/*.cmxs $B/*.a $B/*.o $B/*.cmo 2>/dev/null || true`
++  FILES=`ls -1 lib/intro.html $B/*.mli $B/*.cmi $B/*.cmt $B/*.cmti $B/*.cmx $B/*.cmxa $B/*.cma $B/*.cmxs $B/*$(EXT_LIB) $B/*$(EXT_OBJ) $B/*.cmo 2>/dev/null || true`
+   ocamlfind install conduit META $FILES
+ else
+   ocamlbuild -use-ocamlfind -classic-display -no-links -j ${J_FLAG-1} -tag ${TAGS} \
 --- ./Makefile
 +++ ./Makefile
 @@ -1,6 +1,13 @@
