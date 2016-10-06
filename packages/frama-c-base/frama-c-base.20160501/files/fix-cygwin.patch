@@ -1,0 +1,13 @@
+diff --git a/share/Makefile.common b/share/Makefile.common
+index fcce208..dc53a9a 100644
+--- a/share/Makefile.common
++++ b/share/Makefile.common
+@@ -54,7 +54,7 @@ FRAMAC_SRC_DIRS:= $(addprefix src/, $(FRAMAC_SRC_DIRS))
+ 
+ ifeq ($(OCAMLWIN32),yes)
+ ifneq ($(CYGPATH),no)
+-winpath=$(shell $(CYGPATH) -m "$(1)")
++winpath=$(shell $(CYGPATH) -m $(1))
+ else
+ winpath=$(1)
+ endif #CYGPATH

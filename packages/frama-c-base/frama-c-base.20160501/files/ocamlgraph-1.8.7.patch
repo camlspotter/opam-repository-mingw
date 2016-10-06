@@ -1,0 +1,26 @@
+diff --git a/configure b/configure
+index f9a52e6..682b700 100755
+--- a/configure
++++ b/configure
+@@ -3576,7 +3576,7 @@ $as_echo "$as_me: OcamlGraph $OCAMLGRAPH_VERSION is incompatible with Frama-C."
+       | 1.8.3 | 1.8.3+dev \
+       | 1.8.4 | 1.8.4+dev)
+         ocamlgraph_error;;
+-      1.8.5 | 1.8.6)
++      1.8.5 | 1.8.6 | 1.8.7)
+         { $as_echo "$as_me:${as_lineno-$LINENO}: OcamlGraph $OCAMLGRAPH_VERSION found: great!" >&5
+ $as_echo "$as_me: OcamlGraph $OCAMLGRAPH_VERSION found: great!" >&6;};;
+       1.8.*)
+diff --git a/configure.in b/configure.in
+index fdc28a5..4f0caca 100644
+--- a/configure.in
++++ b/configure.in
+@@ -334,7 +334,7 @@ if test "$ENABLE_LOCAL_OCAMLGRAPH" != "yes"; then
+       | 1.8.3 | 1.8.3+dev \
+       | 1.8.4 | 1.8.4+dev)
+         ocamlgraph_error;;
+-      1.8.5 | 1.8.6)
++      1.8.5 | 1.8.6 | 1.8.7)
+         AC_MSG_NOTICE([OcamlGraph $OCAMLGRAPH_VERSION found: great!]);;
+       1.8.*)
+         AC_MSG_NOTICE(
