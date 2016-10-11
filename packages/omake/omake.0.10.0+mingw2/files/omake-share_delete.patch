@@ -1,0 +1,11 @@
+--- ./src/build/omake_rule.ml
++++ ./src/build/omake_rule.ml
+@@ -1214,7 +1214,7 @@
+ and eval_shell_output venv pos loc e =
+   let pos = string_pos "eval_shell_output" pos in
+   let tmpname = Filename.temp_file "omake" ".shell" in
+-  let fd = Lm_unix_util.openfile tmpname [Unix.O_RDWR; Unix.O_CREAT; Unix.O_TRUNC] 0o600 in
++  let fd = Lm_unix_util.openfile tmpname [Unix.O_RDWR; Unix.O_CREAT; Unix.O_TRUNC; Unix.O_SHARE_DELETE] 0o600 in
+   let channel = Lm_channel.create tmpname Lm_channel.PipeChannel Lm_channel.OutChannel false (Some fd) in
+   let channel = Omake_env.venv_add_channel venv channel in
+   let venv = Omake_env.venv_add_var venv Omake_var.stdout_var (ValChannel (OutChannel, channel)) in
