@@ -28,7 +28,7 @@ depexts: [
   [["debian"] ["clang" "libc++-dev"]]
   [["ubuntu"] ["clang" "libc++-dev"]]
 ]
-available: [ocaml-version >= "4.03.0"]
+available: os != "win32" & (ocaml-version >= "4.03.0")
 messages: [
  "Note, you'll need to have libbrotli installed: https://github.com/bagder/libbrotli"
 ]
