@@ -22,4 +22,4 @@ depends: [
   "conf-m4" {build}
 ]
 authors: "Gerd Stolpmann <gerd@gerd-stolpmann.de>"
-patches: "findlib-1.6.2.patch" {os = "win32"}
+patches: "findlib-1.6.3.patch" {os = "win32"}
