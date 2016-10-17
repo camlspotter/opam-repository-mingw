@@ -12,3 +12,4 @@ depexts: [
   [["ubuntu"] ["libfuse-dev"]]
 ]
 install: [make "-C" "lib" "install"]
+available: os != "win32"
