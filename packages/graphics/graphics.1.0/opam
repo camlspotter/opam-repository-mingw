@@ -2,7 +2,7 @@ opam-version: "1"
 maintainer: "Fabrice Le Fessant <fabrice.le_fessant@ocamlpro.com>"
 homepage: "http://www.ocaml.org/"
 license: "LGPL+EXN-BIN"
-build: [["ocamlc" "-custom" "graphics.cma" "-o" "test"]]
+build: [["ocamlc" "-custom" "graphics.cma" "-o" "test.exe"]]
 post-messages: [
   "This package checks whether the Graphics library was compiled." {failure}
 ]
