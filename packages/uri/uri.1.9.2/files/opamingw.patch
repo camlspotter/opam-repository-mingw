@@ -1,0 +1,14 @@
+diff -c -r uri.1.9.2-orig/etc/gen.sh uri.1.9.2/etc/gen.sh
+*** uri.1.9.2-orig/etc/gen.sh	Mon Feb 22 07:18:10 2016
+--- uri.1.9.2/etc/gen.sh	Tue Oct 18 11:49:14 2016
+***************
+*** 1,5 ****
+--- 1,8 ----
+  #!/bin/sh -e
+  
++ # Cygwin + MinGW OCaml fix
++ set -o igncr
++ 
+  BYTES=`ocamlfind query bytes`
+  STRINGEXT=`ocamlfind query stringext`
+  if [ -e ${BYTES}/bytes.cma ]
