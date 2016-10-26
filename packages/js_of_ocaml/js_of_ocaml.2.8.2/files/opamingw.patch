@@ -1,0 +1,20 @@
+diff -c -r js_of_ocaml-2.8.2/Makefile.conf js_of_ocaml-2.8.2-fixed/Makefile.conf
+*** js_of_ocaml-2.7/Makefile.conf	2016-01-26 03:35:03.000000000 +0800
+--- js_of_ocaml-2.7-fixed/Makefile.conf	2016-05-23 22:56:31.387993900 +0800
+***************
+*** 23,29 ****
+  EXEEXT :=
+  OBJEXT := .o
+  LIBEXT := .a
+! DLLEXT := .so
+  
+  ifeq ($(shell ocamlc -version | grep -q "^4."; echo $$?),0)
+  WITH_TOPLEVEL =YES
+--- 23,29 ----
+  EXEEXT :=
+  OBJEXT := .o
+  LIBEXT := .a
+! DLLEXT := .dll
+  
+  ifeq ($(shell ocamlc -version | grep -q "^4."; echo $$?),0)
+  WITH_TOPLEVEL =YES
