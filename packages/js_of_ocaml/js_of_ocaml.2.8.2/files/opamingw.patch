@@ -1,20 +1,73 @@
-diff -c -r js_of_ocaml-2.8.2/Makefile.conf js_of_ocaml-2.8.2-fixed/Makefile.conf
-*** js_of_ocaml-2.7/Makefile.conf	2016-01-26 03:35:03.000000000 +0800
---- js_of_ocaml-2.7-fixed/Makefile.conf	2016-05-23 22:56:31.387993900 +0800
-***************
-*** 23,29 ****
-  EXEEXT :=
-  OBJEXT := .o
-  LIBEXT := .a
-! DLLEXT := .so
-  
-  ifeq ($(shell ocamlc -version | grep -q "^4."; echo $$?),0)
-  WITH_TOPLEVEL =YES
---- 23,29 ----
-  EXEEXT :=
-  OBJEXT := .o
-  LIBEXT := .a
-! DLLEXT := .dll
-  
-  ifeq ($(shell ocamlc -version | grep -q "^4."; echo $$?),0)
-  WITH_TOPLEVEL =YES
+diff --git a/.gitignore b/.gitignore
+index 6c205bc..5550c02 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -4,6 +4,7 @@
+ *.o
+ *.a
+ *.so
++*.dll
+ # Ocaml object files
+ *.cmi
+ *.cmo
+@@ -12,6 +13,8 @@
+ *.cmxa
+ *.cmxs
+ *.cmjs
++*.cmt
++*.cmti
+ 
+ # backup files
+ *~
+diff --git a/Makefile.conf b/Makefile.conf
+index fc5c137..5fbd7ce 100644
+--- a/Makefile.conf
++++ b/Makefile.conf
+@@ -11,7 +11,7 @@ MINIFIER := jsoo_minify$(EXEEXT)
+ MKTOP    := jsoo_mktop$(EXEEXT)
+ MKCMIS   := jsoo_mkcmis$(EXEEXT)
+ 
+-PPX   := ppx_js$(EXEXT)
++PPX   := ppx_js$(EXEEXT)
+ # opt/byte
+ BEST := opt
+ 
+@@ -20,10 +20,10 @@ DOCOPT := -colorize-code -short-functors -charset utf-8
+ 
+ ####
+ 
+-EXEEXT :=
++EXEEXT := .exe
+ OBJEXT := .o
+ LIBEXT := .a
+-DLLEXT := .so
++DLLEXT := .dll
+ 
+ ifeq ($(shell ocamlc -config | grep -q "architecture: i386"; echo $$?),0)
+ ARCH_32BIT=YES
+diff --git a/Makefile.filelist b/Makefile.filelist
+index 06a3f09..84ff73c 100644
+--- a/Makefile.filelist
++++ b/Makefile.filelist
+@@ -36,7 +36,7 @@ INTF += lib/async/*.cmi
+ endif
+ 
+ ifeq "${WITH_PPX}" "YES"
+-OCAMLFIND_BIN += lib/ppx/${PPX}
++OCAMLFIND_BIN += lib/ppx/${PPX}${EXEEXT}
+ IMPL += lib/ppx/ppx_js.cma
+ INTF += lib/ppx/*.cmi
+ IMPL += lib/ppx/ppx_js.cmx lib/ppx/ppx_js.cmxa
+diff --git a/lib/Makefile b/lib/Makefile
+index 3b944ed..df708c3 100644
+--- a/lib/Makefile
++++ b/lib/Makefile
+@@ -50,7 +50,7 @@ endif
+ endif
+ 
+ ifeq "${WITH_PPX}" "YES"
+-PPX_EX= ppx/$(PPX)
++PPX_EX= ppx/$(PPX)$(EXEEXT)
+ PPX_LIB= ppx/ppx_js.cma ppx/ppx_js.cmxa
+ ifeq "${WITH_PPX_DRIVER}" "YES"
+ PPX_LIB+= ppx_driver/ppx_js_driver.cma ppx_driver/ppx_js_driver.cmxa
