@@ -58,6 +58,19 @@ index 06a3f09..84ff73c 100644
  IMPL += lib/ppx/ppx_js.cma
  INTF += lib/ppx/*.cmi
  IMPL += lib/ppx/ppx_js.cmx lib/ppx/ppx_js.cmxa
+diff --git a/lib/META b/lib/META
+index c8dc658..0bf29d9 100644
+--- a/lib/META
++++ b/lib/META
+@@ -20,7 +20,7 @@ package "ppx" (
+   version = "[distributed with js_of_ocaml]"
+   ppx = "./ppx_js"
+   requires = "js_of_ocaml"
+-  exists_if = "ppx_js"
++  exists_if = "ppx_js.exe"
+   package "internal" (
+     description = "Js_of_ocaml ppx mapper"
+     version = "[distributed with js_of_ocaml]"
 diff --git a/lib/Makefile b/lib/Makefile
 index 3b944ed..df708c3 100644
 --- a/lib/Makefile
