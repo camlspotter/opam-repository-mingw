@@ -17,4 +17,4 @@ depends: [
   "js_of_ocaml" {>= "2.6"}
   "re" { >= "1.7.1" }
 ]
-available: [ocaml-version >= "4.03.0"]
+available: os != "win32" & (ocaml-version >= "4.03.0")
