@@ -16,3 +16,4 @@ install: [
 ]
 depends: ["ocamlfind" "ocamlbuild" "ocamlgraph"]
 available: [ocaml-version >= "4.02.0"]
+patches: "solvuu-build-0.1.0.patch" {os = "win32"}
