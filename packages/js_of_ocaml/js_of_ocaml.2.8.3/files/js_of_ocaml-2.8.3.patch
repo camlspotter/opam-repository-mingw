@@ -1,0 +1,146 @@
+--- ./compiler/Makefile
++++ ./compiler/Makefile
+@@ -16,7 +16,7 @@
+ all: $(COMPILER) $(MINIFIER) $(FINDLIB_SUPPORT) man
+ 
+ compilerlib: lib/compiler.cma lib/compiler.cmxa lib/compiler.cmxs lib/compiler.cmx
+-	cp compiler.cmi compiler.a lib/
++	cp compiler.cmi compiler$(LIBEXT) lib/
+ 
+ lib/%: %
+ 	cp $< $@
+@@ -45,11 +45,11 @@
+ 	mv -f $< $@
+ 
+ 
+-man: man/$(MINIFIER).1 man/$(COMPILER).1
+-man/$(MINIFIER).1: $(MINIFIER)
++man: man/jsoo_minify.1 man/js_of_ocaml.1
++man/jsoo_minify.1: $(MINIFIER)
+ 	mkdir -p man
+ 	./$(MINIFIER) --help=groff >$@
+-man/$(COMPILER).1: $(COMPILER)
++man/js_of_ocaml.1: $(COMPILER)
+ 	mkdir -p man
+ 	./$(COMPILER) --help=groff >$@
+ 
+@@ -125,8 +125,8 @@
+ %.ml: %.mll
+ 	ocamllex -q $<
+ clean:
+-	rm -f *.cm[aiox] *.cmxa *.cmxs *.o *.a *.conflicts
+-	rm -f lib/*.cm[aiox] lib/*.cmxa lib/*.cmxs lib/*.o lib/*.a
++	rm -f *.cm[aiox] *.cmxa *.cmxs *.o *$(LIBEXT) *.conflicts
++	rm -f lib/*.cm[aiox] lib/*.cmxa lib/*.cmxs lib/*.o lib/*$(LIBEXT)
+ 	rm -f *.opt *.byte
+ 	rm -f $(MINIFIER) $(COMPILER)
+ 	rm -f compiler_version.ml
+--- ./lib/Makefile
++++ ./lib/Makefile
+@@ -65,7 +65,7 @@
+ 
+ ifeq "${WITH_PPX_DERIVING}" "YES"
+ PPX_DERIVING_LIB= ppx/ppx_deriving_json.cma \
+-	ppx/ppx_deriving_json.a \
++	ppx/ppx_deriving_json$(LIBEXT) \
+ 	ppx/ppx_deriving_json.cmxa \
+ 	ppx/ppx_deriving_json.cmxs
+ endif
+@@ -232,7 +232,7 @@
+ ppx/ppx_deriving_json.cmx: ppx/ppx_deriving_json.ml
+ 	$(OCAMLOPT) -w -40-42-48-27 -package ppx_deriving,ppx_tools.metaquot -c $<
+ 
+-ppx/ppx_deriving_json.a: ppx/ppx_deriving_json.cmx
++ppx/ppx_deriving_json$(LIBEXT): ppx/ppx_deriving_json.cmx
+ 
+ ppx/ppx_deriving_json.cmxa: ppx/ppx_deriving_json.cmx
+ 	$(OCAMLOPT) -a -o $@ $^
+--- ./Makefile.conf
++++ ./Makefile.conf
+@@ -4,8 +4,18 @@
+ 
+ ####
+ 
++OS_TYPE:=$(shell ocamlfind ocamlc -config | awk '/^os_type:/ {print $$2}')
++ifeq ($(OS_TYPE),$(filter $(OS_TYPE),Win32 Cygwin))
++EXEEXT := .exe
++else
++EXEEXT :=
++endif
++OBJEXT := $(shell ocamlfind ocamlc -config | awk '/^ext_obj:/ {print $$2}')
++LIBEXT := $(shell ocamlfind ocamlc -config | awk '/^ext_lib:/ {print $$2}')
++DLLEXT := $(shell ocamlfind ocamlc -config | awk '/^ext_dll:/ {print $$2}')
++
+ LIBRARY  := js_of_ocaml
+-LIBNAME  := js_of_ocaml$(LIBEXT)
++LIBNAME  := js_of_ocaml
+ COMPILER := js_of_ocaml$(EXEEXT)
+ MINIFIER := jsoo_minify$(EXEEXT)
+ MKTOP    := jsoo_mktop$(EXEEXT)
+@@ -20,11 +30,6 @@
+ 
+ ####
+ 
+-EXEEXT :=
+-OBJEXT := .o
+-LIBEXT := .a
+-DLLEXT := .so
+-
+ ifeq ($(shell ocamlc -config | grep -q "architecture: i386"; echo $$?),0)
+ ARCH_32BIT=YES
+ endif
+--- ./Makefile.filelist
++++ ./Makefile.filelist
+@@ -40,7 +40,7 @@
+ IMPL += lib/ppx/ppx_js.cma
+ INTF += lib/ppx/*.cmi
+ IMPL += lib/ppx/ppx_js.cmx lib/ppx/ppx_js.cmxa
+-IMPL += lib/ppx/ppx_js.a
++IMPL += lib/ppx/ppx_js$(LIBEXT)
+ ifeq "${BEST}" "opt"
+ ifeq "${NATDYNLINK}" "YES"
+ IMPL += lib/ppx/ppx_js.cmxs
+@@ -50,7 +50,7 @@
+ 
+ ifeq "${WITH_PPX}${WITH_PPX_DRIVER}" "YESYES"
+ IMPL += lib/ppx_driver/ppx_js_driver.cma lib/ppx_driver/ppx_js_driver.cmx lib/ppx_driver/ppx_js_driver.cmxa
+-IMPL += lib/ppx_driver/ppx_js_driver.a
++IMPL += lib/ppx_driver/ppx_js_driver$(LIBEXT)
+ ifeq "${BEST}" "opt"
+ ifeq "${NATDYNLINK}" "YES"
+ IMPL += lib/ppx_driver/ppx_js_driver.cmxs
+@@ -59,7 +59,7 @@
+ endif
+ 
+ ifeq "${WITH_PPX_DERIVING}" "YES"
+-IMPL += lib/ppx/ppx_deriving_json.a
++IMPL += lib/ppx/ppx_deriving_json$(LIBEXT)
+ IMPL += lib/ppx/ppx_deriving_json.cma
+ IMPL += lib/ppx/ppx_deriving_json.cmxa
+ IMPL += lib/ppx/ppx_deriving_json.cmxs
+@@ -97,14 +97,14 @@
+ 
+ COMP_INTF := compiler/compiler.cmi
+ COMP_IMPL := compiler/compiler.cma
+-COMP_NAT_IMPL := compiler/compiler.cmxa compiler/compiler.a compiler/compiler.cmx
++COMP_NAT_IMPL := compiler/compiler.cmxa compiler/compiler$(LIBEXT) compiler/compiler.cmx
+ COMP_NATDYN_IMPL := compiler/compiler.cmxs
+ 
+ ifeq "${WITH_FINDLIB}" "YES"
+ COMP_INTF += compiler/jsoo_findlib_support.cmi
+ COMP_IMPL += compiler/jsoo_findlib_support.cma
+ COMP_NAT_IMPL += compiler/jsoo_findlib_support.cmxa \
+-                 compiler/jsoo_findlib_support.a \
++                 compiler/jsoo_findlib_support$(LIBEXT) \
+                  compiler/jsoo_findlib_support.cmx
+ COMP_NATDYN_IMPL += compiler/jsoo_findlib_support.cmxs
+ endif
+@@ -114,7 +114,7 @@
+ INTF += ocamlbuild/_build/ocamlbuild_js_of_ocaml.cmi
+ 
+ ifeq "${BEST}" "opt"
+-OCAMLBUILD_IMPL += ocamlbuild_js_of_ocaml.cmxa ocamlbuild_js_of_ocaml.a
++OCAMLBUILD_IMPL += ocamlbuild_js_of_ocaml.cmxa ocamlbuild_js_of_ocaml$(LIBEXT)
+ ifeq "${NATDYNLINK}" "YES"
+ OCAMLBUILD_IMPL += ocamlbuild_js_of_ocaml.cmxs
+ endif
