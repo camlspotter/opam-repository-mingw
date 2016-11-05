@@ -13,5 +13,5 @@ depends: [
   "ocamlbuild" {>="0.9.3" | <"0.9.0"}
   "topkg" {>= "0.8.1"}
   "astring" ]
-depopts: []
 build: [ "ocaml" "pkg/pkg.ml" "build" "--pinned" "%{pinned}%" "--tests" "false" ]
+patches: "ocb-stubblr-0.1.0.patch" {os = "win32"}
