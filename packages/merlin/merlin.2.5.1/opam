@@ -45,3 +45,4 @@ Take a look at https://github.com/the-lambda-church/merlin for more information
   "
     {success}
 ]
+patches: "merlin-2.5.1.patch" {os = "win32"}
