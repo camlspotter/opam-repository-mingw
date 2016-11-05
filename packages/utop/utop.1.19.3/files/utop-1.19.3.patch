@@ -1,0 +1,12 @@
+--- ./src/lib/uTop_main.cppo.ml
++++ ./src/lib/uTop_main.cppo.ml
+@@ -1312,6 +1312,9 @@
+   (* We lost the terminal. *)
+   catch Sys.sighup;
+   (* Termination request. *)
++  if Sys.win32 && !emacs_mode then
++    Sys.set_signal Sys.sigterm Sys.Signal_ignore
++  else
+   catch Sys.sigterm
+ 
+ let load_inputrc () =

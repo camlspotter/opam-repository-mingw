@@ -39,4 +39,7 @@ post-messages: [
  UTop does not work inside a cygwin terminal (mintty, urxvt,...). Use cmd.exe, ConsoleZ or a similar
  terminal emulator." {success & os = "win32" }
 ]
-patches: "patch-oasis-utop.1.19.3" {os = "win32"}
+patches: [
+  "utop-1.19.3.patch" {os = "win32"}
+  "patch-oasis-utop.1.19.3" {os = "win32"}
+]
