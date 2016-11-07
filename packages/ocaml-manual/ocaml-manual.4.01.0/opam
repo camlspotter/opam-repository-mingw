@@ -13,6 +13,8 @@ dev-repo: "https://github.com/ocaml/ocaml.git"
 bug-reports: "http://caml.inria.fr/mantis/"
 available: [ ocaml-version >= "4.01.0" & ocaml-version < "4.02.0" ]
 build: [
- [ "cp" "-R" "." ocaml-manual:doc ] {os != "win32"}
- [ "robocopy" "/E" "." ocaml-manual:doc ] {os = "win32"}
+ [ "cp" "-R" "." ocaml-manual:doc ]
+]
+remove: [
+ ["rm" "-rf" "%{doc}%/ocaml-manual"]
 ]
