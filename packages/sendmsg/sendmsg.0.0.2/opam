@@ -6,8 +6,7 @@ doc: "https://pqwy.github.io/sendmsg/doc"
 license: "ISC"
 dev-repo: "https://github.com/pqwy/sendmsg.git"
 bug-reports: "https://github.com/pqwy/sendmsg/issues"
-tags: []
-available: [ ocaml-version >= "4.02.0"]
+available: os != "win32" & (ocaml-version >= "4.02.0")
 build: [
   "ocaml" "pkg/pkg.ml" "build" "--pinned" "%{pinned}%"
           "--with-lwt" "%{lwt:installed}%"
@@ -20,4 +19,3 @@ depends: [
   "alcotest" {test} ]
 depopts: [ "lwt" ]
 conflicts: [ "ocb-stubblr" {<"0.1.0"} ]
-
