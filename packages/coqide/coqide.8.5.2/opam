@@ -19,6 +19,10 @@ build: [
     "-usecamlp5"
     "-camlp5dir"
     "%{lib}%/camlp5"
+    "-bindir"
+    bin
+    "-libdir"
+    "%{lib}%/coq"
   ]
   [make "-j%{jobs}%" "coqide-files"]
   [make "-j%{jobs}%" "coqide-binaries"]

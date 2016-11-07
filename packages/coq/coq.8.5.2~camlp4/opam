@@ -18,9 +18,14 @@ build: [
     "-coqide"
     "no"
     "-debug"
+    "-bindir"
+    bin
+    "-libdir"
+    "%{lib}%/coq"
   ]
   [make "-j%{jobs}%"]
 ]
+remove: ["rm" "-R" "%{lib}%/coq"]
 depends: [
   "camlp4"
 ]
