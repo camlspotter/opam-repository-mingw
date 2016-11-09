@@ -1,0 +1,37 @@
+diff -c -r ocamlbuild.0.9.3/src/ocamlbuild_where.ml ocamlbuild.0.9.3-fix/src/ocamlbuild_where.ml
+*** ocamlbuild.0.9.3/src/ocamlbuild_where.ml	Fri Oct  7 09:42:12 2016
+--- ocamlbuild.0.9.3-fix/src/ocamlbuild_where.ml	Wed Nov  9 16:55:41 2016
+***************
+*** 12,20 ****
+  (***********************************************************************)
+  
+  let bindir = ref Ocamlbuild_config.bindir;;
+! let libdir = ref begin
+!   Filename.concat
+!     (try Sys.getenv "OCAMLLIB"
+!      with Not_found -> Ocamlbuild_config.libdir)
+!     "ocamlbuild"
+! end;;
+--- 12,15 ----
+  (***********************************************************************)
+  
+  let bindir = ref Ocamlbuild_config.bindir;;
+! let libdir = ref (Filename.concat Ocamlbuild_config.libdir "ocamlbuild");;
+Only in ocamlbuild.0.9.3-fix/src: ocamlbuild_where.ml~
+diff -c -r ocamlbuild.0.9.3/src/options.ml ocamlbuild.0.9.3-fix/src/options.ml
+*** ocamlbuild.0.9.3/src/options.ml	Fri Oct  7 09:42:12 2016
+--- ocamlbuild.0.9.3-fix/src/options.ml	Wed Nov  9 16:56:18 2016
+***************
+*** 233,239 ****
+--- 233,242 ----
+     "-j", Set_int Command.jobs, "<N> Allow N jobs at once (0 for unlimited)";
+  
+     "-build-dir", String set_build_dir, "<path> Set build directory (implies no-links)";
++ (*
+     "-install-lib-dir", Set_string Ocamlbuild_where.libdir, "<path> Set the install library directory";
++ *)
++    "-install-lib-dir", String (fun _ -> prerr_endline "Warning: ocamlbuild's -install-lib-dir option is disabled in opamingw"), "<path> Set the install library directory (no effect in opamingw)";
+     "-install-bin-dir", Set_string Ocamlbuild_where.bindir, "<path> Set the install binary directory";
+     "-where", Unit (fun () -> print_endline !Ocamlbuild_where.libdir; raise Exit_OK), " Display the install library directory";
+     "-which", String (fun cmd -> print_endline (find_tool cmd); raise Exit_OK), "<command> Display path to the tool command";
+Only in ocamlbuild.0.9.3-fix/src: options.ml~
