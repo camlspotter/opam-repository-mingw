@@ -1,0 +1,48 @@
+Only in ppx_deriving.4.1-fix: _build
+Only in ppx_deriving.4.1-fix/pkg: #build.ml#
+Only in ppx_deriving.4.1-fix/pkg: .#build.ml
+diff -c -r ppx_deriving.4.1/pkg/build.ml ppx_deriving.4.1-fix/pkg/build.ml
+*** ppx_deriving.4.1/pkg/build.ml	Sun Sep 25 01:20:09 2016
+--- ppx_deriving.4.1-fix/pkg/build.ml	Wed Nov  9 17:34:19 2016
+***************
+*** 19,25 ****
+  let () =
+    Pkg.describe "ppx_deriving" ~builder:(`Other (ocamlbuild, "_build")) [
+      Pkg.lib "pkg/META";
+!     Pkg.bin ~auto:true "src/ppx_deriving_main" ~dst:"../lib/ppx_deriving/ppx_deriving";
+      Pkg.lib ~exts:Exts.module_library "src/ppx_deriving";
+      Pkg.lib ~exts:Exts.library "src/ppx_deriving_main";
+      Pkg.lib ~exts:Exts.module_library "src/ppx_deriving_runtime";
+--- 19,25 ----
+  let () =
+    Pkg.describe "ppx_deriving" ~builder:(`Other (ocamlbuild, "_build")) [
+      Pkg.lib "pkg/META";
+!     Pkg.bin ~auto:true "src/ppx_deriving_main" ~dst:"../lib/ppx_deriving/ppx_deriving.exe";
+      Pkg.lib ~exts:Exts.module_library "src/ppx_deriving";
+      Pkg.lib ~exts:Exts.library "src/ppx_deriving_main";
+      Pkg.lib ~exts:Exts.module_library "src/ppx_deriving_runtime";
+Only in ppx_deriving.4.1-fix/pkg: build.ml~
+diff -c -r ppx_deriving.4.1/pkg/topkg.ml ppx_deriving.4.1-fix/pkg/topkg.ml
+*** ppx_deriving.4.1/pkg/topkg.ml	Sun Sep 25 01:20:09 2016
+--- ppx_deriving.4.1-fix/pkg/topkg.ml	Wed Nov  9 17:34:55 2016
+***************
+*** 152,158 ****
+  module Exts : Exts = struct
+    let interface = [".mli"; ".cmi"; ".cmti"]
+    let interface_opt = ".cmx" :: interface
+!   let c_library = if Sys.win32 then [".lib"] else [".a"]
+    let c_dll_library = if Sys.win32 then [".dll"] else [".so"]
+    let library = [".cma"; ".cmxa"; ".cmxs"] @ c_library
+    let module_library = (interface_opt @ library)
+--- 152,159 ----
+  module Exts : Exts = struct
+    let interface = [".mli"; ".cmi"; ".cmti"]
+    let interface_opt = ".cmx" :: interface
+!   (* let c_library = if Sys.win32 then [".lib"] else [".a"] *)
+!   let c_library = [".a"] (* opamingw *)
+    let c_dll_library = if Sys.win32 then [".dll"] else [".so"]
+    let library = [".cma"; ".cmxa"; ".cmxs"] @ c_library
+    let module_library = (interface_opt @ library)
+Only in ppx_deriving.4.1-fix/pkg: topkg.ml~
+Only in ppx_deriving.4.1-fix: ppx_deriving.install
+Only in ppx_deriving.4.1-fix: ppx_deriving_main.native
