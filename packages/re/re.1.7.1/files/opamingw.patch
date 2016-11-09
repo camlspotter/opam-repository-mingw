@@ -1,0 +1,20 @@
+diff -c -r re.1.7.1/setup.ml re.1.7.1-fix/setup.ml
+*** re.1.7.1/setup.ml	Thu Oct 20 05:18:44 2016
+--- re.1.7.1-fix/setup.ml	Wed Nov  9 16:02:13 2016
+***************
+*** 6982,6988 ****
+       BaseSetup.configure = InternalConfigurePlugin.configure;
+       build =
+         OCamlbuildPlugin.build
+!          ["-cflags '-w +a-40-42-44-3-4-48 -warn-error +1..49'"];
+       test =
+         [
+            ("re_test_re",
+--- 6982,6988 ----
+       BaseSetup.configure = InternalConfigurePlugin.configure;
+       build =
+         OCamlbuildPlugin.build
+!          ["-cflags \"-w +a-40-42-44-3-4-48 -warn-error +1..49\""];
+       test =
+         [
+            ("re_test_re",
