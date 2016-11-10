@@ -6,7 +6,6 @@ build: [
   [make "installptrees"]
   [make]
 ]
-author: "Javalib development team"
 license: "LGPL-2.1 with OCaml linking exception"
 install: [
   [make "install"]
@@ -24,5 +23,5 @@ depends: [
   "camlp4" 
   "extlib-compat"
 ]
-
-
+authors: "Javalib development team"
+patches: "javalib-2.3.3.patch" {os = "win32"}
