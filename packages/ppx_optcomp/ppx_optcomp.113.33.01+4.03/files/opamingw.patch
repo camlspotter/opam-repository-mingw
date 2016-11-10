@@ -1,0 +1,20 @@
+diff -c -r ppx_optcomp.113.33.01+4.03/js-utils/gen_install.ml ppx_optcomp.113.33.01+4.03-fix/js-utils/gen_install.ml
+*** ppx_optcomp.113.33.01+4.03/js-utils/gen_install.ml	Sun Nov  6 07:44:37 2016
+--- ppx_optcomp.113.33.01+4.03-fix/js-utils/gen_install.ml	Thu Nov 10 16:20:14 2016
+***************
+*** 31,37 ****
+    |> List.map (fun line -> Scanf.sscanf line "%[^=]=%S" (fun k v -> (k, v)))
+  
+  let remove_cwd =
+!   let prefix = Sys.getcwd () ^ "/" in
+    let len_prefix = String.length prefix in
+    fun fn ->
+      let len = String.length fn in
+--- 31,37 ----
+    |> List.map (fun line -> Scanf.sscanf line "%[^=]=%S" (fun k v -> (k, v)))
+  
+  let remove_cwd =
+!   let prefix = Sys.getcwd () ^ Filename.dir_sep in
+    let len_prefix = String.length prefix in
+    fun fn ->
+      let len = String.length fn in
