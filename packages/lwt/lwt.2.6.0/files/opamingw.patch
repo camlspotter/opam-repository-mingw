@@ -1,0 +1,19 @@
+*** lwt.2.6.0/myocamlbuild.ml	Fri Oct 28 04:50:54 2016
+--- lwt.2.6.0-fix/myocamlbuild.ml	Thu Nov 10 17:56:03 2016
+***************
+*** 1083,1089 ****
+                 ["lwt_options"; "lwt"; "lwt_log"];
+  
+               flag ["ocaml"; "compile"; "ppx_lwt"] &
+!               S [A "-ppx"; A ("src/ppx/ppx_lwt_ex." ^ native_suffix)];
+  
+               (* Use an introduction page with categories *)
+               tag_file "lwt-api.docdir/index.html" ["apiref"];
+--- 1083,1089 ----
+                 ["lwt_options"; "lwt"; "lwt_log"];
+  
+               flag ["ocaml"; "compile"; "ppx_lwt"] &
+!               S [A "-ppx"; A ("src\\ppx\\ppx_lwt_ex." ^ native_suffix)];
+  
+               (* Use an introduction page with categories *)
+               tag_file "lwt-api.docdir/index.html" ["apiref"];
