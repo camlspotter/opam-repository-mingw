@@ -1,0 +1,14 @@
+xdiff -c -r menhir.20160825/src/_tags menhir.20160825-fix/src/_tags
+*** menhir.20160825/src/_tags	Thu Aug 25 20:32:38 2016
+--- menhir.20160825-fix/src/_tags	Fri Nov 11 10:59:15 2016
+***************
+*** 18,21 ****
+  # these build directories violate its hygiene rules.
+  <_build>: -traverse
+  <_stage*>: -traverse
+! 
+--- 18,21 ----
+  # these build directories violate its hygiene rules.
+  <_build>: -traverse
+  <_stage*>: -traverse
+! <_versioncheck>: -traverse
