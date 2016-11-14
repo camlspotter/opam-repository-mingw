@@ -1,0 +1,86 @@
+diff -c -r js_of_ocaml.2.8.3-orig/Makefile.conf js_of_ocaml.2.8.3/Makefile.conf
+*** js_of_ocaml.2.8.3-orig/Makefile.conf	Sat Nov  5 03:13:56 2016
+--- js_of_ocaml.2.8.3/Makefile.conf	Mon Nov 14 10:57:04 2016
+***************
+*** 20,29 ****
+  
+  ####
+  
+! EXEEXT :=
+  OBJEXT := .o
+  LIBEXT := .a
+! DLLEXT := .so
+  
+  ifeq ($(shell ocamlc -config | grep -q "architecture: i386"; echo $$?),0)
+  ARCH_32BIT=YES
+--- 20,29 ----
+  
+  ####
+  
+! EXEEXT := .exe
+  OBJEXT := .o
+  LIBEXT := .a
+! DLLEXT := .dll
+  
+  ifeq ($(shell ocamlc -config | grep -q "architecture: i386"; echo $$?),0)
+  ARCH_32BIT=YES
+diff -c -r js_of_ocaml.2.8.3-orig/Makefile.filelist js_of_ocaml.2.8.3/Makefile.filelist
+*** js_of_ocaml.2.8.3-orig/Makefile.filelist	Sat Nov  5 03:13:56 2016
+--- js_of_ocaml.2.8.3/Makefile.filelist	Mon Nov 14 10:51:09 2016
+***************
+*** 36,42 ****
+  endif
+  
+  ifeq "${WITH_PPX}" "YES"
+! OCAMLFIND_BIN += lib/ppx/${PPX}
+  IMPL += lib/ppx/ppx_js.cma
+  INTF += lib/ppx/*.cmi
+  IMPL += lib/ppx/ppx_js.cmx lib/ppx/ppx_js.cmxa
+--- 36,42 ----
+  endif
+  
+  ifeq "${WITH_PPX}" "YES"
+! OCAMLFIND_BIN += lib/ppx/${PPX}${EXEEXT}
+  IMPL += lib/ppx/ppx_js.cma
+  INTF += lib/ppx/*.cmi
+  IMPL += lib/ppx/ppx_js.cmx lib/ppx/ppx_js.cmxa
+diff -c -r js_of_ocaml.2.8.3-orig/lib/META js_of_ocaml.2.8.3/lib/META
+*** js_of_ocaml.2.8.3-orig/lib/META	Sat Nov  5 03:13:56 2016
+--- js_of_ocaml.2.8.3/lib/META	Mon Nov 14 10:51:09 2016
+***************
+*** 20,26 ****
+    version = "[distributed with js_of_ocaml]"
+    ppx = "./ppx_js"
+    requires = "js_of_ocaml"
+!   exists_if = "ppx_js"
+    package "internal" (
+      description = "Js_of_ocaml ppx mapper"
+      version = "[distributed with js_of_ocaml]"
+--- 20,26 ----
+    version = "[distributed with js_of_ocaml]"
+    ppx = "./ppx_js"
+    requires = "js_of_ocaml"
+!   exists_if = "ppx_js.exe"
+    package "internal" (
+      description = "Js_of_ocaml ppx mapper"
+      version = "[distributed with js_of_ocaml]"
+diff -c -r js_of_ocaml.2.8.3-orig/lib/Makefile js_of_ocaml.2.8.3/lib/Makefile
+*** js_of_ocaml.2.8.3-orig/lib/Makefile	Sat Nov  5 03:13:56 2016
+--- js_of_ocaml.2.8.3/lib/Makefile	Mon Nov 14 10:51:09 2016
+***************
+*** 50,56 ****
+  endif
+  
+  ifeq "${WITH_PPX}" "YES"
+! PPX_EX= ppx/$(PPX)
+  PPX_LIB= ppx/ppx_js.cma ppx/ppx_js.cmxa
+  ifeq "${WITH_PPX_DRIVER}" "YES"
+  PPX_LIB+= ppx_driver/ppx_js_driver.cma ppx_driver/ppx_js_driver.cmxa
+--- 50,56 ----
+  endif
+  
+  ifeq "${WITH_PPX}" "YES"
+! PPX_EX= ppx/$(PPX)$(EXEEXT)
+  PPX_LIB= ppx/ppx_js.cma ppx/ppx_js.cmxa
+  ifeq "${WITH_PPX_DRIVER}" "YES"
+  PPX_LIB+= ppx_driver/ppx_js_driver.cma ppx_driver/ppx_js_driver.cmxa
