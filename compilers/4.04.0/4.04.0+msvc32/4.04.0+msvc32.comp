@@ -1,7 +1,7 @@
 opam-version: "1"
 version: "4.04.0"
 src: "https://github.com/ocaml/ocaml/archive/4.04.0.tar.gz"
-patches:["https://gist.githubusercontent.com/fdopen/0cad8775aca5dd09958f843094272dd4/raw"]
+patches:["https://gist.githubusercontent.com/fdopen/858f355db416335e06c10d7ad7be68b2/raw"]
 build: [
   [ "mkdir" "-p" "%{lib}%/ocaml" ]
   [ "sh" "-exc" "echo \"* : g = 1\" > %{lib}%/ocaml/ocaml_compiler_internal_params" ]
