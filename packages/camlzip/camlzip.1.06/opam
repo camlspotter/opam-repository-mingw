@@ -25,6 +25,7 @@ depexts: [
 patches: [
   "camlzip-1.06.patch" {os = "win32"}
   "fix-install.patch" {os != "win32"}
+  "no-L.patch" {os = "darwin"}
   "build_with_trunk.patch" {os != "win32"}
 ]
 install: [make "install-findlib"]
