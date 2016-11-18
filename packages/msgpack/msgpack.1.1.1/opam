@@ -7,6 +7,7 @@ authors: "MIZUNO Hiroki <mzp.ppp@gmail.com>"
 homepage: "http://github.com/msgpack/msgpack-ocaml/"
 bug-reports: "https://github.com/msgpack/msgpack-ocaml/issues"
 patches: [
+  "patch-oasis-msgpack.1.1.1" {os = "win32"}
   "no-camlp4.patch"
 ]
 build: [

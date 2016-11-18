@@ -1,10 +1,10 @@
 opam-version: "1.2"
 maintainer: "mzp <mzp.ppp@gmail.com>"
-author: "mzp <mzp.ppp@gmail.com>"
 homepage: "http://github.com/msgpack/msgpack-ocaml/"
 dev-repo: "https://github.com/msgpack/msgpack-ocaml.git"
 bug-reports: "https://github.com/msgpack/msgpack-ocaml/issues"
 patches: [
+  "patch-oasis-msgpack.1.2.1" {os = "win32"}
   "no-camlp4.patch"
 ]
 build: [
@@ -24,3 +24,4 @@ depends: [
 
 depopts: ["meta_conv"]
 available: [ ocaml-version >= "4.01.0" ]
+authors: "mzp <mzp.ppp@gmail.com>"
