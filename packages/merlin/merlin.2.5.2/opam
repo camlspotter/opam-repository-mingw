@@ -13,7 +13,7 @@ depends: [
   "ocamlfind" {>= "1.5.2"}
   "yojson"
 ]
-available: [ocaml-version >= "4.02.1" & ocaml-version < "4.04"]
+available: [ocaml-version >= "4.02.1" & ocaml-version < "4.05"]
 
 post-messages: [
   "
@@ -43,7 +43,16 @@ Add opam emacs directory to your load-path by appending this to your .emacs:
     (setq merlin-command 'opam)))
 
 Take a look at https://github.com/the-lambda-church/merlin for more information
+
+Quick setup with opam-user-setup
+--------------------------------
+
+Opam-user-setup support Merlin.
+
+  $ opam user-setup install
+
+should take care of basic setup.
+See https://github.com/OCamlPro/opam-user-setup
   "
-    {success}
+    {success & !user-setup:installed}
 ]
-patches: "merlin-2.5.1.patch" {os = "win32"}
