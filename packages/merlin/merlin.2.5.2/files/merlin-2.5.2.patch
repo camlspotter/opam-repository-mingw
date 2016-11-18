@@ -1,0 +1,14 @@
+--- ./src/platform/fs_case.c
++++ ./src/platform/fs_case.c
+@@ -1,10 +1,9 @@
+ #include <caml/mlvalues.h>
+ #include <caml/memory.h>
+ #include <caml/alloc.h>
+-#include <unistd.h>
+ 
+ #ifdef __APPLE__
+-
++#include <unistd.h>
+ #include <fcntl.h>
+ #include <sys/param.h>
+ 
