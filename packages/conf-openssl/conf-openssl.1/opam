@@ -16,5 +16,6 @@ depexts: [
   [["osx" "homebrew"] ["openssl"]]
   [["alpine"] ["openssl-dev"]]
   [["nixpkgs"] ["openssl"]]
-  [["win32" "cygwinports"] ["openssl" "pkg-config"]]
+  [["archlinux"] ["openssl"]]
+  [["win32" "cygwinports"] ["openssl"]]
 ]
