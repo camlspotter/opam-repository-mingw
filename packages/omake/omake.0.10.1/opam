@@ -15,7 +15,7 @@ bug-reports: "https://github.com/ocaml-omake/issues"
 build: [
   ["ocamlfind" "ocamlopt" "-linkpkg" "-package" "str,cygwinpath" "ohelper.ml" "-o" "omake-mmtranslate.exe"] { os = "win32" }
   ["install" "-m" "0755" "omake-mmtranslate.exe" "%{bin}%/omake-mmtranslate.exe"] { os = "win32" }
-  ["%{prefix}%/bin/ocaml" "configure.ml"]
+  ["%{prefix}%/bin/ocaml" "configure.ml" "-prefix" "%{prefix}%"]
   ["%{prefix}%/bin/ocaml" "build.ml"]
 ]
 install: [
