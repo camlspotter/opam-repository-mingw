@@ -60,3 +60,4 @@ conflicts: [
   "camlzip" {< "1.04"}
   "pgocaml" {< "2.2"}
 ]
+available: os != "win32"
