@@ -12,6 +12,7 @@ build: [
 depexts: [
   [["debian"] ["libmpfr-dev"]]
   [["ubuntu"] ["libmpfr-dev"]]
+  [["fedora"] ["mpfr-devel"]]
   [["osx" "homebrew"] ["mpfr"]]
   [["freebsd"] ["mpfr"]]
   [["openbsd"] ["mpfr"]]
