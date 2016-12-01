@@ -1,0 +1,29 @@
+--- ./omake/OCaml.om
++++ ./omake/OCaml.om
+@@ -106,7 +106,7 @@
+ #   of build speed (\verb+true+ or \verb+false+).
+ # \end{doc}
+ #
+-public.USE_OCAMLFIND = false
++public.USE_OCAMLFIND = true
+ 
+ .STATIC: :value: $(PATH)
+     OCAMLFIND_EXISTS = $(CheckProg ocamlfind)
+--- ./OMakefile
++++ ./OMakefile
+@@ -1,8 +1,14 @@
+ Modules(path) =
+   value $(basename $(removesuffix $(find $(path) -name *.ml)))
+ 
++NULL_DEVICE=
++	if $(equal $(OS),Win32)
++		value $'nul'
++	else
++		value $'/dev/null'
++
+ FindlibExists(packages) =
+-  value $(equal 0,$(shell-code ocamlfind query $(packages) > /dev/null))
++  value $(equal 0,$(shell-code ocamlfind query $(packages) > $(NULL_DEVICE)))
+ 
+ GenMeta() =
+   meta = $(file META)
