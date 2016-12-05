@@ -8,6 +8,4 @@ license: "Apache-2.0"
 build: [
   ["ocaml" "build.ml"]
 ]
-depends: [
-]
-available: [ ocaml-version >= "4.03.0" ]
+available: os != "win32" & (ocaml-version >= "4.03.0")
