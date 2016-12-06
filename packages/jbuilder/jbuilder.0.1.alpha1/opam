@@ -8,4 +8,5 @@ license: "Apache-2.0"
 build: [
   ["ocaml" "build.ml"]
 ]
-available: os != "win32" & (ocaml-version >= "4.03.0")
+available: ocaml-version >= "4.03.0"
+patches: "jbuilder-0.1.alpha1.patch" {os = "win32"}

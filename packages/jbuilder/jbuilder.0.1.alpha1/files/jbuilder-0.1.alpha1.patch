@@ -1,0 +1,68 @@
+--- ./build.ml
++++ ./build.ml
+@@ -141,6 +141,7 @@
+     print_endline cmd;
+     Unix.open_process_in cmd
+   in
++  set_binary_mode_in ic false;
+   let rec loop acc =
+     match input_line ic with
+     | exception End_of_file ->
+@@ -197,7 +198,7 @@
+   !newlines
+ 
+ let read_file fn =
+-  let ic = open_in fn in
++  let ic = open_in_bin fn in
+   let data = really_input_string ic (in_channel_length ic) in
+   close_in ic;
+   data
+@@ -205,7 +206,7 @@
+ let generated_file = "jbuilder.ml"
+ 
+ let generate_file_with_all_the_sources () =
+-  let oc = open_out generated_file in
++  let oc = open_out_bin generated_file in
+   let pos_in_generated_file = ref 1 in
+   let pr fmt =
+     ksprintf (fun s ->
+@@ -259,7 +260,8 @@
+     | Native -> "cmxa"
+     | Byte   -> "cma"
+   in
+-  exit (exec "%s -w -40 -o jbuilder unix.%s %s" compiler lib_ext generated_file)
++  let exe = if Sys.win32 then ".exe" else "" in
++  exit (exec "%s -w -40 -o jbuilder%s unix.%s %s" compiler exe lib_ext generated_file)
+ 
+ (* Alternative:
+ 
+--- ./src/context.ml
++++ ./src/context.ml
+@@ -148,7 +148,7 @@
+     ; path
+ 
+     ; ocaml_bin  = dir
+-    ; ocaml      = Path.relative dir "ocaml"
++    ; ocaml      = Path.relative dir (if Sys.win32 then "ocaml.exe" else "ocaml")
+     ; ocamlc
+     ; ocamlopt   = best_prog "ocamlopt"
+     ; ocamllex   = get_prog  "ocamllex"
+--- ./src/import.ml
++++ ./src/import.ml
+@@ -265,6 +265,16 @@
+         };
+       f lb)
+ 
++let input_line =
++  if not Sys.win32 then input_line else
++  fun ic ->
++    let s = input_line ic in
++    let len_m1 = String.length s - 1 in
++    if len_m1 < 0 || String.get s len_m1 <> '\r' then
++      s
++    else
++      String.sub s 0 len_m1
++
+ let input_lines =
+   let rec loop ic acc =
+     match input_line ic with
