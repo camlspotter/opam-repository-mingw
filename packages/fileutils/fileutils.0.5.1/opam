@@ -18,3 +18,4 @@ depends: [
   "ounit" {>= "2.0.0"}
   "ocamlbuild" {build}
 ]
+available: os != "win32"
