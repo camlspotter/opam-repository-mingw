@@ -19,4 +19,4 @@ depends: [
   "alcotest" {test}
   "topkg" {build}
 ]
-available: [ocaml-version >= "4.01.0"]
+available: os != "win32" & (ocaml-version >= "4.01.0")
