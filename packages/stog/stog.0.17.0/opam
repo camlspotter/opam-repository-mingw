@@ -26,4 +26,4 @@ depends: [
   "uutf" {>= "1.0.0"}
 ]
 depopts: ["js_of_ocaml" "xmldiff" "websocket" "ojs-base" "cryptokit"]
-available: [ocaml-version >= "4.03.0"]
+available: os != "win32" & (ocaml-version >= "4.03.0")
