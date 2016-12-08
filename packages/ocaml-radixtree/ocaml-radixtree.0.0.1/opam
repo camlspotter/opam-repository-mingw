@@ -15,3 +15,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 install: ["ocaml" "setup.ml" "-install"]
+patches: "ocaml-radixtree-0.0.1.patch" {os = "win32"}

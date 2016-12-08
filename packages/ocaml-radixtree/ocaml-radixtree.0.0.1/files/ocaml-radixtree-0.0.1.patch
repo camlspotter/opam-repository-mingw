@@ -1,0 +1,50 @@
+--- ./_oasis
++++ ./_oasis
+@@ -1,4 +1,4 @@
+-OASISFormat: 0.2
++OASISFormat: 0.3
+ Name:        ocaml-radixtree
+ Version:     0.0.1
+ Synopsis:    Radix tree for string
+@@ -10,14 +10,14 @@
+   Path:       src
+   BuildTools: ocamlbuild
+   Modules:    RadixTree
+-  
++
+ Executable test
+   Path:       test
+   BuildTools: ocamlbuild
+   MainIs:     test.ml
+   BuildDepends: oUnit (>= 1.1.0), radixtree
+   Install:      false
+-  
++
+ Executable bench
+   Path:       test
+   BuildTools: ocamlbuild
+@@ -25,7 +25,7 @@
+   BuildDepends: benchmark, radixtree
+   Install:      false
+   CompiledObject: Best
+-  
++
+ Document "api-radixtree"
+   Title:      API reference for RadixTree
+   InstallDir: $docdir
+@@ -34,13 +34,12 @@
+   XOCamlbuildPath: src/
+   XOCamlbuildLibraries: radixtree
+   BuildTools: ocamlbuild, ocamldoc
+-  
++
+ Test main
+   Command: $test
+   TestTools: test
+-  
++
+ Test bench
+   Command: $bench
+   TestTools: bench
+ #  Run: false
+-  
