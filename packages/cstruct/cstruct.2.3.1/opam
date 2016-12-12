@@ -57,3 +57,7 @@ depexts: [
   [ ["debian"] ["time"] ]
   [ ["ubuntu"] ["time"] ]
 ]
+patches: [
+  "patch-oasis-cstruct.2.3.1" {os = "win32"}
+  "ocaml-cstruct-2.3.1.patch" {os = "win32"}
+]
