@@ -8,8 +8,7 @@ doc: "https://vbmithr.github.io/ocaml-ipv6-multicast/doc"
 license: "ISC"
 dev-repo: "https://github.com/vbmithr/ocaml-ipv6-multicast.git"
 bug-reports: "https://github.com/vbmithr/ocaml-ipv6-multicast/issues"
-tags: []
-available: [ ocaml-version >= "4.02.0"]
+available: os != "win32" & (ocaml-version >= "4.02.0")
 depends: [
   "ocamlfind" {build}
   "ocamlbuild" {build}
@@ -18,7 +17,6 @@ depends: [
   "lwt"
   "ipaddr"
 ]
-depopts: []
 build:
 [[ "ocaml" "pkg/pkg.ml" "build"
            "--pinned" "%{pinned}%" ]]
