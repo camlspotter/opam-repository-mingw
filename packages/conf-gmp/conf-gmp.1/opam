@@ -18,5 +18,6 @@ depexts: [
   [["openbsd"] ["gmp"]]
   [["freebsd"] ["gmp"]]
   [["alpine"] ["gmp-dev"]]
+  [["opensuse"] ["gmp-devel"]]
   [["win32" "cygwinports"] ["gmp"]]
 ]
