@@ -14,4 +14,4 @@ depends: [
   "stog" {= "0.17.0"}
   "menhir" {>= "20120123"}
 ]
-available: [ocaml-version >= "4.03.0"]
+available: os != "win32" & (ocaml-version >= "4.03.0")
