@@ -1,7 +1,9 @@
 opam-version: "1.2"
-maintainer: "contact@ocamlpro.com"
+maintainer: "gregoire@ocamlpro.com"
 authors: ["Yoriyuki Yamagata"]
 homepage: "https://github.com/yoriyuki/Camomile/wiki"
+bug-reports: "https://github.com/yoriyuki/Camomile/issues"
+dev-repo: "https://github.com/yoriyuki/Camomile.git"
 license: "LGPL-2+ with OCaml linking exception"
 patches: [
   "cmxs.patch" { os != "win32" }
@@ -19,5 +21,6 @@ install: [
 ]
 remove: [["ocamlfind" "remove" "camomile"]]
 depends: [
- "ocamlfind" {build}
+  "ocamlfind" {build}
+  "cppo" {build}
 ]
