@@ -29,3 +29,4 @@ post-messages:
   To use it, still call `qtest` on your .ml/.mli files to extract tests,
   then compile the resulting suite using oUnit and qcheck.
   "
+patches: "iTeML-2.5.patch" {os = "win32"}
