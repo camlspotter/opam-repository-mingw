@@ -8,6 +8,7 @@ dev-repo: "https://github.com/xguerin/ppx_hardcaml.git"
 bug-reports: "https://github.com/xguerin/ppx_hardcaml/issues"
 license: "ISC"
 build: [
+  ["oasis" "setup"]
   ["./configure" "--prefix" prefix]
   [make]
 ]
