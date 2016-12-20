@@ -24,3 +24,4 @@ depends: [
 ]
 conflicts: "qcheck"
 available: [ocaml-version >= "4.00.0"]
+patches: "iTeML-2.4.patch" {os = "win32"}
