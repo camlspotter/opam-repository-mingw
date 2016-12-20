@@ -1,0 +1,56 @@
+--- ./src/Makefile
++++ ./src/Makefile
+@@ -1,5 +1,14 @@
+-EXE:=jingoo
+-COMPILER:=compiler
++OS_TYPE:=$(shell ocamlfind ocamlc -config | awk '/^os_type:/ {print $$2}')
++EXT_OBJ:=$(shell ocamlfind ocamlc -config | awk '/^ext_obj:/ {print $$2}')
++EXT_LIB:=$(shell ocamlfind ocamlc -config | awk '/^ext_lib:/ {print $$2}')
++ifeq ($(OS_TYPE),$(filter $(OS_TYPE),Win32 Cygwin))
++EXT_EXE=.exe
++else
++EXT_EXE=
++endif
++
++EXE:=jingoo$(EXT_EXE)
++COMPILER:=compiler$(EXT_EXE)
+ LEX:=ocamllex
+ YAC:=ocamlyacc
+ #YAC:=menhir
+@@ -24,7 +33,7 @@
+ 
+ byte: jg_parser.ml jg_lexer.ml jingoo.cma jingoo_mt.cmo
+ 
+-opt: jingoo.cmxa jingoo_mt.cmx compiler
++opt: jingoo.cmxa jingoo_mt.cmx compiler$(EXT_EXE)
+ 
+ jg_parser.ml: $(MLY)
+ 	$(YAC) $(MLY)
+@@ -46,11 +55,11 @@
+ jingoo_mt.cmx: jingoo_mt.ml
+ 	$(OCAMLOPT) -thread -c $<
+ 
+-compiler: jingoo.cmxa jg_cmdline.ml
++compiler$(EXT_EXE): jingoo.cmxa jg_cmdline.ml
+ 	$(OCAMLOPT) -o $@ -linkpkg -package $(PKG) jingoo.cmxa jg_cmdline.ml
+ 
+ install: all
+-	ocamlfind install jingoo *.a *.cma *.cmi *.cmx jingoo_mt.cmo jingoo_mt.o jg_types.mli jg_template.mli jg_stub.mli META -optional *.cmxa jingoo_mt.cmx
++	ocamlfind install jingoo *$(EXT_LIB) *.cma *.cmi *.cmx jingoo_mt.cmo jingoo_mt$(EXT_OBJ) jg_types.mli jg_template.mli jg_stub.mli META -optional *.cmxa jingoo_mt.cmx
+ 
+ uninstall:
+ 	ocamlfind remove jingoo
+@@ -58,10 +67,10 @@
+ reinstall: uninstall install
+ 
+ clean:
+-	rm -f *.cmi *.cmo *.cmx *.cma *.a *.cmxa *.o *.annot *.byte
++	rm -f *.cmi *.cmo *.cmx *.cma *$(EXT_LIB) *.cmxa *$(EXT_OBJ) *.annot *.byte
+ 	rm -f jg_lexer.ml jg_parser.ml jg_parser.mli
+-	rm -f $(COMPILER)
++	rm -f $(COMPILER$(EXT_EXE))
+ 
+ rebuild: clean all
+ 
+-.PHONY: rebuild clean reinstall uninstall install compiler
++.PHONY: rebuild clean reinstall uninstall install compiler$(EXT_EXE)

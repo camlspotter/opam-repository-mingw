@@ -12,3 +12,4 @@ build: [
 install: [make "install"]
 remove: ["ocamlfind" "remove" "jingoo"]
 depends: ["ocamlfind" "pcre" "uutf" {<= "0.9.4"} "ounit"]
+patches: "jingoo-1.2.14.patch" {os = "win32"}
