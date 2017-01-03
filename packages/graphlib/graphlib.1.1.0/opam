@@ -31,4 +31,4 @@ depends: [
     "regular"
 ]
 
-available: [ocaml-version >= "4.02.3"]
+available: os != "win32" & (ocaml-version >= "4.02.3")
