@@ -20,3 +20,4 @@ remove: [["ocamlfind" "remove" "bap-plugin-objdump"]
 	 ["bapbundle" "remove" "objdump.plugin"]
 ]
 depends: ["bap-std" "re" "cmdliner" "conf-binutils"]
+available: os != "win32"
