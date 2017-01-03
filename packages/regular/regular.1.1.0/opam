@@ -29,4 +29,5 @@ depends: [
     "ppx_jane"          {>= "113.24.01"}
 ]
 
-available: [ocaml-version >= "4.02.3" & ocaml-version < "4.04"]
+available:
+  os != "win32" & ocaml-version >= "4.02.3" & (ocaml-version < "4.04")
