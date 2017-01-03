@@ -27,3 +27,4 @@ depends: [
     "bap-std"
     "bap-signatures"
 ]
+available: os != "win32"
