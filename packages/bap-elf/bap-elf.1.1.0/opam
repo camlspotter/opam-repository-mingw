@@ -26,3 +26,4 @@ depends: [
     "camlp4"
     "bitstring"
 ]
+available: os != "win32"
