@@ -1,6 +1,6 @@
 opam-version: "1.2"
 name: "portia"
-version: "0.1"
+version: "1.0"
 maintainer: "Cedric Cellier <rixed@happyleptic.org>"
 authors: "Cedric Cellier <rixed@happyleptic.org>"
 homepage: "http://pim.happyleptic.org/~rixed/portia.html"
@@ -12,8 +12,8 @@ install: [make "install"]
 remove: ["ocamlfind" "remove" "portia"]
 depends: ["ocamlfind" "batteries"]
 depexts: [
-  [["debian"] ["funnelweb" "asciidoc"]]
-  [["ubuntu"] ["funnelweb" "asciidoc"]]
+  [["debian"] ["asciidoc"]]
+  [["ubuntu"] ["asciidoc"]]
 ]
 post-messages: [
   "This package requires asciidoc to build the doc." {failure}
