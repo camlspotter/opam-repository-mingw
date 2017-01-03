@@ -1,6 +1,4 @@
 opam-version: "1.2"
-name: "coqide"
-version: "8.6"
 maintainer: "Maxime Dénès <mail@maximedenes.fr>"
 authors: "The Coq development team, INRIA, CNRS, University Paris Sud, University Paris 7, Ecole Polytechnique."
 homepage: "https://coq.inria.fr/"
@@ -21,6 +19,10 @@ build: [
     "-usecamlp5"
     "-camlp5dir"
     "%{lib}%/camlp5"
+    "-bindir"
+    bin
+    "-libdir"
+    "%{lib}%/coq"
   ]
   [make "-j%{jobs}%" "coqide-files"]
   [make "-j%{jobs}%" "coqide-binaries"]
@@ -40,3 +42,4 @@ install: [
   "install-ide-info"
   "install-ide-devfiles"
 ]
+patches: "coq-8.6.patch" {os = "win32"}
