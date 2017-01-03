@@ -30,3 +30,4 @@ depends: [
     "bap-traces"
     "cmdliner"
 ]
+available: os != "win32"
