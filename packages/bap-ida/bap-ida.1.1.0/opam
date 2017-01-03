@@ -32,3 +32,4 @@ depends: [
          "re"
          "bap-ida-plugin"
 ]
+available: os != "win32"
