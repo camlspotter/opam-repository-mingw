@@ -18,3 +18,4 @@ remove: [
 
 ]
 depends: ["bap" "cmdliner"]
+available: os != "win32"
