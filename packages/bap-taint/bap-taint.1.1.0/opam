@@ -15,3 +15,4 @@ install: [[make "install"]]
 remove: [["ocamlfind" "remove" "bap-plugin-taint"]
          ["bapbundle" "remove" "taint.plugin"]]
 depends: ["bap-std" "cmdliner"]
+available: os != "win32"
