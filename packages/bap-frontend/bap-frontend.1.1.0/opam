@@ -28,3 +28,4 @@ depends: [
     "bap-std"
     "cmdliner"
 ]
+available: os != "win32"
