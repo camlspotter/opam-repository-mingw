@@ -25,3 +25,4 @@ depends: [
     "bap-demangle"
     "text-tags"
 ]
+available: os != "win32"
