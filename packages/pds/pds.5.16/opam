@@ -31,5 +31,4 @@ authors: [
 homepage: "https://bitbucket.org/mimirops/pds"
 bug-reports: "https://bitbucket.org/mimirops/pds/issues"
 dev-repo: "git@bitbucket.org:mimirops/pds.git"
-available: [ocaml-version >= "4.02"]
-
+available: os != "win32" & (ocaml-version >= "4.02")
