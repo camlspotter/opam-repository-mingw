@@ -1,9 +1,7 @@
 opam-version: "1.2"
-available: [ ocaml-version >= "4.03" ]
-
+available: os != "win32" & (ocaml-version >= "4.03")
 name:         "ocsigen-i18n"
 version:      "1.0.0"
-author:       "Julien Sagot julien.sagot@besport.com"
 maintainer:   "Julien Sagot julien.sagot@besport.com"
 
 homepage: "https://github.com/besport/ocsigen-i18n"
@@ -19,3 +17,4 @@ remove:  [ ["rm" "-f" "%{bin}%/ocsigen-i18n-generator"]
 depends: [
   "ocamlfind" { build }
 ]
+authors: "Julien Sagot julien.sagot@besport.com"
