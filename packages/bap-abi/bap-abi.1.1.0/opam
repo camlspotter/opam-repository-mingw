@@ -17,3 +17,4 @@ remove: [["ocamlfind" "remove" "bap-plugin-abi"]
          ["bapbundle" "remove" "abi.plugin"]
          ]
 depends: ["bap-std" "cmdliner"]
+available: os != "win32"
