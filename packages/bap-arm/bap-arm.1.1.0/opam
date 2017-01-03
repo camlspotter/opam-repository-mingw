@@ -27,3 +27,4 @@ depends: [
     "bap-abi"
     "bap-c"
 ]
+available: os != "win32"
