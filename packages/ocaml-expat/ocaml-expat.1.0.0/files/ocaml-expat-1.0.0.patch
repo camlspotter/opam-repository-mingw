@@ -1,0 +1,28 @@
+--- ./Makefile
++++ ./Makefile
+@@ -28,6 +28,7 @@
+ OCAMLDOC=$(OCAMLFIND) ocamldoc $(OCAMLPKGS)
+ OCAMLDIR=$(shell $(OCAMLFIND) query stdlib)
+ include $(OCAMLDIR)/Makefile.config
++OCC:= $(shell $(OCAMLFIND) ocamlc -config | awk '/^bytecomp_c_compiler/ {print $$2}')
+ 
+ .PHONY: all
+ all: $(ARCHIVE)
+@@ -35,7 +36,7 @@
+ allopt:  $(XARCHIVE)
+ 
+ depend: *.c *.ml *.mli
+-	gcc -I $(OCAMLDIR) -MM *.c > depend
++	$(OCC) -I $(OCAMLDIR) -MM *.c > depend
+ 	$(OCAMLDEP) *.mli *.ml >> depend
+ 
+ ## Library creation
+@@ -98,7 +99,7 @@
+ 	$(OCAMLC) -c $(COMPLAGS) $<
+ .ml.cmx:
+ 	$(OCAMLOPT) -c $(COMPFLAGS) $<
+-.c.o:
++.c$(EXT_OBJ):
+ 	$(OCAMLC) -c -ccopt "$(CFLAGS)" $<
+ 
+ include depend

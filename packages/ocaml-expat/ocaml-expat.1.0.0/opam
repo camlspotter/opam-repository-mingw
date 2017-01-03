@@ -9,11 +9,10 @@ build: [
   [make "allopt"]
 ]
 remove: [["ocamlfind" "remove" "expat"]]
-depends: ["ocamlfind" {build}]
-depexts: [
- [["debian"] ["libexpat1-dev"]]
- [["ubuntu"] ["libexpat1-dev"]]
- [["osx" "homebrew"] ["expat"]]
+depends: [
+ "ocamlfind" {build}
+ "conf-expat"
 ]
 install: [make "install"]
 available: [ocaml-version >= "4.02.0"]
+patches: "ocaml-expat-1.0.0.patch" {os = "win32"}
