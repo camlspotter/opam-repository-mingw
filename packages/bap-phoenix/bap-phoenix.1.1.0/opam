@@ -32,3 +32,4 @@ depends: [
     "ocamlgraph"
     "ezjsonm"
 ]
+available: os != "win32"
