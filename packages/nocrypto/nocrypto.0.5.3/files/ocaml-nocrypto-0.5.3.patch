@@ -1,0 +1,12 @@
+--- ./postconf
++++ ./postconf
+@@ -15,7 +15,8 @@
+ #
+ test_platform () {
+   CPUDETECT=$(mktemp -t nocrypto.XXXXXX)
+-  (cc src/native/cpudetect_static.c -o ${CPUDETECT} > /dev/null 2>&1 && ${CPUDETECT})
++  MCC=$(ocamlfind ocamlc -config | awk '/^bytecomp_c_compiler/ {for(i=2;i<=NF;i++) printf "%s " ,$i}')
++  ($MCC src/native/cpudetect_static.c -o ${CPUDETECT} > /dev/null 2>&1 && ${CPUDETECT})
+   ok=$?
+   rm -f ${CPUDETECT}
+   return $ok
