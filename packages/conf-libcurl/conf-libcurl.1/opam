@@ -15,4 +15,7 @@ depexts: [
   [["nixpkgs"] ["curl"]]
   [["archlinux"] ["curl"]]
   [["win32" "cygwinports"] ["curl"]]
+  [["alpine"] ["curl-dev"]]
+  [["opensuse"] ["libcurl-devel"]]
+  [["fedora"] ["libcurl-devel"]]
 ]
