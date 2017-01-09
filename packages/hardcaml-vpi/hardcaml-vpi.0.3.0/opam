@@ -17,4 +17,4 @@ depexts: [
   [["ubuntu"] ["iverilog"]]
   [["osx" "homebrew"] ["icarus-verilog"]]
 ]
-available: [ os != "darwin" & ocaml-version >= "4.02.0" ]
+available: os != "win32" & os != "darwin" & (ocaml-version >= "4.02.0")
