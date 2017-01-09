@@ -8,7 +8,8 @@ dev-repo: "https://github.com/mmottl/sqlite3-ocaml.git"
 bug-reports: "https://github.com/mmottl/sqlite3-ocaml/issues"
 tags: [ "clib:sqlite3" "clib:pthread"  ]
 build: [
-  ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
+  ["ocaml" "setup.ml" "-configure" "--prefix" prefix "--disable-loadable-extensions"] {depext-cygwinports:installed}
+  ["ocaml" "setup.ml" "-configure" "--prefix" prefix] {!depext-cygwinports:installed}
   ["ocaml" "setup.ml" "-build"] { os != "darwin" }
   ["env" "SQLITE3_OCAML_BREWCHECK=1"
    "ocaml" "setup.ml" "-build"] { os = "darwin" }
@@ -42,4 +43,5 @@ depexts: [
   [["opensuse"] ["sqlite3-devel"]]
   [["osx" "homebrew"] ["sqlite3"]]
   [["osx" "macports"] ["sqlite3"]]
+  [["win32" "cygwinports"] ["sqlite3"]]
 ]
