@@ -7,7 +7,10 @@ license: "MIT"
 dev-repo: "https://github.com/vogler/ppx_distr_guards.git"
 substs: "META"
 build: [make]
-install: ["ocamlfind" "install" name "META" "ppx_distr_guards.native"]
+install: [
+ ["ocamlfind" "install" name "META" "ppx_distr_guards.native"] { os != "win32" }
+ ["sh" "-ecx" "ocamlfind.exe install %{name}% META $(cygpath -m $(readlink -f ppx_distr_guards.native))" ] { os = "win32" }
+]
 remove: ["ocamlfind" "remove" name]
 depends: [
   "ocamlfind" {build}
