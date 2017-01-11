@@ -23,3 +23,4 @@ depends: [
   "ppx_deriving" {>= "4.0" & < "5.0"}
 ]
 available: ocaml-version >= "4.03"
+patches: "patch-topkg-ppx_deriving_hardcaml.1.1.0" {os = "win32"}
