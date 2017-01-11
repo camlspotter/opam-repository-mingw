@@ -1,0 +1,53 @@
+--- ./Makefile
++++ ./Makefile
+@@ -41,6 +41,16 @@
+ 
+ .PHONY: install uninstall
+ 
++EXT_DLL:=$(shell ocamlfind ocamlc -config | awk '/^ext_dll:/ {print $$2}')
++EXT_OBJ:=$(shell ocamlfind ocamlc -config | awk '/^ext_obj:/ {print $$2}')
++EXT_LIB:=$(shell ocamlfind ocamlc -config | awk '/^ext_lib:/ {print $$2}')
++OS_TYPE:=$(shell ocamlfind ocamlc -config | awk '/^os_type:/ {print $$2}')
++ifeq ($(OS_TYPE),$(filter $(OS_TYPE),Win32 Cygwin))
++EXT_EXE=.exe
++else
++EXT_EXE=
++endif
++
+ INSTALL=META $(wildcard src/*.cmo) \
+              $(wildcard src/*.cma) \
+              $(wildcard src/*.cmi) \
+@@ -50,10 +60,10 @@
+              $(wildcard src/*.cmx) \
+              $(wildcard src/*.cmxa) \
+              $(wildcard src/*.cmxs) \
+-             $(wildcard src/*.a) \
+-             $(wildcard src/*.o) \
+-             $(wildcard src/*.so) \
+-             $(wildcard ppx/ppx_landmarks) \
++             $(wildcard src/*$(EXT_LIB)) \
++             $(wildcard src/*$(EXT_OBJ)) \
++             $(wildcard src/*$(EXT_DLL)) \
++             $(wildcard ppx/ppx_landmarks$(EXT_EXE)) \
+              $(wildcard tools/landmarks_viewer/landmarks_viewer.html) \
+              $(wildcard tools/landmarks_viewer/landmarks_viewer.js)
+ 
+--- ./ppx/Makefile
++++ ./ppx/Makefile
+@@ -1,7 +1,15 @@
+ OCAMLFLAGS=-w +A-4-30-42-41-48-40 -safe-string -strict-sequence -bin-annot
+ 
++OS_TYPE:=$(shell ocamlfind ocamlc -config | awk '/^os_type:/ {print $$2}')
++ifeq ($(OS_TYPE),$(filter $(OS_TYPE),Win32 Cygwin))
++EXT_EXE=.exe
++else
++EXT_EXE=
++endif
++
++
+ ppx_landmarks: ppx_landmarks.cmx
+-	ocamlopt $(OCAMLFLAGS) -I +compiler-libs ocamlcommon.cmxa -o $@ $^ 
++	ocamlopt $(OCAMLFLAGS) -I +compiler-libs ocamlcommon.cmxa -o $@$(EXT_EXE) $^ 
+ 
+ ppx_landmarks.cmx: ppx_landmarks.ml
+ 	ocamlopt $(OCAMLFLAGS) -I +compiler-libs -c $<
