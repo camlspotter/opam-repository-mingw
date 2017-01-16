@@ -17,7 +17,7 @@ remove: [
 depends: [
   "bolt"
   "core"
-  "lwt"
+  "lwt" {< "3.0.0"}
   "oasis"
   "ocamlnet"
   "re"
