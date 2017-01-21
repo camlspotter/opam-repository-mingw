@@ -21,6 +21,4 @@ depends: [
   "omake" { build }
   "ppx_test" { >= "1.0.1" }
 ]
-available: [
-  ocaml-version >= "4.02.1"
-]
+available: os != "win32" & (ocaml-version >= "4.02.1")
