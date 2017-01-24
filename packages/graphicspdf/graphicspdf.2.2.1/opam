@@ -11,3 +11,4 @@ homepage: "http://github.com/johnwhitington/graphicspdf"
 bug-reports: "http://github.com/johnwhitington/graphicspdf/issues"
 dev-repo: "git://github.com/johnwhitington/graphicspdf"
 install: [[make "install"]]
+patches: "patch-ocamlmakefile-graphicspdf.2.2.1" {os = "win32"}
