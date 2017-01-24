@@ -15,7 +15,7 @@ install: [
 remove: [ "ocamlfind" "remove" "spotlib" ]
 depends: [
   "ocamlfind" { build }
-  "omake" { build }
+  "omake" { build & < "0.10.1" }
   "pa_ounit" { >= "109.53.02" }
 ]
 available: [
