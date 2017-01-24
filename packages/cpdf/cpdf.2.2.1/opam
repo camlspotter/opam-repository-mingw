@@ -12,3 +12,4 @@ authors: ["John Whitington"]
 bug-reports: "http://github.com/johnwhitington/cpdf-source/issues"
 dev-repo: "git://github.com/johnwhitington/cpdf-source"
 install: [make "install"]
+patches: "patch-ocamlmakefile-cpdf.2.2.1" {os = "win32"}
