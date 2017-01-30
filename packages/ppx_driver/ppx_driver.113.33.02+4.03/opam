@@ -17,3 +17,8 @@ depends: [
   "ppx_optcomp" {>= "113.33.00+4.03" & < "113.34.00+4.03"}
 ]
 available: [ ocaml-version >= "4.03.0" ]
+patches: [
+  "patch_gen_install.ml" {os = "win32"}
+  "ppx_driver-113.33.02+4.03.patch" {os = "win32"}
+  "patch-oasis-ppx_driver.113.33.02+4.03" {os = "win32"}
+]
