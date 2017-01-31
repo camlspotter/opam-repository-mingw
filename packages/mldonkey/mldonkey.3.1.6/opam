@@ -13,4 +13,4 @@ depends: [
   "camlp4"
   "conf-zlib"
 ]
-available: [ocaml-version >= "3.10.1"]
+available: os != "win32" & (ocaml-version >= "3.10.1")

@@ -11,5 +11,6 @@ depexts: [
   [ ["ubuntu"] ["zlib1g-dev"] ]
   [ ["debian"] ["zlib1g-dev"] ]
 ]
-available: ocaml-version >= "3.10.1" & ocaml-version < "4.02.0"
+available:
+  os != "win32" & ocaml-version >= "3.10.1" & (ocaml-version < "4.02.0")
 install: [make "install"]
