@@ -19,7 +19,7 @@ remove: [
 depends: [
   "ocamlfind" { build }
   "spotlib" { >= "2.0.0" & < "2.2.0" }
-  "omake" { build & < "0.10.1" }
+  "omake" { build & > "0.10.1" }
 ]
 available: [
   ocaml-version >= "4.00.0"

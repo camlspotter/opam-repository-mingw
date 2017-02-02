@@ -18,6 +18,6 @@ remove: [
 ]
 depends: [
   "ocamlfind" { build }
-  "omake" { build & < "0.10.1" }
+  "omake" { build & > "0.10.1" }
 ]
 available: os != "win32" & (ocaml-version = "3.12.1")

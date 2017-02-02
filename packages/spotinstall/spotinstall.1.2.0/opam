@@ -19,7 +19,7 @@ remove: [
 depends: [
   "ocamlfind" { build }
   "spotlib" { >= "2.4.0" & <= "2.5.2" }
-  "omake" { build & < "0.10.1" }
+  "omake" { build & > "0.10.1" }
   "orakuda" { < "2.0.0" }
 ]
 available: [

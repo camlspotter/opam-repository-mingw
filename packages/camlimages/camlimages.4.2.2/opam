@@ -21,7 +21,7 @@ remove: [
 depends: [
   "ocamlfind" { build }
   "base-unix"
-  "omake" { build & < "0.10.1" }
+  "omake" { build & > "0.10.1" }
 ]
 depopts: [
   "lablgtk"
