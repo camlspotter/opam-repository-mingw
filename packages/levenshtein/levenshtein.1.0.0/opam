@@ -22,3 +22,4 @@ depends: [
   "pa_ounit" {>="109.53.02"}
 ]
 available: [ ocaml-version >= "4.01.0" ]
+patches: "patch-oasis-levenshtein.1.0.0" {os = "win32"}
