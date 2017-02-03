@@ -15,3 +15,4 @@ depexts: [
 ]
 install: [make "install"]
 dev-repo: "git://github.com/abate/ocaml-buddy"
+available: os != "win32"
