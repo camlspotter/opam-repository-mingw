@@ -19,5 +19,5 @@ depends: [
   "ppx_deriving_yojson" { >= "2.0" }
 ]
 
-available: ocaml-version >= "4.02.1"
+available: os != "win32" & (ocaml-version >= "4.02.1")
 install: [make "install"]
