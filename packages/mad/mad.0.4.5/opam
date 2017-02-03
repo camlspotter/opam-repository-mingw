@@ -15,6 +15,11 @@ depexts: [
   [["debian"] ["libmad0-dev"]]
   [["ubuntu"] ["libmad0-dev"]]
   [[ "osx" "homebrew"] [ "mad" ]]
+  [["win32" "cygwinports"] ["libmad"]]
 ]
 bug-reports: "https://github.com/savonet/ocaml-mad/issues"
 dev-repo: "https://github.com/savonet/ocaml-mad.git"
+patches: [
+  "ocaml-mad-0.4.5.patch" {os = "win32"}
+  "patch-ocamlmakefile-mad.0.4.5" {os = "win32"}
+]

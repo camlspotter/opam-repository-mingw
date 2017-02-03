@@ -1,0 +1,11 @@
+--- ./src/Makefile.in
++++ ./src/Makefile.in
+@@ -28,7 +28,7 @@
+ SOURCES = mad_stubs.c mad.mli mad.ml
+ RES_CLIB_SUF = _stubs
+ RESULT = mad
+-LIBINSTALL_FILES = $(wildcard *.mli *.cmi *.cma *.cmxa *.cmx *.a *.so)
++LIBINSTALL_FILES = $(wildcard *.mli *.cmi *.cma *.cmxa *.cmx *$(EXT_LIB) *$(EXT_DLL))
+ OCAMLLDFLAGS =
+ ACLIBS = @LIBS@ @MAD_LIBS@
+ LDFLAGS = @LDFLAGS@ @MAD_LDFLAGS@
