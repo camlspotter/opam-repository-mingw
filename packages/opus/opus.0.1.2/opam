@@ -24,6 +24,11 @@ depexts: [
   [["opensuse"] ["opus-devel"]]
   [["nixpkgs"] ["libopus"]]
   [["osx" "homebrew"] ["opus"]]
+  [["win32" "cygwinports"] ["opus"]]
 ]
 bug-reports: "https://github.com/savonet/ocaml-opus/issues"
 dev-repo: "https://github.com/savonet/ocaml-opus.git"
+patches: [
+  "patch-ocamlmakefile-opus.0.1.2" {os = "win32"}
+  "ocaml-opus-0.1.2.patch" {os = "win32"}
+]
