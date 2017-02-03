@@ -3,3 +3,4 @@ maintainer: "mlin@mlin.net"
 remove: [[make "uninstall" "PREFIX=%{prefix}%"]]
 install: [make "install" "PREFIX=%{prefix}%"]
 conflicts: "ocaml+twt"
+available: os != "win32"

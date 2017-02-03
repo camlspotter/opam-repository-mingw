@@ -7,3 +7,4 @@ remove: [[make "uninstall" "PREFIX=%{prefix}%"]]
 dev-repo: "git://github.com/mlin/twt"
 install: [make "install" "PREFIX=%{prefix}%"]
 conflicts: "ocaml+twt"
+available: os != "win32"
