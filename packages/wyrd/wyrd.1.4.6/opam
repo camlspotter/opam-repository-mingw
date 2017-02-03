@@ -19,3 +19,4 @@ build: [
 ]
 depends: ["camlp4"]
 install: [make "install"]
+available: os != "win32"
