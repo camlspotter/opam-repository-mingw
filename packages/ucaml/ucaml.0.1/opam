@@ -7,3 +7,4 @@ build: [
   ["make"]
 ]
 dev-repo: "git://github.com/masateruk/micro-caml"
+available: os != "win32"
