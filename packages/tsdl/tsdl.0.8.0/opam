@@ -20,3 +20,4 @@ build:
   [ "ocaml" "pkg/build.ml" "native=true"           # TODO fixme
                            "native-dynlink=true" ] # TODO fixme
 ]
+available: os != "win32"
