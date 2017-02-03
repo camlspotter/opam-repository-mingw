@@ -32,6 +32,7 @@ depends: [
 depexts: [
   [ ["debian"] ["libevent-dev"] ]
   [ ["ubuntu"] ["libevent-dev"] ]
+  [ ["win32" "cygwinports"] ["libevent"]]
 ]
 # https://travis-ci.org/ocaml/opam-repository/jobs/193601575
 available: [ os != "darwin" ]
