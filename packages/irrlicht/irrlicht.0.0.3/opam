@@ -15,5 +15,5 @@ depexts: [
   [["debian"] ["libirrlicht-dev" "g++"]]
   [["ubuntu"] ["libirrlicht-dev" "g++"]]
 ]
-available: ocaml-version >= "3.12"
+available: os != "win32" & (ocaml-version >= "3.12")
 install: ["ocaml" "setup.ml" "-install"]
