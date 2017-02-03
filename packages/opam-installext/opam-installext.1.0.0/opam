@@ -9,3 +9,4 @@ build: [make]
 install: [make "install" "PREFIX=%{prefix}%"]
 remove: ["rm" "-f" "%{prefix}%/bin/opam-installext"]
 post-messages: [ "installext is deprecated. Please `opam install depext` instead." ]
+available: os != "win32"
