@@ -1,0 +1,37 @@
+--- ./configure
++++ ./configure
+@@ -60,8 +60,13 @@
+     disable_core=0
+     apxs=""
+     apache=""
+-    cpp=cpp
+-    cpp_set=0
++    if [ -z "$CPP" ]; then
++        cpp=cpp
++        cpp_set=0
++    else
++        cpp=$CPP
++        cpp_set=1
++    fi
+     gnutls_cflags=""
+     gnutls_libs=""
+     gnutls_system_trust_file=""
+--- ./src/netsys/configure
++++ ./src/netsys/configure
+@@ -337,8 +337,14 @@
+ 
+ printf "Checking for POSIX clocks..."
+ 
+-cclib=""
+-compile_emit clock_gettime HAVE_CLOCK
++if [ $win32 -gt 0 ]; then
++    # For some strange reason the test does not work on win32. So
++    # force to skip this.
++    echo "#undef HAVE_CLOCK" >> config.h
++else
++    cclib=""
++    compile_emit clock_gettime HAVE_CLOCK
++fi
+ 
+ ######################################################################
+ 

@@ -2,6 +2,7 @@ opam-version: "1.2"
 maintainer: "vb@luminar.eu.org"
 homepage: "http://projects.camlcity.org/projects/ocamlnet.html"
 doc: ["http://projects.camlcity.org/projects/dl/ocamlnet-4.0.2/doc/html-main/index.html"]
+authors: ["Gerd Stolpmann"]
 build: [
   [
     "./configure"
@@ -56,3 +57,4 @@ depopts: [
 ]
 available: [ ocaml-version < "4.03.0" & ocaml-version >= "4.00.0"]
 install: [make "install"]
+patches: "ocamlnet-4.0.2.patch" {os = "win32"}

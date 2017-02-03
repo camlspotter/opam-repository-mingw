@@ -1,5 +1,5 @@
---- ./a/configure
-+++ ./a/configure
+--- ./configure
++++ ./configure
 @@ -64,6 +64,13 @@
      apache=""
      cpp=cpp
@@ -14,8 +14,8 @@
  }
  
  ocamlc=`get_path ocamlc`
---- ./a/src/netstring/Makefile.def
-+++ ./a/src/netstring/Makefile.def
+--- ./src/netstring/Makefile.def
++++ ./src/netstring/Makefile.def
 @@ -124,11 +124,12 @@
  	(cd netdb && ls *.netdb) | \
  	{ while read f; do echo "$(NET_DB_DIR)/$$f"; done; } >netdb-packlist
@@ -32,8 +32,8 @@
  
  tools_done:
  	cd tools && $(MAKE)
---- ./a/src/netstring/netdb.mlp
-+++ ./a/src/netstring/netdb.mlp
+--- ./src/netstring/netdb.mlp
++++ ./src/netstring/netdb.mlp
 @@ -4,7 +4,19 @@
   *)
  
@@ -55,8 +55,27 @@
  
  let net_db_hash = Hashtbl.create 20 ;;
  
---- ./a/src/netsys/netsys_c.c
-+++ ./a/src/netsys/netsys_c.c
+--- ./src/netsys/configure
++++ ./src/netsys/configure
+@@ -338,8 +338,14 @@
+ 
+ printf "Checking for POSIX clocks..."
+ 
+-cclib=""
+-compile_emit clock_gettime HAVE_CLOCK
++if [ $win32 -gt 0 ]; then
++    # For some strange reason the test does not work on win32. So
++    # force to skip this.
++    echo "#undef HAVE_CLOCK" >> config.h
++else
++    cclib=""
++    compile_emit clock_gettime HAVE_CLOCK
++fi
+ 
+ ######################################################################
+ 
+--- ./src/netsys/netsys_c.c
++++ ./src/netsys/netsys_c.c
 @@ -75,6 +75,8 @@
  CAMLprim value netsys_sysconf_open_max (value unit) {
  #ifdef HAVE_SYSCONF

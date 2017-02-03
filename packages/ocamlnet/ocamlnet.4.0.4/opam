@@ -42,12 +42,5 @@ depends: [
   "ocamlfind" {build}
   "ocamlbuild" {build}
 ]
-depopts: [
-  "conf-gnutls"
-  "conf-gssapi"
-  "lablgtk" { os != "win32" }
-  "pcre"
-  "camlzip"
-]
 available: [ ocaml-version < "4.03.0" & ocaml-version >= "4.00.0"]
-patches: [ "patch-aa" { os = "win32"} ]
+patches: "ocamlnet-4.0.4.patch" {os = "win32"}

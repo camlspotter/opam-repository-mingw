@@ -15,7 +15,16 @@ build: [
     "-disable-gtk2"
     "-%{camlzip:enable}%-zip"
     "-with-nethttpd"
-  ]
+  ] { os != "win32" }
+  [ "./configure"
+    "-bindir"
+    bin
+    "-disable-gssapi"
+    "-%{conf-gnutls:enable}%-gnutls"
+    "-%{pcre:enable}%-pcre"
+    "-disable-gtk2"
+    "-%{camlzip:enable}%-zip"
+    "-without-nethttpd"]  { os = "win32" }
   [make "all"]
   [make "opt"]
 ]
@@ -58,4 +67,4 @@ depopts: [
 ]
 available: [ ocaml-version >= "4.00.0" & compiler != "4.04.0+flambda"]
 install: [make "install"]
-patches: [ "patch-aa" { os = "win32"} ]
+patches: "ocamlnet-4.1.2.patch" {os = "win32"}
