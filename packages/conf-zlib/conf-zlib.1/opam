@@ -17,4 +17,5 @@ depexts: [
   [["nixpkgs"] ["zlib"]]
   [["homebrew" "osx"] ["lzlib"]]
   [["archlinux"] ["zlib"]]
+  [["win32" "cygwinports"] ["zlib"]]
 ]
