@@ -5,11 +5,17 @@ homepage: "https://github.com/let-def/merlin-extend"
 bug-reports: "https://github.com/let-def/merlin-extend"
 license: "MIT"
 dev-repo: "https://github.com/let-def/merlin-extend.git"
-build: [make]
+build: [
+ ["cp" "extend_helper.ml" "extend_helper.ml.orig"] { os = "win32" }
+ ["dash" "-ecx" "cppo -V OCAML:`ocamlc -version` extend_helper.ml | tail -n +3 > extend_helper.ml.1" ] { os = "win32" }
+ ["cp" "extend_helper.ml.1" "extend_helper.ml"] { os = "win32" }
+ [make]
+]
 install: [make "install"]
 remove: ["ocamlfind" "remove" "merlin_extend"]
 depends: [
   "ocamlfind" {build}
   "cppo" {build}
 ]
-available: os != "win32" & (ocaml-version >= "4.02.3")
+available: ocaml-version >= "4.02.3"
+patches: "patch-ocamlmakefile-merlin-extend.0.3" {os = "win32"}
