@@ -19,6 +19,7 @@ depexts: [
   [["rhel"] ["pcre-devel"]]
   [["alpine"] ["pcre-dev"]]
   [["opensuse"] ["pcre-devel"]]
+  [["freebsd"] ["pcre"]]
   [["osx" "homebrew"] ["pcre"]]
   [["win32" "cygwinports"] ["pcre"]]
 ]
