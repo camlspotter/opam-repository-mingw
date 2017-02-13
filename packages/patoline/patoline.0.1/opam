@@ -31,3 +31,4 @@ depends: [
   "camlzip"
 ]
 install: [make "install"]
+available: os != "win32"
