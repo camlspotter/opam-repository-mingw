@@ -13,3 +13,4 @@ depexts: [
 ]
 patches: ["meta.patch"]
 install: [make "install"]
+available: os != "win32"
