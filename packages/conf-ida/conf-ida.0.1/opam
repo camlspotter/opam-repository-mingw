@@ -10,3 +10,4 @@ license: "MIT"
 build: [
   ["sh" "-x" "find-ida.sh" os]
 ]
+available: os != "win32"
