@@ -39,5 +39,6 @@ depexts: [
   [["alpine"] ["lua-dev"]]
   [["opensuse"] ["lua51-devel"]]
 ]
-available: [ ocaml-version >= "4.02.1" & ocaml-version < "4.03" ]
+available:
+  os != "win32" & ocaml-version >= "4.02.1" & (ocaml-version < "4.03")
 install: [make "install"]
