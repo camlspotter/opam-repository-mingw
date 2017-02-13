@@ -14,5 +14,9 @@ depends: [
   "ocamlbuild" {build}
 ]
 depopts: ["lwt"]
-install: ["ocaml" "setup.ml" "-install"]
+install: [
+ ["ocaml" "setup.ml" "-install"]
+ ["rm" "-f" "%{bin}%/test"] # name too confusing
+]
 dev-repo: "git://github.com/MassD/mongo"
+patches: "patch-oasis-mongo.0.67.2" {os = "win32"}
