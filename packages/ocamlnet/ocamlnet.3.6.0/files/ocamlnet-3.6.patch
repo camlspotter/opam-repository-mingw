@@ -1,0 +1,58 @@
+--- ./configure
++++ ./configure
+@@ -58,8 +58,14 @@
+     disable_core=0
+     apxs=""
+     apache=""
+-    cpp=cpp
+-    cpp_set=0
++    if [ -n "$CPP" ]; then
++	echo "using CPP: $CPP" >&2
++	cpp=$CPP
++	cpp_set=1
++    else
++	cpp=cpp
++	cpp_set=0
++    fi
+ }
+ 
+ ocamlc=`get_path ocamlc`
+--- ./src/netsys/configure
++++ ./src/netsys/configure
+@@ -118,7 +118,7 @@
+ printf "Checking for win32... "
+ system=`ocamlc -config | grep system | sed -e 's/system: //'`
+ case "$system" in
+-    mingw|msvc)
++    mingw*|msvc*)
+ 	  echo "yes"
+ 	  win32=1
+           netsys_link_options="$netsys_link_options -lws2_32" ;;
+@@ -284,8 +284,14 @@
+ 
+ printf "Checking for POSIX clocks..."
+ 
+-cclib=""
+-compile_emit clock_gettime HAVE_CLOCK
++if [ $win32 -gt 0 ]; then
++    # For some strange reason the test does not work on win32. So
++    # force to skip this.
++    echo "#undef HAVE_CLOCK" >> config.h
++else
++    cclib=""
++    compile_emit clock_gettime HAVE_CLOCK
++fi
+ 
+ ######################################################################
+ 
+--- ./src/netsys/netsys_c.c
++++ ./src/netsys/netsys_c.c
+@@ -75,6 +75,8 @@
+ CAMLprim value netsys_sysconf_open_max (value unit) {
+ #ifdef HAVE_SYSCONF
+     return Val_long(sysconf(_SC_OPEN_MAX));
++#elif _WIN32
++    return Val_long(_getmaxstdio () );
+ #else
+     invalid_argument("Netsys.sysconf_open_max not available");
+ #endif

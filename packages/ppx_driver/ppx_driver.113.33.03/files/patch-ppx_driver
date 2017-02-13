@@ -1,6 +1,6 @@
---- src/ppx_driver.ml
-+++ src/ppx_driver.ml
-@@ -219,7 +219,10 @@
+--- ./src/ppx_driver.ml
++++ ./src/ppx_driver.ml
+@@ -221,7 +221,10 @@
  
  let with_output fn ~binary ~f =
    match fn with

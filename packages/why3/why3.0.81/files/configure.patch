@@ -1,5 +1,5 @@
---- /tmp/why3-0.81/configure	2013-03-27 07:08:28.000000000 +0100
-+++ configure	2013-04-05 14:45:02.311937591 +0200
+--- ./configure
++++ ./configure
 @@ -611,6 +611,7 @@
  enable_ide
  enable_profiling
@@ -31,8 +31,7 @@
  # Finally create the Makefile from Makefile.in
  ac_config_files="$ac_config_files Makefile src/config.sh doc/version.tex"
  
-@@ -5377,7 +5387,9 @@
-    echo "Installable             : no"
+@@ -5378,6 +5388,8 @@
  else
     echo "Installable             : yes"
     echo "    Binary path         : $bindir"

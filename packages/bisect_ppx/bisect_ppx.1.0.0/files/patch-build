@@ -16,8 +16,8 @@
  REWRITER_BYTE := $(INSTALL_SOURCE_DIR)/src/syntax/bisect_ppx.byte
  REWRITER_NATIVE := $(INSTALL_SOURCE_DIR)/src/syntax/bisect_ppx.native
  
---- myocamlbuild.ml.orig
-+++ myocamlbuild.ml
+--- ./myocamlbuild.ml
++++ ./myocamlbuild.ml
 @@ -65,7 +65,12 @@
    let src = Pathname.mk src in
    let dst = Pathname.mk dst in

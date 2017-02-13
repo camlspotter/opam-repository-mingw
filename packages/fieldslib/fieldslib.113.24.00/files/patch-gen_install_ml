@@ -1,5 +1,5 @@
---- js-utils/gen_install.ml
-+++ js-utils/gen_install.ml
+--- ./js-utils/gen_install.ml
++++ ./js-utils/gen_install.ml
 @@ -30,10 +30,26 @@
    lines_of_file "setup.data"
    |> List.map (fun line -> Scanf.sscanf line "%[^=]=%S" (fun k v -> (k, v)))

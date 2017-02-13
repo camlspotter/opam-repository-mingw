@@ -1,7 +1,5 @@
-diff --git a/lib/extended_unix_stubs.c b/lib/extended_unix_stubs.c
-index 40b4d10..cbede42 100644
---- a/lib/extended_unix_stubs.c
-+++ b/lib/extended_unix_stubs.c
+--- ./src/extended_unix_stubs.c
++++ ./src/extended_unix_stubs.c
 @@ -12,7 +12,10 @@
  #include <string.h>
  #include <time.h>
@@ -13,7 +11,7 @@ index 40b4d10..cbede42 100644
  #include <sys/mount.h>
  
  #ifndef __USE_ISOC99
-@@ -117,17 +120,24 @@ CAMLprim value getloadavg_stub (value v_unit __unused)
+@@ -117,17 +120,24 @@
  #endif
  
  int quota_command (value v_user_or_group, int command) {
@@ -38,7 +36,7 @@ index 40b4d10..cbede42 100644
    int id, cmd;
    struct dqblk quota;
    int64_t bytes_used, bytes_soft, bytes_hard;
-@@ -162,11 +172,15 @@ CAMLprim value quota_query (value v_user_or_group, value v_id, value v_path)
+@@ -162,11 +172,15 @@
    Store_field(v_ret, 3, caml_alloc_int63(quota.dqb_curinodes));
  
    CAMLreturn(v_ret);
@@ -54,7 +52,7 @@ index 40b4d10..cbede42 100644
    int id, cmd;
    struct dqblk quota;
    CAMLparam5(v_user_or_group, v_id, v_path, v_bytes_limit, v_inodes_limit);
-@@ -190,6 +204,7 @@ CAMLprim value quota_modify (value v_user_or_group, value v_id,
+@@ -190,6 +204,7 @@
      unix_error(errno, "Unix.Quota: unable to set quota", v_path);
  
    CAMLreturn(Val_unit);

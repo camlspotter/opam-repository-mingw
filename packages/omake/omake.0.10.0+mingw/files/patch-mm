@@ -1,5 +1,5 @@
---- lib/build/C.om
-+++ lib/build/C.om
+--- ./lib/build/C.om
++++ ./lib/build/C.om
 @@ -410,19 +410,19 @@
      export
  else

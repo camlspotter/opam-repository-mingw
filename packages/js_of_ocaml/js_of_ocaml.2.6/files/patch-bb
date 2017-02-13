@@ -1,5 +1,5 @@
---- compiler/Makefile
-+++ compiler/Makefile
+--- ./compiler/Makefile
++++ ./compiler/Makefile
 @@ -44,11 +44,11 @@
  	mv -f $< $@
  

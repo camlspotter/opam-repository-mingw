@@ -1,6 +1,5 @@
-diff -ru /tmp/a/myocamlbuild.ml /tmp/b/myocamlbuild.ml
---- /tmp/a/myocamlbuild.ml	2012-12-01 16:47:06.000000000 +0100
-+++ /tmp/b/myocamlbuild.ml	2012-12-01 16:54:27.327740090 +0100
+--- ./myocamlbuild.ml
++++ ./myocamlbuild.ml
 @@ -490,7 +490,7 @@
              [
                 (OASISExpr.EBool true, S []);
@@ -28,9 +27,8 @@ diff -ru /tmp/a/myocamlbuild.ml /tmp/b/myocamlbuild.ml
              ])
         ];
       includes = [];
-diff -ru /tmp/a/setup.ml /tmp/b/setup.ml
---- /tmp/a/setup.ml	2012-12-01 16:47:06.000000000 +0100
-+++ /tmp/b/setup.ml	2012-12-01 16:54:34.163740111 +0100
+--- ./setup.ml
++++ ./setup.ml
 @@ -5673,7 +5673,7 @@
                          [
                             (OASISExpr.EBool true, []);

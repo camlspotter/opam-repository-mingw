@@ -1,5 +1,5 @@
---- myocamlbuild.ml.prev	2013-01-31 11:03:46.469655755 -0500
-+++ myocamlbuild.ml	2013-01-31 11:03:49.633903949 -0500
+--- ./myocamlbuild.ml
++++ ./myocamlbuild.ml
 @@ -574,7 +574,7 @@
  
      (* enable warnings; make sure the '@' character isn't in the beginning;

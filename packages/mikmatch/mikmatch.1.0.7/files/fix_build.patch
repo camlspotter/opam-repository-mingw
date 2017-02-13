@@ -1,5 +1,5 @@
---- pcre/Makefile.orig	2014-11-11 18:50:00.000000000 +0800
-+++ pcre/Makefile	2014-11-11 18:54:45.385223413 +0800
+--- ./pcre/Makefile
++++ ./pcre/Makefile
 @@ -94,11 +94,9 @@
  	ocamlc -c mikmatch.mli
  	ocamlc -a -o run_mikmatch_pcre.cma -I $(PCRE_DIR) \

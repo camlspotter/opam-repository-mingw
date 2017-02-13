@@ -1,5 +1,5 @@
---- evaluator/lib/fnmatch_stub.c
-+++ evaluator/lib/fnmatch_stub.c
+--- ./evaluator/lib/fnmatch_stub.c
++++ ./evaluator/lib/fnmatch_stub.c
 @@ -1,4 +1,6 @@
 +#ifndef _WIN32
  #include <fnmatch.h>

@@ -1,6 +1,6 @@
---- src/libmojave/lm_unix_util.ml
-+++ src/libmojave/lm_unix_util.ml
-@@ -80,7 +80,10 @@ let copy_file from_name to_name mode =
+--- ./src/libmojave/lm_unix_util.ml
++++ ./src/libmojave/lm_unix_util.ml
+@@ -80,7 +80,10 @@
         need_close to_fd 
           (function to_fd ->
             copy_file_fd (Bytes.create 8192) from_fd to_fd; 

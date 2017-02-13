@@ -17,7 +17,7 @@ depends: [
  "cygwinpath" { build }
 ]
 patches: [
-  "patch-mm" { os = "win32" }
+#  "patch-mm" { os = "win32" } , upstreamed?
   "patch-chmod"
 ]
 available: [ ocaml-version >= "4.02.0" ]

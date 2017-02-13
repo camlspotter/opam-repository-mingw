@@ -1,5 +1,5 @@
---- lib/META.prev	2012-12-13 16:05:41.644185169 -0500
-+++ lib/META	2012-12-13 16:06:15.268184976 -0500
+--- ./lib/META
++++ ./lib/META
 @@ -3,7 +3,7 @@
  version = "108.08.00"
  description = "Jane Street Capital's standard library overlay"

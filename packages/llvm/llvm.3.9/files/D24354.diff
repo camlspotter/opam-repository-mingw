@@ -1,7 +1,5 @@
-Index: bindings/ocaml/backends/CMakeLists.txt
-===================================================================
---- bindings/ocaml/backends/CMakeLists.txt
-+++ bindings/ocaml/backends/CMakeLists.txt
+--- ./bindings/ocaml/backends/CMakeLists.txt
++++ ./bindings/ocaml/backends/CMakeLists.txt
 @@ -23,5 +23,5 @@
      "${LLVM_LIBRARY_DIR}/ocaml/META.llvm_${TARGET}")
  
@@ -9,30 +7,24 @@ Index: bindings/ocaml/backends/CMakeLists.txt
 -          DESTINATION lib/ocaml)
 +          DESTINATION "${LLVM_OCAML_INSTALL_PATH}")
  endforeach()
-Index: bindings/ocaml/backends/META.llvm_backend.in
-===================================================================
---- bindings/ocaml/backends/META.llvm_backend.in
-+++ bindings/ocaml/backends/META.llvm_backend.in
+--- ./bindings/ocaml/backends/META.llvm_backend.in
++++ ./bindings/ocaml/backends/META.llvm_backend.in
 @@ -4,4 +4,4 @@
  requires = "llvm"
  archive(byte) = "llvm_@TARGET@.cma"
  archive(native) = "llvm_@TARGET@.cmxa"
 -directory = "."
 +directory = "llvm"
-Index: bindings/ocaml/llvm/CMakeLists.txt
-===================================================================
---- bindings/ocaml/llvm/CMakeLists.txt
-+++ bindings/ocaml/llvm/CMakeLists.txt
+--- ./bindings/ocaml/llvm/CMakeLists.txt
++++ ./bindings/ocaml/llvm/CMakeLists.txt
 @@ -8,4 +8,4 @@
    "${LLVM_LIBRARY_DIR}/ocaml/META.llvm")
  
  install(FILES "${LLVM_LIBRARY_DIR}/ocaml/META.llvm"
 -        DESTINATION lib/ocaml)
 +        DESTINATION "${LLVM_OCAML_INSTALL_PATH}")
-Index: bindings/ocaml/llvm/META.llvm.in
-===================================================================
---- bindings/ocaml/llvm/META.llvm.in
-+++ bindings/ocaml/llvm/META.llvm.in
+--- ./bindings/ocaml/llvm/META.llvm.in
++++ ./bindings/ocaml/llvm/META.llvm.in
 @@ -3,7 +3,7 @@
  description = "LLVM OCaml bindings"
  archive(byte) = "llvm.cma"
@@ -42,11 +34,9 @@ Index: bindings/ocaml/llvm/META.llvm.in
  
  package "analysis" (
      requires = "llvm"
-Index: cmake/config-ix.cmake
-===================================================================
---- cmake/config-ix.cmake
-+++ cmake/config-ix.cmake
-@@ -576,6 +576,9 @@
+--- ./cmake/config-ix.cmake
++++ ./cmake/config-ix.cmake
+@@ -568,6 +568,9 @@
          message(STATUS "OCaml bindings enabled.")
          find_ocamlfind_package(oUnit VERSION 2 OPTIONAL)
          set(LLVM_BINDINGS "${LLVM_BINDINGS} ocaml")
@@ -56,11 +46,9 @@ Index: cmake/config-ix.cmake
        else()
          message(STATUS "OCaml bindings disabled, need ctypes >=0.4.")
        endif()
-Index: cmake/modules/AddOCaml.cmake
-===================================================================
---- cmake/modules/AddOCaml.cmake
-+++ cmake/modules/AddOCaml.cmake
-@@ -193,12 +193,12 @@
+--- ./cmake/modules/AddOCaml.cmake
++++ ./cmake/modules/AddOCaml.cmake
+@@ -189,12 +189,12 @@
    endforeach()
  
    install(FILES ${install_files}
