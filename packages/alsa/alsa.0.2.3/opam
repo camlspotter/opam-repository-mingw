@@ -17,4 +17,4 @@ depexts: [
 ]
 bug-reports: "https://github.com/savonet/ocaml-alsa/issues"
 dev-repo: "https://github.com/savonet/ocaml-alsa.git"
-available: [os = "linux"]
+available: os != "win32" & (os = "linux")

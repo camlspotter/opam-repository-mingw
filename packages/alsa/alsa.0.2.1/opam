@@ -12,4 +12,4 @@ depexts: [
   [["ubuntu"] ["libasound2-dev"]]
 ]
 install: [make "install"]
-available: [ ocaml-version < "4.04.0" ]
+available: os != "win32" & (ocaml-version < "4.04.0")
