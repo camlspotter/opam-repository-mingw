@@ -22,5 +22,6 @@ depends: [
   "type_conv"
   "ocamlbuild" {build}
 ]
-install: [make "install"]
 dev-repo: "git://github.com/mirage/ocaml-ipaddr"
+install: [make "install"]
+available: [ ocaml-version < "4.04.0" ]
