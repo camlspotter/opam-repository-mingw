@@ -253,3 +253,16 @@
      | Process.Failure err   -> raise (PkgConfigError err)
  
  let runPkgConfigVersion name =
+--- ./src/main.ml
++++ ./src/main.ml
+@@ -46,8 +46,8 @@
+         (set_target_options "library-debugging" true) ();
+         (set_target_options "executable-debugging" true)), "compilation with debugging");
+     ("-pg", Arg.Unit (
+-        (set_target_options "library-profiling" true) ();
+-        (set_target_options "executable-profiling" true)), "compilation with profiling")
++        (set_target_options "library-profiling" (not Sys.win32)) ();
++        (set_target_options "executable-profiling" (not Sys.win32))), "compilation with profiling")
+   ] in
+   Arg.parse_argv (Array.of_list argv) (
+     enable_disable_opt "library-bytecode" "library compilation as bytecode"
