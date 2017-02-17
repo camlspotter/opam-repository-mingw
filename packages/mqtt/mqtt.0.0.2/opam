@@ -11,10 +11,9 @@ depends: [
   "ocamlfind"
   "ocplib-endian"
   "ounit"
-  "lwt" {<= "2.7.0"}
+  "lwt" {>= "2.7.0"}
   "ocamlbuild" {build}
 ]
-patches: "patch-oasis-mqtt.0.0.1" {os = "win32"}
+dev-repo: "git://github.com/j0sh/ocaml-mqtt"
 available: ocaml-version >= "4.01.0"
 install: [make "install"]
-dev-repo: "git://github.com/j0sh/ocaml-mqtt"
