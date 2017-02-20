@@ -15,3 +15,4 @@ depends: [
 ]
 install: [make "install"]
 dev-repo: "git://github.com/mmottl/cfg"
+patches: "patch-oasis-cfg.2.0.3" {os = "win32"}
