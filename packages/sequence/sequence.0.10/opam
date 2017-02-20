@@ -14,6 +14,8 @@ build: [
     "--%{delimcc:enable}%-invert"
     "--%{base-bigarray:enable}%-bigarray"
   ]
+  ["tar" "-chf" "tmp.tar" "src"] { os = "win32" }
+  ["tar" "-xf" "tmp.tar"] { os = "win32" }
   [make "build"]
 ]
 install: [make "install"]
