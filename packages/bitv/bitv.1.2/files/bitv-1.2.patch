@@ -1,0 +1,15 @@
+--- ./test.ml
++++ ./test.ml
+@@ -99,10 +99,10 @@
+ 
+ let test_io v =
+   let f = Filename.temp_file "bitv" "" in
+-  let c = open_out f in
++  let c = open_out_bin f in
+   output_bin c v;
+   close_out c;
+-  let c = open_in f in
++  let c = open_in_bin f in
+   let w = input_bin c in
+   close_in c;
+   try Sys.remove f with _ -> ();
