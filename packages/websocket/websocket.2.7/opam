@@ -31,3 +31,4 @@ conflicts: [
   "nocrypto" {< "0.5.0"}
 ]
 available: [ocaml-version >= "4.02.0"]
+patches: "patch-topkg-quote-websocket.2.7" {os = "win32"}
