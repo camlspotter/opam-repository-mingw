@@ -5,8 +5,12 @@ homepage: "https://github.com/Octachron/codept"
 bug-reports: "https://github.com/Octachron/codept/issues"
 license: "gpl-3"
 dev-repo: "https://github.com/Octachron/codept.git"
-build: [make "all"]
+build: [
+ [make "-C" "build" "dirs"] {os = "win32"}
+ [make "all"]
+]
 build-test: [make "alt2-tests"]
 build-doc: [make "alt2-docs"]
 depopts: "ocamlbuild"
-available: os != "win32" & (ocaml-version = "4.04.0")
+available: ocaml-version = "4.04.0"
+patches: "codept-0.9.0.patch" {os = "win32"}
