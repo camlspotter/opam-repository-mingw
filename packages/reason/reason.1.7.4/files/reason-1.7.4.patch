@@ -1,0 +1,21 @@
+--- ./pkg/topkg.ml
++++ ./pkg/topkg.ml
+@@ -384,6 +384,7 @@
+   let build ccomp btool bdir pkg mvs =
+     let ext_to_string = Exts.ext_to_string ccomp in
+     let install, exec = build_strings btool bdir ext_to_string mvs in
++    let exec = "dash.exe -exc " ^ Filename.quote (" " ^ exec) in
+     let e = Sys.command exec in
+     if e <> 0 then exit e else
+     let install_file = pkg ^ ".install" in
+--- ./_tags
++++ ./_tags
+@@ -4,7 +4,7 @@
+ <node_modules/**>: -traverse
+ "formatTest": -traverse
+ "src": include
+-<src/*>: package(menhirLib unix compiler-libs.common ocamlbuild findlib merlin_extend)
++<src/*>: package(menhirLib,unix,compiler-libs.common,ocamlbuild,findlib,merlin_extend)
+ <src/reason_utop.*>: package(menhirLib utop)
+ 
+ <src_gen/*>: package(sedlex)

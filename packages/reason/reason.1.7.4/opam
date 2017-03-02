@@ -34,4 +34,5 @@ depends: [
 conflicts: [
   "utop" {< "1.17"}
 ]
-available: os != "win32" & (ocaml-version = "4.02.3")
+available: [ ocaml-version = "4.02.3" ]
+patches: "reason-1.7.4.patch" {os = "win32"}
