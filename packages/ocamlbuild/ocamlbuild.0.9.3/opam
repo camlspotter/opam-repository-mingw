@@ -50,4 +50,7 @@ conflicts: [
   "base-ocamlbuild"
   "ocamlfind" {< "1.6.2"}
 ]
-patches: "ocamlbuild-0.9.3.patch" {os = "win32"}
+patches: [
+ "ocamlbuild-0.9.3.patch" {os = "win32"}
+ "dash.patch" {os = "win32"}
+]
