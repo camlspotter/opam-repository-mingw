@@ -1,0 +1,196 @@
+--- ./libs/ocplib-compat/build.ocp2
++++ ./libs/ocplib-compat/build.ocp2
+@@ -42,10 +42,10 @@
+ 
+   begin
+     ocaml.files = [ "stringCompat.ml" ];
+-    ocaml.pp = [ "%{ocp-pp_FULL_DST_DIR}%/ocp-pp.byte" ];
++    ocaml.pp = [ "%{ocp-pp_FULL_DST_DIR}%/ocp-pp.byte.exe" ];
+     ocaml.requires = [ "ocp-pp" ];
+     ocaml.pp_requires += [ "ocp-pp:byte" ];
+-    ocaml.pp_deps = [ "%{ocp-pp_FULL_DST_DIR}%/ocp-pp.byte" ];
++    ocaml.pp_deps = [ "%{ocp-pp_FULL_DST_DIR}%/ocp-pp.byte.exe" ];
+     new_package( "ocplib-compat", "library", ocaml);
+   end
+ 
+--- ./libs/ocplib-file/file.ml
++++ ./libs/ocplib-file/file.ml
+@@ -139,7 +139,7 @@
+ let add_basename_string dir basename =
+   match dir.file_basename with
+   | "" | "/" | "\\" ->
+-    dir.file_basename ^ basename
++    dir.file_partition ^ dir.file_basename ^ basename
+   | _ ->
+     dir.file_string ^ FileOS.dir_separator_string ^ basename
+ 
+@@ -301,9 +301,16 @@
+   let s1, s2  = OcpString.cut_at s ':' in
+   let ss = if s1 == s then s else s2 in
+   let part = if s1 == s then "" else (String.lowercase s1) ^ ":" in
+-  let path = OcpString.split ss '\\' in
++  let len = String.length ss in
++  let b = Buffer.create len in
++  for i = 0 to len - 1 do
++    let c = String.get ss i in
++    Buffer.add_char b (if c = '/' then '\\' else c)
++  done;
++  let path = OcpString.split (Buffer.contents b) '\\' in
+   of_path part path
+ 
++
+ let of_string s =
+   if FileOS.win32 then of_win32_string s else of_unix_string s
+ 
+--- ./libs/ocplib-unix/build.ocp2
++++ ./libs/ocplib-unix/build.ocp2
+@@ -27,7 +27,7 @@
+   ];
+ 
+   if( system = "win64" ) {
+-    ocaml.requires = [ "unix" ];
++    ocaml.requires = [ "unix" ] + string_compat;
+     ocaml.link = [ "-cclib"; "user32.lib"; ];
+   } else {
+ (* We require "Unix", but do not use it directly !!! *)
+--- ./libs/ocplib-unix/minUnix_c.c
++++ ./libs/ocplib-unix/minUnix_c.c
+@@ -17,6 +17,7 @@
+ #include <winsock2.h>
+ #include <windows.h>
+ #include <sys/types.h>
++#include <io.h>
+ 
+ #endif
+ 
+@@ -24,6 +25,17 @@
+ #include <caml/alloc.h>
+ #include <caml/memory.h>
+ #include <caml/signals.h>
++#include <caml/misc.h>
++/* very dirty: CAMLassert is exposed since 4.02, when caml/version.h was 
++   also introduced */
++#ifdef CAMLassert
++#include <caml/version.h>
++#else
++#define OCAML_VERSION_MAJOR 4
++#define OCAML_VERSION_MINOR 0
++#define OCAML_VERSION_PATCHLEVEL 0
++#endif
++
+ 
+ #ifndef CAML_UNIXSUPPORT_H
+ #include <caml/unixsupport.h>
+@@ -31,14 +43,20 @@
+ #endif
+ 
+ /* Versions before 4.02.0 use unix_ prefixes for these functions */
++/* Really ??? */
+ 
+-#if OCAML_VERSION_OCP == 4010001
++#if 0 && (OCAML_VERSION_MAJOR < 4 || (OCAML_VERSION_MAJOR == 4 && OCAML_VERSION_MINOR < 2))
+ #define win_cleanup unix_cleanup
+ #define win_filedescr_of_channel  unix_filedescr_of_channel
+ #define win_inchannel_of_filedescr  unix_inchannel_of_filedescr
+ #define win_outchannel_of_filedescr unix_outchannel_of_filedescr
+ #define win_startup unix_startup
+ #define win_waitpid unix_waitpid
++extern value unix_startup(value);
++extern value unix_cleanup(value);
++#else
++extern value win_startup(value);
++extern value win_cleanup(value);
+ #endif
+ 
+ /* There is a test in win_starup/win_cleanup, so there is no
+--- ./libs/ocplib-unix/onlyUnix_c.c
++++ ./libs/ocplib-unix/onlyUnix_c.c
+@@ -25,6 +25,15 @@
+ #include <caml/memory.h>
+ #include <caml/signals.h>
+ #include <caml/fail.h>
++/* very dirty: CAMLassert is exposed since 4.02, when caml/version.h was 
++   also introduced */
++#ifdef CAMLassert
++#include <caml/version.h>
++#else
++#define OCAML_VERSION_MAJOR 4
++#define OCAML_VERSION_MINOR 0
++#define OCAML_VERSION_PATCHLEVEL 0
++#endif
+ 
+ #ifndef CAML_UNIXSUPPORT_H
+ #include <caml/unixsupport.h>
+@@ -49,12 +58,13 @@
+ UNAVAILABLE_PRIM(unix_umask)
+ UNAVAILABLE_PRIM(unix_chown)
+ UNAVAILABLE_PRIM(unix_fchown)
+-UNAVAILABLE_PRIM(unix_fchown)
+ UNAVAILABLE_PRIM(unix_chroot)
+ UNAVAILABLE_PRIM(unix_mkfifo)
++#if OCAML_VERSION_MAJOR < 4 || ( OCAML_VERSION_MAJOR == 4 && OCAML_VERSION_MINOR < 3 )
+ UNAVAILABLE_PRIM(unix_readlink)
+ UNAVAILABLE_PRIM(unix_symlink)
+ #endif
++#endif
+ 
+ UNAVAILABLE_PRIM(unix_clear_close_on_exec)
+ UNAVAILABLE_PRIM(unix_closedir)
+--- ./libs/ocplib-unix/onlyWin32_c.c
++++ ./libs/ocplib-unix/onlyWin32_c.c
+@@ -32,6 +32,8 @@
+ #define CAML_UNIXSUPPORT_H
+ #endif
+ 
++extern char * caml_search_exe_in_path(char * name);
++
+ #ifdef _WIN32
+ static value alloc_process_status(HANDLE pid, int status)
+ {
+--- ./Makefile
++++ ./Makefile
+@@ -4,6 +4,7 @@
+ include $(MAKE_CONFIG)
+ 
+ OBUILD_DSTDIR=_obuild
++EXT_OBJ:=$(shell ocamlc -config | awk '/^ext_obj:/ {print $$2}')
+ 
+ # If you add a library ocplib-xxx:
+ # 1/ Update this list with xxx_SRCDIR=
+@@ -165,13 +166,13 @@
+ OCP_BUILD_CMOS= $(OCP_BUILD_MLS:.ml=.cmo)
+ OCP_BUILD_MLIS= $(OCP_BUILD_MLS:.ml=.mli)
+ OCP_BUILD_CMIS= $(OCP_BUILD_MLS:.ml=.cmi)
+-OCP_BUILD_STUBS= $(OCP_BUILD_CS:.c=.o)
++OCP_BUILD_STUBS= $(OCP_BUILD_CS:.c=$(EXT_OBJ))
+ OCP_BUILD_TMPS= $(OCP_BUILD_MLYS:.mly=.mli) $(OCP_BUILD_MLYS:.mly=.ml) \
+ 	$(OCP_BUILD_MLLS:.mll=.ml) $(OCP_BUILD_ML4S:.ml4=.ml) \
+ 	$(OCP_BUILD_SRCDIR)/buildVersion.ml \
+ 	$(compat_SRCDIR)/stringCompat.ml
+ 
+-OCP_BUILD_OS= $(OCP_BUILD_STUBS) $(OCP_BUILD_CMXS:.cmx=.o)
++OCP_BUILD_OS= $(OCP_BUILD_STUBS) $(OCP_BUILD_CMXS:.cmx=$(EXT_OBJ))
+ 
+ all: build-ocps
+ 	@echo Libraries will be installed in ${ocamldir}
+@@ -303,7 +304,7 @@
+ OCP_BUILD:=$(OCP_BUILD_BOOTER)
+ include autoconf/Makefile.rules
+ 
+-.SUFFIXES: .ml .mll .mli .mly .c .o .cmo .cmi .cmx
++.SUFFIXES: .ml .mll .mli .mly .c $(EXT_OBJ) .cmo .cmi .cmx
+ 
+ .mll.ml:
+ 	$(OCAMLLEX) $<
+@@ -320,9 +321,9 @@
+ .ml.cmo:
+ 	$(OCAMLC) -c -o $*.cmo $(INCLUDES) $<
+ 
+-.c.o:
++.c$(EXT_OBJ):
+ 	$(OCAMLC) -c $(INCLUDES) $<
+-	mv `basename $*.o` $*.o
++	mv `basename $*$(EXT_OBJ)` $*$(EXT_OBJ)
+ 
+ 
+ 
