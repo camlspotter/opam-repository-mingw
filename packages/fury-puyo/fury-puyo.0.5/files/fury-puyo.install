@@ -1,6 +1,6 @@
 bin: [
-  "furypuyo"
-  "furypuyo_srv"
+  "_build/main.native" {"furypuyo"}
+  "_build/server/server.native" {"furypuyo_srv"}
 ]
 share: [
   "data/allclear.png" {"data/allclear.png"}
