@@ -26,3 +26,4 @@ depends: [
   "ocamlbuild" {build}
   "conf-autoconf"
 ]
+available: os != "win32"
