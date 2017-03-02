@@ -8,6 +8,8 @@ build: [
   [make "all"]
 ]
 depends: [
+  "ocamlfind" # ocamlfind removes the META file of camlp4 during uninstallation
+              # and ocamlfind is called at the remove step
   "ocamlbuild" {build}
 ]
 install: [
@@ -25,3 +27,4 @@ remove: [
 available: [ (!preinstalled) & (ocaml-version >= "4.05") & (ocaml-version < "4.06") ]
 bug-reports: "https://github.com/ocaml/camlp4/issues"
 dev-repo: "https://github.com/ocaml/camlp4.git"
+patches: "camlp4-4.05-1.patch" {os = "win32"}
