@@ -35,4 +35,7 @@ depends: [
   "cppo" {build & >= "1.1.2"}
 ]
 conflicts: "dose"
-patches: "dose3-5.0.1.patch" {os = "win32"}
+patches: [
+ "0001-Install-mli-cmx-etc.patch"
+ "dose3-5.0.1.patch" {os = "win32"}
+]
