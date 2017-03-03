@@ -53,7 +53,7 @@ build: [
   ]
     {!ocaml-native & os != "win32" }
 ]
-depends: [ "cmdliner" {build} ]
+depends: [ "cmdliner" {build & <= "0.9.8"} ]
 available: [ opam-version >= "1.1.0" ]
 tags: "flags:plugin"
 patches: "opam-depext-1.0.2.patch" {os = "win32"}

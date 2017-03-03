@@ -44,9 +44,7 @@ build: [
   ]
     {!ocaml-native & os != "win32" }
 ]
-depends: [
-  "cmdliner" {build}
-]
+depends: [ "cmdliner" {build & <= "0.9.8"} ]
 patches: [ "patch-aa" ]
 
 available: [opam-version >= "1.1.0"]
