@@ -1,20 +1,22 @@
 # opam mingw repository
 
-My opam repository for windows - including an experimental build of opam
+An opam repository for windows - including an experimental build of opam
 for windows (of course, you still need cygwin for nearly everything:
 a shell interpreter to run configure scripts, git, rsync, ...)
 
 ## Homepage
 
 There is now a small homepage with installation instructions and usage
-information: https://fdopen.github.io/opam-repository-mingw/
+information: https://fdopen.github.io/opam-repository-mingw/ - and a
+[graphical installer](https://fdopen.github.io/opam-repository-mingw/installation/) that
+automates the steps listed below.
 
 ## Summary
 
 ### Download
 
-* [32-bit](https://dl.dropboxusercontent.com/s/eo4igttab8ipyle/opam32.tar.xz)
-* [64-bit](https://dl.dropboxusercontent.com/s/b2q2vjau7if1c1b/opam64.tar.xz)
+* [32-bit](https://github.com/fdopen/opam-repository-mingw/releases/download/0.0.0.1/opam32.tar.xz)
+* [64-bit](https://github.com/fdopen/opam-repository-mingw/releases/download/0.0.0.1/opam64.tar.xz)
 
 The archives contain native versions of opam, flexdll and aspcud. They
 are all not linked against cygwin1.dll, so you can use them with
@@ -43,6 +45,7 @@ $ opam init default 'https://github.com/fdopen/opam-repository-mingw.git' --comp
 $ opam init default 'https://github.com/fdopen/opam-repository-mingw.git' --comp 4.03.0+mingw64 --switch 4.03.0+mingw64
 $ eval $(opam config env)
 ```
+
 ## Things to remember
 
 * Add `/usr/i686-w64-mingw32/sys-root/mingw/bin` (or
