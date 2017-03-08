@@ -18,4 +18,5 @@ depexts: [
   [["nixpkgs"] ["openssl"]]
   [["archlinux"] ["openssl"]]
   [["win32" "cygwinports"] ["openssl"]]
+  [["opensuse"] ["libopenssl-devel"]]
 ]
