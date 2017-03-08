@@ -53,7 +53,7 @@
  ML_OUTFILE="$2"
  C_OUTFILE="$3"
  shift 3
-@@ -18,9 +18,18 @@
+@@ -18,9 +18,19 @@
  
  SRC=config/test.c
  OUT=config/test.out
@@ -65,6 +65,7 @@
 +case "$system" in
 +    win*)
 +        "$OCAMLC" -ccopt /P $OCAML_CFLAGS -c $SRC
++        dos2unix test.i
 +        cat test.i | grep '^"OUT:[^"]*"$' | sed 's/"OUT:\([^"]*\)"/\1/' | tee > $OUT
 +        ;;
 +    *)
