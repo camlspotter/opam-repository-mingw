@@ -12,4 +12,5 @@ depexts: [
   [["osx" "homebrew"] ["zeromq"]]
   [["alpine"] ["zeromq-dev"]]
   [["win32" "cygwinports"] ["zeromq"]]
+  [["centos"] ["zeromq-devel"]]
 ]
