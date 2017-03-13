@@ -11,6 +11,7 @@ patches: [
   "cmx.patch" { os != "win32" }
   "camomile-0.8.5.patch" { os = "win32" }
   "camomile-0.8.5-2.patch" { os = "win32" }
+  "4.05-typing-fix.patch"
 ]
 build: [
   ["./configure" "--prefix" prefix]
