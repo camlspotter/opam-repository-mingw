@@ -32,4 +32,5 @@ available: [ocaml-version >= "4.02.1" & ocaml-version < "4.03" & opam-version >=
 patches: [
   "opamingw.patch"
   "opamingw2.patch"
+  "fix_ppx_deriving_make_mllib.patch"
 ]
