@@ -17,3 +17,4 @@ depends: [
   "ocaml-migrate-parsetree" { >= "0.5" }
 ]
 available: [ocaml-version >= "4.02.0"]
+patches: "ppx_tools_versioned-5.0alpha.patch" {os = "win32"}
