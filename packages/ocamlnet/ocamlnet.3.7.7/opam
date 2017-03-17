@@ -63,10 +63,7 @@ depends: [
   "ocamlfind"
   "ocamlbuild" {build}
 ]
-depends: [
-  "ocamlfind" {build}
-  "ocamlbuild" {build}
-]
+depends: ["ocamlfind" "ocamlbuild"]
 depopts: [
   "lablgtk"
   "pcre"
