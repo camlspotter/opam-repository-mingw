@@ -45,7 +45,7 @@ remove: [
   ["ocamlfind" "remove" "smtp"]
 ]
 depends: [
-  "ocamlfind"
+  "ocamlfind" {build}
   "ocamlbuild" {build}
 ]
 depopts: [
