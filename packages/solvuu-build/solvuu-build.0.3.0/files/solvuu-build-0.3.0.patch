@@ -1,0 +1,44 @@
+--- ./lib/project.ml
++++ ./lib/project.ml
+@@ -3,7 +3,14 @@
+ open Tools
+ open Util
+ open Util.Filename
+-let (/) = Util.Filename.concat
++let (/) =
++  if Sys.os_type <> "Win32" then
++    Util.Filename.concat
++  else
++  fun a b ->
++    String.map
++      (fun c -> if c = '\\' then '/' else c)
++      (Util.Filename.concat a b)
+ 
+ type findlib_pkg = Solvuu_build_findlib.pkg
+ 
+@@ -803,7 +810,7 @@
+   let default = ["default: .merlin .ocamlinit byte"] in
+   let ln file = [
+     sprintf "%s: _build/%s" file file;
+-    "\tln -fs $< $@";
++    (if Sys.os_type <> "Win32" then "\tln -fs $< $@" else "\tcp -a $< $@");
+   ]
+   in
+   let libs mode =
+--- ./lib/util.ml
++++ ./lib/util.ml
+@@ -261,6 +261,14 @@
+     | None -> failwithf "%s doesn't end with %s" s old ()
+ 
+   let normalize x =
++    let x =
++      if Sys.os_type <> "Win32" then
++        x
++      else
++        String.map
++          (fun c -> if c = '\\' then '/' else c)
++          x
++    in
+     String.split ~on:'/' x |>
+     List.filter_map ~f:(function "." | "" -> None | x -> Some x) |>
+     String.concat ~sep:"/" |> function
