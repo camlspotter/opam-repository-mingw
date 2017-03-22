@@ -21,3 +21,4 @@ depends: [
   "ocamlbuild" {build}
   "ppx_deriving_protobuf"
 ]
+patches: "ocaml-protoc-1.0.3.patch" {os = "win32"}
