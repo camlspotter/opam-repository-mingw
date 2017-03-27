@@ -1,0 +1,15 @@
+--- ./_tags
++++ ./_tags
+@@ -5,9 +5,9 @@
+ <bspacks/**>: -traverse
+ "formatTest": -traverse
+ "src": include
+-<src/*>: package(menhirLib unix compiler-libs.common ocamlbuild findlib merlin_extend result dynlink findlib.dynload ocaml-migrate-parsetree ppx_tools_versioned.metaquot_404)
+-<src/reason_utop.*>: package(menhirLib utop)
+-<vendor/ppx_deriving/*>: package(compiler-libs.common findlib result ocaml-migrate-parsetree ppx_tools_versioned.metaquot_404)
++<src/*>: package(menhirLib,unix,compiler-libs.common,ocamlbuild,findlib,merlin_extend,result,dynlink,findlib.dynload,ocaml-migrate-parsetree,ppx_tools_versioned.metaquot_404)
++<src/reason_utop.*>: package(menhirLib,utop)
++<vendor/ppx_deriving/*>: package(compiler-libs.common,findlib,result,ocaml-migrate-parsetree,ppx_tools_versioned.metaquot_404)
+ 
+ <src_gen/*>: package(sedlex)
+ 
