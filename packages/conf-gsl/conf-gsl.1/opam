@@ -17,4 +17,5 @@ depexts: [
   [["opensuse"] ["gsl-devel"]]
   [["freebsd"] ["gsl"]]
   [["osx" "homebrew"] ["gsl"]]
+  [["win32" "cygwinports"] ["gsl"]]
 ]
