@@ -21,4 +21,5 @@ depexts: [
   [["alpine"] ["lapack-dev"]]
   [["opensuse"] ["blas-devel"]]
   [["freebsd"] ["blas" "gcc"]]
+  [["win32" "cygwinports"] ["blas"]]
 ]
