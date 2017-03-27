@@ -28,3 +28,4 @@ depopts: [
   "ounit" {test}
 ]
 available: [ ocaml-version >= "3.12" ]
+patches: "patch-oasis-slap.4.1.0" {os = "win32"}
