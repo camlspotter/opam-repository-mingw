@@ -36,4 +36,9 @@ depexts: [
   [ [ "openbsd" ] [ "lang/f77" ] ]
   [ [ "osx" "homebrew" ] [ "gcc" ] ] # provides gfortran
   [ [ "osx" "macports" ] [ "gcc" ] ]
+  [["win32" "cygwinports"] ["gcc-fortran"]]
+]
+patches: [
+  "odepack-0.6.8.patch" {os = "win32"}
+  "patch-oasis-odepack.0.6.8" {os = "win32"}
 ]

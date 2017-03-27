@@ -1,0 +1,16 @@
+--- ./setup.ml
++++ ./setup.ml
+@@ -7868,6 +7868,13 @@
+   is_substring_loop p (String.length p) 0 s (String.length s)
+ 
+ let fortran_compilers = ["gfortran"; "g95"; "g77"; "f77"]
++let fortran_compilers =
++  if Sys.os_type <> "Win32" then
++    fortran_compilers
++  else if Sys.word_size = 32 then
++    "i686-w64-mingw32-gfortran"::fortran_compilers
++  else
++    "x86_64-w64-mingw32-gfortran"::fortran_compilers
+ 
+ let fortran_lib() =
+   try
