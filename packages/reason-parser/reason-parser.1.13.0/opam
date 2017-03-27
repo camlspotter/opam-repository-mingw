@@ -37,3 +37,4 @@ depends: [
   "ppx_tools_versioned" {= "5.0alpha"}
 ]
 available: [ocaml-version >= "4.02" & ocaml-version < "4.05"]
+patches: "patch-spacetag-reason-parser.1.13.0" {os = "win32"}
