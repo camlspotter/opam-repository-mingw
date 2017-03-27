@@ -29,9 +29,8 @@ depends: [
   "ocaml-migrate-parsetree"
   "reason-parser"           {= "1.13.0"}
 ]
-depopts: [
-]
 conflicts: [
   "utop" {< "1.17"}
 ]
 available: [ ocaml-version >= "4.02" & ocaml-version < "4.05" ]
+patches: "patch-spacetag-reason.1.13.0" {os = "win32"}
