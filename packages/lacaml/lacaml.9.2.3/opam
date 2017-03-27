@@ -38,3 +38,7 @@ depends: [
   "conf-lapack"
 ]
 available: [ ocaml-version >= "4.03" ]
+patches: [
+  "patch-oasis-lacaml.9.2.3" {os = "win32"}
+  "lacaml-9.2.3.patch" {os = "win32"}
+]
