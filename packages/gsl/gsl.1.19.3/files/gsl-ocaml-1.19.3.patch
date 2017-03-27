@@ -1,0 +1,59 @@
+--- ./do_const.ml
++++ ./do_const.ml
+@@ -3,6 +3,15 @@
+ 
+ open Printf
+ 
++let cygpath s =
++  let s = "cygpath -aw " ^ Filename.quote s in
++  let ic = Unix.open_process_in s in
++  try
++    let l = input_line ic in
++    close_in_noerr ic;
++    l
++  with exc -> close_in_noerr ic; raise exc
++
+ let () =
+   let n_args = Array.length Sys.argv in
+   printf "(** Values of physical constants *)\n";
+@@ -26,7 +35,11 @@
+       emit, 1
+   in
+   let gsl_prefix =
+-    let ic = Unix.open_process_in "gsl-config --prefix" in
++   let s =
++       if Sys.os_type <> "Win32" then "gsl-config --prefix"
++       else "bash -ec ' gsl-config --prefix'"
++    in
++    let ic = Unix.open_process_in s in
+     try input_line ic
+     with exc -> close_in ic; raise exc
+   in
+@@ -35,7 +48,12 @@
+     if is_mli then printf "\nmodule %s : sig\n" (String.uppercase const)
+     else printf "\nmodule %s = struct\n" upper_const;
+     let gsl_path = sprintf "%s/include/gsl/gsl_const_%s.h" gsl_prefix const in
+-    let ic = open_in gsl_path in
++    let ic =
++      try
++        open_in gsl_path
++      with
++      | Sys_error _ when Sys.os_type = "Win32" -> open_in (cygpath gsl_path)
++    in
+     try
+       let rec loop () =
+         match try Some (input_line ic) with End_of_file -> None with
+--- ./myocamlbuild.ml
++++ ./myocamlbuild.ml
+@@ -983,7 +983,10 @@
+               | "macosx" -> "--libs-without-cblas"
+               | _ -> "--libs"
+             in
+-            Unix.open_process_in ("gsl-config --cflags " ^ libs_flag)
++            if Sys.os_type <> "Win32" then
++              Unix.open_process_in ("gsl-config --cflags " ^ libs_flag)
++            else
++              Unix.open_process_in ("bash -ec ' gsl-config --cflags " ^ libs_flag ^ "'")
+           in
+           try
+             let gsl_cflags = input_line ic in
