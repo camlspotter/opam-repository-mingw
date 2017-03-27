@@ -13,6 +13,7 @@ build: [
   [ "cp" "config/Makefile.msvc" "config/Makefile" ]
   [ "sed" "-i" "s#@PREFIX@#%{prefix}%#g" "config/Makefile" ]
   [ make "flexdll" "world.opt" "install" ]
+  [ "sh" "-exc" "echo \"%{lib}%/stublibs\"  >> \"%{lib}%/ocaml/ld.conf\"" ]
 ]
 packages: [
   "base-unix"
