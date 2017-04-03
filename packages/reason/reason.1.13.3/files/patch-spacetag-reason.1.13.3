@@ -1,0 +1,26 @@
+--- ./_tags
++++ ./_tags
+@@ -6,8 +6,8 @@
+ "formatTest": -traverse
+ "reason-parser": -traverse
+ "src": include
+-<src/*>: package(menhirLib unix compiler-libs.common ocamlbuild findlib merlin_extend result dynlink findlib.dynload ocaml-migrate-parsetree reason-parser)
+-<src/reason_utop.*>: package(menhirLib utop)
++<src/*>: package(menhirLib,unix,compiler-libs.common,ocamlbuild,findlib,merlin_extend,result,dynlink,findlib.dynload,ocaml-migrate-parsetree,reason-parser)
++<src/reason_utop.*>: package(menhirLib,utop)
+ 
+ <src_gen/*>: package(sedlex)
+ 
+--- ./reason-parser/_tags
++++ ./reason-parser/_tags
+@@ -3,8 +3,8 @@
+ <node_modules/**>: -traverse
+ <bspacks/**>: -traverse
+ "src": include
+-<src/*>: package(menhirLib unix compiler-libs.common ocamlbuild findlib merlin_extend result dynlink findlib.dynload ocaml-migrate-parsetree ppx_tools_versioned.metaquot_404)
+-<vendor/ppx_deriving/*>: package(compiler-libs.common findlib result ocaml-migrate-parsetree ppx_tools_versioned.metaquot_404)
++<src/*>: package(menhirLib,unix,compiler-libs.common,ocamlbuild,findlib,merlin_extend,result,dynlink,findlib.dynload,ocaml-migrate-parsetree,ppx_tools_versioned.metaquot_404)
++<vendor/ppx_deriving/*>: package(compiler-libs.common,findlib,result,ocaml-migrate-parsetree,ppx_tools_versioned.metaquot_404)
+ 
+ <src_gen/*>: package(sedlex)
+ 
