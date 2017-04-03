@@ -1,6 +1,5 @@
 opam-version: "1.2"
 maintainer: "yallop@gmail.com"
-author: "yallop@gmail.com"
 homepage: "https://github.com/yallop/ocaml-memcpy"
 dev-repo: "http://github.com/yallop/ocaml-memcpy.git"
 bug-reports: "http://github.com/yallop/ocaml-memcpy/issues"
@@ -16,3 +15,5 @@ depends: [
    "ocamlbuild" {build}
 ]
 available: [ ocaml-version >= "4.01.0" ]
+authors: "yallop@gmail.com"
+patches: "ocaml-memcpy-0.2.0.patch" {os = "win32"}
