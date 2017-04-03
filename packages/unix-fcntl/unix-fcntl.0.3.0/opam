@@ -17,4 +17,5 @@ depends: [
   "unix-type-representations"
 ]
 depopts: ["lwt" "base-threads"]
-available: os != "win32" & (ocaml-version >= "4.02.0")
+available:
+  os != "win32" & ocaml-version >= "4.02.0" & (ocaml-version < "4.05.0")
