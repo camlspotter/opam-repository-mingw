@@ -33,3 +33,4 @@ depends: [
   "rresult"
   "io-page"       {test}
 ]
+patches: "patch-spacetag-charrua-core.0.6" {os = "win32"}
