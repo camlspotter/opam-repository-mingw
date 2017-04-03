@@ -25,5 +25,8 @@ depends: [
 depopts: [
   "pcre"
 ]
+conflicts: [
+  "pcre" {>= "7.2"}
+]
 available: [ ocaml-version >= "4.01" ]
 patches: [ "patch-mikmatch_pcre-1.0.8" { os = "win32" } ]
