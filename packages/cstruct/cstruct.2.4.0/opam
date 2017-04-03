@@ -64,3 +64,7 @@ depexts: [
   [["ubuntu"] ["time"]]
 ]
 available: [ocaml-version >= "4.02.3"]
+patches: [
+  "patch-oasis-cstruct.2.4.0" {os = "win32"}
+  "ocaml-cstruct-2.4.0.patch" {os = "win32"}
+]
