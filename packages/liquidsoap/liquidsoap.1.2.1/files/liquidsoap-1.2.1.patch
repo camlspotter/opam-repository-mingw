@@ -1,0 +1,60 @@
+--- ./configure.ac
++++ ./configure.ac
+@@ -207,7 +207,7 @@
+         AC_MSG_RESULT(no)
+     fi
+     OCAMLC="$OCAMLFIND ocamlopt"
+-    _DEP_OPTS="-native"
++    _DEP_OPTS="-native -slash"
+ else
+     BYTE=yes
+     OCAMLCOMP=OCAMLC
+@@ -228,7 +228,7 @@
+     else
+         OCAMLC="$OCAMLFIND ocamlc"
+     fi
+-    _DEP_OPTS=""
++    _DEP_OPTS="-slash"
+ fi
+ 
+ OCAML_VERSION="`$OCAMLC -version`"
+@@ -629,8 +629,7 @@
+     AC_MSG_ERROR([Camomile provides charset detection and conversions. It is strongly advised to enable those features. If you really don't want this, use --disable-camomile.])
+   fi
+ else
+-    camdir=`$OCAMLFIND query camomile -l | \
+-      grep location | tr -d ' ' | cut -d':' -f 2`
++    camdir=`$OCAMLFIND query camomile -l | awk '/^location/ {print $2}'`
+     camencoding=Camomile.CharEncoding
+     # Use Camomile with environment variables if
+     # available
+--- ./configure
++++ ./configure
+@@ -5997,7 +5997,7 @@
+ $as_echo "no" >&6; }
+     fi
+     OCAMLC="$OCAMLFIND ocamlopt"
+-    _DEP_OPTS="-native"
++    _DEP_OPTS="-native -slash"
+ else
+     BYTE=yes
+     OCAMLCOMP=OCAMLC
+@@ -6058,7 +6058,7 @@
+     else
+         OCAMLC="$OCAMLFIND ocamlc"
+     fi
+-    _DEP_OPTS=""
++    _DEP_OPTS="-slash"
+ fi
+ 
+ OCAML_VERSION="`$OCAMLC -version`"
+@@ -12924,8 +12924,7 @@
+     as_fn_error $? "Camomile provides charset detection and conversions. It is strongly advised to enable those features. If you really don't want this, use --disable-camomile." "$LINENO" 5
+   fi
+ else
+-    camdir=`$OCAMLFIND query camomile -l | \
+-      grep location | tr -d ' ' | cut -d':' -f 2`
++    camdir=`$OCAMLFIND query camomile -l |  awk '/^location/ {print $2}'`
+     camencoding=Camomile.CharEncoding
+     # Use Camomile with environment variables if
+     # available
