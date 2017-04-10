@@ -17,6 +17,9 @@ depexts: [
   [["freebsd"] ["mpfr"]]
   [["openbsd"] ["mpfr"]]
   [["win32" "cygwinports"] ["mpfr"]]
+  [["alpine"] ["mpfr-dev"]]
+  [["centos"] ["mpfr-devel"]]
+  [["opensuse"] ["mpfr-devel"]]
 ]
 depends: [
   "conf-gmp"
