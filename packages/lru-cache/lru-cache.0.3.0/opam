@@ -11,4 +11,4 @@ build: [make "all"]
 install: [make "install"]
 remove: ["ocamlfind" "remove" "lru-cache"]
 depends: "ocamlfind"
-available: [ocaml-version >= "4.02.0"]
+available: os != "win32" & (ocaml-version >= "4.02.0")
