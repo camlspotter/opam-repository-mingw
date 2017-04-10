@@ -20,4 +20,4 @@ depends: [
   "lablgtk" {>= "2.16.0"}
   "conf-gtksourceview" {= "2"}
 ]
-available: [ocaml-version >= "4.02.0"]
+available: os != "win32" & (ocaml-version >= "4.02.0")
