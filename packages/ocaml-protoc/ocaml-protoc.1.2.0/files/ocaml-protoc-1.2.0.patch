@@ -1,0 +1,17 @@
+--- ./Makefile
++++ ./Makefile
+@@ -7,10 +7,11 @@
+ OCB_FLAGS = -use-ocamlfind -pkgs ppx_deriving_protobuf.runtime 
+ OCB       = ocamlbuild $(OCB_FLAGS) $(OCB_INC)
+ 
+-ifeq "$(shell ocamlc -config | grep os_type)" "os_type: Win32"
+-	@EXE=.exe
++OS_TYPE:=$(shell ocamlfind ocamlc -config | awk '/^os_type:/ {print $$2}')
++ifeq ($(OS_TYPE),$(filter $(OS_TYPE),Win32 Cygwin))
++	EXE=.exe
+ else
+-	@EXE=
++	EXE=
+ endif
+ 
+ # Common Directories

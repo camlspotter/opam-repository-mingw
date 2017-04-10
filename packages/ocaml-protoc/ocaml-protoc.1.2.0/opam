@@ -22,3 +22,4 @@ depends: [
   "ppx_deriving_protobuf"
 ]
 available: [ocaml-version >= "4.02.1" & opam-version >= "1.2"]
+patches: "ocaml-protoc-1.2.0.patch" {os = "win32"}
