@@ -1,6 +1,4 @@
 opam-version: "1.2"
-name: "lwt"
-version: "2.7.1"
 maintainer: [
   "Anton Bachin <antonbachin@yahoo.com>"
   "Mauricio Fernandez <mfp@acm.org>"
@@ -66,3 +64,4 @@ messages: [
   "For module Lwt_react, please install package lwt_react"
   {react:installed & !lwt_react:installed}
 ]
+patches: "lwt-2.7.1.patch" {os = "win32"}
