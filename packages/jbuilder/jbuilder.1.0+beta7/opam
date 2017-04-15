@@ -42,3 +42,4 @@ available: [ ocaml-version >= "4.02.3" ]
 # packages across several versions of OCaml and gives cross-compilation
 # for free.
 # "
+patches: "jbuilder-1.0-beta7.patch" {os = "win32"}
