@@ -21,6 +21,11 @@ depexts: [
   [["opensuse"] ["libogg-devel"]]
   [["nixpkgs"] ["libogg"]]
   [["osx" "homebrew"] ["libogg"]]
+  [["win32" "cygwinports"] ["libogg"]]
 ]
 bug-reports: "https://github.com/savonet/ocaml-ogg/issues"
 dev-repo: "https://github.com/savonet/ocaml-ogg.git"
+patches: [
+  "patch-ocamlmakefile-ogg.0.5.1" {os = "win32"}
+  "ocaml-ogg-0.5.1.patch" {os = "win32"}
+]

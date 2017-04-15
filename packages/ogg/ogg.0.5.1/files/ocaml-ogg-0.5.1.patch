@@ -1,0 +1,11 @@
+--- ./src/Makefile.in
++++ ./src/Makefile.in
+@@ -28,7 +28,7 @@
+ SOURCES = ogg.mli ogg.ml ogg_stubs.c ogg_demuxer.mli ogg_demuxer.ml
+ RESULT = ogg
+ OCAMLDOCFLAGS = -stars
+-LIBINSTALL_FILES = $(wildcard *.mli *.cmi *.cma *.cmx *.cmxa *.a *.so *.h)
++LIBINSTALL_FILES = $(wildcard *.mli *.cmti *.cmi *.cma *.cmx *.cmxa *.$(EXT_LIB) *.$(EXT_DLL) *.h)
+ ACLIBS = @LIBS@
+ LDFLAGS = @LDFLAGS@
+ CLIBS = $(ACLIBS:-l%=%)
