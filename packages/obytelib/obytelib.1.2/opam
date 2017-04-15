@@ -13,5 +13,5 @@ remove: [
   [make "uninstall"]
 ]
 depends: ["ocamlbuild"]
-available: ocaml-version >= "4.04.0"
+available: os != "win32" & (ocaml-version >= "4.04.0")
 install: [make "install"]
