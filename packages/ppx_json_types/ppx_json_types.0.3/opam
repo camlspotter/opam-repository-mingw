@@ -21,4 +21,4 @@ depends: [
   "ppx_deriving" {>= "3.0"}
   "ppx_deriving_yojson" {>= "2.4"}
 ]
-available: os != "win32"
+available: os != "win32" & ocaml-version < "4.03.0"
