@@ -11,3 +11,4 @@ install: ["ocaml" "please.ml" "install"]
 remove: ["ocaml" "please.ml" "uninstall"]
 depends: "ocamlfind"
 available: [ocaml-version >= "4.00.0"]
+patches: "smondet-nonstd-d23af602e909.patch" {os = "win32"}
