@@ -16,13 +16,14 @@ license: "LGPL-v3+ with OCaml linking exception"
 dev-repo: "https://gforge.inria.fr/git/dose/dose.git"
 build: [
   ["./configure"]
+  [make "printconf"]
   [make] {os != "win32"}
   [make "libs"] {os = "win32"}
 ]
 install: [make "installlib"]
 remove: [
   ["./configure"] {os != "win32"}
-  [make "uninstall"] {os != "win32"}
+  [make "uninstalllib"] {os != "win32"}
   ["ocamlfind" "remove" "dose3"] {os = "win32"}
 ]
 depends: [
@@ -38,4 +39,5 @@ conflicts: "dose"
 patches: [
  "0001-Install-mli-cmx-etc.patch"
  "dose3-5.0.1.patch" {os = "win32"}
+ "0002-dont-make-printconf.patch"
 ]
