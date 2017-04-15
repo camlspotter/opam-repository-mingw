@@ -19,6 +19,11 @@ depexts: [
   [["debian"] ["libgstreamer1.0-dev" "libgstreamer-plugins-base1.0-dev"]]
   [["ubuntu"] ["libgstreamer1.0-dev" "libgstreamer-plugins-base1.0-dev"]]
   [["osx" "homebrew"] ["gstreamer" "gst-plugins-base"]]
+  [["win32" "cygwinports"] ["gstreamer1.0" "gstreamer1.0-plugins-base"]]
 ]
 bug-reports: "https://github.com/savonet/ocaml-gstreamer/issues"
 dev-repo: "https://github.com/savonet/ocaml-gstreamer.git"
+patches: [
+  "patch-ocamlmakefile-gstreamer.0.2.3" {os = "win32"}
+  "ocaml-gstreamer-0.2.3.patch" {os = "win32"}
+]

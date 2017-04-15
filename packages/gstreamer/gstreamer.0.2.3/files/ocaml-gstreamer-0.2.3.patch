@@ -1,0 +1,11 @@
+--- ./src/Makefile.in
++++ ./src/Makefile.in
+@@ -29,7 +29,7 @@
+ SOURCES = gstreamer_stubs.c gstreamer.ml
+ RESULT = gstreamer
+ OCAMLDOCFLAGS = -stars
+-LIBINSTALL_FILES = $(wildcard *.mli *.cmi *.cma *.cmxa *.cmx *.a *.so)
++LIBINSTALL_FILES = $(wildcard *.mli *.cmi *.cma *.cmxa *.cmx *.$(EXT_LIB) *.$(EXT_DLL))
+ ACLIBS = @LIBS@
+ LDFLAGS = @LDFLAGS@
+ CLIBS = $(ACLIBS:-l%=%)
