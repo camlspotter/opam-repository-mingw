@@ -22,5 +22,5 @@ depexts: [
   [ [ "freebsd" ] [ "lang/f77" ] ]
   [ [ "openbsd" ] [ "lang/f77" ] ]
 ]
-available: ocaml-version >= "3.12.1"
+available: os != "win32" & (ocaml-version >= "3.12.1")
 install: ["ocaml" "setup.ml" "-install"]
