@@ -1,0 +1,11 @@
+--- ./cmd
++++ ./cmd
+@@ -63,7 +63,7 @@
+ install()  {
+   sed -e "s/@VERSION@/${VERSION}/g" < META.in > _config/META
+   ${OCAMLFIND} remove ${NAME} || true
+-  t=`sed -e 's,^,_build/,g' < _build/${NAME}.all`
++  t=`cat _build/${NAME}.all | dos2unix | sed -e 's,^,_build/,g'`
+   if [ ! -z "${DESTDIR}" ]; then
+     OCAMLFIND_FLAGS="${OCAMLFIND_FLAGS} -destdir ${DESTDIR}"
+   fi

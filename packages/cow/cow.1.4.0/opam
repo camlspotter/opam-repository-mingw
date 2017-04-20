@@ -44,3 +44,4 @@ depends: [
   "ocamlbuild" {build}
 ]
 available: [ocaml-version >= "4.00"]
+patches: "ocaml-cow-1.4.0.patch" {os = "win32"}
