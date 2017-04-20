@@ -56,7 +56,7 @@ depends: [
   "sexplib"
   "base-bytes"
   "ocaml-migrate-parsetree"
-  "ppx_tools_versioned"
+  "ppx_tools_versioned" {>="5.0beta"}
 ]
 depopts: ["async" "lwt" "base-unix"]
 depexts: [
