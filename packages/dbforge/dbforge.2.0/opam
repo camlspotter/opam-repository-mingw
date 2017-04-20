@@ -14,3 +14,4 @@ depends: [
   "xml-light"
 ]
 install: [make "install"]
+available: os != "win32"

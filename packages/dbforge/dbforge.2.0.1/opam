@@ -25,3 +25,4 @@ depends: [
   "xml-light"
 ]
 install: [make "install-lib"]
+available: os != "win32"
