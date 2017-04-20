@@ -12,3 +12,4 @@ depends: [
 ]
 install: [make "install"]
 dev-repo: "git://github.com/mmottl/pcre-ocaml"
+available: os != "win32"
