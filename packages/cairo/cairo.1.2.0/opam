@@ -33,7 +33,7 @@ authors: [
   "Richard Jones"
 ]
 depexts: [
-  [["win32" "cygwinports"] ["system:autoconf-archive" "system:pkg-config"]]
+  [["win32" "cygwinports"] ["system:autoconf-archive" "system:pkg-config" "system:automake"]]
 ]
 homepage: "http://cairographics.org/cairo-ocaml/"
 dev-repo: "git+http://anongit.freedesktop.org/git/cairo-ocaml.git"
