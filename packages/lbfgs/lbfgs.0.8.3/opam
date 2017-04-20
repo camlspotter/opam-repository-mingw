@@ -30,3 +30,4 @@ depexts: [
   [["osx" "homebrew"] ["gcc"]]
 ]
 install: ["ocaml" "setup.ml" "-install"]
+available: os != "win32"
