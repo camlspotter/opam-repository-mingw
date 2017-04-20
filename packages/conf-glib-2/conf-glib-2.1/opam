@@ -1,6 +1,7 @@
 opam-version: "1.2"
 homepage: "https://wiki.gnome.org/Projects/GLib"
 license: "LGPL-2.0"
+depends: ["conf-pkg-config"]
 build: [["pkg-config" "glib-2.0"]]
 depexts: [
   [["debian"] ["libglib2.0-dev"]]
@@ -10,6 +11,7 @@ depexts: [
   [["alpine"] ["glib-dev"]]
   [["osx" "homebrew"] ["glib"]]
   [["osx" "macports"] ["glib2-devel"]]
+  [["win32" "cygwinports"] ["glib2.0"]]
 ]
 post-messages: [
   "This package requires GLib 2 development files installed on your system"
