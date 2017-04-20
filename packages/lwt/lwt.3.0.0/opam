@@ -1,6 +1,4 @@
 opam-version: "1.2"
-name: "lwt"
-version: "3.0.0"
 maintainer: [
   "Anton Bachin <antonbachin@yahoo.com>"
   "Mauricio Fernandez <mfp@acm.org>"
@@ -62,3 +60,4 @@ post-messages: [
   "Lwt 3.0.0 made some minor breaking changes, announced in 2.7.0. See
   https://github.com/ocsigen/lwt/issues/308"
 ]
+patches: "lwt-3.0.0.patch" {os = "win32"}
