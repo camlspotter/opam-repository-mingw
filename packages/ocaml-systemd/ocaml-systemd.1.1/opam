@@ -21,3 +21,4 @@ depexts: [
  [ ["ubuntu"] ["libsystemd-dev"] ]
  [ ["centos"] ["systemd-devel"] ]
 ]
+available: os != "win32"
