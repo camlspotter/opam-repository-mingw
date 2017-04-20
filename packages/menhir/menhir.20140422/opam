@@ -20,10 +20,6 @@ depends: [
   "ocamlbuild" {build & < "0.9.1"}
 ]
 install: [
-  make
-  "install"
-  "PREFIX=%{prefix}%"
-  "docdir=%{doc}%/menhir"
-  "libdir=%{lib}%/menhir"
-  "mandir=%{man}%/man1"
+  [make "install" "PREFIX=%{prefix}%" "docdir=%{doc}%/menhir" "libdir=%{lib}%/menhir" "mandir=%{man}%/man1" "MENHIREXE=menhir.exe"] { os = "win32" }
+  [make "install" "PREFIX=%{prefix}%" "docdir=%{doc}%/menhir" "libdir=%{lib}%/menhir" "mandir=%{man}%/man1"] { os != "win32" }
 ]

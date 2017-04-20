@@ -10,3 +10,4 @@ install: [
   "libdir=%{lib}%/menhir"
   "mandir=%{man}%/man1"
 ]
+available: os != "win32"
