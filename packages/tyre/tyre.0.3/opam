@@ -26,3 +26,4 @@ depends: [
   "result"
 ]
 available: [ocaml-version >= "4.02.0"]
+patches: "patch-oasis-tyre.0.3" {os = "win32"}
