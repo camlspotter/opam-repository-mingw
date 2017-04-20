@@ -1,6 +1,4 @@
 opam-version: "1.2"
-name: "lwt_glib"
-version: "1.0.1"
 maintainer: [
   "Anton Bachin <antonbachin@yahoo.com>"
 ]
@@ -28,3 +26,4 @@ depends: [
   "conf-pkg-config" {build}
   "conf-glib-2" {build}
 ]
+patches: "lwt_glib-1.0.1.patch" {os = "win32"}
