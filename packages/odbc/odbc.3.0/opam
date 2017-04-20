@@ -20,3 +20,4 @@ depexts: [
   [ [ "osx" "homebrew" ] [ "unixodbc" ] ]
 ]
 install: [make "findlib_install"]
+available: os != "win32"
