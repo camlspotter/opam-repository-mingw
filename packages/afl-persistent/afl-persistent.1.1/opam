@@ -8,7 +8,7 @@ license: "MIT"
 build:
 [[ "ocaml" "pkg/pkg.ml" "build"
            "--pinned" "%{pinned}%"]]
-available: [ ocaml-version >= "4.05" ]
+available: ocaml-version >= "4.05" & os != "win32"
 depends: [
   "topkg" {build & >= "0.7.4"}
   "base-unix"
