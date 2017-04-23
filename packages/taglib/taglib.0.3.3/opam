@@ -22,3 +22,4 @@ depexts: [
 ]
 bug-reports: "https://github.com/savonet/ocaml-taglib/issues"
 dev-repo: "https://github.com/savonet/ocaml-taglib.git"
+available: os != "win32"
