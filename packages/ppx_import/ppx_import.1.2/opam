@@ -28,3 +28,4 @@ depends: [
   "ppx_deriving" {test & >= "2.0"}
 ]
 available: [ocaml-version >= "4.02.0" & opam-version >= "1.2.2"]
+patches: "ppx_import-1.2.patch" {os = "win32"}
