@@ -17,3 +17,4 @@ depends: [
   "ctypes" {test}
   "ounit" {test}
 ]
+available: os != "win32"
