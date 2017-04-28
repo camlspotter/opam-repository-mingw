@@ -16,3 +16,4 @@ depends: [
   "jbuilder" {build & >= "1.0+beta7"}
 ]
 available: [ ocaml-version >= "4.02.3" ]
+patches: "lambda-term-1.11.patch" {os = "win32"}
