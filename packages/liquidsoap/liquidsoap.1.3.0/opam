@@ -58,7 +58,10 @@ conflicts: [
   "cry" {< "0.5.0"}
   "taglib" {< "0.3.0"}
 ]
-patches: [ "fix_4.05.patch" ]
+patches: [
+  "fix_4.05.patch"
+  "liquidsoap-1.3.0.patch" {os = "win32"}
+]
 available: [ ocaml-version >= "4.00" ]
 bug-reports: "https://github.com/savonet/liquidsoap/issues"
 dev-repo: "https://github.com/savonet/liquidsoap.git"
