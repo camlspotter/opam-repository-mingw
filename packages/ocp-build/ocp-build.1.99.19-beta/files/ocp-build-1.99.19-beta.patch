@@ -1,14 +1,3 @@
---- ./libs/ocplib-compat/build.ocp2
-+++ ./libs/ocplib-compat/build.ocp2
-@@ -32,7 +32,7 @@
- 
-   begin
-     ocaml.files = [ "stringCompat.ml";  "ocpCompat.ml" ];
--    ocaml.pp = [ "%{ocp-pp_FULL_DST_DIR}%/ocp-pp.byte" ]; 
-+    ocaml.pp = [ "%{ocp-pp_FULL_DST_DIR}%/ocp-pp.byte.exe" ];
-     ocaml.requires = [ "ocp-pp" ];
-     ocaml.pp_requires = [ "ocp-pp:byte" ];
- (*  Wrong on windows, as it should set .byte.exe instead of .byte
 --- ./libs/ocplib-unix/build.ocp2
 +++ ./libs/ocplib-unix/build.ocp2
 @@ -26,7 +26,7 @@
