@@ -1,0 +1,11 @@
+--- ./src/Makefile.in
++++ ./src/Makefile.in
+@@ -28,7 +28,7 @@
+ SOURCES = lame.mli lame.ml lame_stubs.c
+ RESULT = lame
+ OCAMLDOCFLAGS = -stars
+-LIBINSTALL_FILES = $(wildcard *.mli *.cmi *.cma *.cmxa *.cmx *.a *.so *.cmxs)
++LIBINSTALL_FILES = $(wildcard *.mli *.cmi *.cma *.cmxa *.cmx *.$(EXT_LIB) *.$(EXT_DLL) *.cmxs)
+ LDFLAGS = @LDFLAGS@
+ ACLIBS = @LIBS@
+ CLIBS = $(ACLIBS:-l%=%)
