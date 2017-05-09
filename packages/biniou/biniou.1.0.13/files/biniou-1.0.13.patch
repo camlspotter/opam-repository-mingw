@@ -1,0 +1,41 @@
+--- ./Makefile
++++ ./Makefile
+@@ -3,7 +3,10 @@
+ FLAGS = -g -annot -bin-annot
+ PACKS = easy-format
+ 
+-ifeq "$(shell ocamlfind ocamlc -config |grep os_type)" "os_type: Win32"
++EXT_LIB:=$(shell ocamlfind ocamlc -config | tr -d '\15' | awk '/^ext_lib:/ {print $$2}')
++EXT_OBJ:=$(shell ocamlfind ocamlc -config | tr -d '\15' | awk '/^ext_obj:/ {print $$2}')
++
++ifeq "$(shell ocamlfind ocamlc -config | tr -d '\15' | grep os_type)" "os_type: Win32"
+ EXE=.exe
+ else
+ EXE=
+@@ -70,7 +73,7 @@
+ ANNOT = $(MLI:.mli=.annot)
+ CMO = $(ML:.ml=.cmo)
+ CMX = $(ML:.ml=.cmx)
+-O = $(ML:.ml=.o)
++O = $(ML:.ml=$(EXT_OBJ))
+ 
+ biniou.cma: $(SOURCES) Makefile
+ 	ocamlfind ocamlc -a $(FLAGS) -o biniou.cma \
+@@ -115,7 +118,7 @@
+ 	fi
+ 	ocamlfind install biniou META \
+ 	  $(MLI) $(CMI) $(CMT) $(ANNOT) $(CMO) biniou.cma \
+-	  -optional $(CMX) $(O) biniou.cmxa biniou.a biniou.cmxs
++	  -optional $(CMX) $(O) biniou.cmxa biniou$(EXT_LIB) biniou.cmxs
+ 
+ uninstall:
+ 	rm -f $(BINDIR)/bdump{.exe,}
+@@ -124,7 +127,7 @@
+ .PHONY: clean
+ 
+ clean:
+-	rm -f *.o *.a *.cm[ioxa] *.cmxa *~ *.annot META
++	rm -f *.o *$(EXT_LIB) *.cm[ioxa] *.cmxa *~ *.annot META
+ 	rm -f {bdump,test_biniou}{.exe,.byte,.native,}
+ 	rm -rf doc
+ 	rm -f test.bin test_channels.bin
