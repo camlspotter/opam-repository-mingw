@@ -29,3 +29,4 @@ License terms: http://yices.csl.sri.com/yices-newnewlicense.html
   "
     {success}
 ]
+available: os != "win32"
