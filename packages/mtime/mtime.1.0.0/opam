@@ -19,3 +19,4 @@ build: [[
    "ocaml" "pkg/pkg.ml" "build"
    "--pinned" "%{pinned}%"
    "--with-js_of_ocaml" "%{js_of_ocaml:installed}%" ]]
+patches: "mtime-1.0.0.patch" {os = "win32"}
