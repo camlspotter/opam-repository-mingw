@@ -11,9 +11,9 @@ depends: [ "jbuilder" {build} "ocamlfind" {build} ]
 build: [
   [ "jbuilder" "build" ]
 ]
-install: [
-  [ "jbuilder" "install" ]
-]
+#install: [
+#  [ "jbuilder" "install" ]
+#]
 remove: [
   [ "ocamlfind" "remove" "clarity" ]
 ]
