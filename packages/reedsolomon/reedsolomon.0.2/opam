@@ -8,7 +8,7 @@ remove: [
 depends: [
   "ocamlfind"
   "hardcaml"
-  "js_of_ocaml"
+  "js_of_ocaml" {< "3.0"}
   "ocamlbuild" {build}
 ]
 available: ocaml-version >= "4.00.1"
