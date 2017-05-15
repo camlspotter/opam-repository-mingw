@@ -36,5 +36,5 @@ conflicts: [
   "async_kernel" {< "113.33.00"}
   "ppx_driver" {>="v0.9.0"}
 ]
-available: [ocaml-version >= "4.02.0"]
+available: [ocaml-version >= "4.02.0" & ocaml-version < "4.05.0"]
 patches: "js_of_ocaml-2.8.2.patch" {os = "win32"}
