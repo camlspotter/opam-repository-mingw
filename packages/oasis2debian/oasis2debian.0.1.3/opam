@@ -38,4 +38,4 @@ depends: [
   "pcre" {build}
   "xstrp4" {build & >= "1.8"}
 ]
-available: [ ocaml-version >= "3.12.1" ]
+available: ocaml-version >= "3.12.1" & os != "win32"
