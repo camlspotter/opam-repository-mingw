@@ -1,0 +1,31 @@
+--- ./lib/utils_c.c
++++ ./lib/utils_c.c
+@@ -24,7 +24,7 @@
+ #include "utils_c.h"
+ #include <caml/alloc.h>
+ 
+-#ifdef WIN32
++#ifdef _WIN32
+   #include <windows.h>
+ #else
+   #include <time.h>
+@@ -40,7 +40,7 @@
+ 
+ int portable_sleep(int milliseconds)
+ {
+-#ifdef WIN32
++#ifdef _WIN32
+   Sleep(milliseconds);
+   return 0;
+ #else
+--- ./_oasis
++++ ./_oasis
+@@ -80,7 +80,7 @@
+     CCOpt+:      -DEXTERNAL_EXP10
+     CCLib:       -framework Accelerate
+   # FIXME: mingw is untested!!!
+-  if system(mingw)
++  if system(mingw) || system(mingw64)
+     CCOpt+:      -DEXTERNAL_EXP10
+ 
+ Library lacaml_top
