@@ -9,6 +9,7 @@ depends: [
   "lwt" {>= "2.4.3"}
   "mirage-types" {>= "1.1.0"}
   "ocamlbuild" {build}
+  "cstruct-lwt"
 ]
 available: ocaml-version >= "4.01.0"
 install: [make "install"]
