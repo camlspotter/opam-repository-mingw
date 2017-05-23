@@ -1,0 +1,43 @@
+--- ./Makefile
++++ ./Makefile
+@@ -1,5 +1,8 @@
+ .PHONY: build install uninstall reinstall clean
+ 
++EXT_DLL:=$(shell ocamlfind ocamlc -config | tr -d '\015' | awk '/^ext_dll:/ {print $$2}')
++EXT_LIB:=$(shell ocamlfind ocamlc -config | tr -d '\015' | awk '/^ext_lib:/ {print $$2}')
++
+ FINDLIB_NAME=memcpy
+ MOD_NAME=memcpy
+ 
+@@ -12,7 +15,7 @@
+ 
+ PRODUCTS=$(addprefix $(MOD_NAME),$(TARGETS))
+ PRODUCTS+=$(addprefix $(MOD_NAME),$(TARGETS)) \
+-          lib$(MOD_NAME)_stubs.a dll$(MOD_NAME)_stubs.so \
++          lib$(MOD_NAME)_stubs$(EXT_LIB) dll$(MOD_NAME)_stubs$(EXT_DLL) \
+ 
+ TYPES=.mli .cmi .cmti .cmx
+ 
+@@ -21,9 +24,9 @@
+ 
+ INSTALL:=$(addprefix _build/lib/,$(INSTALL))
+ 
+-ARCHIVES:=_build/lib/$(MOD_NAME).a
++ARCHIVES:=_build/lib/$(MOD_NAME)$(EXT_LIB)
+ 
+-ARCHIVES+=_build/lib/$(MOD_NAME).a
++ARCHIVES+=_build/lib/$(MOD_NAME)$(EXT_LIB)
+ 
+ build:
+ 	$(OCAMLBUILD) $(PRODUCTS)
+@@ -31,8 +34,8 @@
+ install:
+ 	ocamlfind install $(FINDLIB_NAME) META \
+ 		$(INSTALL) \
+-		-dll _build/lib/dll$(MOD_NAME)_stubs.so \
+-		-nodll _build/lib/lib$(MOD_NAME)_stubs.a \
++		-dll _build/lib/dll$(MOD_NAME)_stubs$(EXT_DLL) \
++		-nodll _build/lib/lib$(MOD_NAME)_stubs$(EXT_LIB) \
+ 		$(ARCHIVES)
+ 
+ test: build

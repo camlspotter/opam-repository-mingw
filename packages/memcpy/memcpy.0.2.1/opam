@@ -17,3 +17,4 @@ depends: [
 ]
 available: [ ocaml-version >= "4.01.0" ]
 tags: ["org:mirage"]
+patches: "ocaml-memcpy-0.2.1.patch" {os = "win32"}
