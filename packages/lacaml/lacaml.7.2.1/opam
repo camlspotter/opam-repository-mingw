@@ -30,10 +30,16 @@ depends: [
   "base-bytes"
   "ocamlfind" {>= "1.5"}
   "ocamlbuild" {build}
+  "conf-blas" {build}
+  "conf-lapack" {build}
 ]
 available: [ ocaml-version >= "3.12" ]
 depexts: [
   [["debian"] ["libblas-dev" "liblapack-dev"]]
   [["ubuntu"] ["libblas-dev" "liblapack-dev"]]
   [["centos"] ["blas-devel" "lapack-devel"]]
+]
+patches: [
+  "lacaml-7.2.1.patch" {os = "win32"}
+  "patch-oasis-lacaml.7.2.1" {os = "win32"}
 ]
