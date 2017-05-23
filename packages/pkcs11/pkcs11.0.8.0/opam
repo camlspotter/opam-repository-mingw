@@ -29,4 +29,4 @@ depopts: [
   "cmdliner"
 ]
 tags: ["org:cryptosense"]
-available: [ocaml-version >= "4.02.0" & os != "darwin"]
+available: ocaml-version >= "4.02.0" & os != "darwin" & os != "win32"
