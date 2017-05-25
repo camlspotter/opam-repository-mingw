@@ -1,0 +1,11 @@
+--- ./_oasis
++++ ./_oasis
+@@ -85,7 +85,7 @@
+     CCOpt+:      -DEXTERNAL_EXP10
+     CCLib:       -framework Accelerate
+   # building on Windows is only tested for mingw64 toolchain
+-  if system(mingw64)
++  if system(mingw) || system(mingw64)
+     CCOpt+:      -DEXTERNAL_EXP10 -DWIN32
+ 
+ Library lacaml_top
