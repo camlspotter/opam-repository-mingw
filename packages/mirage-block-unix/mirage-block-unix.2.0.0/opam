@@ -27,4 +27,4 @@ depends: [
   "ocamlbuild" {build}
   "cstruct-lwt"
 ]
-available: [ ocaml-version >= "4.00.0" ]
+available: ocaml-version >= "4.00.0" & os != "win32"
