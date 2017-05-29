@@ -12,7 +12,7 @@ depends: [
   "type_conv" {= "109.47.00"}
   "ocamlbuild" {build}
 ]
-available: [ ocaml-version < "4.03" ]
+available: ocaml-version < "4.03" & os != "win32"
 bug-reports: "https://github.com/janestreet/bin_prot/issues"
 dev-repo: "https://github.com/janestreet/bin_prot.git"
 install: [[make "install"]]

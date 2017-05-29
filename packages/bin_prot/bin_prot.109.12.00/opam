@@ -9,3 +9,4 @@ depends: [
 ]
 install: [make "install"]
 dev-repo: "git://github.com/janestreet/bin_prot"
+available: os != "win32"
