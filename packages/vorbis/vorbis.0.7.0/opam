@@ -22,6 +22,11 @@ depexts: [
  [["debian"] ["libvorbis-dev"]]
  [["ubuntu"] ["libvorbis-dev"]]
  [["osx" "homebrew"] ["libvorbis"]]
+ [["win32" "cygwinports"] ["libvorbis"]]
 ]
 bug-reports: "https://github.com/savonet/ocaml-vorbis/issues"
 dev-repo: "https://github.com/savonet/ocaml-vorbis.git"
+patches: [
+  "ocaml-vorbis-0.7.0.patch" {os = "win32"}
+  "patch-ocamlmakefile-vorbis.0.7.0" {os = "win32"}
+]
