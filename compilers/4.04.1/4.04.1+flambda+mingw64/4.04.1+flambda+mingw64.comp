@@ -2,7 +2,7 @@ opam-version: "1"
 version: "4.04.1"
 src: "https://github.com/ocaml/ocaml/archive/4.04.1.tar.gz"
 patches:[
-  "https://gist.githubusercontent.com/fdopen/5b94836d67b7d6bdf2b410b166225511/raw/0bfa91b115be869fb0b2a48d69d86ed68e4bf9de/ocaml-4.04.1.patch"
+  "https://gist.github.com/fdopen/e1e942d7ac4eb4379682a48d71b21ffa/raw/b6800bbb16e223f7b587fd28e1ffae5d23d1d398/ocaml-4.04.1.patch"
 ]
 build: [
   [ "mkdir" "-p" "%{lib}%/ocaml" ]
