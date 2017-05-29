@@ -1,0 +1,954 @@
+--- ./lib/build/C.om
++++ ./lib/build/C.om
+@@ -91,33 +91,40 @@
+ # \end{doc}
+ #
+ if $(equal $(OSTYPE), Win32)
+-    public.CC = cl /nologo
+-    public.CXX = cl /nologo
+-    public.CPP = cl /nologo /E
+-    public.CFLAGS = /DWIN32
+-    public.CXXFLAGS = /DWIN32
++    public.GCCTOOLPREFIX=i686-w64-mingw32-
++    .STATIC:
++        GCC_FOUND = $(CheckProg $(GCCTOOLPREFIX)gcc)
++        GXX_FOUND = $(and $(GCC_FOUND), $(CheckProg $(GCCTOOLPREFIX)g++))
++        CC = $(if $(GCC_FOUND), $(GCCTOOLPREFIX)gcc, gcc)
++        CXX = $(if $(GXX_FOUND), $(GCCTOOLPREFIX)g++, g++)
++    public.CPP = $(GCCTOOLPREFIX)cpp
++    public.CFLAGS =
++    public.CXXFLAGS =
+     public.AR(name) =
+-        return(lib /nologo /debugtype:CV /out:$(name))
+-    public.RANLIB = echo ranlib
++        return($(GCCTOOLPREFIX)ar cq $(name))
++    public.RANLIB = $(GCCTOOLPREFIX)ranlib
++    public.LD = $(GCCTOOLPREFIX)ld
+     public.INCLUDES[] = .
+-    public.INCLUDES_OPT = /I
+-    public.CCOUT = /Fo
+-    public.LD = cl /nologo
+-    public.YACC = echo yacc
+-    public.LEX = echo lex
++    public.INCLUDES_OPT = -I
++    public.CCOUT = $(array -o)
++    public.YACC = yacc
++    public.LEX = lex
+     public.LIBS =
+     public.LDFLAGS =
+-    public.LDFLAGS_DLL = /DLL
+-    public.CDLL_IMPLIES_STATIC = true
+-    public.LDOUT = /Fe
+-
+-    public.AS = ml /nologo
+-    public.ASOUT = /Fo
+-    public.ASFLAGS = /c /coff
++    public.CDLL_IMPLIES_STATIC = false
++    public.LDOUT = $(array -o)
+ 
+-    .STATIC:
+-        CL_FOUND = $(CheckProg cl)
+-        LIB_FOUND = $(CheckProg lib)
++    # MacOS X specific config
++    if $(equal $(SYSNAME), Darwin)
++        public.LDFLAGS_DLL = -dynamiclib
++        export
++    else
++        public.LDFLAGS_DLL = -shared
++        export
++
++    public.AS = $(GCCTOOLPREFIX)as
++    public.ASOUT = $(array -o)
++    public.ASFLAGS =
+ 
+     export
+ else
+@@ -239,34 +246,20 @@
+ # whenever the scanned dependencies change.
+ #
+ if $(equal $(OSTYPE), Win32)
+-    Shell. +=
+-        builtin-cc-depend(argv) =
+-           filename = $(nth 0, $(argv))
+-           depends[] =
+-           awk(b, $(stdin))
+-           case $'Note:.*including file: *\(.*\)$'
+-              depends[] += $(file $"$1")
+-              export
+-           case $'.[(][0-9][0-9]*[)] : (warning|(fatal |)error) [A-Z][0-9]*: '
+-              eprintln($0)
+-           depends = $(string-escaped $(set $(depends)))
+-           objname = $(string-escaped $(rootname $(filename))$(EXT_OBJ))
+-           println($"$(objname): $(depends)")
+-
+     .SCANNER: scan-c-%.c: %.c /.PHONY/CGeneratedFilesTarget :value: $(digest-in-path-optional $(INCLUDES), $&)
+-        $(CC) $(CFLAGS) $(PREFIXED_INCLUDES) /Zs /showIncludes $< |& builtin-cc-depend $<
++	$(CC) $(CFLAGS) $(PREFIXED_INCLUDES) -MM $< | omake-mmtranslate.exe
+ 
+     # Include default rule for backwards-compatibility
+     .SCANNER: %$(EXT_OBJ): %.c /.PHONY/CGeneratedFilesTarget :value: $(digest-in-path-optional $(INCLUDES), $&)
+-        $(CC) $(CFLAGS) $(PREFIXED_INCLUDES) /Zs /showIncludes $< |& builtin-cc-depend $<
++    	$(CC) $(CFLAGS) $(PREFIXED_INCLUDES) -MM $< | omake-mmtranslate.exe
+ 
+     foreach(CXX_EXT => ..., $(CXX_EXTS))
+         .SCANNER: scan-cxx-%$(CXX_EXT): %$(CXX_EXT) /.PHONY/CGeneratedFilesTarget :value: $(digest-in-path-optional $(INCLUDES), $&)
+-            $(CXX) $(CXXFLAGS) $(PREFIXED_INCLUDES) /Zs /showIncludes $< |& builtin-cc-depend $<
++            $(CXX) $(CXXFLAGS) $(PREFIXED_INCLUDES) -MM $< | omake-mmtranslate.exe
+ 
+         # Include default rule for backwards-compatibility
+         .SCANNER: %$(EXT_OBJ): %$(CXX_EXT) /.PHONY/CGeneratedFilesTarget :value: $(digest-in-path-optional $(INCLUDES), $&)
+-            $(CXX) $(CXXFLAGS) $(PREFIXED_INCLUDES) /Zs /showIncludes $< |& builtin-cc-depend $<
++            $(CXX) $(CXXFLAGS) $(PREFIXED_INCLUDES) -MM $< | omake-mmtranslate.exe
+ 
+         export
+     export
+@@ -331,9 +324,9 @@
+ 
+     if $(equal $(OSTYPE), Win32)
+         $(NORMALLIB): $(OFILES)
+-            echo $(OFILES) > $@.tmp
+-            $(AR $@) @$@.tmp
+-            rm -f $@.tmp
++	    rm -f $@
++            $(AR $@) $(OFILES)
++            $(RANLIB) $@
+ 
+     else
+         $(NORMALLIB): $(OFILES)
+--- ./lib/build/Common.om
++++ ./lib/build/Common.om
+@@ -115,10 +115,10 @@
+     #
+     # Common suffixes for files
+     #
+-    EXT_LIB = .lib
++    EXT_LIB = .a
+     EXT_DLL = .dll
+-    EXT_OBJ = .obj
+-    EXT_ASM = .asm
++    EXT_OBJ = .o
++    EXT_ASM = .s
+     EXE = .exe
+ 
+     export
+--- ./lib/build/OCaml.om
++++ ./lib/build/OCaml.om
+@@ -176,7 +176,7 @@
+ #
+ declare OCAMLDEPFLAGS
+ public.OCAMLPPFLAGS  =
+-public.OCAMLFLAGS    = -warn-error A
++public.OCAMLFLAGS    =
+ public.OCAMLCFLAGS   = -g
+ public.OCAMLOPTFLAGS =
+ public.OCAMLCPPFLAGS =
+--- ./lib/configure/Configure.om
++++ ./lib/configure/Configure.om
+@@ -266,7 +266,7 @@
+ # \end{doc}
+ #
+ public.CheckCLib(libs, funs) =
+-    CFLAGS += $(addprefix -l, $(libs))
++    LDFLAGS += $(addprefix -l, $(libs))
+ 
+     return $(TryLinkC $"""
+ #ifdef __cplusplus
+--- ./lib/configure/fam.om
++++ ./lib/configure/fam.om
+@@ -9,7 +9,7 @@
+     FAM_CLIBS =
+     if $(equal $(OSTYPE), Win32)
+         FAM_AVAILABLE = true
+-        FAM_CFLAGS = /DFAM_ENABLED /DFAM_PSEUDO
++        FAM_CFLAGS = -DFAM_ENABLED -DFAM_PSEUDO
+         export
+     else
+         # Unix
+--- ./Makefile
++++ ./Makefile
+@@ -18,8 +18,8 @@
+ 	@exit 1
+ 
+ bootstrap: boot/Makefile
+-	@cd boot; $(MAKE) Makefile.dep; $(MAKE) omake
+-	@ln -sf boot/omake omake-boot
++	@cd boot; $(MAKE) Makefile.dep; $(MAKE) omake.exe
++	@ln -sf boot/omake.exe omake-boot.exe
+ 
+ boot/Makefile: src/Makefile
+ 	mkdir -p boot
+@@ -32,5 +32,12 @@
+ 	OMAKEFLAGS= OMAKEPATH=lib ./omake-boot --dotomake .omake --force-dotomake -j2 main
+ 	OMAKEFLAGS= OMAKEPATH=lib src/main/omake --dotomake .omake --force-dotomake -j2 all
+ 
++MJOBS?=2
++all-no-bootstrap:
++	touch .config
++	OMAKEFLAGS= OMAKEPATH=lib ./omake-boot --dotomake .omake --force-dotomake -j$(MJOBS) main
++	rm -f src/main/omake.exe
++	OMAKEFLAGS= OMAKEPATH=lib src/main/omake.opt --dotomake .omake --force-dotomake -j$(MJOBS) all
++
+ install: all
+ 	OMAKEFLAGS= OMAKEPATH=lib src/main/omake --dotomake .omake --force-dotomake -j2 install
+--- ./OMakefile
++++ ./OMakefile
+@@ -15,8 +15,7 @@
+     #
+     # Extra options for the C compiler
+     #
+-    CFLAGS += /MT /DWIN32 /W4 /WX
+-
++    CFLAGS += -g -O2 -Wall -mms-bitfields
+     #
+     # Don't build man pages
+     #
+@@ -57,7 +56,7 @@
+ #
+ # OCaml options
+ #
+-OCAMLFLAGS[] += -w Ae$(if $(OCAML_ACCEPTS_Z_WARNING), z)
++#OCAMLFLAGS[] += -w Ae$(if $(OCAML_ACCEPTS_Z_WARNING), z)
+ if $(THREADS_ENABLED)
+     OCAMLFLAGS += -thread
+     export
+@@ -227,11 +226,11 @@
+ 
+ install: $(DEFAULTFILES)  $(INSTALLFILES)
+     mkdir -p $(INSTALL_LIBDIR)/omake
+-    cp -f -m 444 $(DEFAULTFILES) $(INSTALL_LIBDIR)/omake/
++    cp -f -m 644 $(DEFAULTFILES) $(INSTALL_LIBDIR)/omake/
+     foreach(name => ..., $(STDLIBNAMES))
+         node = $(file $(INSTALL_LIBDIR)/omake/$(name).om)
+         mkdir -p $(dirof $(node))
+-        cp -f -m 444 lib/$(name).install $(node)
++        cp -f -m 644 lib/$(name).install $(node)
+ 
+ ########################################################################
+ # Testing
+--- ./OMakeroot
++++ ./OMakeroot
+@@ -1,3 +1,6 @@
++OSTYPE = Win32
++export
++
+ #
+ # We want the ocamldep-omake to be accessible through the standard path.
+ #
+--- ./src/clib/omake_shell_sys.c
++++ ./src/clib/omake_shell_sys.c
+@@ -38,13 +38,14 @@
+ #ifdef WIN32
+ #include <caml/signals.h>
+ 
+-/* Disable some of the warnings */
+-#pragma warning( disable : 4127 4189 4702 4706 4996 )
+-
+ #ifndef _WIN32_WINNT
+-#define _WIN32_WINNT 0x0400
++#ifdef _WIN64
++#define _WIN32_WINNT  0x0502
++#else
++#define _WIN32_WINNT  0x0501
+ #endif
+-
++#endif
++#include <winsock2.h>
+ #include <windows.h>
+ #include <tlhelp32.h>
+ #include <winsock.h>
+@@ -1092,7 +1093,7 @@
+         ExitProcess(1);
+         break;
+     default:
+-        fprintf(stderr, "console_ctrl_handler: unknown code: %d\n", code);
++        fprintf(stderr, "console_ctrl_handler: unknown code: %d\n", (int)code);
+         fflush(stderr);
+         rval = FALSE;
+         break;
+--- ./src/clib/readline.c
++++ ./src/clib/readline.c
+@@ -36,6 +36,8 @@
+ #include <caml/custom.h>
+ #include <caml/callback.h>
+ 
++#include <ctype.h>
++
+ /*
+  * XXX: HACK (nogin 02/28/07):
+  * CAMLreturn with non-value types is wrong in 3.09.3 and later; CAMLreturnT was added in 3.09.4 and
+@@ -52,8 +54,6 @@
+ #ifdef WIN32
+ #  include <caml/signals.h>
+ #  include <windows.h>
+-   /* Disable some of the warnings */
+-#  pragma warning( disable : 4100 4127 4505 4702 4996 4189)
+ #else
+ #  include <unistd.h>
+ #  include <string.h>
+--- ./src/libmojave-external/cutil/fam_inotify.c
++++ ./src/libmojave-external/cutil/fam_inotify.c
+@@ -416,10 +416,6 @@
+ }
+ #else /* FAM_INOTIFY */
+ 
+-#if defined(WIN32) || defined(_WIN32)
+-/* Disable the "translation unit is empty" warning */
+-#pragma warning( disable : 4206 )
+-#endif
+ 
+ #endif /* FAM_INOTIFY */
+ 
+--- ./src/libmojave-external/cutil/fam_kqueue.c
++++ ./src/libmojave-external/cutil/fam_kqueue.c
+@@ -592,9 +592,5 @@
+ 
+ #else /* FAM_KQUEUE */
+ 
+-#if defined(WIN32) || defined(_WIN32)
+-/* Disable the "translation unit is empty" warning */
+-#pragma warning( disable : 4206 )
+-#endif
+ 
+ #endif /* FAM_KQUEUE */
+--- ./src/libmojave-external/cutil/fam_win32.c
++++ ./src/libmojave-external/cutil/fam_win32.c
+@@ -34,8 +34,6 @@
+ #ifdef WIN32
+ #ifdef FAM_ENABLED
+ 
+-/* Disable some of the warnings */
+-#pragma warning( disable : 4127 4996 )
+ 
+ #ifndef _WIN32_WINNT
+ #define _WIN32_WINNT 0x0400
+--- ./src/libmojave-external/cutil/lm_channel.c
++++ ./src/libmojave-external/cutil/lm_channel.c
+@@ -36,8 +36,8 @@
+ #include <caml/custom.h>
+ 
+ #ifdef WIN32
+-#include <windows.h>
+ #include "unixsupport.h"
++#include <windows.h>
+ 
+ /*
+  * Utilities for pipes, used by Omake_channel.
+--- ./src/libmojave-external/cutil/lm_compat_win32.c
++++ ./src/libmojave-external/cutil/lm_compat_win32.c
+@@ -37,8 +37,6 @@
+ #include <caml/custom.h>
+ 
+ #ifdef WIN32
+-/* Disable some of the warnings */
+-#pragma warning( disable : 4100 4201 ) 
+ 
+ #include <windows.h>
+ #include <tlhelp32.h>
+--- ./src/libmojave-external/cutil/lm_ctype.c
++++ ./src/libmojave-external/cutil/lm_ctype.c
+@@ -40,8 +40,6 @@
+ 
+ #ifdef WIN32 
+ #include <windows.h>
+-/* Disable some of the warnings */
+-#pragma warning( disable : 4100 )
+ #endif /* WIN32 */
+ 
+ /*
+--- ./src/libmojave-external/cutil/lm_fs_case_sensitive.c
++++ ./src/libmojave-external/cutil/lm_fs_case_sensitive.c
+@@ -48,6 +48,7 @@
+ /* Other various includes */
+ #include <memory.h>
+ #include <errno.h>
++#include <string.h>
+ 
+ typedef struct vol_caps_buf {
+     unsigned long size;
+@@ -66,13 +67,21 @@
+ value lm_fs_case_sensitive(value path_val) {
+     CAMLparam1(path_val);
+     struct statfs stat;
+-    char *path = String_val(path_val);
++    char *path ;
++    char *p = String_val(path_val);
++    size_t len = strlen (p) + 1;
++    path=malloc(len);
++    if ( path == NULL )
++      caml_raise_out_of_memory ();
++    memcpy(path,p,len);
+     
+     do {
++        int erg;
+         caml_enter_blocking_section();
+-        if (statfs(path, &stat))
+-            break;
+-        
++        erg = statfs(path, &stat);
++        free(path);
++        if ( erg )
++          break;
+         struct attrlist alist;
+         memset(&alist, 0, sizeof(alist));
+         alist.bitmapcount = ATTR_BIT_MAP_COUNT;
+@@ -105,9 +114,6 @@
+ 
+ #else /* not DETECT_FS_CASE_SENSITIVE_GETATTRLIST */
+ 
+-#ifdef _WIN32
+-#pragma warning( disable : 4100 )
+-#endif /* _WIN32 */
+ 
+ value lm_fs_case_sensitive_available(value _unit) {
+     return Val_false;
+--- ./src/libmojave-external/cutil/lm_heap.c
++++ ./src/libmojave-external/cutil/lm_heap.c
+@@ -38,11 +38,6 @@
+ #include <caml/fail.h>
+ #include <caml/custom.h>
+ 
+-#if defined(WIN32) || defined(_WIN32)
+-/* Disable some of the warnings */
+-#pragma warning( disable : 4146 )
+-#endif
+-
+ extern char *caml_young_start, *caml_young_ptr, *caml_young_limit, *caml_young_end;
+ 
+ static char *null = 0;
+@@ -50,6 +45,18 @@
+ #undef abort
+ #define abort()    (*null = 0)
+ 
++#ifdef _WIN64
++#define __STDC_FORMAT_MACROS
++#include <inttypes.h>
++#define P_LD  PRId64
++#define P_LX  PRIx64
++#define P_LUD PRIu64
++#else
++#define P_LD  "ld"
++#define P_LX  "lx"
++#define P_LUD "lud"
++#endif
++
+ static void search_pointer(char **pointers, char *name, unsigned bound, char *p, char *v, unsigned index)
+ {
+     unsigned i, j, k;
+@@ -67,14 +74,14 @@
+     }
+     p2 = pointers[i];
+     if((p2 != p) && (Tag_val(p) != Infix_tag)) {
+-        fprintf(stderr, "%s: illegal pointer: 0x%08lx < 0x%08lx < 0x%08lx, size = %lud, tag = %d\n", 
++        fprintf(stderr, "%s: illegal pointer: 0x%08" P_LX " < 0x%08" P_LX " < 0x%08"P_LX", size = %" P_LUD ", tag = %d\n", 
+                 name,
+-                (unsigned long) p2, (unsigned long) p, (unsigned long) pointers[i + 1],
++                (uintnat) p2, (uintnat) p, (uintnat) pointers[i + 1],
+                 Wosize_val(p), Tag_val(p));
+-        fprintf(stderr, "points into: 0x%08lx: index = %d, size = %lud, tag = %d\n",
+-                (unsigned long) p2, i, Wosize_val(p2), Tag_val(p2));
+-        fprintf(stderr, "from block: 0x%08lx: size = %lud, tag = %d, field = %d\n",
+-                (unsigned long) v, Wosize_val(v), Tag_val(v), index);
++        fprintf(stderr, "points into: 0x%08"P_LX": index = %d, size = %"P_LUD", tag = %d\n",
++                (uintnat) p2, i, Wosize_val(p2), Tag_val(p2));
++        fprintf(stderr, "from block: 0x%08"P_LX": size = %"P_LUD", tag = %d, field = %d\n",
++                (uintnat) v, Wosize_val(v), Tag_val(v), index);
+         fflush(stderr);
+         abort();
+     }
+@@ -93,15 +100,15 @@
+     ptr = caml_young_ptr;
+     end = caml_young_end;
+ 
+-    fprintf(stderr, "AAA: %s: [0x%08lx, 0x%08lx, 0x%08lx, 0x%08lx] (%ld/%ld/%ld bytes)\n",
++    fprintf(stderr, "AAA: %s: [0x%08"P_LX", 0x%08"P_LX", 0x%08"P_LX", 0x%08"P_LX"] (%"P_LD"/%"P_LD"/%"P_LD" bytes)\n",
+             name,
+-            (unsigned long) caml_young_start,
+-            (unsigned long) caml_young_ptr,
+-            (unsigned long) caml_young_limit,
+-            (unsigned long) caml_young_end, 
+-            ((unsigned long) caml_young_end) - (unsigned long) caml_young_ptr,
+-            ((unsigned long) caml_young_end) - (unsigned long) caml_young_limit,
+-            ((unsigned long) caml_young_end) - (unsigned long) caml_young_start);
++            (uintnat) caml_young_start,
++            (uintnat) caml_young_ptr,
++            (uintnat) caml_young_limit,
++            (uintnat) caml_young_end, 
++            ((uintnat) caml_young_end) - (uintnat) caml_young_ptr,
++            ((uintnat) caml_young_end) - (uintnat) caml_young_limit,
++            ((uintnat) caml_young_end) - (uintnat) caml_young_start);
+     fflush(stderr);
+ 
+     /*
+@@ -112,8 +119,8 @@
+     while(v < caml_young_end) {
+         pointers[index++] = (char *) v;
+         size = Wosize_val(v);
+-        fprintf(stderr, "%s: 0x%08lx: size %lud, tag = %d\n",
+-                name, (unsigned long) v, size, Tag_val(v));
++        fprintf(stderr, "%s: 0x%08"P_LX": size %"P_LUD", tag = %d\n",
++                name, (uintnat) v, size, Tag_val(v));
+         found = 0;
+         for(i = 0; i != 10; i++) {
+             next = &Field(v, size + i);
+@@ -121,12 +128,12 @@
+                 p = *next;
+ #define Debug_free_minor 0xD700D6D7ul
+                 if(p == Debug_free_minor) {
+-                    fprintf(stderr, "\tnext[%d]:0x%08lx = 0x%08lx\n", i, (unsigned long) next, (unsigned long) p);
++                    fprintf(stderr, "\tnext[%d]:0x%08"P_LX" = 0x%08"P_LX"\n", i, (uintnat) next, (uintnat) p);
+                     found = 1;
+                 }
+                 else if(found)
+-                    fprintf(stderr, "\tnext[%d]:0x%08lx = 0x%08lx, size = %lud, tag = %d\n",
+-                            i, (unsigned long) next, (unsigned long) p, Wosize_hd(p), Tag_hd(p));
++                    fprintf(stderr, "\tnext[%d]:0x%08"P_LX" = 0x%08"P_LX", size = %"P_LUD", tag = %d\n",
++                            i, (uintnat) next, (uintnat) p, Wosize_hd(p), Tag_hd(p));
+             }
+         }
+         fflush(stderr);
+@@ -146,7 +153,7 @@
+     while(v < caml_young_end) {
+         size = Wosize_val(v);
+         if(Tag_val(v) < No_scan_tag) {
+-            fprintf(stderr, "%s: scanning 0x%08lx: size %lud, tag = %d\n", name, (unsigned long) v, size, Tag_val(v));
++            fprintf(stderr, "%s: scanning 0x%08"P_LX": size %"P_LUD", tag = %d\n", name, (uintnat) v, size, Tag_val(v));
+             fflush(stderr);
+             for(i = 0; i != size; i++) {
+                 char *p = (char *) Field(v, i);
+@@ -177,15 +184,15 @@
+     ptr = caml_young_ptr;
+     end = caml_young_end;
+ 
+-    fprintf(stderr, "AAA: %s: [0x%08lx, 0x%08lx, 0x%08lx, 0x%08lx] (%ld/%ld/%ld bytes)\n",
++    fprintf(stderr, "AAA: %s: [0x%08"P_LX", 0x%08"P_LX", 0x%08"P_LX", 0x%08"P_LX"] (%"P_LD"/%"P_LD"/%"P_LD" bytes)\n",
+             name,
+-            (unsigned long) caml_young_start,
+-            (unsigned long) caml_young_ptr,
+-            (unsigned long) caml_young_limit,
+-            (unsigned long) caml_young_end, 
+-            ((unsigned long) caml_young_end) - (unsigned long) caml_young_ptr,
+-            ((unsigned long) caml_young_end) - (unsigned long) caml_young_limit,
+-            ((unsigned long) caml_young_end) - (unsigned long) caml_young_start);
++            (uintnat) caml_young_start,
++            (uintnat) caml_young_ptr,
++            (uintnat) caml_young_limit,
++            (uintnat) caml_young_end, 
++            ((uintnat) caml_young_end) - (uintnat) caml_young_ptr,
++            ((uintnat) caml_young_end) - (uintnat) caml_young_limit,
++            ((uintnat) caml_young_end) - (uintnat) caml_young_start);
+ 
+     fflush(stderr);
+ 
+@@ -196,7 +203,7 @@
+     while(v < caml_young_end) {
+         hd = Hd_val(v);
+         if(hd == Debug_free_minor) {
+-            fprintf(stderr, "Bogus pointer: 0x%08lx\n", (unsigned long) v);
++            fprintf(stderr, "Bogus pointer: 0x%08"P_LX"\n", (uintnat) v);
+             fflush(stderr);
+             v += sizeof(header_t);
+         }
+@@ -205,8 +212,8 @@
+             for(i = 0; i != size; i++) {
+                 char *p = (char *) Field(v, i);
+                 if(p >= caml_young_end && p < caml_young_ptr) {
+-                    fprintf(stderr, "%s: Found a bogus pointer: 0x%08lx[%d] = 0x%08lx\n",
+-                            name, (unsigned long) v, i, (unsigned long) p);
++                    fprintf(stderr, "%s: Found a bogus pointer: 0x%08"P_LX"[%d] = 0x%08"P_LX"\n",
++                            name, (uintnat) v, i, (uintnat) p);
+                     fflush(stderr);
+                     abort();
+                 }
+--- ./src/libmojave-external/cutil/lm_nocompare.c
++++ ./src/libmojave-external/cutil/lm_nocompare.c
+@@ -40,25 +40,25 @@
+ #include <caml/custom.h>
+ #include <caml/fail.h>
+ 
+-static void lm_nocompare_serialize(value v, unsigned long * wsize_32, unsigned long * wsize_64)
++static void lm_nocompare_serialize(value v, uintnat * wsize_32, uintnat * wsize_64)
+ {
+     *wsize_32 = 0;
+     *wsize_64 = 0;
+ }
+ 
+-static unsigned long lm_nocompare_deserialize(void * dst)
++static uintnat lm_nocompare_deserialize(void * dst)
+ {
+     return 0;
+ }
+ 
+-static void lm_nomarshal_serialize(value v, unsigned long * wsize_32, unsigned long * wsize_64)
++static void lm_nomarshal_serialize(value v, uintnat * wsize_32, uintnat * wsize_64)
+ {
+     caml_invalid_argument("Lm_nocompare: some code attempted to marshal a value\n   on a data structure that specifically prohibits this");
+     *wsize_32 = 0;
+     *wsize_64 = 0;
+ }
+ 
+-static unsigned long lm_nomarshal_deserialize(void * dst)
++static uintnat lm_nomarshal_deserialize(void * dst)
+ {
+     caml_invalid_argument("Lm_nocompare: some code attempted to marshal a value\n   on a data structure that specifically prohibits this");
+     return 0;
+--- ./src/libmojave-external/cutil/lm_notify.c
++++ ./src/libmojave-external/cutil/lm_notify.c
+@@ -41,8 +41,6 @@
+ 
+ #ifdef WIN32 
+ #include <windows.h>
+-/* Disable some of the warnings */
+-#pragma warning( disable : 4100 4189 4127 4702 4996 )
+ #endif /* WIN32 */
+ 
+ #ifdef FAM_PSEUDO
+@@ -53,6 +51,7 @@
+ #include <unistd.h>
+ #include <sys/stat.h>
+ #include <sys/select.h>
++#include <sys/string.h>
+ #endif /* FAM_PSEUDO */
+ 
+ /*
+@@ -84,6 +83,22 @@
+      }                                       \
+   } while(0)
+ 
++
++#define CheckCodeClean(fmt, expr,clean)         \
++    do {                                        \
++        caml_enter_blocking_section();          \
++        code = expr;                            \
++        caml_leave_blocking_section();          \
++        clean ;                                 \
++        if(code < 0) {                          \
++            char buffer[256];                   \
++            ErrFmt(buffer, fmt);                \
++            caml_failwith(buffer);              \
++        }                                       \
++    } while(0)
++
++
++
+ static int fam_connection_compare(value v1, value v2)
+ {
+     FAMConnection *info1 = FAMConnection_val(v1);
+@@ -96,9 +111,9 @@
+ #endif /* !FAM_PSEUDO */
+ }
+ 
+-static long fam_connection_hash(value v)
++static intnat fam_connection_hash(value v)
+ {
+-    return (long) FAMConnection_val(v);
++    return (intnat) FAMConnection_val(v);
+ }
+ 
+ static void fam_connection_finalize(value v_info)
+@@ -108,9 +123,10 @@
+     info = FAMInfo_val(v_info);
+     if(info->is_open) {
+         int code;
+-        CheckCode("om_notify_close", FAMClose(info->fc));
+-        free(info->fc);
++        FAMConnection *fc = info->fc;
+         info->is_open = 0;
++        FAMClose(fc);
++        free(fc);
+     }
+ }
+ 
+@@ -197,23 +213,26 @@
+ value om_notify_monitor_directory(value v_fc, value v_name, value v_recursive)
+ {
+     CAMLparam3(v_fc, v_name, v_recursive);
+-    const char *name;
++    char *name;
+     FAMConnection *fc;
+     FAMRequest request;
+     int code, recursive;
+ 
+     fc = FAMConnection_val(v_fc);
+-    name = String_val(v_name);
++    name = strdup(String_val(v_name));
++    if ( name == NULL ){
++        caml_raise_out_of_memory();
++    }
+     recursive = Int_val(v_recursive);
+     if(recursive) {
+ #ifdef WIN32
+-        CheckCode("om_notify_monitor_directory", FAMMonitorDirectoryTree(fc, name, &request, 0));
++        CheckCodeClean("om_notify_monitor_directory", FAMMonitorDirectoryTree(fc, name, &request, 0),free(name));
+ #else /* WIN32 */
+         failwith("om_notify_monitor_directory: recursive monitoring is not allowed");
+ #endif /* !WIN32 */
+     }
+     else
+-        CheckCode("om_notify_monitor_directory", FAMMonitorDirectory(fc, name, &request, 0));
++        CheckCodeClean("om_notify_monitor_directory", FAMMonitorDirectory(fc, name, &request, 0),free(name));
+     CAMLreturn(Val_int(request.reqnum));
+ }
+ 
+--- ./src/libmojave-external/cutil/lm_printf.c
++++ ./src/libmojave-external/cutil/lm_printf.c
+@@ -42,8 +42,6 @@
+ 
+ #ifdef WIN32 
+ #include <windows.h>
+-/* Disable some of the warnings */
+-#pragma warning( disable : 4996)
+ #endif /* WIN32 */
+ 
+ /*
+--- ./src/libmojave-external/cutil/lm_ssl.c
++++ ./src/libmojave-external/cutil/lm_ssl.c
+@@ -191,9 +191,9 @@
+     return info1->fd == info2->fd ? 0 : info1->fd < info2->fd ? -1 : 1;
+ }
+ 
+-static long ssl_info_hash(value v)
++static intnat ssl_info_hash(value v)
+ {
+-    return (long) SslInfo_val(v);
++    return (intnat) SslInfo_val(v);
+ }
+ 
+ static void ssl_finalize(value v_info)
+@@ -615,9 +615,9 @@
+     return info1->fd == info2->fd ? 0 : info1->fd < info2->fd ? -1 : 1;
+ }
+ 
+-static long ssl_info_hash(value v)
++static intnat ssl_info_hash(value v)
+ {
+-    return (long) SslInfo_val(v);
++    return (intnat) SslInfo_val(v);
+ }
+ 
+ static void ssl_finalize(value v_info)
+--- ./src/libmojave-external/cutil/lm_terminfo.c
++++ ./src/libmojave-external/cutil/lm_terminfo.c
+@@ -8,7 +8,6 @@
+ #include <caml/memory.h>
+ 
+ #ifdef WIN32
+-#   pragma warning (disable: 4127 4189 4702 4996)
+ #endif
+ 
+ #ifdef NCURSES
+--- ./src/libmojave-external/cutil/lm_termsize.c
++++ ./src/libmojave-external/cutil/lm_termsize.c
+@@ -22,23 +22,23 @@
+  * Authors: Jason Hickey <jyh@cs.caltech.edu>
+  *          Aleksey Nogin <nogin@cs.cornell.edu>
+  */
++#include <caml/mlvalues.h>
++#include <caml/alloc.h>
++#include <caml/memory.h>
++#include <caml/fail.h>
++
+ #include <stdio.h>
+ #if defined(__CYGWIN__) || defined(__svr4__)
+ #   include <sys/termios.h>
+ #endif
+ #ifdef WIN32
+-#   include <Windows.h>
+-#   pragma warning (disable: 4127 4189 4702)
++#   include "unixsupport.h"
++#   include <windows.h>
+ #else
+ #   include <unistd.h>
+ #   include <sys/ioctl.h>
+ #endif
+ 
+-#include <caml/mlvalues.h>
+-#include <caml/alloc.h>
+-#include <caml/memory.h>
+-#include <caml/fail.h>
+-
+ value caml_term_size(value arg)
+ {
+     CAMLparam1(arg);
+--- ./src/libmojave-external/cutil/lm_uname_ext.c
++++ ./src/libmojave-external/cutil/lm_uname_ext.c
+@@ -38,7 +38,7 @@
+ #ifdef WIN32
+ #include <windows.h>
+ /* Disable some of the warnings */
+-#pragma warning( disable : 4127 4189 4702 4996 )
++/* #pragma warning( disable : 4127 4189 4702 4996 ) */
+ 
+ /*
+  * Fake utsname.
+--- ./src/libmojave-external/cutil/lm_unix_cutil.c
++++ ./src/libmojave-external/cutil/lm_unix_cutil.c
+@@ -38,8 +38,7 @@
+ #include <caml/fail.h>
+ 
+ #if defined(WIN32) || defined(_WIN32)
+-/* Disable some of the warnings */
+-#pragma warning( disable : 4100 4201 4127 4189 4702 4716 4996 )
++#include "unixsupport.h"
+ #endif
+ 
+ /*
+@@ -53,6 +52,16 @@
+ 
+ #define FLOCK_LEN       ((unsigned int) ~0 >> 2)
+ 
++#define __STDC_FORMAT_MACROS
++#include <inttypes.h>
++
++#if SIZEOF_PTR == 8
++#define P_LX  PRIx64
++#else
++#define P_LX  PRIx32
++#endif 
++
++
+ /*
+  * Print the stack pointer for debugging.
+  */
+@@ -60,7 +69,7 @@
+ {
+     int sp;
+ 
+-    fprintf(stderr, "Stack pointer: 0x%08lx\n", (unsigned long) &sp);
++    fprintf(stderr, "Stack pointer: 0x%08" P_LX "\n", (intnat) &sp);
+     return Val_unit;
+ }
+ 
+@@ -75,7 +84,7 @@
+  */
+ value int_of_fd(value fd)
+ {
+-    return Val_long((long) *(HANDLE *)Data_custom_val(fd));
++  return fd;
+ }
+ 
+ /*
+@@ -184,7 +193,7 @@
+                     (LPTSTR) &lpMsgBuf,
+                     0, NULL);
+ 
+-                sprintf(szBuf, "lockf_win32 failed with error %d: %s", error, lpMsgBuf); 
++		sprintf(szBuf, "lockf_win32 failed with error %d: %s", (int)error, (char*)lpMsgBuf);
+                 LocalFree(lpMsgBuf);
+ 
+                 failwith(szBuf);
+@@ -222,7 +231,7 @@
+  */
+ value ftruncate_win32(value v_fd)
+ {
+-    HANDLE fd = *(HANDLE *)Data_custom_val(v_fd);
++    HANDLE fd = Handle_val(v_fd);
+     SetEndOfFile(fd);
+     return Val_unit;
+ }
+--- ./src/libmojave-external/cutil/unixsupport.h
++++ ./src/libmojave-external/cutil/unixsupport.h
+@@ -33,24 +33,8 @@
+ #define _UNIXSUPPORT_H
+ 
+ #ifdef WIN32
+-
+-/*
+- * HACK: this gets the handle from a file_descr.
+- * This depends on the OCaml implementation, but
+- * it is unlikely to change.
+- */
+-struct filedescr {
+-    union {
+-        HANDLE handle;
+-        SOCKET socket;
+-    } fd;
+-    enum { KIND_HANDLE, KIND_SOCKET } kind;
+-    int crt_fd;
+-};
+-
+-#define Handle_val(v)           (((struct filedescr *) Data_custom_val(v))->fd.handle)
+-#define Socket_val(v)           (((struct filedescr *) Data_custom_val(v))->fd.socket)
+-#define Descr_kind_val(v)       (((struct filedescr *) Data_custom_val(v))->kind)
++#include <winsock2.h>
++#include <caml/unixsupport.h>
+ 
+ #else /* !WIN32 */
+ 
+--- ./src/magic/omake_gen_magic.ml
++++ ./src/magic/omake_gen_magic.ml
+@@ -271,7 +271,7 @@
+       fprintf buf "let cache_magic = \"%s\"\n" (digest_files ".cache.magic" ".odb" !cache_files);
+       fprintf buf "let ir_magic = \"%s\"\n"    (digest_files ".omc.magic" ".omc" !omc_files);
+       fprintf buf "let obj_magic = \"%s\"\n"   (digest_files ".omo.magic" ".omo" !omo_files);
+-      fprintf buf "let lib_dir = \"%s\"\n" (String.escaped libdir);
++      fprintf buf "let lib_dir = Filename.concat (Filename.dirname (Filename.dirname Sys.executable_name)) (Filename.concat \"lib\" \"omake\") ;;\n";
+       fprintf buf "let version = \"%s\"\n" (String.escaped (shorten_version version));
+       fprintf buf "let version_message = \"OMake %s:\\n\\tbuild [%s %s %d %02d:%02d:%02d %d]\\n\\ton %s\"\n"
+          (String.escaped version)
+@@ -282,7 +282,7 @@
+          min
+          sec
+          (year + 1900)
+-         (String.escaped (Unix.gethostname ()));
++         (String.escaped "localhost");
+       flush buf
+ 
+ (************************************************************************
+--- ./src/main/OMakefile
++++ ./src/main/OMakefile
+@@ -58,7 +58,7 @@
+ #
+ install: cvs_realclean$(EXE) omake$(EXE) osh$(EXE)
+     mkdir -p $(INSTALL_BINDIR)
+-    cp -f -m 555 cvs_realclean$(EXE) omake$(EXE) $(INSTALL_BINDIR)/
++    cp -f -m 755 cvs_realclean$(EXE) omake$(EXE) $(INSTALL_BINDIR)/
+     ln-or-cp $(INSTALL_BINDIR)/omake$(EXE) $(INSTALL_BINDIR)/osh$(EXE)
+ 
+ clean:
+--- ./src/Makefile
++++ ./src/Makefile
+@@ -7,32 +7,34 @@
+ #
+ # System config
+ #
+-LN = ln -sf
++LN = cp
+ RM = rm -f
+ DOT = ./
+ slash = /
+ 
+-win32 = unix
+-system = null
++win32 = win32
++system = system
+ 
+ #
+ # C configuration
+ #
+-CC = cc
+-CFLAGS =
+-AR = ar cq
++CC := $(CC)
++CFLAGS = -DWIN32 -DFAM_ENABLED -DFAM_PSEUDO -Wno-strict-aliasing -Wall -mms-bitfields
++AR := $(AR) cq
+ AROUT =
+ EXT_OBJ = .o
+ EXT_LIB = .a
+-EXE =
++EXE = .exe
++
++OCAMLFLAGS = -g -thread
++THREADSLIB = threads.cma
++OCAMLCWHERE=$(shell ocamlc -where | tr -d '\r')
+ 
+-OCAMLFLAGS = -g
+-THREADSLIB =
+ 
+ .SUFFIXES: .mll .mly .mli .ml .c .cmi .cmo .cma .o
+ 
+ .c.o:
+-	$(CC) $(CFLAGS) -I"`ocamlc -where`" -c $*.c
++	$(CC) $(CFLAGS) -I"$(OCAMLCWHERE)" -c $*.c
+ 
+ 
+ #
