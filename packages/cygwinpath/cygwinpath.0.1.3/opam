@@ -1,6 +1,7 @@
 opam-version: "1"
 maintainer: "andreashauptmann@t-online.de"
 build: [
+  ["./configure"]
   [make "all"]
 ]
 install: [
@@ -8,7 +9,8 @@ install: [
 ]
 remove: [["ocamlfind" "remove" "cygwinpath"]]
 depends: [
- "ocamlfind"
- "ocamlnet" { >= "4" }
+  "base-unix"
+  "base-bytes"
+  "ocamlfind" {build}
+  "ocamlbuild" {build}
 ]
-available: [ ocaml-version >= "4.00.0" ]
