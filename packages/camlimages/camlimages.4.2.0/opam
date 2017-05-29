@@ -13,5 +13,5 @@ authors: [
   "François Pessaux"
   "Pierre Weis"
 ]
-available: ocaml-version >= "4.02.0"
+available: ocaml-version >= "4.02.0" & os != "win32"
 install: ["omake" "install"]

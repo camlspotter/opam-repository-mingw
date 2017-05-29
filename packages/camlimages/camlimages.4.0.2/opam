@@ -14,5 +14,9 @@ depends: [
   "omake"
 ]
 depopts: ["lablgtk"]
+depexts: [
+  [["win32" "cygwinports"] ["freetype2" "libpng" "libjpeg-turbo" "tiff" "libXpm" "giflib" "libexif"]]
+]
 available: ocaml-version <= "4.01.0"
 install: ["omake" "install"]
+patches: "camlspotter-camlimages-b13d6457ea31.patch" {os = "win32"}

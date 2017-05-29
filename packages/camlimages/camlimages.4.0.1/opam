@@ -7,5 +7,5 @@ depends: [
   "lablgtk"
   "omake"
 ]
-available: ocaml-version <= "4.01.0"
+available: ocaml-version <= "4.01.0" & os != "win32"
 install: ["omake" "install"]
