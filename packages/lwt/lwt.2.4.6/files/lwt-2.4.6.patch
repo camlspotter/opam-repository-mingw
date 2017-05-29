@@ -1,0 +1,14 @@
+--- ./discover.ml
++++ ./discover.ml
+@@ -533,7 +533,10 @@
+                 ([], ["-lglib-2.0"]))
+     in
+     setup_data := ("glib_opt", opt) :: ("glib_lib", lib) :: !setup_data;
+-    test_code (opt, lib) glib_code
++    if Sys.os_type = "Win32" then
++      true
++    else
++      test_code (opt, lib) glib_code
+   in
+ 
+   test_feature ~do_check:!use_libev "libev" "HAVE_LIBEV" test_libev;

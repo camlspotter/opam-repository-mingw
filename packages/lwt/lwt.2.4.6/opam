@@ -37,6 +37,7 @@ conflicts: [
 ]
 patches: [
   "patch-ocsigen-lwt-101.diff" {os = "darwin"}
+  "lwt-2.4.6.patch" {os = "win32"}
 ]
 available: [ocaml-version < "4.03.0" & compiler != "4.02.1+BER"]
 install: [make "install"]
