@@ -103,7 +103,7 @@
 -        (String.concat "," flags)
 -        (String.concat "," opam_packages)
 +  let s =
-+    if Sys.win32 then
++    if is_win then
 +      let a = "--external=" ^ (String.concat "," flags) in
 +      let b = "--required-by=" ^ (String.concat "," opam_packages) in
 +      let argv = [| "opam"; "list" ; "--safe" ; "--recursive" ; a ; b |] in
