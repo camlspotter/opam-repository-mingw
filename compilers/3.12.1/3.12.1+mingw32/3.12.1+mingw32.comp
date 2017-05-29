@@ -10,8 +10,10 @@ build: [
   [ "cp" "config/s-nt.h" "config/s.h" ]
   [ "cp" "config/Makefile.mingw" "config/Makefile" ]
   [ "sed" "-i" "s#@PREFIX@#%{prefix}%#" "config/Makefile" ]
-  [make "-f" "Makefile.nt" "world.opt" "PREFIX=%{prefix}%" ]
-  [make "-f" "Makefile.nt" "install" "PREFIX=%{prefix}%" ]
+  [ make "-f" "Makefile.nt" "world.opt" ]
+  [ make "-f" "Makefile.nt" "install" ]
+  [ "mkdir" "-p" "%{prefix}%/lib/ocaml/compiler-libs" ]
+  [ "cp" "-r" "typing" "parsing" "utils" "%{prefix}%/lib/ocaml/compiler-libs/" ]
 ]
 packages: [
   "base-unix"
