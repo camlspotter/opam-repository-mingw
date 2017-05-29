@@ -261,8 +261,8 @@
      ("-pg", Arg.Unit (
 -        (set_target_options "library-profiling" true) ();
 -        (set_target_options "executable-profiling" true)), "compilation with profiling")
-+        (set_target_options "library-profiling" (not Sys.win32)) ();
-+        (set_target_options "executable-profiling" (not Sys.win32))), "compilation with profiling")
++        (set_target_options "library-profiling" (Sys.os_type <> "Win32")) ();
++        (set_target_options "executable-profiling" (Sys.os_type <> "Win32"))), "compilation with profiling")
    ] in
    Arg.parse_argv (Array.of_list argv) (
      enable_disable_opt "library-bytecode" "library compilation as bytecode"
