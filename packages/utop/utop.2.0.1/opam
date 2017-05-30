@@ -20,3 +20,4 @@ depends: [
   "jbuilder"     {build & >= "1.0+beta9"}
 ]
 available: [ ocaml-version >= "4.02.3" & ocaml-version < "4.06.0"]
+patches: "utop-2.0.1.patch" {os = "win32"}
