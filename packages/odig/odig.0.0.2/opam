@@ -7,7 +7,7 @@ license: "ISC"
 dev-repo: "http://erratique.ch/repos/odig.git"
 bug-reports: "https://github.com/dbuenzli/odig/issues"
 tags: [ "org:erratique" "build" "dev" "meta" "doc" "packaging" ]
-available: [ ocaml-version >= "4.03"]
+available: ocaml-version >= "4.03" & os != "win32"
 depends: [
   "ocamlfind" {build}
   "ocamlbuild" {build}
@@ -24,7 +24,6 @@ depends: [
   "webbrowser"
   "opam-format"
 ]
-depopts: []
 build: [
   "ocaml" "pkg/pkg.ml" "build"
            "--pinned" "%{pinned}%"
