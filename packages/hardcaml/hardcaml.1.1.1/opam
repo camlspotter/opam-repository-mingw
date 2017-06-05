@@ -10,6 +10,7 @@ depends: [
   "base-bytes"
   "camlp4"
   "ocamlbuild" {build}
+  "num"
 ]
 available: ocaml-version >= "4.01.0"
 install: [make "install"]

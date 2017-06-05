@@ -8,6 +8,6 @@ build: [
 remove: [
 [make "uninstall"]
 ]
-depends: ["ocamlfind" "ocamlbuild"]
+depends: ["ocamlfind" "ocamlbuild" "num"]
 available: os != "win32"
 install: [make "install"]

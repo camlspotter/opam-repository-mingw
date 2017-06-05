@@ -9,6 +9,6 @@ remove: [
  ["./configure" "--prefix" "%{prefix}%"]
  [make "uninstall"]
 ]
-depends: ["ocamlbuild"]
+depends: ["ocamlbuild" "num"]
 available: os != "win32"
 install: [make "install"]

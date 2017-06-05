@@ -12,7 +12,7 @@ build: [
   [make]
   [make "install" "MANDIR=%{man}%"]
 ]
-depends: ["ocamlfind"]
+depends: ["ocamlfind" "num"]
 depopts: ["functory"]
 conflicts: [
   "functory" {< "0.5"}

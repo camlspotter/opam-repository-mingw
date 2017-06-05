@@ -16,5 +16,6 @@ remove: [
 ]
 depends: [
  "ocamlbuild"
+ "num"
 ]
 available: os != "win32"

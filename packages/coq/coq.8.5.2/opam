@@ -30,5 +30,6 @@ build: [
 remove: ["rm" "-R" "%{lib}%/coq"]
 depends: [
   "camlp5"
+  "num"
 ]
 install: [make "install"]

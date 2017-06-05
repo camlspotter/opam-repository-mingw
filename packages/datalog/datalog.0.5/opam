@@ -14,6 +14,7 @@ remove: [["ocamlfind" "remove" "datalog"]]
 depends: [
   "ocamlfind"
   "ocamlbuild" {build}
+  "num"
 ]
 available: ocaml-version >= "4.00.1"
 install: [
