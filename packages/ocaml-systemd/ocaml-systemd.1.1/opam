@@ -15,10 +15,9 @@ depends: [
   "ocamlfind"
   "ocamlbuild" {build}
 ]
-ocaml-version: [ >= "4.02.0" ]
 depexts: [
  [ ["debian"] ["libsystemd-dev"] ]
  [ ["ubuntu"] ["libsystemd-dev"] ]
  [ ["centos"] ["systemd-devel"] ]
 ]
-available: os != "win32"
+available: ocaml-version >= "4.02.0" & os != "win32"
