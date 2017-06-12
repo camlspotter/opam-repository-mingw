@@ -24,3 +24,4 @@ depends: [
   "ounit" {test}
 ]
 depopts: ["ctypes" "random-generator"]
+available: os != "win32"
