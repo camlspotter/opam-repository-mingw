@@ -19,3 +19,4 @@ depends: [
   "base-bytes"
 ]
 available: [ocaml-version >= "4.02.3"]
+patches: "cstruct-3.0.2.patch" {os = "win32"}
