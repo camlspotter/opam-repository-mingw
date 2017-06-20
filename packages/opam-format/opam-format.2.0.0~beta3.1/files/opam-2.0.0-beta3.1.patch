@@ -1,0 +1,31 @@
+--- ./src/Makefile
++++ ./src/Makefile
+@@ -1,5 +1,5 @@
+ -include ../Makefile.config
+-
++EXT_LIB:=$(shell $(OCAMLC) -config | tr -d '\015' | awk '/^ext_lib:/ {print $$2}')
+ .NOTPARALLEL:
+ 
+ ifndef version
+@@ -300,7 +300,7 @@
+ # The artifacts must be built first. Names relative from project root.
+ define lib_inst_files
+   $(addprefix src/,\
+-    $(wildcard /opam-$(1).cma opam-$(1).cmxa opam-$(1).a) \
++    $(wildcard /opam-$(1).cma opam-$(1).cmxa opam-$(1)$(EXT_LIB)) \
+     $(foreach f,$(basename $(SRC_$(1))),\
+       $(wildcard \
+         $(addprefix $(1)/$(f),\
+@@ -308,10 +308,10 @@
+   $(patsubst ../%,%,\
+     $(wildcard \
+       $(addprefix ../_obuild/opam-$(1)/*,\
+-        .cma .cmxa .a .cmi .cmo .cmx .cmxs .cmti)) \
++        .cma .cmxa $(EXT_LIB) .cmi .cmo .cmx .cmxs .cmti)) \
+     $(wildcard \
+       $(addprefix $(1)/_obuild/opam-$(1)/*,\
+-        .cma .cmxa .a .cmi .cmo .cmx .cmxs .cmti)))
++        .cma .cmxa $(EXT_LIB) .cmi .cmo .cmx .cmxs .cmti)))
+ endef
+ 
+ ../opam-%.install: ALWAYS
