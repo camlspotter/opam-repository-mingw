@@ -24,3 +24,4 @@ build-test: [
   [ "ocaml" "pkg/pkg.ml" "build" "-n" name "--pinned" "%{pinned}%" "--tests" "true" ]
   [ "ocaml" "pkg/pkg.ml" "test" "-n" name ]
 ]
+available: os != "win32"
