@@ -20,3 +20,4 @@ build: [
   [ "jbuilder" "subst" ] {pinned}
   [ "jbuilder" "build" "-p" name "-j" jobs ]
 ]
+available: os != "win32"
