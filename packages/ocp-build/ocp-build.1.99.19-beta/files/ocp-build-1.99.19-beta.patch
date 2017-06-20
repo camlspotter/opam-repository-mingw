@@ -1,3 +1,29 @@
+--- ./libs/ocplib-file/fileGen.ml
++++ ./libs/ocplib-file/fileGen.ml
+@@ -139,7 +139,7 @@
+ let add_basename_string dir basename =
+   match dir.file_basename with
+   | "" | "/" | "\\" ->
+-    dir.file_basename ^ basename
++    dir.file_partition ^ dir.file_basename ^ basename
+   | _ ->
+     dir.file_string ^ FileOS.dir_separator_string ^ basename
+ 
+@@ -301,7 +301,13 @@
+   let s1, s2  = OcpString.cut_at s ':' in
+   let ss = if s1 == s then s else s2 in
+   let part = if s1 == s then "" else (String.lowercase s1) ^ ":" in
+-  let path = OcpString.split ss '\\' in
++  let len = String.length ss in
++  let b = Buffer.create len in
++  for i = 0 to len - 1 do
++    let c = String.get ss i in
++    Buffer.add_char b (if c = '/' then '\\' else c)
++  done;
++  let path = OcpString.split (Buffer.contents b) '\\' in
+   of_path part path
+ 
+ let of_string s =
 --- ./libs/ocplib-unix/build.ocp2
 +++ ./libs/ocplib-unix/build.ocp2
 @@ -26,7 +26,7 @@
@@ -11,7 +37,14 @@
  (* We require "Unix", but do not use it directly !!! *)
 --- ./libs/ocplib-unix/minUnix_c.c
 +++ ./libs/ocplib-unix/minUnix_c.c
-@@ -17,6 +17,7 @@
+@@ -10,13 +10,12 @@
+ /*                                                                        */
+ /**************************************************************************/
+ 
+-#include <caml/mlvalues.h>
+-
+ #ifdef _WIN32
+ 
  #include <winsock2.h>
  #include <windows.h>
  #include <sys/types.h>
@@ -19,7 +52,7 @@
  
  #endif
  
-@@ -24,6 +25,17 @@
+@@ -24,6 +23,17 @@
  #include <caml/alloc.h>
  #include <caml/memory.h>
  #include <caml/signals.h>
@@ -37,7 +70,7 @@
  
  #ifndef CAML_UNIXSUPPORT_H
  #include <caml/unixsupport.h>
-@@ -31,14 +43,20 @@
+@@ -31,14 +41,20 @@
  #endif
  
  /* Versions before 4.02.0 use unix_ prefixes for these functions */
@@ -113,6 +146,53 @@
  
  # If you add a library ocplib-xxx:
  # 1/ Update this list with xxx_SRCDIR=
+@@ -22,7 +23,7 @@
+ 
+ OCPLIB_NAMES=stdlib debug lang unix file system config compat subcmd
+ 
+-INCLUDES=$(foreach lib, $(OCPLIB_NAMES), -I $($(lib)_SRCDIR)) \
++XINCLUDES=$(foreach lib, $(OCPLIB_NAMES), -I $($(lib)_SRCDIR)) \
+     $(OCP_BUILD_SRCDIR) \
+     -I $(OCP_BUILD_SRCDIR)/lang-ocp \
+     -I $(OCP_BUILD_SRCDIR)/lang-ocp2 \
+@@ -166,13 +167,13 @@
+ OCP_BUILD_CMOS= $(OCP_BUILD_MLS:.ml=.cmo)
+ OCP_BUILD_MLIS= $(OCP_BUILD_MLS:.ml=.mli)
+ OCP_BUILD_CMIS= $(OCP_BUILD_MLS:.ml=.cmi)
+-OCP_BUILD_STUBS= $(OCP_BUILD_CS:.c=.o)
++OCP_BUILD_STUBS= $(OCP_BUILD_CS:.c=$(EXT_OBJ))
+ OCP_BUILD_TMPS= $(OCP_BUILD_MLYS:.mly=.mli) $(OCP_BUILD_MLYS:.mly=.ml) \
+ 	$(OCP_BUILD_MLLS:.mll=.ml) $(OCP_BUILD_ML4S:.ml4=.ml) \
+ 	$(OCP_BUILD_SRCDIR)/buildVersion.ml \
+ 	$(compat_SRCDIR)/ocpCompat.ml
+ 
+-OCP_BUILD_OS= $(OCP_BUILD_STUBS) $(OCP_BUILD_CMXS:.cmx=.o)
++OCP_BUILD_OS= $(OCP_BUILD_STUBS) $(OCP_BUILD_CMXS:.cmx=$(EXT_OBJ))
+ 
+ all: build-ocps
+ 	@echo Libraries will be installed in ${ocamldir}
+@@ -184,7 +185,7 @@
+ 	$(OCP_BUILD_BOOTER)
+ 
+ depend: $(OCP_BUILD_MLS) $(OCP_BUILD_TMPS)
+-	$(OCAMLDEP) $(INCLUDES) $(OCP_BUILD_MLS) $(OCP_BUILD_MLIS) > .depend
++	$(OCAMLDEP) $(XINCLUDES) $(OCP_BUILD_MLS) $(OCP_BUILD_MLIS) > .depend
+ 
+ $(OCP_BUILD_BOOTER): $(MAKE_CONFIG)
+ 	$(MAKE) create-booter
+@@ -212,10 +213,10 @@
+ 	echo "let version=\"$(PACKAGE_VERSION)\"" > $(OCP_BUILD_SRCDIR)/buildVersion.ml
+ 
+ $(OCP_BUILD_SRCDIR)/lang-ocp/buildOCPParser.cmi: $(OCP_BUILD_SRCDIR)/lang-ocp/buildOCPParser.mli
+-	$(OCAMLC) -c -o $(OCP_BUILD_SRCDIR)/lang-ocp/buildOCPParser.cmi $(INCLUDES) $(OCP_BUILD_SRCDIR)/lang-ocp/buildOCPParser.mli
++	$(OCAMLC) -c -o $(OCP_BUILD_SRCDIR)/lang-ocp/buildOCPParser.cmi $(XINCLUDES) $(OCP_BUILD_SRCDIR)/lang-ocp/buildOCPParser.mli
+ 
+ $(OCP_BUILD_SRCDIR)/lang-ocp2/buildOCP2Parser.cmi: $(OCP_BUILD_SRCDIR)/lang-ocp2/buildOCP2Parser.mli
+-	$(OCAMLC) -c -o $(OCP_BUILD_SRCDIR)/lang-ocp2/buildOCP2Parser.cmi $(INCLUDES) $(OCP_BUILD_SRCDIR)/lang-ocp2/buildOCP2Parser.mli
++	$(OCAMLC) -c -o $(OCP_BUILD_SRCDIR)/lang-ocp2/buildOCP2Parser.cmi $(XINCLUDES) $(OCP_BUILD_SRCDIR)/lang-ocp2/buildOCP2Parser.mli
+ 
+ doc:
+ 	cd docs/user-manual; $(MAKE)
 @@ -312,7 +313,7 @@
  OCP_BUILD:=$(OCP_BUILD_BOOTER)
  include autoconf/Makefile.rules
@@ -122,15 +202,100 @@
  
  .mll.ml:
  	$(OCAMLLEX) $<
-@@ -329,9 +330,9 @@
+@@ -321,17 +322,17 @@
+ 	$(OCAMLYACC) $<
+ 
+ .ml.cmx:
+-	$(OCAMLOPT) -c -o $*.cmx $(INCLUDES) $<
++	$(OCAMLOPT) -c -o $*.cmx $(XINCLUDES) $<
+ 
+ .mli.cmi:
+-	$(OCAMLC) -c -o $*.cmi $(INCLUDES) $<
++	$(OCAMLC) -c -o $*.cmi $(XINCLUDES) $<
+ 
  .ml.cmo:
- 	$(OCAMLC) -c -o $*.cmo $(INCLUDES) $<
+-	$(OCAMLC) -c -o $*.cmo $(INCLUDES) $<
++	$(OCAMLC) -c -o $*.cmo $(XINCLUDES) $<
  
 -.c.o:
-+.c$(EXT_OBJ):
- 	$(OCAMLC) -c $(INCLUDES) $<
+-	$(OCAMLC) -c $(INCLUDES) $<
 -	mv `basename $*.o` $*.o
++.c$(EXT_OBJ):
++	$(OCAMLC) -c $(XINCLUDES) $<
 +	mv `basename $*$(EXT_OBJ)` $*$(EXT_OBJ)
  
  
+ 
+--- ./tools/ocp-build/ocaml/buildOCamlMeta.ml
++++ ./tools/ocp-build/ocaml/buildOCamlMeta.ml
+@@ -160,10 +160,13 @@
+                       VObject (BuildValue.set_bool BuildValue.empty_env "tolink" link)]
+             ) requires)) in
+           let options = BuildValue.set_bool options "generated" true in
+-
++          let envs = [options] in
++          let ext_lib = BuildOCamlConfig.ocaml_config_ext_lib.get envs in
++          let ext_obj = BuildOCamlConfig.ocaml_config_ext_obj.get envs in
++  
+           let stub_targets = List.filter (fun file ->
+-                                 Filename.check_suffix file ".o"
+-                                 || Filename.check_suffix file ".a")
++                                 Filename.check_suffix file ext_obj
++                                 || Filename.check_suffix file ext_lib)
+                                          byte_targets in
+           let byte_targets, asm_targets =
+             match stub_targets with
+--- ./tools/ocp-build/ocaml/buildOCamlRules.ml
++++ ./tools/ocp-build/ocaml/buildOCamlRules.ml
+@@ -1052,8 +1052,9 @@
+   if lib.lib_opk.opk_has_byte  then
+     do_copy_objects_from lib src_lib kernel_name ".cmo" ptmp.cmo_files;
+   if lib.lib_opk.opk_has_asm then begin
++    let ext_obj  = BuildOCamlConfig.ocaml_config_ext_obj.get envs  in
+     do_copy_objects_from lib src_lib kernel_name ".cmx" ptmp.cmx_files;
+-    do_copy_objects_from lib src_lib kernel_name ".o" ptmp.cmx_o_files;
++    do_copy_objects_from lib src_lib kernel_name ext_obj ptmp.cmx_o_files;
+   end
+ 
+ let object_dst_dir b lib pack_for =
+@@ -2696,6 +2697,7 @@
+     ) state.BuildOCPTypes.project_sorted
+   in
+   Array.iter (fun lib ->
++    let envs = lib.lib_opk.opk_options in
+     try
+       if not lib.lib_opk.opk_installed then
+         safe_mkdir lib.lib.lib_dst_dir.dir_fullname;
+@@ -2747,11 +2749,13 @@
+               | "byte"  when List.mem RUN_BYTE kinds -> [ bf, RUN_BYTE ]
+               | "cmxs" when List.mem CMXS kinds -> [ bf, CMXS ]
+               | "cmx" when List.mem CMX kinds ->
+-                let s = Filename.chop_extension s ^ ".o" in
++                let ext_obj  = BuildOCamlConfig.ocaml_config_ext_obj.get envs  in
++                let s = Filename.chop_extension s ^ ext_obj in
+                 let bf2 = add_package_file lib s in
+                 [ bf, CMX; bf2, CMX_O ]
+               | "cmxa" ->
+-                let s = Filename.chop_extension s ^ ".a" in
++                let ext_lib  = BuildOCamlConfig.ocaml_config_ext_lib.get envs  in
++                let s = Filename.chop_extension s ^ ext_lib in
+                 let bf2 = add_package_file lib s in
+                 [ bf, CMXA; bf2, CMXA_A ]
+               | "cmi" when List.mem CMI kinds -> [ bf, CMI ]
+@@ -2760,11 +2764,15 @@
+               | "o" when List.mem STUB_A kinds -> [ bf, STUB_A ]
+               | "a" when List.mem STUB_A kinds -> [ bf, STUB_A ]
+               | ext ->
++                let ext_obj  = BuildOCamlConfig.ocaml_config_ext_obj.get envs  in
++                let ext_lib  = BuildOCamlConfig.ocaml_config_ext_lib.get envs  in
++                let dext = "." ^ ext in
++                if dext = ext_lib || dext = ext_obj then [ bf, STUB_A ] else (
+                 Printf.eprintf
+                   "Error: package %S, option %S contains a file %S\n"
+                   lib.lib.lib_name name s0;
+                 Printf.eprintf "  with unexpected extension %S\n%!" ext;
+-                exit 2
++                exit 2)
+               ) objs))
+       in
  
