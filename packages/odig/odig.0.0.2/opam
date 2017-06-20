@@ -7,7 +7,7 @@ license: "ISC"
 dev-repo: "http://erratique.ch/repos/odig.git"
 bug-reports: "https://github.com/dbuenzli/odig/issues"
 tags: [ "org:erratique" "build" "dev" "meta" "doc" "packaging" ]
-available: ocaml-version >= "4.03" & os != "win32"
+available: [ ocaml-version >= "4.03"]
 depends: [
   "ocamlfind" {build}
   "ocamlbuild" {build}
@@ -29,3 +29,4 @@ build: [
            "--pinned" "%{pinned}%"
            "--etc-dir" "%{odig:etc}%"
            "--lib-dir" "%{lib}%" ]
+patches: "odig-0.0.2.patch" {os = "win32"}
