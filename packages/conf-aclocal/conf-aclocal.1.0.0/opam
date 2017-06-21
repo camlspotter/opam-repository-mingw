@@ -15,5 +15,6 @@ depexts: [
   [["ubuntu"] ["automake"]]
   [["nixpkgs"] ["automake"]]
   [["archlinux"] ["automake"]]
+  [["win32" "cygwinports"] ["automake"]]
 ]
 depends: ["conf-which"]
