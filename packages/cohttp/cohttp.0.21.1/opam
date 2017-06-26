@@ -47,6 +47,7 @@ conflicts: [
   "async" {< "113.24.00"}
   "lwt" {< "2.5.0"}
   "js_of_ocaml" {< "2.8"}
+  "js_of_ocaml" {>= "3.0"}
 ]
 available: [ocaml-version >= "4.01.0"]
 patches: "ocaml-cohttp-0.21.1.patch" {os = "win32"}
