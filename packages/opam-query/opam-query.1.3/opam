@@ -21,4 +21,4 @@ depends: [
   "uri"
   "ounit" {test}
 ]
-available: [ocaml-version >= "4.01"]
+available: ocaml-version >= "4.01" & os != "win32"
