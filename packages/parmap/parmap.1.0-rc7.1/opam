@@ -25,5 +25,6 @@ depends: [
   "ocamlfind"
   "ocamlbuild" {build}
   "conf-autoconf"
+  "conf-aclocal"
 ]
 available: os != "win32"
