@@ -15,4 +15,4 @@ remove: ["./uninstall.sh" "%{prefix}%"]
 depends: [
   "ocamlbuild" {build}
 ]
-available: [ocaml-version >= "4.02.0"]
+available: ocaml-version >= "4.02.0" & os != "win32"
