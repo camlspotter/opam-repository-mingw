@@ -30,4 +30,4 @@ depends: [
   "ocamlfind" {build}
   "ounit" {build}
 ]
-available: [ ocaml-version >= "4.03.0" ]
+available: ocaml-version >= "4.03.0" & os != "win32"
