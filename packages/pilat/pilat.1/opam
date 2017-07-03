@@ -8,4 +8,4 @@ build: ["sh" "make.sh"]
 install: ["sh" "install.sh"]
 remove: ["ocamlfind" "remove" "pilat"]
 depends: ["ocamlfind" "lacaml" "zarith" "frama-c"]
-available: [ocaml-version > "4.02.3"]
+available: ocaml-version > "4.02.3" & os != "win32"
