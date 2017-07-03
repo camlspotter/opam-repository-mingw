@@ -10,9 +10,9 @@ build: [
 build-test: [
   ["jbuilder" "runtest"]
 ]
-install: [
-  ["jbuilder" "install" "-p" name]
-]
+#install: [
+#  ["jbuilder" "install" "-p" name]
+#]
 remove: [
   ["jbuilder" "uninstall" "-p" name]
 ]
