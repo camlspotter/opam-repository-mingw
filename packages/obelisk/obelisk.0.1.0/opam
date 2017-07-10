@@ -10,3 +10,4 @@ install: [make "install" "BINDIR=%{bin}%"]
 remove: [make "uninstall" "BINDIR=%{bin}%"]
 depends: ["ocamlfind" "ocamlbuild" "menhir"]
 available: [ocaml-version >= "4.03"]
+patches: "Obelisk-0.1.0.patch" {os = "win32"}
