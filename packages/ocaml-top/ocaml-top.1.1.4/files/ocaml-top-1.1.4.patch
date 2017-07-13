@@ -1,0 +1,31 @@
+--- ./ocaml-top.install
++++ ./ocaml-top.install
+@@ -1,5 +1,5 @@
+ bin: [
+-  "_obuild/ocaml-top/ocaml-top.asm" {"ocaml-top"}
++  "src/ocaml-top" {"ocaml-top"}
+ ]
+ share: [
+   "data/ocaml.lang"
+--- ./src/cfg.ml
++++ ./src/cfg.ml
+@@ -46,7 +46,7 @@
+     else dir
+   in
+   let default =
+-    if is_unix && Filename.basename program_dir = "bin" then
++    if (* is_unix &&*) Filename.basename program_dir = "bin" then
+       Filename.dirname program_dir / "share" / "ocaml-top"
+     else
+       program_dir / "data"
+--- ./src/Makefile
++++ ./src/Makefile
+@@ -2,7 +2,7 @@
+ 
+ SRC = cfg.ml tools.mli tools.ml top.mli top.ml gui.mli gui.ml ocamlBuffer.mli ocamlBuffer.ml topUi.mli topUi.ml completion.mli completion.ml main.ml
+ 
+-OCAMLFIND_OPTS = -package unix,lablgtk2,lablgtk2.sourceview2,str,ocp-indent-lib,ocp-index-lib -linkpkg -thread -g
++OCAMLFIND_OPTS = -package unix,lablgtk2,lablgtk2.sourceview2,str,ocp-indent.lib,ocp-index.lib -linkpkg -thread -g
+ 
+ UNAME := $(shell uname)
+ ifeq (WIN,$(findstring WIN,$(UNAME)))
