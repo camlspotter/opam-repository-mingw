@@ -21,3 +21,4 @@ depends: [
 ]
 patches: [ "patch-aa" { os = "win32" } ]
 dev-repo: "git://github.com/OCamlPro/ocaml-top"
+available: [ocaml-version <= "4.02.3"]

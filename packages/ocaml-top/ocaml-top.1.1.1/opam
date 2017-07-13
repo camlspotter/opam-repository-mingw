@@ -28,5 +28,7 @@ depends: [
   "ocp-indent" {>= "1.4.0"}
   "ocp-index" {>= "1.0.0" & < "1.1.5"}
 ]
-install: [make "install"]
 dev-repo: "git://github.com/OCamlPro/ocaml-top"
+install: [make "install"]
+available: [ocaml-version <= "4.02.3"]
+
