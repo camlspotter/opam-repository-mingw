@@ -21,6 +21,7 @@ depends: ["ocamlfind" {build} "camlp4" {build}]
 depexts: [
   [["debian"] ["time"]]
   [["ubuntu"] ["time"]]
+  [["win32" "cygwinports"] ["system:time"]]
 ]
 available: [ ocaml-version >= "3.10" ]
 install: [make "install"]
