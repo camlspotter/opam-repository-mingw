@@ -19,3 +19,4 @@ depexts: [
   [["debian"] ["libopenblas-dev liblapacke-dev"]]
   [["osx" "homebrew"] ["homebrew/science/openblas"]]
 ]
+available: os != "win32"
