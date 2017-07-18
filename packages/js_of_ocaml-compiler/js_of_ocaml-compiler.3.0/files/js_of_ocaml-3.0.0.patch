@@ -1,0 +1,11 @@
+--- ./compiler/jbuild
++++ ./compiler/jbuild
+@@ -1,8 +1,6 @@
+ (jbuild_version 1)
+ (executables
+  ((names        (js_of_ocaml jsoo_minify jsoo_link))
+-  (public_names (js_of_ocaml jsoo_minify jsoo_link))
+-  (package js_of_ocaml-compiler)
+   (libraries
+    (js_of_ocaml-compiler
+     cmdliner
