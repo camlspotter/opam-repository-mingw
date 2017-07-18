@@ -22,6 +22,7 @@ depexts: [
   [["archlinux"] ["boost"]]
   [["osx" "homebrew"] ["boost"]]
   [["freebsd"] ["boost-all"]]
+  [["win32" "cygwinports"] ["boost"]]
   [["netbsd"] ["boost"]]
   [["openbsd"] ["boost"]]
 ]
