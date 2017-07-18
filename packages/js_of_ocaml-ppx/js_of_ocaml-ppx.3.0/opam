@@ -22,4 +22,4 @@ conflicts: [
   "ppx_tools_versioned"     {<="5.0beta0"}
 ]
 
-available: ocaml-version >= "4.02.0" & os != "win32"
+available: [ ocaml-version >= "4.02.0" ]

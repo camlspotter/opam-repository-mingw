@@ -24,4 +24,4 @@ conflicts: [
   "ocamlfind"   {< "1.5.1"}
 ]
 
-available: ocaml-version >= "4.02.0" & os != "win32"
+available: [ ocaml-version >= "4.02.0" ]

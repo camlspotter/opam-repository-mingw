@@ -19,4 +19,4 @@ depends: [
 
 depopts: [ "camlp4" ]
 
-available: ocaml-version >= "4.02.0" & os != "win32"
+available: [ ocaml-version >= "4.02.0" ]
