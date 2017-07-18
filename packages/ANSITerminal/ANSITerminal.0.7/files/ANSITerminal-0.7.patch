@@ -1,3 +1,14 @@
+--- ./choose_implementation.ml
++++ ./choose_implementation.ml
+@@ -7,7 +7,7 @@
+   let fh0 = open_in (Filename.concat dir source) in
+   let target = Filename.concat dir target in
+   (try Sys.remove target with _ -> ());
+-  let fh1 = open_out_gen [Open_wronly; Open_creat; Open_trunc] 0o444 target in
++  let fh1 = open_out_gen [Open_wronly; Open_creat; Open_trunc] 0o666 target in
+   let content = Buffer.create 4096 in
+   if line_directive then
+     bprintf content "#1 \"%s\"\n" (Filename.concat dir source);
 --- ./src/ANSITerminal_win_stubs.c
 +++ ./src/ANSITerminal_win_stubs.c
 @@ -29,10 +29,31 @@
