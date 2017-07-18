@@ -5,6 +5,7 @@ depexts: [
   [["debian"] ["libev-dev"]]
   [["ubuntu"] ["libev-dev"]]
   [["alpine"] ["libev-dev"]]
+  [["archlinux"] ["libev"]]
   [["fedora"] ["libev-devel"]]
   [["rhel"] ["libev-devel"]]
   [["centos"] ["libev-devel"]]
