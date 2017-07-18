@@ -22,6 +22,10 @@ build: [
     "-coqide"
     "no"
     "-debug"
+    "-bindir"
+    bin
+    "-libdir"
+    "%{lib}%/coq"
   ]
   [make "-j%{jobs}%"]
 ]
