@@ -16,10 +16,10 @@ patches: [
   "patch-ac-makefile-srcdir.diff"
 ]
 remove: [["ocamlfind" "remove" "bitstring"]]
-depends: ["ocamlfind" {build} "camlp4" {build}]
-depexts: [
-  [["debian"] ["time"]]
-  [["ubuntu"] ["time"]]
+depends: [
+  "ocamlfind" {build}
+  "camlp4" {build}
+  "conf-time"
 ]
 available: [ ocaml-version >= "3.10" ]
 install: [make "install"]

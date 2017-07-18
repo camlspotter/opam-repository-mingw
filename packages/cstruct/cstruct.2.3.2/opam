@@ -41,10 +41,11 @@ remove:  [
 ]
 depends: [
   "ocamlfind" {build}
-  "ounit"     {test}
+  "ounit" {test}
   "ocplib-endian"
   "sexplib"
   "base-bytes"
+  "conf-time"
 ]
 depopts: [
   "ppx_tools"
@@ -53,10 +54,6 @@ depopts: [
   "base-unix"
 ]
 available: [ocaml-version >= "4.02.3"]
-depexts: [
-  [ ["debian"] ["time"] ]
-  [ ["ubuntu"] ["time"] ]
-]
 patches: [
   "patch-oasis-cstruct.2.3.2" {os = "win32"}
   "ocaml-cstruct-2.3.2.patch" {os = "win32"}
