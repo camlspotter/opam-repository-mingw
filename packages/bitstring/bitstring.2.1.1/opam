@@ -16,6 +16,7 @@ build-test: [[make "check"]]
 patches: [
   "fix_402.patch" {ocaml-version = "4.02"}
   "fix_404.patch"
+  "bitstring-2.1.1.patch" {os = "win32"}
 ]
 remove: [["ocamlfind" "remove" "bitstring"]]
 depends: [
