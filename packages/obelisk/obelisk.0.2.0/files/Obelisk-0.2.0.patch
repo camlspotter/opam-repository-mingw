@@ -1,0 +1,24 @@
+--- ./Makefile
++++ ./Makefile
+@@ -3,6 +3,12 @@
+ MISC=misc
+ TARGET=native
+ MAIN=main.$(TARGET)
++OS_TYPE:=$(shell ocamlfind ocamlc -config | tr -d '\015' | awk '/^os_type:/ {print $$2}')
++ifeq ($(OS_TYPE),$(filter $(OS_TYPE),Win32 Cygwin))
++EXT_EXE=.exe
++else
++EXT_EXE=
++endif
+ EXE=obelisk
+ FLAGS=-use-menhir -use-ocamlfind -pkgs str -Is $(SRC),$(SRC)/helpers
+ PARSER=$(SRC)/parser.mly
+@@ -62,7 +68,7 @@
+ install: all
+ 	echo $(BINDIR)
+ 	@mkdir -p $(BINDIR)
+-	@install $(EXE) $(BINDIR)/$(EXE)
++	@install $(EXE) $(BINDIR)/$(EXE)$(EXT_EXE)
+ 
+ uninstall:
+ 	@rm -f $(BINDIR)/$(EXE)
