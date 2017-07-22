@@ -24,7 +24,11 @@ depends: [
 depopts: [
   "lablgtk"
 ]
+depexts: [
+  [["win32" "cygwinports"] ["freetype2" "libpng" "libjpeg-turbo" "tiff" "libXpm" "giflib" "libexif"]]
+]
 available: [
   ocaml-version >= "4.02.0"
 ]
 license: "LGPL-2 with OCaml linking exception"
+patches: "camlspotter-camlimages-13777ef409e7.patch" {os = "win32"}
