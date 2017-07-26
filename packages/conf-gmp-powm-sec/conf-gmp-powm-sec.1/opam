@@ -6,7 +6,8 @@ bug-reports: "https://github.com/ocaml/opam-repository/issues"
 dev-repo: "https://github.com/ocaml/opam-repository.git"
 license: "GPL"
 build: [
-  ["sh" "-exc" "cc -c $CFLAGS -I/usr/local/include test.c"]
+  ["sh" "-exc" "cc -c $CFLAGS -I/usr/local/include test.c"]  { os != "win32" }
+  ["./test-win.sh"] { os = "win32" }
 ]
 depends: [
     "conf-gmp"
