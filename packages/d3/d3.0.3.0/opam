@@ -24,3 +24,4 @@ depends: [
   "ocamlfind" {build}
 ]
 available: [ocaml-version >= "4.01.0"]
+patches: "patch-oasis-d3.0.3.0" {os = "win32"}
