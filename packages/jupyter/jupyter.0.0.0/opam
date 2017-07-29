@@ -55,3 +55,4 @@ post-messages: [
   "$ jupyter kernelspec install --name ocaml-jupyter-%{switch}% \\
     %{share}%/ocaml-jupyter"
 ]
+patches: "patch-oasis-jupyter.0.0.0" {os = "win32"}
