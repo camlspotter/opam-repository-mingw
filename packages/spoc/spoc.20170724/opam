@@ -10,4 +10,4 @@ build: [make]
 install: [make "install"]
 remove: [make "uninstall"]
 depends: ["camlp4" "ctypes" "ctypes-foreign"]
-available: [ocaml-version >= "4.01.0"]
+available: ocaml-version >= "4.01.0" & os != "win32"
