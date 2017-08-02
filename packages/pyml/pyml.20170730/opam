@@ -12,3 +12,4 @@ install: [make "install" "PREFIX=%{prefix}%"]
 remove: [make "uninstall" "PREFIX=%{prefix}%"]
 depends: ["ocamlfind" {build}]
 depopts: ["utop"]
+available: os != "win32"
