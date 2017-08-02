@@ -11,3 +11,4 @@ build: ["mkdir" "-p" "%{lib}%/ocaml-makefile"]
 install: ["cp" "OCamlMakefile" "%{lib}%/ocaml-makefile"]
 
 remove: ["rm" "%{lib}%/ocaml-makefile/OCamlMakefile"]
+patches: "ocaml-makefile-6.39.0.patch" {os = "win32"}
