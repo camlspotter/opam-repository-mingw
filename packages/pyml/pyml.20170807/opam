@@ -12,3 +12,4 @@ remove: [make "uninstall" "PREFIX=%{prefix}%"]
 depends: ["ocamlfind" {build}]
 depopts: ["utop"]
 version: "20170807"
+available: os != "win32"
