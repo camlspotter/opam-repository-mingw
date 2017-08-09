@@ -19,3 +19,4 @@ depends: [
   "ocamlfind" {>= "1.5"}
   "ocamlbuild" {build}
 ]
+patches: "patch-oasis-posix-time.1.0.1-0" {os = "win32"}
