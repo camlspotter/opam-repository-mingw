@@ -22,6 +22,7 @@ depends: [
   "opam-core" {= "2.0.0~beta3.1"}
   "opam-format" {= "2.0.0~beta3.1"}
   "dose3" {>= "5"}
+  "cudf" {<= "0.7"}
 ]
 available: [ocaml-version >= "4.01.0"]
 patches: "opam-2.0.0-beta3.1.patch" {os = "win32"}
