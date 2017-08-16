@@ -9,7 +9,6 @@ dev-repo: "git@github.com:mhallin/graphql_ppx.git"
 build: [
   [make "build"]
 ]
-install: [make "install"]
 remove: [make "uninstall"]
 available: [ocaml-version = "4.02.3"]
 depends: [
