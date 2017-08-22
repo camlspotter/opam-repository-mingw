@@ -17,3 +17,4 @@ depexts: [
   [["archlinux"] ["glpk"]]
   [["homebrew"] ["glpk"]]
 ]
+available: os != "win32"
