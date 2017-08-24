@@ -1,0 +1,72 @@
+--- ./build/Makefile
++++ ./build/Makefile
+@@ -1,5 +1,7 @@
+ include Makefile.common
+ 
++EXT_OBJ:=$(shell ocamlfind ocamlc -config | tr -d '\015' | awk '/^ext_obj:/ {print $$2}')
++
+ all: dirs tests $S/codept-server $S/codept-client $S/codept
+ 
+ dirs:
+@@ -30,21 +32,21 @@
+ print-%  : ; @echo $* = $($*)
+ 
+ $(SRC:%.mli=%.cmi):%.cmi: $S/%.mli | dirs
+-	@$(OCAMLC) -c $< && mv $S/$@ $@ && mv $S/$*.cmti $*.cmti
++	@$(OCAMLC) -c $(shell cygpath -m $<) && mv $S/$@ $@ && mv $S/$*.cmti $*.cmti
+ 
+ %.cmo: $S/%.ml %.cmi | dirs
+-	@$(OCAMLC) -c $< && mv $S/$@ $@ && mv $S/$*.cmt $*.cmt
++	@$(OCAMLC) -c $(shell cygpath -m $<) && mv $S/$@ $@ && mv $S/$*.cmt $*.cmt
+ 
+ $(OBJ):%.cmx: $S/%.ml | dirs
+-	@$(OCAMLOPT) -c $< && mv $S/$@ $@ && mv $S/$*.o $*.o && mv $S/$*.cmt $*.cmt && (mv $S/$*.cmi $*.cmi 2> /dev/null ||true)
++	@$(OCAMLOPT) -c $(shell cygpath -m $<) && mv $S/$@ $@ && mv $S/$*$(EXT_OBJ) $*$(EXT_OBJ) && mv $S/$*.cmt $*.cmt && (mv $S/$*.cmi $*.cmi 2> /dev/null ||true)
+ $(BGENS:=.cmx):%.cmx: %.ml %.cmi
+-	@$(OCAMLOPT) -c $<
++	@$(OCAMLOPT) -c $(shell cygpath -m $<)
+ 
+ lib/sparser.cmi: lib/sparser.mli
+-	@$(OCAMLC) -c $<
++	@$(OCAMLC) -c $(shell cygpath -m $<)
+ 
+ lib/slex.cmi: lib/slex.ml lib/sparser.cmi
+-	@$(OCAMLC) -c $<
++	@$(OCAMLC) -c $(shell cygpath -m $<)
+ 
+ 
+ clean:
+@@ -53,11 +55,11 @@
+ 
+ 
+ %.cmi: %.mli | dirs
+-	@$(OCAMLC) -c $< && mv $S/$@ $@
++	@$(OCAMLC) -c $(shell cygpath -m $<) && mv $S/$@ $@
+ 
+ 
+ $(ODOC):docs/%.odoc: $S/lib/%.mli | dirs
+-	@ocamldoc -I lib -I +compiler-libs $< -dump $@
++	@ocamldoc -I lib -I +compiler-libs $(shell cygpath -m $<) -dump $@
+ 
+ docs: $S/docs/index.html | dirs
+ $S/docs/index.html: $(ODOC)
+--- ./build/Makefile.common
++++ ./build/Makefile.common
+@@ -53,4 +53,4 @@
+ endef
+ 
+ lib/slex.ml: $S/lib/slex.mll
+-	ocamllex $< -o $@
++	ocamllex $(shell cygpath -m $<) -o $@
+--- ./codept.install
++++ ./codept.install
+@@ -1,7 +1,7 @@
+ bin: ["codept"]
+ lib: ["META"
+-     "?ocamlbuild_plugin/codept_ocamlbuild.cma"
+-     "?ocamlbuild_plugin/codept_ocamlbuild.cmxa"
++     "?ocamlbuild_plugin/_build/codept_ocamlbuild.cma"
++     "?ocamlbuild_plugin/_build/codept_ocamlbuild.cmxa"
+      "?ocamlbuild_plugin/_build/codept_ocamlbuild.cmx"
+      "?ocamlbuild_plugin/_build/codept_ocamlbuild.cmi"
+      "?ocamlbuild_plugin/_build/codept_ocamlbuild.cmti"
