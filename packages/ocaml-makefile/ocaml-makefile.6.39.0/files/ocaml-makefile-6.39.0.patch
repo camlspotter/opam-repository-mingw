@@ -111,6 +111,42 @@
  				$(CPPFLAGS) $(CPPFLAGS_WIN32) \
  				$(CFLAGS_WIN32) $(CINCFLAGS) $(CFLAG_O)$@ " $<
  
+@@ -1147,14 +1133,14 @@
+ 			$(QUIET)if [ ! -d $(@D) ]; then mkdir -p $(@D); fi
+ 			$(QUIET)pp=`sed -n -e '/^#/d' -e 's/(\*pp \([^*]*\) \*)/\1/p;q' $<`; \
+ 			if [ -z "$$pp" ]; then \
+-			  $(ECHO) $(REAL_OCAMLFIND) $(OCAMLDEP) $(OCAML_DEP_PACKAGES) \
++			  $(ECHO) $(REAL_OCAMLFIND) $(OCAMLDEP) -slash $(OCAML_DEP_PACKAGES) \
+ 				$(INCFLAGS) $< \> $@; \
+-			  $(REAL_OCAMLFIND) $(OCAMLDEP) $(OCAML_DEP_PACKAGES) \
++			  $(REAL_OCAMLFIND) $(OCAMLDEP) -slash $(OCAML_DEP_PACKAGES) \
+ 				$(INCFLAGS) $< > $@; \
+ 			else \
+-			  $(ECHO) $(REAL_OCAMLFIND) $(OCAMLDEP) $(OCAML_DEP_PACKAGES) \
++			  $(ECHO) $(REAL_OCAMLFIND) $(OCAMLDEP) -slash $(OCAML_DEP_PACKAGES) \
+ 				-pp \"$$pp $(PPFLAGS)\" $(INCFLAGS) $< \> $@; \
+-			  $(REAL_OCAMLFIND) $(OCAMLDEP) $(OCAML_DEP_PACKAGES) \
++			  $(REAL_OCAMLFIND) $(OCAMLDEP) -slash $(OCAML_DEP_PACKAGES) \
+ 				-pp "$$pp $(PPFLAGS)" $(INCFLAGS) $< > $@; \
+ 			fi
+ 
+@@ -1162,12 +1148,12 @@
+ 			$(QUIET)if [ ! -d $(@D) ]; then mkdir -p $(@D); fi
+ 			$(QUIET)pp=`sed -n -e '/^#/d' -e 's/(\*pp \([^*]*\) \*)/\1/p;q' $<`; \
+ 			if [ -z "$$pp" ]; then \
+-			  $(ECHO) $(REAL_OCAMLFIND) $(OCAMLDEP) $(DEPFLAGS) $(INCFLAGS) $< \> $@; \
+-			  $(REAL_OCAMLFIND) $(OCAMLDEP) $(DEPFLAGS) $(INCFLAGS) $< > $@; \
++			  $(ECHO) $(REAL_OCAMLFIND) $(OCAMLDEP) -slash $(DEPFLAGS) $(INCFLAGS) $< \> $@; \
++			  $(REAL_OCAMLFIND) $(OCAMLDEP) -slash $(DEPFLAGS) $(INCFLAGS) $< > $@; \
+ 			else \
+-			  $(ECHO) $(REAL_OCAMLFIND) $(OCAMLDEP) $(DEPFLAGS) \
++			  $(ECHO) $(REAL_OCAMLFIND) $(OCAMLDEP) -slash $(DEPFLAGS) \
+ 			    -pp \"$$pp $(PPFLAGS)\" $(INCFLAGS) $< \> $@; \
+-			  $(REAL_OCAMLFIND) $(OCAMLDEP) $(DEPFLAGS) \
++			  $(REAL_OCAMLFIND) $(OCAMLDEP) -slash $(DEPFLAGS) \
+ 			    -pp "$$pp $(PPFLAGS)" $(INCFLAGS) $< > $@; \
+ 			fi
+ 
 @@ -1231,24 +1217,36 @@
  ###########################################################################
  # (UN)INSTALL RULES FOR LIBRARIES
