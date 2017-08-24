@@ -1,3 +1,43 @@
+--- ./config.make.in
++++ ./config.make.in
+@@ -36,7 +36,7 @@
+ RANLIB=@RANLIB@
+ XA=.a
+ XB=
+-XE=
++XE=@EXE@
+ XO=.o
+ XS=@XS@
+ TOOLCHAIN=unix
+--- ./configure
++++ ./configure
+@@ -2668,12 +2668,11 @@
+ $as_echo "no" >&6; }
+ fi
+ 
+-
+-if test "`$OCAMLFIND printconf stdlib`" != "`$CAMLC -where`"; then
+-  { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: Ignoring ocamlfind" >&5
+-$as_echo "$as_me: WARNING: Ignoring ocamlfind" >&2;}
+-  OCAMLFIND=no
+-fi
++#if test "`$OCAMLFIND printconf stdlib`" != "`$CAMLC -where`"; then
++#  { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: Ignoring ocamlfind" >&5
++#$as_echo "$as_me: WARNING: Ignoring ocamlfind" >&2;}
++#  OCAMLFIND=no
++#fi
+ 
+ if test "$OCAMLFIND" = no; then
+ FINDLIBDIR=""
+@@ -4179,7 +4178,7 @@
+       cat > conftest.ml << EOF
+       open Raw
+ EOF
+-      if $CAMLC -c -I "${LABLGLDIR:=+lablGL}" conftest.ml > /dev/null 2>&1 ; then
++      if $CAMLC -c -I "$LABLGLDIR" conftest.ml > /dev/null 2>&1 ; then
+         { $as_echo "$as_me:${as_lineno-$LINENO}: result: $LABLGLDIR" >&5
+ $as_echo "$LABLGLDIR" >&6; }
+       else
 --- ./src/glib.ml
 +++ ./src/glib.ml
 @@ -72,6 +72,8 @@
@@ -42,7 +82,7 @@
  #include "wrappers.h"
  #include "ml_glib.h"
  #include "glib_tags.h"
-@@ -325,14 +332,23 @@
+@@ -326,14 +333,23 @@
  
  #ifndef _WIN32
  ML_1 (g_io_channel_unix_new, Int_val, Val_GIOChannel_noref)
