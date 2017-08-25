@@ -27,7 +27,10 @@ remove: [
 depends: ["ocamlfind"]
 #depopts: ["ounit"]
 depexts: [
+  [ ["alpine"] ["libevent-dev"] ]
+  [ ["centos"] ["libevent-devel"] ]
   [ ["debian"] ["libevent-dev"] ]
+  [ ["fedora"] ["libevent-devel"] ]
   [ ["ubuntu"] ["libevent-dev"] ]
   [ ["win32" "cygwinports"] ["libevent"]]
 ]
