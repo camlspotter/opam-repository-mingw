@@ -181,6 +181,8 @@
  	OMAKEFLAGS= OMAKEPATH=lib ./omake-boot --dotomake .omake --force-dotomake -j2 main
  	OMAKEFLAGS= OMAKEPATH=lib src/main/omake --dotomake .omake --force-dotomake -j2 all
  
+-install: all
+-	OMAKEFLAGS= OMAKEPATH=lib src/main/omake --dotomake .omake --force-dotomake -j2 install
 +MJOBS?=2
 +all-no-bootstrap:
 +	touch .config
@@ -188,8 +190,8 @@
 +	rm -f src/main/omake.exe
 +	OMAKEFLAGS= OMAKEPATH=lib src/main/omake.opt --dotomake .omake --force-dotomake -j$(MJOBS) all
 +
- install: all
- 	OMAKEFLAGS= OMAKEPATH=lib src/main/omake --dotomake .omake --force-dotomake -j2 install
++install:
++	OMAKEFLAGS= OMAKEPATH=lib src/main/omake.opt --dotomake .omake --force-dotomake -j2 install
 --- ./OMakefile
 +++ ./OMakefile
 @@ -15,8 +15,7 @@
