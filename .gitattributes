@@ -1,0 +1,19 @@
+# Autodetect text files
+* text=auto
+
+.gitattributes text eol=lf
+.gitignore text eol=lf
+.gitconfig text eol=lf
+
+# Force images/fonts/archives to be handled as binaries
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.png binary
+*.ttf binary
+*.gz binary
+*.zip binary
+*.7z binary
+
+# unix eols
+* text eol=lf
