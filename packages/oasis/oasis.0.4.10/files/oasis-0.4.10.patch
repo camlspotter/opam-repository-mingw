@@ -2131,6 +2131,18 @@
  
  
  let install =
+@@ -534,7 +544,10 @@
+     if ev = install_file_ev then begin
+       if OASISFileUtil.file_exists_case data then begin
+         info (f_ "Removing file '%s'") data;
+-        Sys.remove data
++        (try Sys.remove data
++        with Sys_error _ when
++            Sys.os_type = "Win32" &&
++            Filename.basename data = "setup.ml" -> ());
+       end else begin
+         warning (f_ "File '%s' doesn't exist anymore") data
+       end
 --- ./src/plugins/ocamlbuild/MyOCamlbuildFindlib.ml
 +++ ./src/plugins/ocamlbuild/MyOCamlbuildFindlib.ml
 @@ -93,7 +93,9 @@
