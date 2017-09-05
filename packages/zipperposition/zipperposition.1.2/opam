@@ -43,4 +43,4 @@ depopts: [
   "qcheck" {test}
 ]
 conflicts: "logtk"
-available: [ocaml-version >= "4.02.3"]
+available: ocaml-version >= "4.02.3" & os != "win32"
