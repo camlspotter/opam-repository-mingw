@@ -60,3 +60,4 @@ post-messages: [
     %{share}%/ocaml-jupyter"
   {success}
 ]
+patches: "patch-oasis-jupyter.1.0.1" {os = "win32"}
