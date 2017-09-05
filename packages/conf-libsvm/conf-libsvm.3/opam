@@ -19,3 +19,4 @@ depexts: [
   [["source" "alpine"] ["https://gist.githubusercontent.com/akabe/918c5018809abceb3a3a83bd985c42c8/raw/libsvm.sh"]]
   [["osx" "homebrew"] ["libsvm"]]
 ]
+available: os != "win32"
