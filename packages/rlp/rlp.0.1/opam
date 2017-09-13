@@ -11,7 +11,7 @@ build: [
   ["ocaml" "setup.ml" "-doc"]
 ]
 install: ["ocaml" "setup.ml" "-install"]
-remove: ["ocaml" "setup.ml" "-uninstall"]
+remove: ["ocamlfind" "remove" name]
 depends: [
   "ocamlbuild" {build}
   "ocamlfind" {build}
