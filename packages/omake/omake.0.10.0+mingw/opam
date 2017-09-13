@@ -20,5 +20,5 @@ patches: [
 #  "patch-mm" { os = "win32" } , upstreamed?
   "patch-chmod"
 ]
-available: [ ocaml-version >= "4.02.0" ]
+available: [ ocaml-version >= "4.02.0" & ocaml-version < "4.06.0" ]
 dev-repo: "git://github.com/camlspotter/omake-fork"
