@@ -25,4 +25,4 @@ depexts: [
   # Cf. https://github.com/ocaml/opam-repository/pull/10167 for OSX:
   [["homebrew" "osx"] ["jack"]]
 ]
-available: [ocaml-version >= "4.03.0"]
+available: ocaml-version >= "4.03.0" & os != "win32"
