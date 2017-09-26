@@ -9,6 +9,7 @@ build: [["mysql_config" "--include"]]
 depexts: [
   [["debian"] ["libmariadbclient-dev"]]
   [["ubuntu"] ["libmariadbclient-dev"]]
+  [["win32" "cygwinports"] ["mariadb-connector"]]
   [["centos"] ["mariadb-devel"]]
   [["osx" "homebrew"] ["mariadb-connector-c"]]
   [["alpine"] ["mariadb-dev"]]
