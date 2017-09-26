@@ -5,10 +5,8 @@ depends: ["ocamlfind" {build}]
 available: [
 #
 # The lines below were generated using the following travesty:
-#  grep -l '[-]flambda' `find compilers/ -name *.comp` | \
+#  grep -l '[-]flambda' `find compilers/ -name *.comp` | sort | \
 #    sed 's/.*\/\([^/]*\)\.comp/| compiler = "\1"/; 1s/^| /  /'
-#
-#
   compiler = "4.03.0+beta1+flambda+mingw32"
 | compiler = "4.03.0+beta1+flambda+mingw64"
 | compiler = "4.03.0+beta2+flambda+mingw32"
@@ -25,10 +23,24 @@ available: [
 | compiler = "4.04.0+flambda+mingw32c"
 | compiler = "4.04.0+flambda+mingw64"
 | compiler = "4.04.0+flambda+mingw64c"
+| compiler = "4.04.1+flambda+mingw32"
+| compiler = "4.04.1+flambda+mingw32c"
+| compiler = "4.04.1+flambda+mingw64"
+| compiler = "4.04.1+flambda+mingw64c"
+| compiler = "4.04.2+flambda+mingw32"
+| compiler = "4.04.2+flambda+mingw32c"
+| compiler = "4.04.2+flambda+mingw64"
+| compiler = "4.04.2+flambda+mingw64c"
 | compiler = "4.05.0+beta1+flambda+mingw32"
 | compiler = "4.05.0+beta1+flambda+mingw64"
 | compiler = "4.05.0+beta2+flambda+mingw32"
 | compiler = "4.05.0+beta2+flambda+mingw64"
 | compiler = "4.05.0+beta3+flambda+mingw32"
 | compiler = "4.05.0+beta3+flambda+mingw64"
+| compiler = "4.05.0+flambda+mingw32"
+| compiler = "4.05.0+flambda+mingw32c"
+| compiler = "4.05.0+flambda+mingw64"
+| compiler = "4.05.0+flambda+mingw64c"
+| compiler = "4.05.0+rc1+flambda+mingw32"
+| compiler = "4.05.0+rc1+flambda+mingw64"
 ]
