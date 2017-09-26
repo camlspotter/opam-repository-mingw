@@ -24,3 +24,7 @@ depends: [
   "ocamlfind" {build}
   ("conf-mysql" | "conf-mariadb")
 ]
+patches: [
+  "ocaml-mysql-1.2.2.patch" {os = "win32"}
+  "patch-ocamlmakefile-mysql.1.2.2" {os = "win32"}
+]
