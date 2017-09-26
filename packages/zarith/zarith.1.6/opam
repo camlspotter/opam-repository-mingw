@@ -19,3 +19,4 @@ depends: [
   "conf-gmp"
   "conf-perl" {build}
 ]
+patches: "Zarith-release-1.6.patch" {os = "win32"}
