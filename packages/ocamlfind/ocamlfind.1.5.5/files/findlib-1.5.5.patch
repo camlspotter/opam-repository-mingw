@@ -87,7 +87,7 @@
  
 --- ./src/findlib/frontend.ml
 +++ ./src/findlib/frontend.ml
-@@ -24,6 +24,12 @@
+@@ -24,12 +24,18 @@
    | Plus
  ;;
  
@@ -100,6 +100,34 @@
  
  
  let slashify s =
+   match Findlib_config.system with
+-    | "mingw" | "cygwin" ->
+-	let u = String.copy s in
++    | "mingw" | "cygwin" | "mingw64" | "cygwin64" ->
++  let u = String.copy s in
+ 	for k = 0 to String.length u - 1 do
+ 	  if u.[k] = '\\' then u.[k] <- '/'
+ 	done;
+@@ -40,8 +46,8 @@
+ 
+ let out_path ?(prefix="") s =
+   match Findlib_config.system with
+-    | "mingw" | "cygwin" ->
+-	let u = slashify s in
++    | "mingw" | "cygwin" | "mingw64" | "cygwin64" ->
++  let u = slashify s in
+ 	prefix ^ 
+ 	  (if String.contains u ' ' then
+ 	     (* Desperate attempt to fix the space problem in paths.
+@@ -372,7 +378,7 @@
+     Sys.signal Sys.sigint Sys.Signal_ignore in
+ 
+   let need_exe =
+-    List.mem Findlib_config.system [ "win32"; "win64"; "mingw" ] in
++    List.mem Findlib_config.system [ "win32"; "win64"; "mingw" ; "mingw64"] in
+ 
+   let fixed_cmd =
+     if need_exe then (
 @@ -445,6 +451,87 @@
        )
        packages
