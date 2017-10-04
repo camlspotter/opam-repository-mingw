@@ -18,7 +18,7 @@ build: [
 #  [make "bootstrap" "PREFIX=%{prefix}%"]
   [make "all-no-bootstrap" "PREFIX=%{prefix}%" "MJOBS=%{jobs}%"]
 ]
-install: [make "install" "PREFIX=%{prefix}%"]
+install: [make "install-no-bootstrap" "PREFIX=%{prefix}%"]
 remove: [
   ["rm" "-rf" "%{bin}%/osh"]
   ["rm" "-rf" "%{bin}%/omake"]
