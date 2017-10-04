@@ -92,6 +92,17 @@
  #endif
  
  /* There is a test in win_starup/win_cleanup, so there is no
+--- ./libs/ocplib-unix/minUnix.ml
++++ ./libs/ocplib-unix/minUnix.ml
+@@ -302,7 +302,7 @@
+ external set_nonblock : file_descr -> unit = "unix_set_nonblock"
+ external clear_nonblock : file_descr -> unit = "unix_clear_nonblock"
+ external set_close_on_exec : file_descr -> unit = "unix_set_close_on_exec"
+-external clear_close_on_exec : file_descr -> unit = "unix_clear_close_on_exec"
++external clear_close_on_exec : file_descr -> unit = "win_clear_close_on_exec"
+ 
+ external mkdir : string -> file_perm -> unit = "unix_mkdir"
+ external rmdir : string -> unit = "unix_rmdir"
 --- ./libs/ocplib-unix/onlyUnix_c.c
 +++ ./libs/ocplib-unix/onlyUnix_c.c
 @@ -25,6 +25,15 @@
@@ -110,7 +121,7 @@
  
  #ifndef CAML_UNIXSUPPORT_H
  #include <caml/unixsupport.h>
-@@ -49,12 +58,13 @@
+@@ -49,18 +58,21 @@
  UNAVAILABLE_PRIM(unix_umask)
  UNAVAILABLE_PRIM(unix_chown)
  UNAVAILABLE_PRIM(unix_fchown)
@@ -125,6 +136,14 @@
  
  UNAVAILABLE_PRIM(unix_clear_close_on_exec)
  UNAVAILABLE_PRIM(unix_closedir)
+ 
+ UNAVAILABLE_PRIM(unix_getppid)
++#if OCAML_VERSION_MAJOR < 4 || ( OCAML_VERSION_MAJOR == 4 && OCAML_VERSION_MINOR < 6 )
+ UNAVAILABLE_PRIM(unix_isatty)
++#endif
+ UNAVAILABLE_PRIM(unix_opendir)
+ UNAVAILABLE_PRIM(unix_readdir)
+ UNAVAILABLE_PRIM(unix_rewinddir)
 --- ./libs/ocplib-unix/onlyWin32_c.c
 +++ ./libs/ocplib-unix/onlyWin32_c.c
 @@ -32,6 +32,8 @@
@@ -226,6 +245,39 @@
  
  
  
+--- ./tools/ocp-build/buildMisc.ml
++++ ./tools/ocp-build/buildMisc.ml
+@@ -206,9 +206,17 @@
+       create_process error_handler cmd args maybe_chdir fd1 fd2 fd3
+ end
+ 
++let do_clear_close_on_exec =
++  let ocaml_major,ocaml_minor =
++    Scanf.sscanf Sys.ocaml_version "%u.%u" (fun a b -> a, b) in
++  ocaml_major > 4 || ( ocaml_major = 4 && ocaml_minor >= 6)
++
+ let open_for_pipe filename =
+   let oc = open_out_bin filename in
+-  MinUnix.descr_of_out_channel oc
++  let fd = MinUnix.descr_of_out_channel oc in
++  if do_clear_close_on_exec then
++    MinUnix.clear_close_on_exec fd;
++  fd
+ 
+ let create_process cmd maybe_chdir stdin stdout stderr =
+   match cmd with
+@@ -218,7 +226,10 @@
+         None -> MinUnix.stdin
+       | Some filename ->
+         let ic = open_in_bin filename in
+-        MinUnix.descr_of_in_channel ic
++        let fd = MinUnix.descr_of_in_channel ic in
++        if do_clear_close_on_exec then
++          MinUnix.clear_close_on_exec fd;
++        fd
+     in
+     let stdout_fd = match stdout with
+         None -> MinUnix.stdout
 --- ./tools/ocp-build/ocaml/buildOCamlMeta.ml
 +++ ./tools/ocp-build/ocaml/buildOCamlMeta.ml
 @@ -160,10 +160,13 @@

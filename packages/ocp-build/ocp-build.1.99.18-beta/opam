@@ -36,14 +36,7 @@ remove: [
   [ "rm" "-rf" "%{prefix}%/lib/ocaml/typerex/installed.ocp"   ]
   [ "sh" "-exc" "rmdir %{prefix}%/lib/ocaml/typerex || true"   ]
 ]
-available: [ocaml-version >= "3.12.1"]
-
-(**************************************************************)
-(*                                                            *)
-(* From opam.trailer:                                         *)
-(*                                                            *)
-(**************************************************************)
-
+available: ocaml-version >= "3.12.1" & ocaml-version < "4.06.0"
 conflicts: [ "typerex-build"  {< "1.99.18"} ]
 depends: [
     "ocamlfind" (* not strictly needed by ocp-build, but
