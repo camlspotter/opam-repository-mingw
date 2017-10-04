@@ -11,7 +11,7 @@ build: [
 ]
 install: ["ocaml" "setup.ml" "-install"]
 remove: [
-  ["ocamlfind" "remove" "json-rpc"]
+  ["ocamlfind" "remove" "jsonrpc"]
 ]
 build-doc: [ "ocaml" "setup.ml" "-doc" ]
 depends: [
