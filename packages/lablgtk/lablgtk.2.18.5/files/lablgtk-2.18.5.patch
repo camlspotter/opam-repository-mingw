@@ -59,6 +59,17 @@
    val add_watch :
      cond:condition list -> callback:(condition list -> bool) -> ?prio:int -> channel -> id
    val remove : id -> unit
+--- ./src/Makefile
++++ ./src/Makefile
+@@ -462,7 +462,7 @@
+ 	  do rm -f "$(BINDIR)"/$$f; done
+ 
+ lablgtk.cma liblablgtk2$(XA): $(COBJS) $(MLOBJS)
+-	$(LIBRARIAN) -o lablgtk -oc lablgtk2 $^ $(GTKLIBS)
++	$(LIBRARIAN) -o lablgtk -oc lablgtk2 $^ $(GTKLIBS) -ldopt -link -ldopt -Wl,-s
+ lablgtk.cmxa: $(COBJS) $(MLOBJS:.cmo=.cmx)
+ 	$(LIBRARIAN) -o lablgtk -oc lablgtk2 $^ $(GTKLIBS)
+ lablgtk.cmxs: DYNLINKLIBS=$(GTK_LIBS)
 --- ./src/ml_glib.c
 +++ ./src/ml_glib.c
 @@ -25,6 +25,8 @@
