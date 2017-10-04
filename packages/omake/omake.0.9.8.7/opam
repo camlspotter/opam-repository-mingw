@@ -12,6 +12,9 @@ homepage: "https://github.com/camlspotter/omake-0.9/README.md"
 bug-reports: "https://github.com/camlspotter/omake-0.9/issues"
 
 build: [
+  ["ocamlfind" "ocamlopt" "-linkpkg" "-package" "str,cygwinpath" "ohelper.ml" "-o" "omake-mmtranslate.exe"]  {os = "win32"}
+  ["install" "-m" "0755" "omake-mmtranslate.exe" "%{bin}%/omake-mmtranslate.exe"]  {os = "win32"}
+  ["sh" "-ex" "./change-prefix.sh"]  {os = "win32"}
   [make "bootstrap" "PREFIX=%{prefix}%"]
   [make "all" "PREFIX=%{prefix}%"]
 ]
@@ -21,9 +24,14 @@ install: [make "install" "PREFIX=%{prefix}%"]
 remove: [
   [ "rm" "-f" "%{prefix}%/bin/omake" ]
   [ "rm" "-f" "%{prefix}%/bin/osh" ]
+  [ "rm" "-f" "%{bin}%/omake-mmtranslate"]
   [ "rm" "-rf" "%{prefix}%/lib/omake" ]
 ]
 
-depends: ["ocamlfind"]
+depends: [
+ "ocamlfind"
+ "cygwinpath" { build } # win32 only
+]
 available:
-  ocaml-version >= "4.02.3" & ocaml-version < "4.07.0" & os != "win32"
+  ocaml-version >= "4.02.3" & ocaml-version < "4.07.0"
+patches: "omake-0.9-0.9.8.7.patch" {os = "win32"}
