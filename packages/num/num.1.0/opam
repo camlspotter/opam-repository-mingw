@@ -24,4 +24,4 @@ depends: [
 ]
 conflicts: [ "base-num" ]
 available: [ ocaml-version >= "4.06.0" ]
-
+patches: "num-1.0.patch" {os = "win32"}
