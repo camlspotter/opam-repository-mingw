@@ -15,4 +15,4 @@ depends: [
   "lwt"
   "camlp4"
 ]
-available: [ ocaml-version <= "4.00.1" ]
+available: ocaml-version <= "4.00.1" & os != "win32"

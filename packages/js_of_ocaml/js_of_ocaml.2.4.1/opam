@@ -18,4 +18,4 @@ conflicts: [
   "tyxml"    {< "3.2.1"}
   "tyxml"    {>= "3.6.0"}
 ]
-available: [ ocaml-version <= "4.01.0" ]
+available: ocaml-version <= "4.01.0" & os != "win32"

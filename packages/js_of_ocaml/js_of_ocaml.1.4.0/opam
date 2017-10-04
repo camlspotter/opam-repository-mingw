@@ -21,4 +21,4 @@ depopts: [
 conflicts: [
   "deriving-ocsigen" {< "0.5"}
 ]
-available: [ ocaml-version <= "4.01.0" ]
+available: ocaml-version <= "4.01.0" & os != "win32"

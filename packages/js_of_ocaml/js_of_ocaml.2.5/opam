@@ -27,4 +27,4 @@ conflicts: [
   "reactiveData" {>= "0.2"}
 ]
 
-available: [ ocaml-version < "4.03.0" ]
+available: ocaml-version < "4.03.0" & os != "win32"
