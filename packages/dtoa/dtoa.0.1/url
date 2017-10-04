@@ -1,2 +1,2 @@
-http: "https://github.com/flowtype/ocaml-dtoa/archive/v0.1.tar.gz"
-checksum: "40cb786876812a7e70ab5a7cf4094829"
+http: "https://github.com/flowtype/ocaml-dtoa/archive/0.1.0.tar.gz"
+checksum: "f23a5c6388530a368a85176c13f2f331"
