@@ -1,6 +1,6 @@
 opam-version: "1"
 version: "4.02.3"
-src: "https://dl.bintray.com/fdopen/prebuild-win32-ocaml-packages/4.02.3+mingw32c3.tar.xz"
+src: "https://dl.bintray.com/fdopen/prebuild-win32-ocaml-packages/4.02.3+mingw32c4.tar.xz"
 
 build: [
   [ "sed" "-i" "s#@PREFIX@#%{prefix}%#g" "lib/ocaml/ld.conf" ]

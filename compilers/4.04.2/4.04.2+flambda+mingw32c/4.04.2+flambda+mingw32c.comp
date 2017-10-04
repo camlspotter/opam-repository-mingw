@@ -1,6 +1,6 @@
 opam-version: "1"
 version: "4.04.2"
-src: "https://dl.bintray.com/fdopen/prebuild-win32-ocaml-packages/4.04.2+flambda+mingw32c2.tar.xz"
+src: "https://dl.bintray.com/fdopen/prebuild-win32-ocaml-packages/4.04.2+flambda+mingw32c3.tar.xz"
 build: [
   [ "sed" "-i" "s#@PREFIX@#%{prefix}%#g" "lib/ocaml/ld.conf" ]
   [ "sed" "-i" "s#@PREFIX@#%{prefix}%#g" "lib/ocaml/Makefile.config" ]

@@ -2,7 +2,7 @@ opam-version: "1"
 version: "4.04.2"
 src: "https://github.com/ocaml/ocaml/archive/4.04.2.tar.gz"
 patches:[
-  "https://gist.github.com/fdopen/d1993e578619cd25eedcebd63af2de5a/raw/cda28407b24e7723e8196d4ae5b45f94fd81c8fb/ocaml-4.04.2.patch"
+  "https://gist.githubusercontent.com/fdopen/b764304a11f5f4b607375bb094456fb4/raw/c49765db6a3a46e82e709e534fecf38a76a39a6e/ocaml-4.04.2.patch"
   "https://gist.githubusercontent.com/fdopen/f056b5ec48c5d8e192fb6ba0c0bccc08/raw/d36d61e4660f80f3db2e76eef6817ac17b01c7ca/inline-flexdll.patch"
 ]
 build: [
