@@ -17,7 +17,7 @@ depends: [
   "config-file" {build}
   "base-bytes" {build}
 ]
-available: [ os = "win32" ]
+available: [ os = "win32" & ocaml-version < "4.06.0"]
 post-messages: [
  "Don't forget to add either /usr/x86_64-w64-mingw32/sys-root/mingw/bin (or
  /usr/i686-w64-mingw32/sys-root/mingw/bin for 32-bit builds) to your PATH.
