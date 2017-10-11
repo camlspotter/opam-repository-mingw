@@ -61,15 +61,15 @@
    val remove : id -> unit
 --- ./src/Makefile
 +++ ./src/Makefile
-@@ -462,7 +462,7 @@
- 	  do rm -f "$(BINDIR)"/$$f; done
+@@ -4,7 +4,7 @@
+ LINKER = $(CAMLC) $(MLFLAGS) $(MLBYTEFLAGS)
+ COMPOPT = $(CAMLOPT) $(MLFLAGS) -w s -c
+ LINKOPT = $(CAMLOPT) $(MLFLAGS)
+-LIBRARIAN = $(CAMLMKLIB) -verbose -ocamlc "$(CAMLC)" -ocamlopt "$(CAMLOPT)"
++LIBRARIAN = $(CAMLMKLIB) -verbose -ocamlc "$(CAMLC)" -ocamlopt "$(CAMLOPT)" -ldopt -link -ldopt -Wl,-s
+ TOPLEVEL = $(CAMLMKTOP) $(MLFLAGS)
+ CAMLP4 = $(CAMLP4O) pr_o.cmo
  
- lablgtk.cma liblablgtk2$(XA): $(COBJS) $(MLOBJS)
--	$(LIBRARIAN) -o lablgtk -oc lablgtk2 $^ $(GTKLIBS)
-+	$(LIBRARIAN) -o lablgtk -oc lablgtk2 $^ $(GTKLIBS) -ldopt -link -ldopt -Wl,-s
- lablgtk.cmxa: $(COBJS) $(MLOBJS:.cmo=.cmx)
- 	$(LIBRARIAN) -o lablgtk -oc lablgtk2 $^ $(GTKLIBS)
- lablgtk.cmxs: DYNLINKLIBS=$(GTK_LIBS)
 --- ./src/ml_glib.c
 +++ ./src/ml_glib.c
 @@ -25,6 +25,8 @@
