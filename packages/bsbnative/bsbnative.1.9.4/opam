@@ -11,4 +11,4 @@ tags: [ "ocaml" "bucklescript" "stdlib" "functional programming" ]
 build: [
   [ "./scripts/opam_install.sh" ]
 ]
-available: [ ocaml-version = "4.02.3" ]
+available: ocaml-version = "4.02.3" & os != "win32"
