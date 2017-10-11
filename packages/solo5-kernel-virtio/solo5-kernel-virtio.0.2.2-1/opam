@@ -14,8 +14,8 @@ install: [make "opam-virtio-install" "PREFIX=%{prefix}%"]
 remove: [make "opam-virtio-uninstall" "PREFIX=%{prefix}%"]
 depends: "conf-pkg-config"
 conflicts: "solo5-kernel-ukvm"
-available: [
+available:
   ocaml-version >= "4.02.3" & (arch = "x86_64" | arch = "amd64") &
-  os != "darwin"
-]
+  os != "darwin" &
+  os != "win32"
 patches: [ "solo5-no-werror.diff" ]
