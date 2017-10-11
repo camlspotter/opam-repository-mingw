@@ -24,5 +24,5 @@ depends: [
 conflicts: [
   "ocveralls" {<= "0.3.2"}
 ]
-available: ocaml-version >= "4.02.0"
+available: [ocaml-version >= "4.02.0" & ocaml-version < "4.06.0"]
 patches: "bisect_ppx-1.2.0.patch" {os = "win32"}
