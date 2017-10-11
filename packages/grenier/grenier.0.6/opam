@@ -13,3 +13,4 @@ depends: [
   "ocamlfind" {build}
 ]
 available: [ocaml-version >= "4.02"]
+patches: "patch-ocamlmakefile-grenier.0.6" {os = "win32"}
