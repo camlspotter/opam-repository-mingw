@@ -25,3 +25,7 @@ depexts: [
 available: [ ocaml-version >= "4.02" ]
 bug-reports: "https://github.com/savonet/ocaml-ogg/issues"
 dev-repo: "https://github.com/savonet/ocaml-ogg.git"
+patches: [
+  "patch-ocamlmakefile-ogg.0.5.2" {os = "win32"}
+  "ocaml-ogg-0.5.2.patch" {os = "win32"}
+]
