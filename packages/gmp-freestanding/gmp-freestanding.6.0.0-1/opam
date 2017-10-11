@@ -16,4 +16,3 @@ depends: [
   "ocaml-freestanding"
   "conf-m4" {build}
 ]
-available: os != "win32"
