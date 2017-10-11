@@ -1,6 +1,12 @@
 --- ./src/Makefile
 +++ ./src/Makefile
-@@ -79,7 +79,7 @@
+@@ -74,12 +74,12 @@
+ 
+ TOINSTALL=nums.cma libnums.$(A) $(CMIS) $(CMIS:.cmi=.mli) $(CMIS:.cmi=.cmti)
+ ifneq "$(ARCH)" "none"
+-TOINSTALL+=nums.cmxa nums.$(A)
++TOINSTALL+=nums.cmxa nums.$(A) $(CMIS:.cmi=.cmx)
+ endif
  ifeq "$(NATDYNLINK)" "true"
  TOINSTALL+=nums.cmxs
  endif
