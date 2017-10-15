@@ -22,3 +22,4 @@ depends: [
   "extlib-compat"
 ]
 available: [ocaml-version >= "4.02"]
+patches: "javalib-2.3.4.patch" {os = "win32"}

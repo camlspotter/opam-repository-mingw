@@ -1,0 +1,12 @@
+--- ./configure.sh
++++ ./configure.sh
+@@ -334,7 +334,8 @@
+ #
+ # Check for zlib, set flag if not found
+ #
+-gcc -lz 2>&1 | grep "undefined reference to .main." > /dev/null
++CC=$(ocamlfind ocamlc -config | awk -F '[\t \r]+' '/^bytecomp_c_compiler/ {for(i=2;i<=NF;i++) printf "%s " ,$i}')
++$CC -lz 2>&1 | grep "undefined reference to .main." > /dev/null
+ ZLIBFLAG=$?
+ 
+ #
