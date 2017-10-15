@@ -14,7 +14,7 @@ remove: [
  ["./configure" "--prefix" "%{prefix}%"]
  [make "uninstall"]
 ]
-available: [ocaml-version >= "4.02"]
+available: ocaml-version >= "4.02" & os != "win32"
 depends: [
  "ocamlbuild"
  "num"
