@@ -1,0 +1,16 @@
+--- ./src/OMakefile
++++ ./src/OMakefile
+@@ -96,11 +96,11 @@
+ .DEFAULT: $(OCamlProgram $(PROGRAM), $(BIN_FILES))
+ 
+ install:
+-    $(OCAMLFIND) install loga ../META *.cmx *.cmi *.cma *.cmxa *.a $(PROGRAM)
++    $(OCAMLFIND) install loga ../META *.cmx *.cmi *.cma *.cmxa *.a $(PROGRAM)$(EXE)
+ 
+ uninstall:
+     $(OCAMLFIND) remove loga
+ 
+ clean:
+     rm -f *~ *.opt *.cmi *.cmx *.cmt *.cmti *.cmp *.cmo *.cma *.cmxa *.omc \
+-        *.o *.a *.out *.run *.s *.bc *.log *.cache *.annot $(LIB) $(PROGRAM)
++        *.o *.a *.out *.run *.s *.bc *.log *.cache *.annot $(LIB) $(PROGRAM)$(EXE)
