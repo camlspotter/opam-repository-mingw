@@ -19,3 +19,4 @@ depends: [
   "conf-openssl"
   "base-bytes"
 ]
+patches: "patch-ocamlmakefile-ssl.0.5.5" {os = "win32"}
