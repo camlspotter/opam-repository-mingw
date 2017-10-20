@@ -23,7 +23,7 @@ depopts: [
 ]
 bug-reports: "https://github.com/savonet/ocaml-mm/issues"
 dev-repo: "https://github.com/savonet/ocaml-mm.git"
-available: [compiler != "4.04.2_flambda"]
+available: [compiler != "4.04.2+flambda"]
 patches: [
   "ocaml-mm-0.3.1.patch" {os = "win32"}
   "patch-ocamlmakefile-mm.0.3.1" {os = "win32"}
