@@ -1,0 +1,11 @@
+--- ./src/Makefile.in
++++ ./src/Makefile.in
+@@ -2,7 +2,7 @@
+ image_c.h image_c.c image.mli image.ml video.mli video.ml MIDI.mli MIDI.ml	\
+ synth.mli synth.ml
+ RESULT = mm
+-LIBINSTALL_FILES := *.cm* *.mli *.so *.a
++LIBINSTALL_FILES = *.cm* *.mli *.$(EXT_DLL) *.$(EXT_LIB)
+ OCAMLFLAGS = @OCAMLFLAGS@
+ OCAMLNCFLAGS = @OCAMLNCFLAGS@
+ OCAMLLDFLAGS = -linkall
