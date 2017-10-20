@@ -19,6 +19,8 @@ depexts: [
   [["debian"] ["libao-dev"]]
   [["ubuntu"] ["libao-dev"]]
   [["win32" "cygwinports"] ["libao"]]
+  [["freebsd"] ["libao"]]
+  [["alpine"] ["libao-dev"]]
 ]
 patches: [
   "ocaml-ao-0.2.1.patch" {os = "win32"}
