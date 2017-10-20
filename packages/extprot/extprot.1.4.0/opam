@@ -7,6 +7,8 @@ doc: ["https://github.com/mfp/extprot/blob/master/README.md"]
 dev-repo: "git://github.com/mfp/extprot.git"
 bug-reports: "https://github.com/mfp/extprot/issues"
 build: [
+  ["tar" "-chf" "tmp.tar" "compiler"] {os="win32"}
+  ["tar" "-xf" "tmp.tar"] {os="win32"}
   ["omake"]
 ]
 build-test: [
