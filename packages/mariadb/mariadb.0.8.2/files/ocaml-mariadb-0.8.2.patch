@@ -1,0 +1,12 @@
+--- ./configure
++++ ./configure
+@@ -1,7 +1,8 @@
+ #!/bin/sh
+ 
+ detect () {
+-  gcc -o /dev/null detect/detect.c $@ > /dev/null 2>&1
++  cc=$(ocamlfind ocamlc -config | awk '/^bytecomp_c_compiler/ {for(i=2;i<=NF;i++) printf "%s " ,$i}')
++  $cc -o /dev/null detect/detect.c $@ > /dev/null 2>&1
+   return $?
+ }
+ 
