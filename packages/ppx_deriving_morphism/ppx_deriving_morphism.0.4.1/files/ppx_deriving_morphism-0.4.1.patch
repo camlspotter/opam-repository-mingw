@@ -1,0 +1,11 @@
+--- ./pkg/build.ml
++++ ./pkg/build.ml
+@@ -4,7 +4,7 @@
+ 
+ 
+ let ocamlbuild =
+-  "ocamlbuild -use-ocamlfind -classic-display -plugin-tag 'package(cppo_ocamlbuild)'"
++  "ocamlbuild -use-ocamlfind -classic-display -plugin-tag " ^ Filename.quote "package(cppo_ocamlbuild)" ^ ""
+ 
+ let () =
+   Pkg.describe "ppx_deriving_morphism" ~builder:(`Other (ocamlbuild, "_build")) [
