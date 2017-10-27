@@ -6,7 +6,6 @@ bug-reports: "https://github.com/janestreet/sexplib/issues"
 dev-repo: "https://github.com/janestreet/sexplib.git"
 license: "Apache-2.0"
 build: [
-  ["sh" "winconfigure"] {os = "win32"}
   ["jbuilder" "build" "-p" name "-j" jobs]
 ]
 depends: [
@@ -14,4 +13,4 @@ depends: [
   "num"
 ]
 
-available: [ ocaml-version >= "4.03.0" & ocaml-version < "4.06.0" ]
+available: [ ocaml-version >= "4.06.0" ]
