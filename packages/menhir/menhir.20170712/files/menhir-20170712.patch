@@ -26,3 +26,13 @@
  else
  installation_libdir := $(libdir)
  endif
+--- ./src/cmly_write.ml
++++ ./src/cmly_write.ml
+@@ -168,6 +168,6 @@
+   output_value oc (t : grammar)
+ 
+ let write filename =
+-  let oc = open_out filename in
++  let oc = open_out_bin filename in
+   write oc (encode());
+   close_out oc
