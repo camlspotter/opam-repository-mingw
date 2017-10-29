@@ -1,0 +1,11 @@
+--- ./src/config/discover.ml
++++ ./src/config/discover.ml
+@@ -26,7 +26,7 @@
+         | "linux" | "linux_elf" -> { cflags = "-std=gnu99" :: cflags; libs }
+         | "macosx" when libs_override ->
+             { default with libs = "-framework" :: "Accelerate" :: libs }
+-        | "mingw64" -> { cflags = "-DWIN32" :: default.cflags; libs }
++        | "mingw" | "mingw64" -> { cflags = "-DWIN32" :: default.cflags; libs }
+         | _ -> default)
+     in
+     let write_sexp file sexp =
