@@ -35,3 +35,4 @@ conflicts: [
   "utop" {< "1.17"}
 ]
 available: [ocaml-version >= "4.02" & ocaml-version < "4.06"]
+patches: "patch-spacetag-reason.3.0.0" {os = "win32"}

@@ -1,0 +1,12 @@
+--- ./_tags
++++ ./_tags
+@@ -6,7 +6,7 @@
+ "formatTest": -traverse
+ "miscTests": -traverse
+ "src": include
+-<src/*>: package(menhirLib unix compiler-libs.common ocamlbuild findlib merlin_extend result dynlink findlib.dynload ocaml-migrate-parsetree)
+-<src/reason_utop.*>: package(menhirLib utop)
++<src/*>: package(menhirLib,unix,compiler-libs.common,ocamlbuild,findlib,merlin_extend,result,dynlink,findlib.dynload,ocaml-migrate-parsetree)
++<src/reason_utop.*>: package(menhirLib,utop)
+ <src/menhir_error_processor.*>: package(menhirSdk)
+ 
