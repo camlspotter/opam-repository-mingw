@@ -20,6 +20,7 @@ remove: [
 available: [ocaml-version >= "3.12.0"] # ocamlfind refers to cmxs
 depends: [
   "conf-m4" {build}
+  "num" {= "0"}
 ]
 authors: "Gerd Stolpmann <gerd@gerd-stolpmann.de>"
 patches: "findlib-1.6.2.patch" {os = "win32"}
