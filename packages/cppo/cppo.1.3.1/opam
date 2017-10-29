@@ -17,3 +17,4 @@ remove: [
 ]
 depends: ["ocamlfind" "ocamlbuild"]
 patches: ["cppo-1.3.1.patch" {os="win32"}]
+available: [ocaml-version < "4.06.0"]
