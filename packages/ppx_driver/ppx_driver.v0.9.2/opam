@@ -16,3 +16,4 @@ depends: [
   "ocamlbuild"
 ]
 available: [ ocaml-version >= "4.03.0" ]
+patches: "ppx_driver-0.9.2.patch" {os = "win32"}
