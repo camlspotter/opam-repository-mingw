@@ -6,6 +6,7 @@ bug-reports: "https://forge.ocamlcore.org/tracker/?group_id=220"
 dev-repo: "https://github.com/garrigue/lablgtk.git"
 license: "LGPL with linking exception"
 build: [
+  ["touch" "./configure"]
   ["./configure" "--prefix" prefix "LABLGLDIR=%{lib}%/lablgl"]
   [make "world"]
 ]
@@ -29,9 +30,13 @@ depexts: [
   [["fedora"] ["gtk2-devel"]]
   [["oraclelinux"] ["gtk2-devel"]]
   [["alpine"] ["gtk+2.0-dev"]]
+  [["win32" "cygwinports"] ["gtk2.0"]]
   [["opensuse"] ["gtk2-devel"]]
 ]
-patches: ["lablgldir.patch"]
+patches: [
+  "lablgldir.patch" {os != "win32"}
+  "lablgtk-2.18.6.patch" {os = "win32"}
+]
 post-messages: [
   "This package requires gtk+ 2.0 development packages installed on your system" {failure}
   "To solve pkg-config issues, you may need to do
