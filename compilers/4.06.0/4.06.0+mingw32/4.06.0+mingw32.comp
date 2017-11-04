@@ -1,0 +1,27 @@
+opam-version: "1"
+version: "4.06.0"
+src: "https://github.com/ocaml/ocaml/archive/4.06.0.tar.gz"
+patches:[
+  "https://gist.githubusercontent.com/fdopen/feae8877fdc793a9560dc90fa4698ddc/raw/6eec1588dedbb1d74d940864410aae67af0a4c4a/ocaml-4.06.0.patch"
+  "https://gist.githubusercontent.com/fdopen/0fccced2134d76710ea27416ba6a4290/raw/f27bbe2771a0bb8a7fd8c1c1e3fd2a5530305ce8/inline-flexdll.patch"
+]
+build: [
+  [ "mkdir" "-p" "%{lib}%/ocaml" ]
+  [ "sh" "-exc" "echo \"* : g = 1\" > %{lib}%/ocaml/ocaml_compiler_internal_params" ]
+  [ "cp" "config/m-nt.h" "byterun/caml/m.h" ]
+  [ "cp" "config/s-nt.h" "byterun/caml/s.h" ]
+  [ "cp" "config/Makefile.mingw" "config/Makefile" ]
+  [ "sed" "-i" "s#@PREFIX@#%{prefix}%#g" "config/Makefile" ]
+  [ make "flexdll" "world.opt" "flexlink.opt" "install" ]
+  [ "sh" "-exc" "echo \"%{lib}%/stublibs\"  >> \"%{lib}%/ocaml/ld.conf\"" ]
+]
+packages: [
+  "base-unix"
+  "base-bigarray"
+  "base-threads"
+]
+env: [
+  [CAML_LD_LIBRARY_PATH = "%{lib}%/stublibs"]
+  [CC = "i686-w64-mingw32-gcc.exe"]
+  [CPP = "i686-w64-mingw32-cpp.exe"]
+]
