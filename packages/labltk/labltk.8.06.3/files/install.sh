@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-system="$(ocamlfind ocamlc -config | tr -d '\015' | awk '/^system:/ {print $2}')"
-CC=$(shell $(OCAMLC) -config 2>/dev/null | tr -d '\015' | awk '/^bytecomp_c_compiler/ {for(i=2;i<=NF;i++) printf "%s " ,$$i}')
+system="$(ocamlfind ocamlc -config | awk -F '[\t \r]+' '/^system:/ {print $2}')"
+CC=$(ocamlfind ocamlc -config 2>/dev/null | awk -F '[\t \r]+' '/^bytecomp_c_compiler/ {for(i=2;i<=NF;i++) printf "%s " ,$i}')
 export CC
 case "$system" in
     mingw64)

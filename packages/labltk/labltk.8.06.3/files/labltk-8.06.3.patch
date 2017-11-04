@@ -132,3 +132,53 @@
  
  installopt:
  	cd support ; $(MAKEREC) installopt
+--- ./support/cltkFile.c
++++ ./support/cltkFile.c
+@@ -124,14 +124,14 @@
+   CheckInit();
+   Tcl_CreateChannelHandler(tcl_channel(fd, TCL_READABLE),
+                            TCL_READABLE,
+-                           FileProc, (ClientData) (Int_val(cbid)));
++                           FileProc, (ClientData) (Long_val(cbid)));
+   return Val_unit;
+ }
+ 
+ CAMLprim value camltk_rem_file_input(value fd, value cbid)
+ {
+   Tcl_DeleteChannelHandler(tcl_channel(fd, TCL_READABLE),
+-                           FileProc, (ClientData) (Int_val(cbid)));
++                           FileProc, (ClientData) (Long_val(cbid)));
+   return Val_unit;
+ }
+ 
+@@ -140,14 +140,14 @@
+   CheckInit();
+   Tcl_CreateChannelHandler(tcl_channel(fd, TCL_WRITABLE),
+                            TCL_WRITABLE,
+-                           FileProc, (ClientData) (Int_val(cbid)));
++                           FileProc, (ClientData) (Long_val(cbid)));
+   return Val_unit;
+ }
+ 
+ CAMLprim value camltk_rem_file_output(value fd, value cbid)
+ {
+   Tcl_DeleteChannelHandler(tcl_channel(fd, TCL_WRITABLE),
+-                           FileProc, (ClientData) (Int_val(cbid)));
++                           FileProc, (ClientData) (Long_val(cbid)));
+   return Val_unit;
+ }
+ 
+--- ./support/cltkMain.c
++++ ./support/cltkMain.c
+@@ -28,6 +28,11 @@
+ #ifdef HAS_UNISTD
+ #include <unistd.h>  /* for R_OK */
+ #endif
++#ifdef _WIN32
++/* defined in io.h -> name clash with caml/io.h */
++extern int _access(const char *path,int mode);  
++#define access _access
++#endif
+ #include "camltk.h"
+ 
+ #ifndef R_OK
