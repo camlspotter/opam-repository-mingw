@@ -24,9 +24,9 @@ depends: [
   "webbrowser"
   "opam-format"
 ]
-depopts: []
 build: [
   "ocaml" "pkg/pkg.ml" "build"
            "--pinned" "%{pinned}%"
            "--etc-dir" "%{odig:etc}%"
            "--lib-dir" "%{lib}%" ]
+patches: "odig-0.0.3.patch" {os = "win32"}

@@ -1,0 +1,20 @@
+--- ./myocamlbuild.ml
++++ ./myocamlbuild.ml
+@@ -4,7 +4,7 @@
+ 
+ (* Handle byte/native specific Odig_ocamltop module implementation. *)
+ 
+-let cp = if Sys.win32 then "copy" else "cp"
++let cp = "cp"
+ 
+ let cp_odig_ocamltop dir ext =
+   let cmi = "%odig_ocamltop.cmi" in (* make sure it is built and seen *)
+@@ -24,7 +24,7 @@
+       flag ["ocaml"; "compile"; "my_no_keep_locs"] (A "-no-keep-locs");
+       cp_odig_ocamltop "byte" "cmo";
+       cp_odig_ocamltop "native" "cmx";
+-      cp_odig_ocamltop "native" "o";
++      cp_odig_ocamltop "native" !Ocamlbuild_plugin.Options.ext_obj;
+ 
+       (* When compiled with TOPKG_CONF_DEBUGGER_SUPPORT, topkg will
+          ask for odig_ocamltop.ml because of odig.mllib. We provide
