@@ -1,0 +1,39 @@
+--- ./Makefile
++++ ./Makefile
+@@ -3,8 +3,8 @@
+ 
+ # Change this to match your expat installation.
+ EXPAT_LIB=-lexpat
+-EXPAT_LIBDIR=/usr/local/lib
+-EXPAT_INCDIR=/usr/local/include
++EXPAT_LIBDIR=/inexistentusr/local/lib
++EXPAT_INCDIR=/inexistentusr/local/include
+ 
+ NAME=expat
+ OBJECTS=expat.cmo
+@@ -29,6 +29,7 @@
+ OCAMLDOC=$(OCAMLFIND) ocamldoc $(OCAMLPKGS)
+ OCAMLDIR=$(shell $(OCAMLFIND) query stdlib)
+ include $(OCAMLDIR)/Makefile.config
++OCC:= $(shell $(OCAMLFIND) ocamlc -config | awk -F '[\t \r]+' '/^bytecomp_c_compiler/ {print $$2}')
+ 
+ OPT_TARGETS=	$(XARCHIVE)
+ ifeq ($(SUPPORTS_SHARED_LIBRARIES),true)
+@@ -41,7 +42,7 @@
+ allopt:  $(OPT_TARGETS)
+ 
+ depend: *.c *.ml *.mli
+-	gcc -I $(OCAMLDIR) -MM *.c > depend
++	$(OCC) -I $(OCAMLDIR) -MM *.c > depend
+ 	$(OCAMLDEP) *.mli *.ml >> depend
+ 
+ ## Library creation
+@@ -107,7 +108,7 @@
+ 	$(OCAMLC) -c $(COMPLAGS) $<
+ .ml.cmx:
+ 	$(OCAMLOPT) -c $(COMPFLAGS) $<
+-.c.o:
++.c$(EXT_OBJ):
+ 	$(OCAMLC) -c -ccopt "$(CFLAGS)" $<
+ 
+ include depend
