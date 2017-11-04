@@ -9,6 +9,7 @@ depends: [
   "ocplib-endian" {>= "0.7"}
   "res"
   "uint"
+  "conf-capnproto" {build}
 ]
 available: ocaml-version >= "4.01.0"
 install: ["env" "PREFIX=%{prefix}%" "omake" "install"]
