@@ -2,6 +2,9 @@ opam-version: "1.2"
 maintainer: "thomas@gazagnaire.org"
 authors: [ "Thomas Gazagnaire" ]
 license: "ISC"
+homepage:     "https://github.com/mirage/ocaml-mstruct"
+dev-repo:     "https://github.com/mirage/ocaml-mstruct.git"
+bug-reports:  "https://github.com/mirage/ocaml-mstruct/issues"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
   ["ocaml" "setup.ml" "-build"]
@@ -16,4 +19,5 @@ depends: [
   "ocamlbuild" {build}
 ]
 install: ["ocaml" "setup.ml" "-install"]
-dev-repo: "git://github.com/mirage/ocaml-mstruct"
+available: [ocaml-version < "4.06.0"]
+
