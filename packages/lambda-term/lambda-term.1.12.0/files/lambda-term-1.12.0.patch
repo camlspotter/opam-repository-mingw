@@ -1,0 +1,10 @@
+--- ./src/lTerm_windows_stubs.c
++++ ./src/lTerm_windows_stubs.c
+@@ -16,7 +16,6 @@
+ 
+ #if defined(_WIN32) || defined(_WIN64)
+ 
+-#include <windows.h>
+ #include <lwt_unix.h>
+ 
+ /* +-----------------------------------------------------------------+
