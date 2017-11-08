@@ -13,6 +13,8 @@ homepage: "http://projects.camlcity.org/projects/omake.html"
 bug-reports: "https://github.com/ocaml-omake/issues"
 
 build: [
+  ["ocamlfind" "ocamlopt" "-linkpkg" "-package" "str,cygwinpath" "ohelper.ml" "-o" "omake-mmtranslate.exe"] { os = "win32" }
+  ["install" "-m" "0755" "omake-mmtranslate.exe" "%{bin}%/omake-mmtranslate.exe"] { os = "win32" }
   ["./configure" "-prefix" "%{prefix}%"]
   [make]
 ]
@@ -24,8 +26,13 @@ install: [
 remove: [
   [ "rm" "-f" "%{prefix}%/bin/omake" ]
   [ "rm" "-f" "%{prefix}%/bin/osh" ]
+  [ "rm" "-f" "%{bin}%/omake-mmtranslate"] { os = "win32" }
   [ "rm" "-rf" "%{prefix}%/lib/omake" ]
 ]
 
-depends: ["ocamlfind"]
+depends: [
+ "ocamlfind"
+ "cygwinpath" { build }
+]
 available: [ ocaml-version >= "4.03.0" ]
+patches: "omake-0.10.3.patch" {os = "win32"}
