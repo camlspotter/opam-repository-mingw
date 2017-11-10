@@ -15,5 +15,5 @@ depends: [
 depopts: [
   "base-native-int63"
 ]
-available: ocaml-version >= "4.03.0"
+available: [ ocaml-version >= "4.03.0" & ocaml-version < "4.06.0" ]
 patches: "base-0.9.2.patch" {os = "win32"}
