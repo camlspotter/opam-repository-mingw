@@ -14,4 +14,4 @@ depends: [
   "ocamlnet" {>= "4.1.0"}
   "pxp" {>= "1.2.8"}
 ]
-available: [ocaml-version >= "4.01.0"]
+available: ocaml-version >= "4.01.0" & os != "win32"
