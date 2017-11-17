@@ -19,4 +19,5 @@ available: [ ocaml-version >= "4.04" ]
 depexts: [
  [ ["ubuntu"] ["libmpfr-dev"] ]
  [ ["debian"] ["libmpfr-dev"] ]
+ [ ["win32" "cygwinports"] ["mpfr"] ]
 ]
