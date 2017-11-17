@@ -18,4 +18,4 @@ depends: [
   "ounit" {>= "2.0.0"}
   "ocamlbuild" {build}
 ]
-available: os != "win32"
+available: ocaml-version < "4.06.0" & os != "win32"
