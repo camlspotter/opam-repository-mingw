@@ -10,10 +10,14 @@ bug-reports:  "https://github.com/djs55/ocaml-sha/issues"
 dev-repo:     "https://github.com/djs55/ocaml-sha.git"
 license:      "LGPL"
 
-build: make
+build: [
+  ["sh" "real_configure"] {os = "win32"}
+  [make]
+]
 install: [make "install"]
 remove: [["ocamlfind" "remove" "sha"]]
 
 depends: ["ocamlfind"]
 
 available: [ ocaml-version >= "4.02.0" ]
+patches: "ocaml-sha-1.10.patch" {os = "win32"}
