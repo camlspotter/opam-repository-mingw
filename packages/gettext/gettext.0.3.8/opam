@@ -37,3 +37,4 @@ depends: [
   "base-bytes"
 ]
 install: [make "install"]
+available: os != "win32"
