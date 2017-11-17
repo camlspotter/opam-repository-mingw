@@ -16,6 +16,6 @@ depends: [
   "react" {>= "1.0.0"}
   "ocamlbuild" {build}
 ]
-available: ocaml-version >= "3.12"
-install: ["ocaml" "setup.ml" "-install"]
 dev-repo: "git://github.com/diml/lambda-term"
+install: ["ocaml" "setup.ml" "-install"]
+available: [ ocaml-version >= "3.12" & ocaml-version < "4.06.0" ]
