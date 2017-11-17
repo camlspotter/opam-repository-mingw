@@ -14,3 +14,4 @@ depends: [
   "ocamlfind" {build}
   "cppo" {build}
 ]
+available: os != "win32"
