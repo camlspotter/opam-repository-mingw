@@ -21,3 +21,4 @@ remove: ["ocamlfind" "remove" "tjr_simple_earley"]
 depends: [
   "ocamlfind" {build}
 ]
+available: os != "win32"
