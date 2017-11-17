@@ -25,6 +25,6 @@ depends: [
   "io-page" {>= "1.0.0"}
   "ocamlbuild" {build}
 ]
-available: ocaml-version >= "4.00.1"
+available: [ ocaml-version >= "4.00.1" & ocaml-version < "4.06.0" ]
 install: [make "install"]
 dev-repo: "git://github.com/mirage/mirage"

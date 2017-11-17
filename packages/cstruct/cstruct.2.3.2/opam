@@ -53,7 +53,7 @@ depopts: [
   "lwt"
   "base-unix"
 ]
-available: [ocaml-version >= "4.02.3"]
+available: [ocaml-version >= "4.02.3" & ocaml-version < "4.06.0" ]
 patches: [
   "patch-oasis-cstruct.2.3.2" {os = "win32"}
   "ocaml-cstruct-2.3.2.patch" {os = "win32"}
