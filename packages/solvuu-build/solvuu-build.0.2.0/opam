@@ -20,7 +20,6 @@ depends: [
   "ocamlgraph"
 ]
 
-available: [
-  ocaml-version >= "4.02.0"
-]
+available: [ocaml-version >= "4.02.0" & ocaml-version < "4.06.0" ]
+
 patches: "solvuu-build-0.2.0.patch" {os = "win32"}
