@@ -14,3 +14,4 @@ depends: [
   "odoc" {doc}
 ]
 available: [ ocaml-version >= "4.00.1"]
+patches: "ocaml-crc-2.0.0.patch" {os = "win32"}
