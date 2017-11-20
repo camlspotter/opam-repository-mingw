@@ -9,4 +9,5 @@ maintainer: "jmaloberti@gmail.com"
 build: [
   ["./bootstrap"]
 ]
+available: [ocaml-version < "4.06.0"]
 patches: "obuild-obuild-v0.1.8.patch" {os = "win32"}
