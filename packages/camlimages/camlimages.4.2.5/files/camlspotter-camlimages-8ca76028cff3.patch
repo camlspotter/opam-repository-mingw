@@ -1,0 +1,70 @@
+--- ./OMakefile
++++ ./OMakefile
+@@ -340,8 +340,8 @@
+         export
+     if $(SUPPORT_FREETYPE)
+       # println(SUPPORT_FREETYPE=$(SUPPORT_FREETYPE)!)
+-      CFLAGS_freetype= $(shell $(PATH_FREETYPE_CONFIG) --cflags)
+-      LDFLAGS_freetype= $(shell $(PATH_FREETYPE_CONFIG) --libs)
++      CFLAGS_freetype= $(shell bash $(PATH_FREETYPE_CONFIG) --cflags)
++      LDFLAGS_freetype= $(shell bash $(PATH_FREETYPE_CONFIG) --libs)
+       export
+     if $(SUPPORT_FREETYPE)
+       SUPPORTED_NON_FORMATS+=freetype
+--- ./OMyMakeroot
++++ ./OMyMakeroot
+@@ -132,9 +132,9 @@
+ # of course it only works with unix
+ OCamlMkLibC(name, files, ldflags) =
+   protected.COBJS=$(addsuffix .o, $(files))
+-  dll$(name).so lib$(name).a: $(COBJS)
++  dll$(name)$(EXT_DLL) lib$(name).a: $(COBJS)
+     $(OCAMLMKLIB) -o $(name) $(LDFLAGS) $(ldflags) $(COBJS)
+-  return $(array dll$(name).so, lib$(name).a)
++  return $(array dll$(name)$(EXT_DLL), lib$(name).a)
+ 
+ # If ocamlmklib does not work for you, you can do:
+ # 1. Put -verbose switch to the above call of $(OCAMLMKLIB) and see the command.
+--- ./src/camlimages.ml.in
++++ ./src/camlimages.ml.in
+@@ -28,7 +28,7 @@
+ 
+ (* External files *)
+ let path_rgb_txt = "@PATH_RGB_TXT@"
+-let path_gs = "@PATH_GS@"
++let path_gs = "gs.exe" (* "@PATH_GS@" *)
+ 
+ (* They are written in ML, so always supported *)
+ let lib_ppm = true
+--- ./src/OMakefile
++++ ./src/OMakefile
+@@ -286,7 +286,7 @@
+       $(glob i, *.cmxa) \
+       $(glob i, *.cmxs) \
+       $(glob i, *.a) \
+-      $(glob i, *.so)
++      $(glob i, *$(EXT_DLL))
+ 
+ INSTALL()=
+   value $(OCAMLFIND) install $(LIBRARY_PREFIX) $(INSTALL_TARGETS)
+--- ./src/xpmread.c
++++ ./src/xpmread.c
+@@ -15,13 +15,16 @@
+ #include "config.h"
+ #endif
+ 
++#ifdef _WIN32
++#include <inttypes.h>
++#endif
++#include <X11/xpm.h>
++
+ #include <caml/mlvalues.h>
+ #include <caml/alloc.h>
+ #include <caml/memory.h>
+ #include <caml/fail.h>
+ 
+-#include <X11/xpm.h>
+-
+ #include <stdio.h>
+ 
+ value read_xpm_file( name )

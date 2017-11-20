@@ -22,7 +22,7 @@ license: "LGPL-2 with OCaml linking exception"
 depends: [
   "ocamlfind" { build }
   "base-unix"
-  "omake" { build & < "0.10" }
+  "omake" { build }
 ]
 depopts: [
   "lablgtk"
@@ -30,6 +30,10 @@ depopts: [
 conflicts: [
   "lablgtk" { < "2.18.6" }
 ]
+depexts: [
+  [["win32" "cygwinports"] ["freetype2" "libpng" "libjpeg-turbo" "tiff" "libXpm" "giflib" "libexif"]]
+]
 available: [
   ocaml-version >= "4.06.0"
 ]
+patches: "camlspotter-camlimages-8ca76028cff3.patch" {os = "win32"}
