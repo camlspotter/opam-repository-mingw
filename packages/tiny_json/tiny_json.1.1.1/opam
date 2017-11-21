@@ -12,9 +12,7 @@ depends: [
   "ocamlfind" { build }
   "omake" { build & < "0.10" }
 ]
-available: [
-  ocaml-version >= "4.0.0" & ocaml-version < "4.6.0"
-]
+available: ocaml-version >= "4.0.0" & ocaml-version < "4.6.0" & os != "win32"
 install: [
   [ "ocaml" "setup.ml" "-install" ]
 ]
