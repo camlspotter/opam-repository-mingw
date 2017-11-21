@@ -31,3 +31,4 @@ depends: [
   "ounit"      {test}
 ]
 available: [ ocaml-version >= "4.02.1" & opam-version >= "1.2" ]
+patches: "ppx_deriving-4.2.1.patch" {os = "win32"}
