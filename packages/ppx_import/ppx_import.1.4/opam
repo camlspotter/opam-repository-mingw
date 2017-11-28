@@ -25,3 +25,4 @@ depends: [
 ]
 available: [ opam-version >= "1.2.2"
   & ocaml-version >= "4.02.0" ]
+patches: "patch-topkg-wquote-ppx_import.1.4" {os = "win32"}
