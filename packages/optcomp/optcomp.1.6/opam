@@ -18,6 +18,6 @@ depends: [
   "camlp4"
   "ocamlbuild" {build}
 ]
-available: ocaml-version >= "3.12"
+available: [ocaml-version >= "3.12" & ocaml-version < "4.06.0"]
 install: [make "install"]
 dev-repo: "git://github.com/diml/optcomp"
