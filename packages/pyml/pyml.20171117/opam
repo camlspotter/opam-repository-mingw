@@ -13,4 +13,5 @@ depends: [
   "stdcompat" {>= "1"}
 ]
 depopts: ["utop"]
-available: [ocaml-version >= "3.12.1" & ocaml-version < "4.07.0"]
+available:
+  ocaml-version >= "3.12.1" & ocaml-version < "4.07.0" & os != "win32"
