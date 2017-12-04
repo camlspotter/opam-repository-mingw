@@ -31,5 +31,5 @@ conflicts: [
   "oasis-mirage" {= "0.3.0a"}
   "oasis-mirage" {= "0.3.0"}
 ]
-available: [ ocaml-version >= "3.12.1" ]
+available: [ ocaml-version >= "3.12.1" & ocaml-version < "4.06.0" ]
 patches: "oasis-0.4.6.patch" {os = "win32"}
