@@ -24,6 +24,6 @@ depends: [
 tags: [ "stdlib" "containers" "iterators" "list" "heap" "queue" ]
 homepage: "https://github.com/c-cube/ocaml-containers/"
 doc: "http://cedeela.fr/~simon/software/containers/"
-available: ocaml-version >= "4.01.0"
+available: [ocaml-version >= "4.01.0" & ocaml-version < "4.06.0"]
 install: [make "build" "install"]
 dev-repo: "git://github.com/c-cube/ocaml-containers"
