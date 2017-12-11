@@ -11,6 +11,6 @@ depends: [
   "ocamlbuild" {build}
 ]
 depopts: ["lwt"]
-available: os = "linux" | os = "darwin"
+available: [(os = "linux" | os = "darwin") & ocaml-version < "4.06.0"]
 install: ["ocaml" "setup.ml" "-install"]
 dev-repo: "git://github.com/whitequark/ocaml-inotify"
