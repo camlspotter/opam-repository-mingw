@@ -21,4 +21,4 @@ depends: [
 conflicts: [
   "utop" {< "1.17"}
 ]
-available: [ocaml-version >= "4.02" & ocaml-version < "4.07"]
+available: ocaml-version >= "4.02" & ocaml-version < "4.07" & os != "win32"
