@@ -55,3 +55,4 @@ conflicts: [
   "coq" {< "8.4"}
 ]
 install: [make "install" "install-lib"]
+available: [ocaml-version < "4.06.0"]
