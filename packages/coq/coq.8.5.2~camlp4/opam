@@ -30,6 +30,6 @@ depends: [
   "camlp4"
   "num"
 ]
-available: [ (ocaml-version >= "4.02.0") ]
+available: [ (ocaml-version >= "4.02.0") & ocaml-version < "4.06.0" ]
 install: [make "install"]
 patches: "coq-8.5pl2.patch" {os = "win32"}
