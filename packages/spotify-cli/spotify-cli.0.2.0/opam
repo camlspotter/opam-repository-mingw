@@ -14,6 +14,6 @@ depends: [
   "spotify-web-api"
   "ocamlbuild" {build}
 ]
-install: [make "PREFIX=%{prefix}%" "install"]
-available: os != "win32"
 dev-repo: "git://github.com/johnelse/spotify-cli"
+install: [make "PREFIX=%{prefix}%" "install"]
+available: ocaml-version < "4.06.0" & os != "win32"
