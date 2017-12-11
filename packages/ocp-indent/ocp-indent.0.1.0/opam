@@ -12,5 +12,6 @@ remove: [
 depends: [
   "ocamlbuild" {build}
 ]
-install: [make "install"]
 dev-repo: "git://github.com/OCamlPro/ocp-indent"
+install: [make "install"]
+available: [ ocaml-version < "4.06.0" ]
