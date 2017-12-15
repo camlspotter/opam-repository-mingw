@@ -1,11 +1,3 @@
-(**************************************************************)
-(*                                                            *)
-(*      This file is managed by ocp-autoconf                  *)
-(*  Remove it from `manage_files` in 'ocp-autoconf.config'    *)
-(*  if you want to modify it manually (or use 'opam.trailer') *)
-(*                                                            *)
-(**************************************************************)
-
 opam-version: "1.2"
 maintainer: "Fabrice Le Fessant <fabrice.le_fessant@ocamlpro.com>"
 authors: [
@@ -23,10 +15,17 @@ build: [
 ]
 install: [
   [ make "install" ]
+  [ "sh" "-exc" "if [ -f '%{prefix}%/bin/ocp-build.asm' ]; then mv '%{prefix}%/bin/ocp-build.asm' '%{prefix}%/bin/ocp-build.exe' ; fi" ] { os = "win32" }
+  [ "sh" "-exc" "if [ -f '%{prefix}%/bin/ocp-pp.asm' ]; then mv '%{prefix}%/bin/ocp-pp.asm' '%{prefix}%/bin/ocp-pp.exe' ; fi" ] { os = "win32" }
+  [ "sh" "-exc" "if [ -f '%{prefix}%/bin/ocp-autoconf.asm' ]; then mv '%{prefix}%/bin/ocp-autoconf.asm' '%{prefix}%/bin/ocp-autoconf.exe' ; fi" ] { os = "win32" }
 ]
 remove: [
-  [ "rm" "-f" "%{prefix}%/bin/ocp-build"   ]
-  [ "rm" "-f" "%{prefix}%/bin/ocp-pp"   ]
+  [ "rm" "-f" "%{prefix}%/bin/ocp-build" "%{prefix}%/bin/ocp-build.byte" ]
+  [ "rm" "-f" "%{prefix}%/bin/ocp-pp" "%{prefix}%/bin/ocp-pp.byte" ]
+  [ "rm" "-f" "%{prefix}%/bin/ocp-autoconf" "%{prefix}%/bin/ocp-autoconf.byte" ]
+  [ "rm" "-f" "%{prefix}%/lib/META.ocp-autoconf" "%{prefix}%/lib/META.ocplib-file" "%{prefix}%/lib/META.ocplib-stdlib" "%{prefix}%/lib/META.ezcmd" "%{prefix}%/lib/META.ocplib-file-compat" ]
+  [ "rm" "-rf" "%{prefix}%/lib/ocaml/ocp-build" "%{prefix}%/lib/ocaml/ocp-pp" "%{prefix}%/lib/ocaml/ocplib-compat" "%{prefix}%/lib/ocaml/ocplib-config" "%{prefix}%/lib/ocaml/ocplib-debug" "%{prefix}%/lib/ocaml/ocplib-file" "%{prefix}%/lib/ocaml/ocplib-lang" "%{prefix}%/lib/ocaml/ocplib-stdlib" "%{prefix}%/lib/ocaml/ocplib-subcmd" "%{prefix}%/lib/ocaml/ocplib-system" "%{prefix}%/lib/ocaml/ocplib-unix" "%{prefix}%/lib/ocaml/ocp-autoconf" "%{prefix}%/lib/ocaml/ezcmd" "%{prefix}%/lib/ocaml/ocplib-file-compat" ]
+  [ "rm" "-f" "%{prefix}%/lib/META.ocp-build" "%{prefix}%/lib/META.ocp-pp" "%{prefix}%/lib/META.ocplib-compat" "%{prefix}%/lib/META.ocplib-config" "%{prefix}%/lib/META.ocplib-debug" "%{prefix}%/lib/META.ocplib-lang" "%{prefix}%/lib/META.ocplib-subcmd" "%{prefix}%/lib/META.ocplib-system" "%{prefix}%/lib/META.ocplib-unix" "%{prefix}%/lib/ocaml/installed.ocp" ]
   [ "rm" "-rf" "%{prefix}%/lib/ocaml/typerex/ocp-build"   ]
   [ "rm" "-rf" "%{prefix}%/lib/ocaml/typerex/ocplib-compat"   ]
   [ "rm" "-rf" "%{prefix}%/lib/ocaml/typerex/ocplib-debug"   ]
@@ -37,6 +36,8 @@ remove: [
   [ "rm" "-rf" "%{prefix}%/lib/ocaml/typerex/installed.ocp"   ]
   [ "rm" "-rf" "%{prefix}%/lib/ocaml/site-ocp2/ocp-build"   ]
   [ "sh" "-exc" "rmdir %{prefix}%/lib/ocaml/typerex || true"   ]
+  [ "rm" "-rf" "%{prefix}%/lib/ocaml/site-ocp2/ocp-build" ]
+  [ "sh" "-exc" "rmdir %{prefix}%/lib/ocaml/site-ocp2 || true" ]
 ]
 available: [ocaml-version >= "4.02.1"]
 
@@ -53,3 +54,4 @@ depends: [
                   repository, we need it... *)
     "cmdliner" { >= "1.0" }
 ]
+patches: "ocp-build-1.99.20-beta.patch" {os = "win32"}
