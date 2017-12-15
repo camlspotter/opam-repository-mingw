@@ -15,4 +15,4 @@ depexts: [
   [["alpine"] ["libnuma-dev"]]
 ]
 
-available: [ os != "darwin" & os != "freebsd" & os != "openbsd" ]
+available: os != "darwin" & os != "freebsd" & os != "openbsd" & os != "win32"
