@@ -33,3 +33,4 @@ depopts: [
   "base-native-int63"
 ]
 available: [ ocaml-version >= "4.04.1" ]
+patches: "core_kernel-v0.10.0.patch" {os = "win32"}
