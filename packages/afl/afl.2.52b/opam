@@ -16,3 +16,4 @@ remove: [
 patches: [
   "add-uninstall-target.patch"
 ]
+available: os != "win32"
