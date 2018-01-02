@@ -12,3 +12,4 @@ depends: [
   "cmdliner"
   "opam-client" {>= "2.0.0~beta3.1"}
 ]
+available: os != "win32"
