@@ -32,6 +32,7 @@ depexts: [
   [["centos"] ["postgresql-devel"]]
   [["rhel"] ["postgresql-devel"]]
   [["fedora"] ["postgresql-devel"]]
+  [["win32" "cygwinports"] ["postgresql"]]
   [["alpine"] ["postgresql-dev"]]
   [["opensuse"] ["postgresql"]]
   [["osx" "homebrew"] ["postgresql"]]
