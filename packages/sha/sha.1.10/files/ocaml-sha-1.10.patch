@@ -4593,19 +4593,21 @@
  
  # on unix architecture we just use the default value
  EXE=
-@@ -21,8 +22,9 @@
+@@ -21,8 +22,11 @@
  
  OCAMLOPTFLAGS =
  
 -OCAML_TEST_INC = -I `ocamlfind query oUnit`
 -OCAML_TEST_LIB = `ocamlfind query oUnit`/oUnit.cmxa
 +OUNIT_DIR=$(shell ocamlfind query oUnit | tr -d '\r' | tr '\\' '/')
++ifneq ($(OUNIT_DIR),)
 +OCAML_TEST_INC = -I $(OUNIT_DIR)
 +OCAML_TEST_LIB = $(OUNIT_DIR)/oUnit.cmxa
++endif
  
  PROGRAMS_BINS = sha1sum sha256sum sha512sum
  PROGRAMS = $(addsuffix $(EXE), $(PROGRAMS_BINS))
-@@ -70,10 +72,10 @@
+@@ -70,10 +74,10 @@
  tests: sha.test
  	./sha.test
  
@@ -4618,7 +4620,7 @@
  
  %.test.cmo: %.test.ml
  	$(OCAMLC) -c -o $@ $(OCAML_BFLAGS) -custom $(OCAML_TEST_INC) $<
-@@ -82,13 +84,13 @@
+@@ -82,13 +86,13 @@
  	$(OCAMLOPT) -c -o $@ $(OCAML_BFLAGS) $(OCAML_TEST_INC) $<
  
  %.cmo: %.ml
@@ -4635,7 +4637,7 @@
  
  %.$(OBJ): %.c
  	$(OCAMLC) -ccopt "$(CFLAGS)" -c -o $@ $<
-@@ -102,7 +104,7 @@
+@@ -102,7 +106,7 @@
  	ocamldoc -html -d html *.mli
  
  clean:
