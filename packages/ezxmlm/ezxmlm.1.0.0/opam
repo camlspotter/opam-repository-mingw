@@ -19,6 +19,7 @@ tags: [
   "org:mirage"
   "org:ocamllabs"
 ]
-available: ocaml-version >= "4.01.0"
+available: [ ocaml-version >= "4.01.0" & ocaml-version < "4.06.0" ]
+homepage: "https://github.com/avsm/ezxmlm"
 install: ["ocaml" "setup.ml" "-install"]
 dev-repo: "git://github.com/avsm/ezxmlm"
