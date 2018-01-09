@@ -46,3 +46,4 @@ conflicts: [
   "js_of_ocaml" {>= "3.0"}
 ]
 patches: "patch-oasis-github.1.0.0" {os = "win32"}
+available: [ ocaml-version < "4.06.0" ]
