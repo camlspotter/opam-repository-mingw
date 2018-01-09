@@ -12,5 +12,6 @@ depends: [
   "xmlm"
   "js_of_ocaml" {< "3.0"}
 ]
-install: [make "install"]
 dev-repo: "git://github.com/mirage/ocaml-rpc"
+install: [make "install"]
+available: [ ocaml-version <= "4.02.3" ]
