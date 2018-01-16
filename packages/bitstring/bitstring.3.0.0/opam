@@ -28,3 +28,4 @@ conflicts: [
 ]
 
 available: ocaml-version >= "4.02.3"
+patches: "bitstring-3.0.0.patch" {os = "win32"}
