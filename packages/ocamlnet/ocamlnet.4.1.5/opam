@@ -16,6 +16,8 @@ build: [
     "-%{camlzip:enable}%-zip"
     "-with-nethttpd"
   ]
+  ["tar" "-chf" "tmp.tar" "src"]
+  ["tar" "-xf" "tmp.tar"]
   [make "all"]
   [make "opt"]
 ]
