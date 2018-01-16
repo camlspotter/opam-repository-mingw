@@ -35,4 +35,5 @@ depends: [
 depexts: [
   [["debian"] ["libzstd-dev"]]
   [["ubuntu"] ["libzstd-dev"]]
+  [["win32" "cygwinports"] ["zstd"]]
 ]
