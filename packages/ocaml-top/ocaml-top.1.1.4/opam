@@ -18,4 +18,7 @@ depends: [
   "ocp-indent" {>= "1.4.0"}
   "ocp-index" {>= "1.0.0"}
 ]
-patches: "ocaml-top-1.1.4.patch" {os = "win32"}
+patches: [
+  "ocaml-top-1.1.4.patch" {os = "win32"}
+  "ocaml-top-bytes.patch" {ocaml-version >= "4.04.0"}
+]

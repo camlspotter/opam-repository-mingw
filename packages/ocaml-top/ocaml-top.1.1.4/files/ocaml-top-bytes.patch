@@ -1,0 +1,51 @@
+--- ./src/tools.ml
++++ ./src/tools.ml
+@@ -92,10 +92,10 @@
+         if size > Sys.max_string_length then
+           failwith "Maximum file size exceeded";
+         let ic = open_in_bin filename in
+-        let buf = String.create size in
++        let buf = Bytes.create size in
+         really_input ic buf 0 size;
+         close_in ic;
+-        buf
++        Bytes.unsafe_to_string buf
+       with
+         Unix.Unix_error _ | Sys_error _ as e ->
+           recover_error "<b>Error loading file <i>%s</i>:</b>\n%s"
+--- ./src/top.ml
++++ ./src/top.ml
+@@ -82,7 +82,7 @@
+    Windows: we read from the ocaml process manually with a dedicated thread *)
+ let reader_thread fdescr receive_from_main_thread build_response t =
+   let buf_len = 4096 in
+-  let buf = String.create buf_len in
++  let buf = Bytes.create buf_len in
+   let rec loop () =
+     if t.status = Dead then
+       (Tools.debug "Ocaml process %d dead, reader thread terminating" t.pid;
+@@ -90,7 +90,7 @@
+     try
+       let nread = Unix.read fdescr buf 0 buf_len in
+       if nread <= 0 then Thread.exit ();
+-      let response = String.sub buf 0 nread in
++      let response = Bytes.sub_string buf 0 nread in
+       (* Tools.debug "Incoming response from ocaml: %d %s" nread response; *)
+       if t.status = Dead then
+         (Tools.debug "OCaml process marked as dead, terminating reader thread";
+--- ./src/topUi.ml
++++ ./src/topUi.ml
+@@ -93,9 +93,10 @@
+           if offset >= 1024 then ""
+           else if offset + String.length line <= 1024 then line
+           else
+-            let s = String.sub line 0 (1024 - offset) in
+-            String.blit "..." 0 s (1024 - offset - 3) 3;
+-            s
++            let b = Bytes.create (1024 - offset) in
++            Bytes.blit_string line 0 b 0 (1024 - offset);
++            Bytes.blit_string "..." 0 b (1024 - offset - 3) 3;
++            Bytes.unsafe_to_string b
+         in
+         insert_top ~tags:[OBuf.Tags.stdout] top top.stdout_mark line;
+         if rest <> [] then
