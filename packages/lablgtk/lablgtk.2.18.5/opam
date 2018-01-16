@@ -14,7 +14,10 @@ install: [
 ]
 available: [ocaml-version >= "3.11.0"] # as indicated in README file
 remove: [["ocamlfind" "remove" "lablgtk2"]]
-depends: ["ocamlfind" {>= "1.2.1"}]
+depends: [
+  "ocamlfind" {>= "1.2.1"}
+  "conf-pkg-config" {build}
+]
 depopts: [
   "conf-gtksourceview"
   "conf-gnomecanvas"
