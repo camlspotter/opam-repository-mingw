@@ -24,3 +24,8 @@ depends: [
 build-test: [["jbuilder" "runtest" "-p" name "-j" jobs]]
 available: [ocaml-version >= "4.02.3"]
 patches: "utop-2.0.2.patch" {os = "win32"}
+post-messages: [
+ "
+ UTop does not work inside a cygwin terminal (mintty, urxvt,...). Use cmd.exe, ConsoleZ or a similar
+ terminal emulator." {success & os = "win32" }
+]
