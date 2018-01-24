@@ -18,4 +18,4 @@ depends: [
   "msat" {>= "0.5" & < "1.0"}
   "menhir" {build}
 ]
-available: [ocaml-version >= "4.03.0"]
+available: ocaml-version >= "4.03.0" & os != "win32"
