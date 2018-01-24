@@ -128,7 +128,38 @@
       [(fun () -> runRanlib a_file)]]
 --- ./obuild/buildprogs.ml
 +++ ./obuild/buildprogs.ml
-@@ -177,5 +177,5 @@
+@@ -29,18 +29,20 @@
+   let src_file = Hier.get_src_file dirSpec.src_dir entry in
+   let compileOpt = if buildMode = Interface && compileOpt = WithProf then WithDebug else compileOpt in
+   Filesystem.mkdirSafeRecursive dstDir 0o755;
+-  let (prog, srcFile, dstFile) =
++  let (prog, srcFile, dstFile, opt_compile) =
+     match buildMode with
+     | Interface ->
+       (Prog.getOcamlC ()
+       ,Hier.ml_to_ext src_file Filetype.FileMLI
+       ,Hier.get_dest_file dstDir Filetype.FileCMI modhier
++      ,false
+       )
+     | Compiled ct ->
+       let ext = if ct = ByteCode then Filetype.FileCMO else Filetype.FileCMX in
+       ((if ct = ByteCode then Prog.getOcamlC () else Prog.getOcamlOpt ())
+       ,src_file
+       ,Hier.get_dest_file dstDir ext modhier
++      ,ct <> ByteCode
+       )
+   in
+   let args = [prog]
+@@ -52,7 +54,7 @@
+                  | Normal    -> []
+                  | WithDebug -> ["-g"]
+                  | WithProf  -> ["-p"])
+-             @ annotToOpts annotMode
++             @ (if opt_compile then [] else annotToOpts annotMode)
+              @ oflags
+              @ gconf.ocaml_extra_args
+              @ Pp.to_params pp
+@@ -177,5 +179,5 @@
               @ (List.map (fun m -> fp_to_string (Hier.get_dest_file currentDir ext m)) modules)
    in
    let res = Process.make args in
