@@ -23,6 +23,7 @@ depexts: [
   [["opensuse"] ["jq"]]
   [["oraclelinux"] ["jq"]]
   [["ubuntu"] ["jq"]]
+  [["win32" "cygwinports"] ["system:jq"]]
 ]
 
 build: [make]
