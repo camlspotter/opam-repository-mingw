@@ -10,10 +10,7 @@ build: [
     {os = "darwin" |
      os = "linux" | os = "freebsd" | os = "bsd" | os = "unix" | os = "cygwin"}
   ["mv" "config/Makefile.mingw" "config/Makefile"] {os = "win32"}
-  ["mkdir" "-p" bin "%{lib}%/camlidl" "%{lib}%/camlidl/caml"]
   [make "all" "opt"] {os = "win32"}
-  [make "install" "installopt" "BINDIR=%{bin}%" "OCAMLLIB=%{lib}%/camlidl"]
-    {os = "win32"}
   [make "all"] {os != "win32"}
 ]
 remove: [
@@ -25,6 +22,9 @@ patches: [
   "cpp-location.diff"
   "disable-fatal-warn-31.diff" {ocaml-version >= "4.03"}
 ]
-install:
-  [make "install" "BINDIR=%{bin}%" "OCAMLLIB=%{lib}%/camlidl"]
-    {os != "win32"}
+install: [
+  ["mkdir" "-p" bin "%{lib}%/camlidl" "%{lib}%/camlidl/caml"]
+  [make "install" "BINDIR=%{bin}%" "OCAMLLIB=%{lib}%/camlidl"] {os != "win32"}
+  [make "install" "installopt" "BINDIR=%{bin}%" "OCAMLLIB=%{lib}%/camlidl"] {os = "win32"}
+]
+available: [ ocaml-version < "4.06.0" | os != "win32" ]
