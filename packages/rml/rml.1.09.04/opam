@@ -15,7 +15,10 @@ remove: [
  [make "uninstall"]
 ]
 depends: [
- "ocamlbuild"
+ "ocamlbuild" {build}
  "num"
 ]
-available: os != "win32"
+depexts: [
+  [["alpine"] ["patch"]]
+]
+available: [ocaml-version < "4.06.0"]

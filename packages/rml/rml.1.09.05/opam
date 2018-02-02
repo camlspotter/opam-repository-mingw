@@ -16,6 +16,9 @@ remove: [
 ]
 available: ocaml-version >= "4.02" & os != "win32"
 depends: [
- "ocamlbuild"
+ "ocamlbuild" {build}
  "num"
+]
+depexts: [
+  [["alpine"] ["patch"]]
 ]
