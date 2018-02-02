@@ -27,4 +27,4 @@ depends: [
   "sequence" 
   "visitors" 
 ]
-available: [ocaml-version >= "4.04"]
+available: ocaml-version >= "4.04" & os != "win32"
