@@ -30,3 +30,4 @@ depends: [
   "utop" {test}
 ]
 available: [ ocaml-version >= "4.02.3" ]
+patches: "jbuilder-1.0+beta17.patch" {os = "win32"}
