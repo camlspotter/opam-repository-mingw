@@ -22,7 +22,7 @@ tags: [
   "C"
   "ACSL"
 ]
-available: [ ocaml-version >= "4.02.0" ]
+available: ocaml-version >= "4.02.0" & os != "win32"
 build: [
   ["./configure" "--prefix" prefix]
   [make]
