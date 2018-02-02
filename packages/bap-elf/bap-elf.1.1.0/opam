@@ -24,6 +24,6 @@ depends: [
     "bap-std"
     "bap-dwarf"
     "camlp4"
-    "bitstring"
+    "bitstring" {< "3.0.0"}
 ]
 available: os != "win32"
