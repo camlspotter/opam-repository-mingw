@@ -10,6 +10,8 @@ dev-repo: "https://github.com/ocsigen/deriving.git"
 build: [
   [make "setup.exe"]
   ["./setup.exe" "-configure" "--prefix" prefix "--%{type_conv:enable}%-tc"]
+  ["tar" "-chf" "syntax.tar" "syntax"] { os = "win32" }
+  ["tar" "-xf" "syntax.tar" "syntax"] { os = "win32" }
   [make]
 ]
 install: [make "install"]
