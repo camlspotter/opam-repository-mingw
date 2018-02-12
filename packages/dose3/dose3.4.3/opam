@@ -34,5 +34,8 @@ depends: [
   "ocamlbuild" {build}
   "cppo" {build & >= "1.1.2"}
 ]
-patches: "dose3-4.3.patch" {os = "win32"}
 conflicts: "dose"
+patches: [
+  "dose3-4.3.patch" {os = "win32"}
+  "0004-Add-unix-as-dependency-to-dose3.common-in-META.in.patch"
+]
