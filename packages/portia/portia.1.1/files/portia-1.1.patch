@@ -1,0 +1,44 @@
+--- ./Makefile
++++ ./Makefile
+@@ -22,12 +22,20 @@
+ BACKEND_SOURCES = funnelweb.ml ocaml.ml c.ml asciidoc.ml
+ GEN_SOURCES = $(PROG_GEN_SOURCES) $(BACKEND_SOURCES)
+ 
+-all: $(BACKEND_SOURCES:.ml=.cmo) portia portia.cma $(LIB_SOURCES:.ml=.cmi)
++OS_TYPE:=$(shell ocamlfind ocamlc -config | awk -F '[ \t\r\n]+' '/^os_type:/ {print $$2}')
++ifeq ($(OS_TYPE),$(filter $(OS_TYPE),Win32 Cygwin))
++EXT_EXE=.exe
++else
++EXT_EXE=
++endif
++
++
++all: $(BACKEND_SOURCES:.ml=.cmo) portia$(EXT_EXE) portia.cma $(LIB_SOURCES:.ml=.cmi)
+ 
+ # We install only the bytecode version because that's easier to use bytecode
+ # plugins. Who cares?
+-portia: portia.byte
+-	ln -f portia.byte portia
++portia$(EXT_EXE): portia.byte
++	cp portia.byte portia$(EXT_EXE)
+ 
+ doc: portia.html
+ 
+@@ -91,7 +99,7 @@
+ 	@$(MAKE) -C tests clean
+ 
+ distclean: clean
+-	@$(RM) $(BACKEND_SOURCES:.ml=.cmo) portia.byte portia.opt portia
++	@$(RM) $(BACKEND_SOURCES:.ml=.cmo) portia.byte portia.opt portia$(EXT_EXE)
+ 
+ cleansources:
+ 	@$(RM) $(GEN_SOURCES)
+@@ -100,7 +108,7 @@
+ 	@cat $^ | wc -l
+ 
+ install: all
+-	ocamlfind install portia META portia portia.cma $(LIB_SOURCES:.ml=.cmi) $(BACKEND_SOURCES:.ml=.cmo)
++	ocamlfind install portia META portia$(EXT_EXE) portia.cma $(LIB_SOURCES:.ml=.cmi) $(BACKEND_SOURCES:.ml=.cmo)
+ 
+ uninstall:
+ 	ocamlfind remove portia

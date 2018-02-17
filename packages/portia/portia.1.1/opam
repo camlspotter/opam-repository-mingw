@@ -20,8 +20,10 @@ depends: [
 depexts: [
   [["debian"] ["asciidoc"]]
   [["ubuntu"] ["asciidoc"]]
+  [["win32" "cygwinports"] ["system:asciidoc"]]
 ]
 post-messages: [
   "This package requires asciidoc to build the doc." {failure}
 ]
 available: [ocaml-version >= "4.02.0"]
+patches: "portia-1.1.patch" {os = "win32"}

@@ -14,6 +14,7 @@ depends: ["ocamlfind" "batteries"]
 depexts: [
   [["debian"] ["asciidoc"]]
   [["ubuntu"] ["asciidoc"]]
+  [["win32" "cygwinports"] ["system:asciidoc"]]
 ]
 post-messages: [
   "This package requires asciidoc to build the doc." {failure}
