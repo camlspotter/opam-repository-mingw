@@ -21,3 +21,4 @@ depends: [
   "qcheck" {>= "0.5"}
 ]
 available: [ocaml-version >= "4.00.0"]
+patches: "qtest-2.8.patch" {os = "win32"}
