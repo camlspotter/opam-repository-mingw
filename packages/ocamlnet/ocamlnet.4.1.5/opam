@@ -65,4 +65,7 @@ available: [ ocaml-version >= "4.00.0"
            & compiler != "4.04.1+flambda"
            & compiler != "4.04.2+flambda" ]
 install: [make "install"]
-patches: "ocamlnet-4.1.5.patch" {os = "win32"}
+patches: [
+  "ocamlnet-4.1.5.patch" {os = "win32"}
+  "netgzip.patch"
+]
