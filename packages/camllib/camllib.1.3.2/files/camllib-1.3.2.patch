@@ -1,0 +1,11 @@
+--- ./Makefile
++++ ./Makefile
+@@ -6,7 +6,7 @@
+ # Directories
+ #---------------------------------------
+ 
+-SRCDIR = $(shell pwd)
++SRCDIR = $(shell cygpath -m $$(pwd))
+ #
+ # Installation directory
+ #
