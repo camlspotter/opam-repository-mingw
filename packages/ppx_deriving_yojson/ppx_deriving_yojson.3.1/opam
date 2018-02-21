@@ -27,6 +27,9 @@ depends: [
   "ounit"        {test}
   "ppx_import"   {test & >= "1.1"}
 ]
+conflicts: [
+  "ppx_deriving" {= "4.2"}
+]
 patches: [
   "ppx_deriving_yojson-3.1.patch" {os = "win32"}
   "patch-topkg-ppx_deriving_yojson.3.1" {os = "win32"}
