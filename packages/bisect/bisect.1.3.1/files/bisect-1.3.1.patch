@@ -1,0 +1,121 @@
+--- ./configure
++++ ./configure
+@@ -72,6 +72,6 @@
+ echo "WARNINGS=$devel" >> Makefile.config
+ echo "NO_CAMLP4=$no_camlp4" >> Makefile.config
+ echo "PPX=$ppx" >> Makefile.config
+-echo "MAKE_QUIET=$make_quiet" >> Makefile.config
++echo "MAKE_QUIET= --no-print-directory" >> Makefile.config
+ echo "" >> Makefile.config
+ echo 'Makefile.config successfully created'
+--- ./Makefile
++++ ./Makefile
+@@ -20,7 +20,7 @@
+ 
+ # PATHS
+ 
+-PATH_BASE=`pwd`
++PATH_BASE=$(shell cygpath -m "$$(readlink -f . )")
+ PATH_BUILD=$(PATH_BASE)/_build
+ PATH_OCAMLDOC=$(PATH_BASE)/ocamldoc
+ PATH_SRC=$(PATH_BASE)/src
+@@ -80,11 +80,11 @@
+ 	rm -f $(PATH_OCAMLDOC)/*.html $(PATH_OCAMLDOC)/*.css
+ 
+ install: FORCE
+-	cp $(PATH_BUILD)/src/report/report.byte $(PATH_OCAML_PREFIX)/bin/bisect-report; \
++	cp $(PATH_BUILD)/src/report/report.byte $(PATH_OCAML_PREFIX)/bin/bisect-report.exe; \
+ 	if [ "$(PPX)" = "TRUE" ]; then \
+-	  cp $(PATH_BUILD)/src/syntax/bisect_ppx.byte $(PATH_OCAML_PREFIX)/bin; \
++	  cp $(PATH_BUILD)/src/syntax/bisect_ppx.byte $(PATH_OCAML_PREFIX)/bin/bisect_ppx.byte.exe; \
+ 	fi; \
+-	(which ocamlopt && cp $(PATH_BUILD)/src/report/report.native $(PATH_OCAML_PREFIX)/bin/bisect-report.opt || true); \
++	(which ocamlopt && cp $(PATH_BUILD)/src/report/report.native $(PATH_OCAML_PREFIX)/bin/bisect-report.opt.exe || true); \
+ 	if [ -x "$(PATH_OCAMLFIND)" ]; then \
+ 	  $(PATH_OCAMLFIND) query $(PROJECT_NAME) && $(PATH_OCAMLFIND) remove $(PROJECT_NAME) || true; \
+ 	  $(PATH_OCAMLFIND) install $(PROJECT_NAME) META -optional \
+--- ./myocamlbuild.ml
++++ ./myocamlbuild.ml
+@@ -63,8 +63,10 @@
+     let src = Pathname.mk src in
+     let dst = Pathname.mk dst in
+     let dir = Pathname.dirname dst in
+-    let cmd = Printf.sprintf "mkdir -p %s" (Pathname.to_string dir) in
+-    if Sys.command cmd <> 0 then failwith ("cannot run " ^ cmd);
++    let cmd = Printf.sprintf "\"\"mkdir.exe\" -p %s\"" (Filename.quote (Pathname.to_string dir)) in
++    if Sys.file_exists dir = false then  (
++      if Sys.command cmd <> 0 then failwith ("cannot run " ^ cmd);
++    );
+     cp src dst in
+   dispatch begin function
+     | After_rules ->
+--- ./tests/camlp4-comments/Makefile
++++ ./tests/camlp4-comments/Makefile
+@@ -2,7 +2,7 @@
+ 	@rm -fr *.result *.cmp
+ 	@for file in *.ml; do \
+ 		echo "     testing '$$file' ..."; \
+-		$(PATH_OCAML_BIN)/camlp4o$(EXE_SUFFIX) str.cma ../../_build/bisect_pp.cmo $$file -o $$file.result; \
+-		diff -q $$file.reference $$file.result || exit 1; \
++		$(PATH_OCAML_BIN)/camlp4o$(EXE_SUFFIX) -printer o str.cma ../../_build/bisect_pp.cmo $$file -o $$file.result; \
++		diff -b -q $$file.reference $$file.result || exit 1; \
+ 	done
+ 	@rm -fr *.result *.cmp
+--- ./tests/camlp4-exclude/Makefile
++++ ./tests/camlp4-exclude/Makefile
+@@ -2,7 +2,7 @@
+ 	@rm -fr *.result *.cmp
+ 	@for file in *.ml; do \
+ 		echo "     testing '$$file' ..."; \
+-		$(PATH_OCAML_BIN)/camlp4o$(EXE_SUFFIX) str.cma ../../_build/bisect_pp.cmo $$file -exclude 'f.*' -o $$file.result; \
+-		diff -q $$file.reference $$file.result || exit 1; \
++		$(PATH_OCAML_BIN)/camlp4o$(EXE_SUFFIX) -printer o str.cma ../../_build/bisect_pp.cmo $$file -exclude 'f.*' -o $$file.result; \
++		diff -b -q $$file.reference $$file.result || exit 1; \
+ 	done
+ 	@rm -fr *.result *.cmp
+--- ./tests/camlp4-exclude-file/Makefile
++++ ./tests/camlp4-exclude-file/Makefile
+@@ -2,7 +2,7 @@
+ 	@rm -fr *.result *.cmp
+ 	@for file in *.ml; do \
+ 		echo "     testing '$$file' ..."; \
+-		$(PATH_OCAML_BIN)/camlp4o$(EXE_SUFFIX) str.cma ../../_build/bisect_pp.cmo $$file -exclude-file exclusions -o $$file.result; \
+-		diff -q $$file.reference $$file.result || exit 1; \
++		$(PATH_OCAML_BIN)/camlp4o$(EXE_SUFFIX) -printer o str.cma ../../_build/bisect_pp.cmo $$file -exclude-file exclusions -o $$file.result; \
++		diff -b -q $$file.reference $$file.result || exit 1; \
+ 	done
+ 	@rm -fr *.result *.cmp
+--- ./tests/camlp4-instrument/Makefile
++++ ./tests/camlp4-instrument/Makefile
+@@ -2,7 +2,7 @@
+ 	@rm -fr *.result *.cmp
+ 	@for file in *.ml; do \
+ 		echo "     testing '$$file' ..."; \
+-		$(PATH_OCAML_BIN)/camlp4o$(EXE_SUFFIX) str.cma ../../_build/bisect_pp.cmo $$file -o $$file.result; \
+-		diff -q $$file.reference $$file.result || exit 1; \
++		$(PATH_OCAML_BIN)/camlp4o$(EXE_SUFFIX) -printer o str.cma ../../_build/bisect_pp.cmo $$file -o $$file.result; \
++		diff -b -q $$file.reference $$file.result || exit 1; \
+ 	done
+ 	@rm -fr *.result *.cmp
+--- ./tests/camlp4-instrument-fast/Makefile
++++ ./tests/camlp4-instrument-fast/Makefile
+@@ -2,7 +2,7 @@
+ 	@rm -fr *.result *.cmp
+ 	@for file in *.ml; do \
+ 		echo "     testing '$$file' ..."; \
+-		$(PATH_OCAML_BIN)/camlp4o$(EXE_SUFFIX) str.cma ../../_build/bisect_pp.cmo -mode fast $$file -o $$file.result; \
+-		diff -q $$file.reference $$file.result || exit 1; \
++		$(PATH_OCAML_BIN)/camlp4o$(EXE_SUFFIX) -printer o str.cma ../../_build/bisect_pp.cmo -mode fast $$file -o $$file.result; \
++		diff -b -q $$file.reference $$file.result || exit 1; \
+ 	done
+ 	@rm -fr *.result *.cmp
+--- ./tests/combine-expr/Makefile
++++ ./tests/combine-expr/Makefile
+@@ -20,6 +20,6 @@
+ 	@$(REPORT) -dump combined3-result.dump -combine-expr 'notnull(sum(<first*.out>))*2 + notnull(sum(<second*.out>))'
+ 	@(for name in first second combined1 combined2 combined3; do \
+ 		echo "     testing '$$name' ouput ..."; \
+-		diff -q $$name-result.dump $$name-reference.dump && rm -f $$name-result.dump; \
++		diff -b -q $$name-result.dump $$name-reference.dump && rm -f $$name-result.dump; \
+ 	done || exit 0)
+ 	@rm -f *.cm* *.out *.o *.jo $(EXECUTABLE)
