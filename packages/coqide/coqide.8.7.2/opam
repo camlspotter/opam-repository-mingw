@@ -36,3 +36,4 @@ install: [
   "install-ide-devfiles"
 ]
 remove: ["rm" "-rf" "%{lib}%/coq/ide" "%{doc}%/FAQ-CoqIde"]
+patches: "coq-8.7.2.patch" {os = "win32"}

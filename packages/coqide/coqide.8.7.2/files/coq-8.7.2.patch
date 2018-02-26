@@ -1,0 +1,15 @@
+--- ./Makefile.ide
++++ ./Makefile.ide
+@@ -254,9 +254,11 @@
+ # CoqIde for Windows special targets
+ ###########################################################################
+ 
++WINDRES?=$(shell ocamlfind ocamlc -config | awk -F '[\t\r ]+' '/^bytecomp_c_compiler/ {print $$2}' | sed 's|gcc|windres|g')
++
+ %.o: %.rc
+ 	$(SHOW)'WINDRES    $<'
+-	$(HIDE)i686-w64-mingw32-windres -i $< -o $@
++	$(HIDE)$(WINDRES) -i $< -o $@
+ 
+ 
+ # For emacs:
