@@ -26,5 +26,5 @@ depends: [
   "topkg" {build}
 ]
 tags: ["org:cryptosense"]
-available: [ocaml-version >= "4.02.0" & os != "darwin"]
+available: ocaml-version >= "4.02.0" & os != "darwin" & os != "win32"
 patches: ["0001-Detect-dlfcn.h-using-__linux__.patch"]
