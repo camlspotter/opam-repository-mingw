@@ -11,16 +11,10 @@ homepage: "https://akabe.github.io/ocaml-jupyter/"
 bug-reports: "https://github.com/akabe/ocaml-jupyter/issues"
 dev-repo: "https://github.com/akabe/ocaml-jupyter.git"
 
-available: ocaml-version >= "4.02.0" & os != "win32"
+available: [ ocaml-version >= "4.02.0" ]
 build: [
   [ "jbuilder" "subst" ] {pinned}
   [ "jbuilder" "build" "-p" name "-j" jobs ]
-]
-install: [
-  [ "./kernelspec.sh" "install" ]
-]
-remove: [
-  [ "./kernelspec.sh" "uninstall" ]
 ]
 depends: [
   "base-threads"
@@ -34,8 +28,7 @@ depends: [
   "yojson" {>= "1.3.3"}
   "ppx_deriving_yojson" {>= "3.0"}
   "cryptokit" {>= "1.12"}
-  "ocamlfind" {build & >= "1.5.0"}
-  "jbuilder" {build & >= "1.0+beta14" & < "1.0+beta18"}
+  "jbuilder" {build & >= "1.0+beta14"}
 ]
 depopts: [
   "merlin"
@@ -45,11 +38,9 @@ conflicts: [
 ]
 
 post-messages: [
-  "If Jupyter is installed, ocaml-jupyter kernel is already available."
-  "Otherwise you setup Jupyter and the OCaml kernel as follows:"
+  "Please run for registration of ocaml-jupyter kernel:"
   ""
-  "$ pip install jupyter"
-  "$ jupyter kernelspec install --name ocaml-jupyter \\
-    %{share}%/ocaml-jupyter"
+  "$ jupyter kernelspec install --name ocaml-jupyter \\"
+  "    %{share}%/jupyter"
   {success}
 ]
