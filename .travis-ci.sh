@@ -100,6 +100,9 @@ function build_one {
     depext=$(opam depext -ls $pkg --no-sources)
     opam depext $pkg
     echo
+    echo "====== Installing dependencies ======"
+    opam install --deps-only $pkg
+    echo
     echo "====== Installing package ======"
     opam install -t $pkg
     opam remove -a ${pkg%%.*}
