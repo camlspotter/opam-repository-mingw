@@ -13,7 +13,7 @@ install: [
   [make "install"]
 ]
 homepage: "http://sawja.inria.fr"
-available: ocaml-version >= "4.02" 
+available: ocaml-version >= "4.02" & os != "win32"
 depends: [
   "ocamlfind" {build}
   "javalib" {>= "2.3.4"}
