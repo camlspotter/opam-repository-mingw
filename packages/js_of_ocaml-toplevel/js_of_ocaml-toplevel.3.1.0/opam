@@ -20,3 +20,4 @@ depends: [
 depopts: [ "camlp4" ]
 
 available: [ ocaml-version >= "4.02.0" ]
+patches: "js_of_ocaml-3.1.0.patch" {os = "win32"}
