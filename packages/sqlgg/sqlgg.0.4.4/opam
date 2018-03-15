@@ -33,3 +33,4 @@ depopts: [
   "sqlite3"
 ]
 available: [ocaml-version >= "4.02.0"]
+patches: "patch-oasis-sqlgg.0.4.4" {os = "win32"}
