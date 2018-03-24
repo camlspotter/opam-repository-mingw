@@ -15,3 +15,4 @@ depends: [
   "ocaml-migrate-parsetree" {>= "1.0.8"}
 ]
 available: [ ocaml-version >= "4.04.1" ]
+patches: "ppx_driver-0.10.3.patch" {os = "win32"}
