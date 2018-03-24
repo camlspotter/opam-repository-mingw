@@ -43,6 +43,6 @@ build-test: [
 ]
 
 tags: [ "org:mirage" ]
-available: [ ocaml-version >= "4.02.0" ]
+available: [ ocaml-version >= "4.02.0" & ocaml-version < "4.06.0" ]
 authors: "David Kaloper <david@numm.org>"
 patches: "ocaml-nocrypto-0.5.3.patch" {os = "win32"}
