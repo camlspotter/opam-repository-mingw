@@ -12,3 +12,4 @@ build: [
   ["./boot.exe" "-j" jobs]
 ]
 available: [ ocaml-version >= "4.02.3" ]
+patches: "jbuilder-1.0+beta19.1.patch" {os = "win32"}
