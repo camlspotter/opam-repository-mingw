@@ -1,4 +1,3 @@
-diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/bitfn.h ./bitfn.h
 --- ./bitfn.h
 +++ ./bitfn.h
 @@ -65,18 +65,14 @@
@@ -23,7 +22,6 @@ diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/bitfn.h ./bitfn.h
  #define be32_to_cpu(a) (a)
  #define cpu_to_be32(a) (a)
  #define be64_to_cpu(a) (a)
-diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/config.h.in ./config.h.in
 --- ./config.h.in
 +++ ./config.h.in
 @@ -0,0 +1,9 @@
@@ -36,7 +34,30 @@ diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/config.h.in ./config.h.in
 +#ifndef HAVE_O_CLOEXEC
 +#define O_CLOEXEC 0
 +#endif
-diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/configure ./configure
+--- ./configure.ac
++++ ./configure.ac
+@@ -0,0 +1,21 @@
++AC_INIT([sha], [0.1],[andreas@ml.ignorelist.com],[sha])
++
++AC_CONFIG_HEADERS([config.h])
++AC_PROG_CC
++AC_C_BIGENDIAN([AC_DEFINE(BIG_ENDIAN_HOST,1)],[AC_DEFINE(LITTLE_ENDIAN_HOST,1)])
++
++AC_TRY_COMPILE(
++        [
++        #include <fcntl.h>
++        ],
++        [
++        int flags;
++        flags = O_CLOEXEC;
++        ],
++        AC_MSG_RESULT(yes)
++        AC_DEFINE(HAVE_O_CLOEXEC, 1, Define if open() has O_CLOEXEC flag)
++        ,
++        AC_MSG_RESULT(no)
++        )
++
++AC_OUTPUT
 --- ./configure
 +++ ./configure
 @@ -0,0 +1,4344 @@
@@ -4384,32 +4405,6 @@ diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/configure ./configure
 +$as_echo "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2;}
 +fi
 +
-diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/configure.ac ./configure.ac
---- ./configure.ac
-+++ ./configure.ac
-@@ -0,0 +1,21 @@
-+AC_INIT([sha], [0.1],[andreas@ml.ignorelist.com],[sha])
-+
-+AC_CONFIG_HEADERS([config.h])
-+AC_PROG_CC
-+AC_C_BIGENDIAN([AC_DEFINE(BIG_ENDIAN_HOST,1)],[AC_DEFINE(LITTLE_ENDIAN_HOST,1)])
-+
-+AC_TRY_COMPILE(
-+        [
-+        #include <fcntl.h>
-+        ],
-+        [
-+        int flags;
-+        flags = O_CLOEXEC;
-+        ],
-+        AC_MSG_RESULT(yes)
-+        AC_DEFINE(HAVE_O_CLOEXEC, 1, Define if open() has O_CLOEXEC flag)
-+        ,
-+        AC_MSG_RESULT(no)
-+        )
-+
-+AC_OUTPUT
-diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/Makefile ./Makefile
 --- ./Makefile
 +++ ./Makefile
 @@ -1,7 +1,8 @@
@@ -4422,19 +4417,21 @@ diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/Makefile ./Makefile
  
  # on unix architecture we just use the default value
  EXE=
-@@ -21,8 +22,9 @@
+@@ -21,8 +22,11 @@
  
  OCAMLOPTFLAGS =
  
 -OCAML_TEST_INC = -I `ocamlfind query oUnit`
 -OCAML_TEST_LIB = `ocamlfind query oUnit`/oUnit.cmxa
 +OUNIT_DIR=$(shell ocamlfind query oUnit | tr -d '\r' | tr '\\' '/')
++ifneq ($(OUNIT_DIR),)
 +OCAML_TEST_INC = -I $(OUNIT_DIR)
 +OCAML_TEST_LIB = $(OUNIT_DIR)/oUnit.cmxa
++endif
  
  PROGRAMS_BINS = sha1sum sha256sum sha512sum
  PROGRAMS = $(addsuffix $(EXE), $(PROGRAMS_BINS))
-@@ -70,10 +72,10 @@
+@@ -70,10 +74,10 @@
  tests: sha.test
  	./sha.test
  
@@ -4447,7 +4444,7 @@ diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/Makefile ./Makefile
  
  %.test.cmo: %.test.ml
  	$(OCAMLC) -c -o $@ $(OCAML_BFLAGS) -custom $(OCAML_TEST_INC) $<
-@@ -82,13 +84,13 @@
+@@ -82,13 +86,13 @@
  	$(OCAMLOPT) -c -o $@ $(OCAML_BFLAGS) $(OCAML_TEST_INC) $<
  
  %.cmo: %.ml
@@ -4464,7 +4461,7 @@ diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/Makefile ./Makefile
  
  %.$(OBJ): %.c
  	$(OCAMLC) -ccopt "$(CFLAGS)" -c -o $@ $<
-@@ -102,7 +104,7 @@
+@@ -102,7 +106,7 @@
  	ocamldoc -html -d html *.mli
  
  clean:
@@ -4473,7 +4470,6 @@ diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/Makefile ./Makefile
  
  install: sha1.cma sha1.cmxa sha256.cma sha256.cmxa sha512.cma sha512.cmxa sha.cma sha.cmxa META
  	ocamlfind install sha META *.cmx sha1.cmi sha1.cma sha1.cmxa sha256.cmi sha256.cma sha256.cmxa sha512.cmi sha512.cma sha512.cmxa sha.cma sha.cmxa *.$(A) *.$(SO)
-diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/patch-sha ./patch-sha
 --- ./patch-sha
 +++ ./patch-sha
 @@ -0,0 +1,4475 @@
@@ -8952,7 +8948,6 @@ diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/patch-sha ./patch-sha
 + 
 + install: sha1.cma sha1.cmxa sha256.cma sha256.cmxa sha512.cma sha512.cmxa sha.cma sha.cmxa META
 + 	ocamlfind install sha META *.cmx sha1.cmi sha1.cma sha1.cmxa sha256.cmi sha256.cma sha256.cmxa sha512.cmi sha512.cma sha512.cmxa sha.cma sha.cmxa *.$(A) *.$(SO)
-diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/real_configure ./real_configure
 --- ./real_configure
 +++ ./real_configure
 @@ -0,0 +1,4 @@
@@ -8960,7 +8955,52 @@ diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/real_configure ./real_configur
 +
 +CC="$(ocamlc -config 2>/dev/null | awk '/^bytecomp_c_compiler/ {for(i=2;i<=NF;i++) printf "%s " ,$i}')"
 +sh configure "CC=${CC}"
-diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/sha_test.ml ./sha_test.ml
+--- ./sha1_stubs.c
++++ ./sha1_stubs.c
+@@ -16,6 +16,7 @@
+ #define _GNU_SOURCE
+ #include <unistd.h>
+ #include <fcntl.h>
++#include "config.h"
+ #include "sha1.h"
+ 
+ static inline int sha1_file(char *filename, sha1_digest *digest)
+--- ./sha256_stubs.c
++++ ./sha256_stubs.c
+@@ -16,6 +16,7 @@
+ #define _GNU_SOURCE
+ #include <unistd.h>
+ #include <fcntl.h>
++#include "config.h"
+ #include "sha256.h"
+ 
+ static inline int sha256_file(char *filename, sha256_digest *digest)
+--- ./sha512.c
++++ ./sha512.c
+@@ -238,6 +238,11 @@
+ 	int i;
+ 
+ 	for (p = out, i = 0; i < 8; i++, p += 16)
+-		snprintf(p, 17, "%016llx",
+-		         (unsigned long long) be64_to_cpu(digest->digest[i]));
++		snprintf(p, 17, 
++#if defined(_WIN32) && !defined(__CYGWIN__)
++                         "%016I64x"
++#else
++                         "%016llx"
++#endif
++                         ,(unsigned long long) be64_to_cpu(digest->digest[i]));
+ }
+--- ./sha512_stubs.c
++++ ./sha512_stubs.c
+@@ -16,6 +16,7 @@
+ #define _GNU_SOURCE
+ #include <unistd.h>
+ #include <fcntl.h>
++#include "config.h"
+ #include "sha512.h"
+ 
+ static inline int sha512_file(char *filename, sha512_digest *digest)
 --- ./sha_test.ml
 +++ ./sha_test.ml
 @@ -0,0 +1,112 @@
@@ -9076,53 +9116,3 @@ diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/sha_test.ml ./sha_test.ml
 +	]
 +
 +let _ = run_test_tt ~verbose:true suite
-diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/sha1_stubs.c ./sha1_stubs.c
---- ./sha1_stubs.c
-+++ ./sha1_stubs.c
-@@ -16,6 +16,7 @@
- #define _GNU_SOURCE
- #include <unistd.h>
- #include <fcntl.h>
-+#include "config.h"
- #include "sha1.h"
- 
- static inline int sha1_file(char *filename, sha1_digest *digest)
-diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/sha256_stubs.c ./sha256_stubs.c
---- ./sha256_stubs.c
-+++ ./sha256_stubs.c
-@@ -16,6 +16,7 @@
- #define _GNU_SOURCE
- #include <unistd.h>
- #include <fcntl.h>
-+#include "config.h"
- #include "sha256.h"
- 
- static inline int sha256_file(char *filename, sha256_digest *digest)
-diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/sha512.c ./sha512.c
---- ./sha512.c
-+++ ./sha512.c
-@@ -238,6 +238,11 @@
- 	int i;
- 
- 	for (p = out, i = 0; i < 8; i++, p += 16)
--		snprintf(p, 17, "%016llx",
--		         (unsigned long long) be64_to_cpu(digest->digest[i]));
-+		snprintf(p, 17, 
-+#if defined(_WIN32) && !defined(__CYGWIN__)
-+                         "%016I64x"
-+#else
-+                         "%016llx"
-+#endif
-+                         ,(unsigned long long) be64_to_cpu(digest->digest[i]));
- }
-diff -b -B -u -N ../ocaml-sha-ocaml-sha-v1.9.orig/sha512_stubs.c ./sha512_stubs.c
---- ./sha512_stubs.c
-+++ ./sha512_stubs.c
-@@ -16,6 +16,7 @@
- #define _GNU_SOURCE
- #include <unistd.h>
- #include <fcntl.h>
-+#include "config.h"
- #include "sha512.h"
- 
- static inline int sha512_file(char *filename, sha512_digest *digest)
