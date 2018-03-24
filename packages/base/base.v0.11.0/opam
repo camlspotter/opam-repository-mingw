@@ -16,3 +16,4 @@ depopts: [
   "base-native-int63"
 ]
 available: [ ocaml-version >= "4.04.1" ]
+patches: "base-v0.11.0.patch" {os = "win32"}
