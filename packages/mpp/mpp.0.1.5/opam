@@ -19,3 +19,4 @@ tags: [
 ]
 patches: "patch-oasis-mpp.0.1.5" {os = "win32"}
 install: ["ocaml" "setup.ml" "-install"]
+available: [ocaml-version < "4.06.0"]
