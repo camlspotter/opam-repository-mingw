@@ -1,0 +1,34 @@
+--- ./src/IO.ml
++++ ./src/IO.ml
+@@ -574,7 +574,8 @@
+   write_32 ch n
+ 
+ let write_i32 ch n =
+-  if n < -0x8000_0000 || n > 0x7FFF_FFFF then raise (Overflow "write_i32");
++  let n32 = Int32.of_int n in
++  if n32 < Int32.min_int || n32 > Int32.max_int then raise (Overflow "write_i32");
+   write_32 ch n
+ 
+ let write_real_i32 ch n =
+@@ -678,7 +679,8 @@
+   write_32 ch n
+ 
+ let write_i32 ch n =
+-  if n < -0x8000_0000 || n > 0x7FFF_FFFF then raise (Overflow "write_i32");
++  let n32 = Int32.of_int n in
++  if n32 < Int32.min_int || n32 > Int32.max_int then raise (Overflow "write_i32");
+   write_32 ch n
+ 
+ let write_real_i32 ch n =
+--- ./test/test_IO.ml
++++ ./test/test_IO.ml
+@@ -73,7 +73,8 @@
+ 
+ let test_i31 () =
+   let values = [~-0x40000000;-1;0;1;0x3FFFFFFF] in
+-  let invalid = [~-0x40000001;0x40000000] in
++  (* check whether runtime supports 32 bit int *)
++  let invalid = if 0x40000000 > 0 then [~-0x40000001;0x40000000] else [] in
+   let test = test_write_read values invalid string_of_int in
+   test IO.write_i31 IO.read_i31;
+   test IO.BigEndian.write_i31 IO.BigEndian.read_i31;

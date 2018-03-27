@@ -1,0 +1,10 @@
+#!/bin/sh
+
+echo 'let () = print_int Sys.word_size;;' >"xtest.ml"
+xtest=$(ocaml "xtest.ml" | tr -d '\015')
+rm "xtest.ml"
+case "$xtest" in
+    32*)
+        patch -p1 <extlib-1.7.4.patch
+        ;;
+esac

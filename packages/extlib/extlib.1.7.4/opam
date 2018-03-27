@@ -20,6 +20,7 @@ authors: [
   "Pietro Abate"
 ]
 build: [
+  ["sh" "preconfigure"]
   [make "minimal=1" "build"]
 ]
 install: [ [make "minimal=1" "install"] ]
