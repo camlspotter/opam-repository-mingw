@@ -37,3 +37,4 @@ remove: [ [ "ocamlfind" "remove" "KappaLib" ] ]
 build-test: [ [ make "check" ] ]
 
 available: [ ocaml-version >= "4.02.3" ]
+patches: "KaSim-4.0.patch" {os = "win32"}

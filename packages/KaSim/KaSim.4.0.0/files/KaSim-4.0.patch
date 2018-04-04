@@ -1,0 +1,15 @@
+--- ./Makefile
++++ ./Makefile
+@@ -183,8 +183,11 @@
+ %.cma %.cmxa %.native %.byte %.docdir/index.html: $(filter-out _build/,$(wildcard */*.ml*)) $(wildcard $(KASAREP)*/*.ml*) $(wildcard $(KADEREP)*/*.ml*) $(wildcard $(KASAREP)*/*/*.ml*) $(VERSION) $(RESOURCE)
+ 	"$(OCAMLBINPATH)ocamlbuild" $(OCAMLBUILDFLAGS) $(OCAMLINCLUDES) $@
+ 
++
++STRIP:=$(shell ocamlfind ocamlc -config | awk -F '[\t\r ]+' '/^ranlib:/ {print $$2}' | sed 's|ranlib|strip|g')
++
+ bin/%: %.$(OCAMLBEST) Makefile
+-	[ -d bin ] || mkdir bin && strip -o $@ $<
++	[ -d bin ] || mkdir bin && $(STRIP) -o $@ $<
+ 	rm -f $(notdir $@) && ln -s $@ $(notdir $@)
+ 
+ 
