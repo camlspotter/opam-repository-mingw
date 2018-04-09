@@ -25,5 +25,6 @@ depends: [
   "base-unix"
   "conf-pkg-config" {build}
   "conf-glib-2" {build}
+  "ocamlbuild" {build}
 ]
 patches: "lwt_glib-1.0.1.patch" {os = "win32"}
