@@ -1,6 +1,6 @@
 opam-version: "1.2"
 available:
-  ocaml-version >= "4.03.0" & ocaml-version <= "4.06.0" & os != "win32"
+  ocaml-version >= "4.03.0" & ocaml-version <= "4.06.1" & os != "win32"
 maintainer  : "Christophe Raffalli <christophe@raffalli.eu>"
 bug-reports : "https://github.com/rlepigre/ocaml-earley-ocaml/issues"
 authors     : [ "Christophe Raffalli <christophe@raffalli.eu>"
@@ -13,4 +13,4 @@ install     : [make "install" "BINDIR=%{bin}%" ]
 remove      : [make "uninstall"]
 depends     : [ "ocamlfind" {build}
                 "ocamlbuild" {build}
-                "earley" {= "1.0.1"} ]
+                "earley" {= "1.0.2"} ]
