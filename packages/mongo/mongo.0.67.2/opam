@@ -18,5 +18,8 @@ install: [
  ["ocaml" "setup.ml" "-install"]
  ["rm" "-f" "%{bin}%/test"] # name too confusing
 ]
+conflicts: [
+  "lwt" {>= "4.0.0"}
+]
 dev-repo: "git://github.com/MassD/mongo"
 patches: "patch-oasis-mongo.0.67.2" {os = "win32"}
