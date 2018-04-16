@@ -57,8 +57,4 @@ messages: [
   "For module Lwt_react, please install package lwt_react"
   {react:installed & !lwt_react:installed}
 ]
-post-messages: [
-  "Lwt 3.0.0 made some minor breaking changes, announced in 2.7.0. See
-  https://github.com/ocsigen/lwt/issues/308"
-]
 patches: "lwt-3.0.0.patch" {os = "win32"}
