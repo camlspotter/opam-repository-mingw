@@ -30,5 +30,5 @@ depends: [
   "ocaml-migrate-parsetree" {>= "0.4"}
   "num"
 ]
-available: [ ocaml-version >= "4.03.0" & ocaml-version < "4.06.0" ]
+available: [ ocaml-version >= "4.03.0" & ocaml-version < "4.06.0" & arch != "aarch64" ]
 patches: "core_kernel-v0.9.0.patch" {os = "win32"}
