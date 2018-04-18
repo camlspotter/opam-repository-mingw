@@ -30,6 +30,7 @@ depexts: [
   [["fedora"] ["freetds-devel"]]
   [["ubuntu"] ["freetds-dev"]]
   [["osx" "homebrew"] ["freetds"]]
+  [["win32" "cygwinports"] ["freetds"]]
 ]
 
 available: [ ocaml-version >= "4.02.3" ]
