@@ -8,8 +8,7 @@ doc: "https://vbmithr.github.io/ocaml-ipv6-multicast/doc"
 license: "ISC"
 dev-repo: "https://github.com/vbmithr/ocaml-ipv6-multicast.git"
 bug-reports: "https://github.com/vbmithr/ocaml-ipv6-multicast/issues"
-tags: []
-available: [ ocaml-version >= "4.03.0"]
+available: ocaml-version >= "4.03.0" & os != "win32"
 depends: [
   "jbuilder" {build & >= "1.0+beta11"}
   "rresult" {>= "0.5.0"}
