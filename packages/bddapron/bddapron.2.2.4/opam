@@ -5,7 +5,7 @@ homepage: "https://www.inrialpes.fr/pop-art/people/bjeannet/bjeannet-forge/bddap
 license: "LGPL-2.1"
 build: [
   ["./configure" "--docdir" doc]
-  [make "JOBS=%{jobs}%"]
+  [make]
 ]
 install: [
   [make "install"]
@@ -16,7 +16,7 @@ remove: [
 ]
 tags: [ "flags:light-uninstall" ]
 depends: [
-  "ocamlfind"  {build}
+  "ocamlfind" {build}
   "camllib"
   "mlcuddidl"  {>= "2.3.0"}
   "apron"      {>= "20151015"}
