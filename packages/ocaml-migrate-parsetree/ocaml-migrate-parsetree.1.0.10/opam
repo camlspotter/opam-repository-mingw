@@ -17,5 +17,4 @@ depends: [
   "ocamlfind" {build}
   "jbuilder" {build & >= "1.0+beta18.1"}
 ]
-available: [ocaml-version >= "4.02.0" & ocaml-version < "4.07.0"]
-patches: "ocaml-migrate-parsetree-1.0.9.patch" {os = "win32"}
+available: ocaml-version >= "4.02.0"
