@@ -8,4 +8,7 @@ build: [[make]]
 install: [[make "install"]]
 remove: [["ocamlfind" "remove" "camlpdf"]]
 depends: ["ocamlfind"]
-patches: "patch-ocamlmakefile-camlpdf.2.2.1" {os = "win32"}
+patches: [
+  "patch-ocamlmakefile-camlpdf.2.2.1" {os = "win32"}
+  "unsafe_string.patch" {ocaml-version >= "4.06"}
+]
