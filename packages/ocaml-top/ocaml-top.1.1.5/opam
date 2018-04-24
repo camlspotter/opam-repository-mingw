@@ -16,3 +16,4 @@ depends: [
   "ocp-index" {>= "1.0.0"}
 ]
 available: [ocaml-version >= "4.02.0"]
+patches: "ocaml-top-1.1.5.patch" {os = "win32"}
