@@ -6,10 +6,7 @@ bug-reports: "https://github.com/OCamlPro/ocaml-top/issues"
 license: "GPL-3"
 tags: ["org:ocamlpro" "gui" "teaching" "toplevel"]
 dev-repo: "https://github.com/OCamlPro/ocaml-top.git"
-build: [
- ["jbuilder" "build" "-p" name]  { os != "win32" }
- [make "-f" "Makefile.win32" ] { os = "win32" }
-]
+build: ["jbuilder" "build" "-p" name]
 depends: [
   "jbuilder" {build}
   "ocp-pp" {build}
@@ -18,8 +15,4 @@ depends: [
   "ocp-indent" {>= "1.4.0"}
   "ocp-index" {>= "1.0.0"}
 ]
-patches: [
-  "ocaml-top-1.1.4.patch" {os = "win32"}
-  "ocaml-top-bytes.patch" {ocaml-version >= "4.04.0"}
-]
-available: [ocaml-version < "4.06.0"]
+available: [ocaml-version >= "4.02.0"]
