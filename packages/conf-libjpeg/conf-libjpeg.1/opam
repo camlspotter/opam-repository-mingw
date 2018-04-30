@@ -12,4 +12,5 @@ depexts: [
   [[ "debian" ] [ "libjpeg-dev" ]]
   [[ "ubuntu" ] [ "libjpeg-dev" ]]
   [[ "osx" "homebrew" ] [ "jpeg" ]]
+  [[ "win32" "cygwinports" ] ["libjpeg-turbo"]]
 ]
