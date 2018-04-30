@@ -1,0 +1,25 @@
+--- ./Makefile
++++ ./Makefile
+@@ -14,6 +14,13 @@
+ IMAGES=tabular syntax backnaur
+ PREFIX=my
+ 
++OS_TYPE:=$(shell ocamlfind ocamlc -config | tr -d '\015' | awk '/^os_type:/ {print $$2}')
++ifeq ($(OS_TYPE),$(filter $(OS_TYPE),Win32 Cygwin))
++EXT_EXE=.exe
++else
++EXT_EXE=
++endif
++
+ .PHONY: all latex html default reco readme doc tests clean cleandoc install uninstall publish
+ 
+ all: opam
+@@ -76,7 +83,7 @@
+ install: all
+ 	@echo $(BINDIR)
+ 	@mkdir -p $(BINDIR)
+-	@install $(EXE) $(BINDIR)/$(EXE)
++	@install $(EXE) $(BINDIR)/$(EXE)$(EXT_EXE)
+ 
+ uninstall:
+ 	@rm -f $(BINDIR)/$(EXE)
