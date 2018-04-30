@@ -1,0 +1,286 @@
+--- ./ext/filepath.ml
++++ ./ext/filepath.ml
+@@ -10,11 +10,18 @@
+ let currentDir = { absolute = false; filepath = [] }
+ 
+ let fp_to_string x =
++  if Sys.os_type <> "Win32" then
+     match x.filepath, x.absolute with
+     | ([], true)  -> "/"
+     | ([], false) -> "./"
+     | (l,  true)  -> "/" ^ String.concat Filename.dir_sep l
+     | (l,  false) -> String.concat Filename.dir_sep l
++  else
++    match x.filepath, x.absolute with
++    | ([], true)  -> "C:\\" (* ??? *)
++    | ([], false) -> ".\\"
++    | ([l],  true)  -> l ^ Filename.dir_sep
++    | (l,  _) -> String.concat Filename.dir_sep l
+ 
+ let fn_to_string x = x.filename
+ 
+@@ -30,10 +37,33 @@
+ 
+ (* this only strip the last / if it exists *)
+ let fp x =
++  let slashify s =
++    let l = String.length s in
++    if l = 0 then s else
++    let b = Buffer.create l in
++    let c = s.[0] in
++    if l > 1 && s.[1] = ':' && (c >= 'a' && c <= 'z') &&
++         (l = 2 || String.get s 2 = '/' || String.get s 2 = '\\' ) then
++      Buffer.add_char b (Char.uppercase c)
++    else
++      Buffer.add_char b c;
++    for i = 1 to l - 1 do
++      let c = s.[i] in
++      Buffer.add_char b (if c = '\\' then '/' else c)
++    done;
++    Buffer.contents b
++  in
++  let x = if Sys.os_type = "Win32" then slashify x else x in
+     (* TODO fix it properly, however separator is always a single char *)
+-    match string_split Filename.dir_sep.[0] x with
++    (* TODO windows: neither network paths nor paths like \\\\?\\C:\\foo\longbar
++       nor paths relative to a drive 'C:' are covered *)
++    match string_split '/' x with
+     | "" :: p ->
+         { absolute = true; filepath = List.filter (fun x -> x <> "." && x <> "") p }
++    | (hd :: _) as p when Sys.os_type = "Win32" && String.length hd = 2 ->
++       let c = hd.[0] in
++       let absolute = hd.[1] = ':' && c >= 'A' && c <= 'Z' in
++        { absolute ; filepath = List.filter (fun x -> x <> "." && x <> "") p }
+     | p ->
+         { absolute = false; filepath = List.filter (fun x -> x <> "." && x <> "") p }
+ 
+--- ./ext/filesystem.ml
++++ ./ext/filesystem.ml
+@@ -82,7 +82,19 @@
+    try (Unix.stat (fp_to_string path)).Unix.st_mtime
+    with _ -> 0.0
+ 
+-let exists path = Sys.file_exists (fp_to_string path)
++(* some file systems are case insensitiv (windows, but also Os X)
++   Sys.file_exists "Foo" will be true, although the real file name is foo
++*)
++let exists ?(strict_case=false) path =
++  if strict_case = false then
++    Sys.file_exists (fp_to_string path)
++  else
++    let path = fp_to_string path in
++    let dir = Filename.dirname path in
++    let base = Filename.basename path in
++    let files = try Array.to_list (Sys.readdir dir) with Sys_error _ -> [] in
++    List.mem base files
++
+ let is_dir path =
+     try Sys.is_directory (fp_to_string path)
+     with _ -> false
+--- ./ext/filesystem.mli
++++ ./ext/filesystem.mli
+@@ -54,7 +54,7 @@
+ val getModificationTime : Filepath.filepath -> float
+ 
+ (** Analogous of [Sys.file_exists] but for a filepath *)
+-val exists : Filepath.filepath -> bool
++val exists : ?strict_case:bool -> Filepath.filepath -> bool
+ 
+ (** Analogous of [Sys.is_directory] but for a filepath *)
+ val is_dir : Filepath.filepath -> bool
+--- ./ext/fugue.ml
++++ ./ext/fugue.ml
+@@ -106,6 +106,22 @@
+         in
+     loop 0
+ 
++let no_windows_newlines s =
++ if Sys.os_type <> "Win32" then s else
++ let len = String.length s in
++ let pred_len = pred len in
++ let b = Buffer.create len in
++ let changed = ref false in
++ for i = 0 to pred_len do
++   match s.[i] with
++   | '\r' when i <> pred_len && s.[succ i] = '\n' -> changed:= true
++   | c ->
++     Buffer.add_char b c
++ done;
++ match !changed with
++ | false -> s
++ | true -> Buffer.contents b
++
+ let string_lines s = string_split '\n' s
+ let string_words s = string_split_pred (fun c -> c = ' ' || c = '\n' || c = '\t') s
+ 
+--- ./obuild/build.ml
++++ ./obuild/build.ml
+@@ -320,8 +320,8 @@
+   if gconf.ocamlmklib then
+     [[(fun () -> runCLinking LinkingShared cdep_files lib_name)]]
+   else (
+-    let so_file = cstate.compilation_builddir_c </> fn ("dll" ^ clib_name ^ ".so") in
+-    let a_file = cstate.compilation_builddir_c </> fn ("lib" ^ clib_name ^ ".a") in
++    let so_file = cstate.compilation_builddir_c </> fn ("dll" ^ clib_name ^ Prog.getExt_dll ()) in
++    let a_file = cstate.compilation_builddir_c </> fn ("lib" ^ clib_name ^ Prog.getExt_lib ()) in
+     [[(fun () -> runCLinking LinkingShared cdep_files so_file)];
+      [(fun () -> runAr a_file cdep_files)];
+      [(fun () -> runRanlib a_file)]]
+--- ./obuild/buildprogs.ml
++++ ./obuild/buildprogs.ml
+@@ -29,18 +29,20 @@
+   let src_file = Hier.get_src_file dirSpec.src_dir entry in
+   let compileOpt = if buildMode = Interface && compileOpt = WithProf then WithDebug else compileOpt in
+   Filesystem.mkdirSafeRecursive dstDir 0o755;
+-  let (prog, srcFile, dstFile) =
++  let (prog, srcFile, dstFile, opt_compile) =
+     match buildMode with
+     | Interface ->
+       (Prog.getOcamlC ()
+       ,Hier.ml_to_ext src_file Filetype.FileMLI
+       ,Hier.get_dest_file dstDir Filetype.FileCMI modhier
++      ,false
+       )
+     | Compiled ct ->
+       let ext = if ct = ByteCode then Filetype.FileCMO else Filetype.FileCMX in
+       ((if ct = ByteCode then Prog.getOcamlC () else Prog.getOcamlOpt ())
+       ,src_file
+       ,Hier.get_dest_file dstDir ext modhier
++      ,ct <> ByteCode
+       )
+   in
+   let args = [prog]
+@@ -52,7 +54,7 @@
+                  | Normal    -> []
+                  | WithDebug -> ["-g"]
+                  | WithProf  -> ["-p"])
+-             @ annotToOpts annotMode
++             @ (if opt_compile then [] else annotToOpts annotMode)
+              @ oflags
+              @ gconf.ocaml_extra_args
+              @ Pp.to_params pp
+@@ -177,5 +179,5 @@
+              @ (List.map (fun m -> fp_to_string (Hier.get_dest_file currentDir ext m)) modules)
+   in
+   let res = Process.make args in
+-  let () = link_maybe linkingMode dest in
++  let () = if Sys.os_type <> "Win32" then link_maybe linkingMode dest else () in
+   res
+--- ./obuild/dependencies.ml
++++ ./obuild/dependencies.ml
+@@ -42,6 +42,7 @@
+   match Process.run args with
+   | Process.Failure er -> raise (BuildDepAnalyzeFailed er)
+   | Process.Success (out,_,_) ->
++    let out = no_windows_newlines out in
+     List.map snd (parse_output_KsemiVs
+                     (fun _ -> raise (BuildDepAnalyzeFailed ("assumption failed: " ^ out)))
+                     fp wrap_module_safe out
+--- ./obuild/findlibConf.ml
++++ ./obuild/findlibConf.ml
+@@ -25,7 +25,8 @@
+     | Some x -> string_init 1 (string_drop 1 x)
+   in
+   let kvs = List.map Utils.toKVeq (string_lines_noempty content) in
+-  let paths = string_split ':' (unquote (List.assoc "path" kvs)) in
++  let sep = if Sys.os_type = "Win32" then ';' else ':' in
++  let paths = string_split sep (unquote (List.assoc "path" kvs)) in
+   let destdir = unquote (List.assoc "destdir" kvs) in
+   {
+     all     = kvs;
+@@ -36,7 +37,7 @@
+ 
+ let get_program_config () = match Process.run [ "ocamlfind"; "printconf"; "conf" ] with
+   | Process.Failure err     -> failwith ("ocamlfind printconf failed err " ^ err)
+-  | Process.Success (out,_,_) -> match string_lines_noempty out with
++  | Process.Success (out,_,_) -> match string_lines_noempty (no_windows_newlines out) with
+     | [x] -> [fp x]
+     | _   -> failwith ("ocamlfind printconf failed output: " ^ out)
+                
+--- ./obuild/gconf.ml
++++ ./obuild/gconf.ml
+@@ -44,7 +44,7 @@
+   ("library-debugging", false);
+   ("library-native", true);
+   ("library-bytecode", true);
+-  ("library-plugin", (if Sys.os_type = "Unix" then true else false));
++  ("library-plugin", (if Sys.os_type <> "Cygwin" then true else false));
+   ("build-benchs", false);
+   ("build-tests", false);
+   ("build-examples", false);
+--- ./obuild/hier.ml
++++ ./obuild/hier.ml
+@@ -77,9 +77,9 @@
+ 
+ let check_file path filename ext =
+   if ext <> Filetype.FileOther "" then
+-    Ext.Filesystem.exists (path </> ((fn filename) <.> (Filetype.to_string ext)))
++    Ext.Filesystem.exists ~strict_case:true (path </> ((fn filename) <.> (Filetype.to_string ext)))
+   else
+-    Ext.Filesystem.exists (path </> (fn filename))
++    Ext.Filesystem.exists ~strict_case:true (path </> (fn filename))
+ 
+ let check_modname path modname ext =
+   if (check_file path modname ext) then
+--- ./obuild/meta.ml
++++ ./obuild/meta.ml
+@@ -439,7 +439,7 @@
+   fst (Token.parse name (Pkg.make pkg_name) (Token.tokenize name content))
+ 
+ let read path name =
+-  let meta_content = Filesystem.readFile path in
++  let meta_content = no_windows_newlines (Filesystem.readFile path) in
+   parse path meta_content name
+ 
+ (* get the META file path associated to a library *)
+--- ./obuild/process.ml
++++ ./obuild/process.ml
+@@ -67,7 +67,12 @@
+       let (reads, _, _) = Unix.select !fds [] [] 2.0 in
+       let check_fd out =
+         if not out.closed && List.mem out.fd reads then
+-          let nb = Unix.read out.fd b 0 1024 in
++          let nb =
++           try
++             Unix.read out.fd b 0 1024
++           with
++           | Unix.Unix_error(Unix.EPIPE,_,_) when Sys.os_type = "Win32" -> 0
++          in
+           if nb > 0
+           then buffer_add_subbytes out.buf b 0 nb
+           else (Unix.close out.fd; out.closed <- true; fds := read_fds ())
+--- ./obuild/prog.ml
++++ ./obuild/prog.ml
+@@ -62,7 +62,7 @@
+   | None ->
+     (match Process.run [ getOcamlOpt (); "-config" ] with
+      | Process.Success (s,_,_) ->
+-       let lines = string_lines_noempty s in
++       let lines = string_lines_noempty (no_windows_newlines s) in
+        let h = Hashtbl.create 32 in
+        List.iter (fun l ->
+            let (k,v) = Utils.toKV l in
+@@ -73,10 +73,13 @@
+      | Process.Failure err -> raise (OCamlProgramError ("ocamlopt cannot get config " ^ err)))
+   | Some h -> h
+ 
++let getExt_dll () = try Hashtbl.find (getOcamlConfig ()) "ext_dll" with | Not_found -> ".so"
++let getExt_lib () = try Hashtbl.find (getOcamlConfig ()) "ext_lib" with | Not_found -> ".a"
++
+ let getCamlp4Config () =
+     match Process.run [ getCamlp4 (); "-where" ] with
+     | Process.Success (s,_,_) ->
+-        let (l:_) = string_lines_noempty s in
++        let (l:_) = string_lines_noempty (no_windows_newlines s) in
+         l
+     | Process.Failure err -> raise (OCamlProgramError ("ocamlopt cannot get config " ^ err))
+  
+@@ -87,7 +90,7 @@
+ 
+ let runPkgConfig typ name =
+     match Process.run [ getPkgConfig (); typ; name ] with
+-    | Process.Success (s,_,_) -> s
++    | Process.Success (s,_,_) -> no_windows_newlines s
+     | Process.Failure err   -> raise (PkgConfigError err)
+ 
+ let runPkgConfigVersion name =

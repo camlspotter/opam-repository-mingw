@@ -9,3 +9,4 @@ maintainer: "jmaloberti@gmail.com"
 build: [
   ["./bootstrap"]
 ]
+patches: "obuild-obuild-v0.1.10.patch" {os = "win32"}
