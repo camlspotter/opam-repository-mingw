@@ -19,4 +19,5 @@ depexts: [
   [[ "debian" ] [ "libgif-dev" ]]
   [[ "ubuntu" ] [ "libgif-dev" ]]
   [[ "osx" "homebrew" ] [ "giflib" ]]
+  [["win32" "cygwinports"] ["giflib"]]
 ]
