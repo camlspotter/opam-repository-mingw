@@ -12,4 +12,5 @@ depexts: [
   [[ "debian" ] [ "libpango1.0-dev" ]]
   [[ "ubuntu" ] [ "libpango1.0-dev" ]]
   [[ "osx" "homebrew" ] [ "pango" ]]
+  [[ "win32" "cygwinports" ] [ "pango1.0" ]]
 ]
