@@ -55,6 +55,7 @@ depopts: [
   "lwt"
   "base-unix"
 ]
+conflicts: ["async" {>= "v0.10.0"}]
 available: [ocaml-version >= "4.02.3"]
 patches: [
   "ocaml-cstruct-2.4.1.patch" {os = "win32"}
