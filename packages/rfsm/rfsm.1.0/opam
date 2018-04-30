@@ -27,4 +27,4 @@ depends: [
   "menhir"
   "lascar"
 ]
-available: [ ocaml-version >= "4.03" ]
+available: ocaml-version >= "4.03" & os != "win32"
