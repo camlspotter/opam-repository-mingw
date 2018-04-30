@@ -19,6 +19,4 @@ depends: [
   "core_kernel" {>= "v0.11.0"}
 ]
 
-available: [
-  ocaml-version >= "4.04.1"
-]
+available: ocaml-version >= "4.04.1" & os != "win32"
