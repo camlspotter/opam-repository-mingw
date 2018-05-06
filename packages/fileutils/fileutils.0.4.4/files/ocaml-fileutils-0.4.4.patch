@@ -1,0 +1,28 @@
+--- ./setup.ml
++++ ./setup.ml
+@@ -229,11 +229,11 @@
+       raise Not_found
+ 
+   let replace_chars f s =
+-    let buf = String.make (String.length s) 'X' in
++    let buf = Bytes.make (String.length s) 'X' in
+       for i = 0 to String.length s - 1 do
+-        buf.[i] <- f s.[i]
++        Bytes.set buf i (f s.[i])
+       done;
+-      buf
++      Bytes.unsafe_to_string buf
+ 
+ end
+ 
+--- ./src/FileUtil.ml
++++ ./src/FileUtil.ml
+@@ -1034,7 +1034,7 @@
+     let cpfile () = 
+       let buffer_len = 1024
+       in
+-      let buffer = String.make buffer_len ' '
++      let buffer = Bytes.make buffer_len ' '
+       in
+       let read_len = ref 0
+       in
