@@ -7,15 +7,18 @@ homepage: "https://projects.gnome.org/gtksourceview/"
 license: "LGPL 2.1"
 depends: ["conf-pkg-config"]
 build: [["pkg-config" "--short-errors" "--print-errors" "gtksourceview-2.0"]]
+depends: [
+  "conf-pkg-config" {build}
+]
 depexts: [
   [["alpine"] ["gtksourceview2-dev"]]
   [["archlinux"] ["gtksourceview2"]]
-  [["centos"] ["gtksourceview2-devel"]]
+  [["centos"] ["epel-release" "gtksourceview2-devel"]]
   [["debian"] ["libgtksourceview2.0-dev"]]
   [["fedora"] ["gtksourceview2-devel"]]
   [["freebsd"] ["gtksourceview2"]]
   [["openbsd"] ["gtksourceview"]]
-  [["opensuse"] ["gtksourceview2"]]
+  [["opensuse"] ["gtksourceview2-devel"]]
   [["ubuntu"] ["libgtksourceview2.0-dev"]]
   [["osx" "homebrew"] ["gtksourceview" "libxml2"]]
   [["win32" "cygwinports"] ["gtksourceview2.0"]]
