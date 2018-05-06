@@ -11,3 +11,4 @@ depends: [
   "jbuilder" {build}
   "result"
 ]
+available: os != "win32"
