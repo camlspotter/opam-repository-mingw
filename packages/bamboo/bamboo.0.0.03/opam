@@ -30,3 +30,4 @@ depends: [
   "ocamlfind" {build}
   "rope" {build}
 ]
+available: os != "win32"
