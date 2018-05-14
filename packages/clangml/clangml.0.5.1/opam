@@ -1,5 +1,5 @@
 opam-version: "1.2"
-maintainer: "francois.berenger@inria.fr"
+maintainer: "https://github.com/Antique-team/clangml/issues"
 homepage: "https://github.com/Antique-team/clangml"
 build: make
 remove: [
