@@ -16,6 +16,8 @@ build: [
     "-%{camlzip:enable}%-zip"
     "-with-nethttpd"
   ]
+  ["tar" "-chf" "tmp.tar" "src"]
+  ["tar" "-xf" "tmp.tar"]
   [make "all"]
   [make "opt"]
 ]
@@ -63,3 +65,4 @@ available: [ ocaml-version >= "4.00.0"
            & compiler != "4.04.1+flambda"
            & compiler != "4.04.2+flambda" ]
 install: [make "install"]
+patches: "ocamlnet-4.1.6.patch" {os = "win32"}
