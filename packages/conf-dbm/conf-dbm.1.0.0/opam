@@ -24,3 +24,4 @@ depexts: [
   [["archlinux"] ["gdbm"]]
   [["gentoo"] ["sys-libs/gdbm"]]
 ]
+available: os != "win32"
