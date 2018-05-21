@@ -13,3 +13,4 @@ depends: [
   "jbuilder" {build}
   "cudf" {>= "0.7"}
 ]
+available: os != "win32"
