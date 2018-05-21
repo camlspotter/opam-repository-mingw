@@ -44,4 +44,4 @@ depopts: [
   "gperftools"
   "jemalloc"
 ]
-available: [ocaml-version >= "4.04.0"]
+available: ocaml-version >= "4.04.0" & os != "win32"
