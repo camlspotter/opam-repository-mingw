@@ -17,4 +17,4 @@ depends: [
     "topkg" {build}
     "lwt" {>= "3.3.0"}
 ]
-available: [ ocaml-version >= "4.03.0" ]
+available: ocaml-version >= "4.03.0" & os != "win32"
