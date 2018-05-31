@@ -15,6 +15,7 @@ build: [
 remove: [
   ["ocamlfind" "remove" "mezzo"]
 ]
-available: os != "win32" & (ocaml-version >= "4.00.1")
-install: [make "install"]
 dev-repo: "git://github.com/protz/mezzo"
+available:
+  ocaml-version >= "4.00.1" & ocaml-versio < "4.06.0" & os != "win32"
+install: [make "install"]
