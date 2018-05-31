@@ -31,4 +31,5 @@ depexts: [
   [["openbsd"] ["devel/pkgconf"]]
   [["osx" "homebrew"] ["pkg-config"]]
   [["freebsd"] ["pkgconf"]]
+  [["win32" "cygwinports"] ["pkg-config"]]
 ]
