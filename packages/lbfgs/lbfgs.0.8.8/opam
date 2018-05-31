@@ -34,7 +34,8 @@ depopts: [
 depexts: [
   [["debian"] ["gfortran"]]
   [["ubuntu"] ["gfortran"]]
-  [["osx" "homebrew"] ["gcc"]]
   [["win32" "cygwinports"] ["gcc-fortran"]]
+  [["osx" "homebrew"] ["gcc"]]
 ]
 patches: "patch-oasis-lbfgs.0.8.8" {os = "win32"}
+available: [ocaml-version < "4.06.0"]
