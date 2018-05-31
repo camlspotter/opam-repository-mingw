@@ -15,9 +15,11 @@ install: [
 ]
 remove: [
   [make "-f" "Makefile" "uninstall" "PREFIX=%{prefix}%" "docdir=%{doc}%/menhir" "libdir=%{lib}%/menhir" "mandir=%{man}%/man1"]
+  ["rm" "-rf" "%{prefix}%/lib/menhirLib" "%{prefix}%/lib/menhirSdk"]
 ]
 depends: [
   "ocamlfind" {build}
   "ocamlbuild" {build}
 ]
 available: [ ocaml-version >= "4.02" ]
+patches: "menhir-20180530.patch" {os = "win32"}
