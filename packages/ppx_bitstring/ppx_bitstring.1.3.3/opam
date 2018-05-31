@@ -20,7 +20,7 @@ depends: [
   "ounit"          {build}
   "ppx_core"       {build}
   "ppx_driver"     {build & < "v0.9.0"}
-  "ppx_tools"      {build}
+  "ppx_tools"
 ]
 available: ocaml-version >= "4.03"
 patches: "patch-oasis-ppx_bitstring.1.3.3" {os = "win32"}

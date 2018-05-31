@@ -18,7 +18,7 @@ build-test: [
 depends: [
   "ocamlbuild" {build}
   "ocamlfind" {build}
-  "ppx_tools" {build}
+  "ppx_tools"
 ]
 patches:
   "ocaml-monadic-16a58948594661ce5d3e4e64229f97d830b12db2.patch"
