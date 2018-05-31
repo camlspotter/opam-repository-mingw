@@ -39,4 +39,4 @@ depends: [
   "pcre" {build}
   "base-bytes" {build}
 ]
-available: [ ocaml-version >= "3.12.1" ]
+available: ocaml-version >= "3.12.1" & os != "win32"
