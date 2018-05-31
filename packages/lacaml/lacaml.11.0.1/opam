@@ -38,3 +38,4 @@ depends: [
 ]
 
 available: [ ocaml-version >= "4.05" ]
+patches: "lacaml-11.0.1.patch" {os = "win32"}
