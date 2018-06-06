@@ -23,3 +23,4 @@ depends: [
 ]
 available: [ ocaml-version >= "4.03.0" ]
 patches: "patch-topkg-ppx_jsobject_conv.0.4.2" {os = "win32"}
+conflicts: [ "ppxlib" ]
