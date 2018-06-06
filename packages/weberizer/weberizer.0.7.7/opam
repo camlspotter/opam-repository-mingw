@@ -3,6 +3,8 @@ maintainer: "Christophe.Troestler@umons.ac.be"
 authors: [ "Christophe Troestler" ]
 license: "LGPL-3.0 with OCaml linking exception"
 homepage: "https://github.com/Chris00/weberizer"
+dev-repo: "https://github.com/Chris00/weberizer.git"
+bug-reports: "https://github.com/Chris00/weberizer/issues"
 tags: [ "web"  ]
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
@@ -19,3 +21,4 @@ depends: [
 ]
 install: ["ocaml" "setup.ml" "-install"]
 patches: "patch-oasis-weberizer.0.7.7" {os = "win32"}
+available: [ ocaml-version < "4.06.0" ]
