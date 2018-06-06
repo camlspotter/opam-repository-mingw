@@ -1,6 +1,8 @@
 opam-version: "1.2"
 maintainer: "thomas@gazagnaire.org"
 authors: [ "Louis Gesbert" "Thomas Gazagnaire" ]
+homepage: "https://github.com/mirage/ocaml-lazy-trie"
+bug-reports: "https://github.com/mirage/ocaml-lazy-trie/issues"
 license: "ISC"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
@@ -14,6 +16,7 @@ depends: [
   "ocamlfind"
   "ocamlbuild" {build}
 ]
+dev-repo: "git://github.com/mirage/ocaml-lazy-trie"
 patches: [ "patch-oasis-lazy-trie.1.0.0" { os = "win32" } ]
 install: ["ocaml" "setup.ml" "-install"]
-dev-repo: "git://github.com/mirage/ocaml-lazy-trie"
+available: [ocaml-version < "4.06.0"]
