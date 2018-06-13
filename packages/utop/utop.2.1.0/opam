@@ -22,5 +22,5 @@ depends: [
   "jbuilder"     {build & >= "1.0+beta9"}
 ]
 build-test: [["jbuilder" "runtest" "-p" name "-j" jobs]]
-available: [ocaml-version >= "4.02.3" & ocam-version < "4.07.0"]
+available: [ocaml-version >= "4.02.3" & ocaml-version < "4.07.0"]
 patches: "utop-2.1.0.patch" {os = "win32"}
