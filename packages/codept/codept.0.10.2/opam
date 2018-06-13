@@ -20,3 +20,4 @@ build-doc: [
 depopts:["ocamlbuild"]
 depends: ["base-unix"]
 available: [ ocaml-version >= "4.03.0" ]
+patches: "codept-0.10.2.patch" {os = "win32"}
