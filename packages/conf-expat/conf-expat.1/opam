@@ -1,12 +1,18 @@
-opam-version: "1"
+opam-version: "1.2"
 maintainer: "blue-prawn"
+authors: "The Expat Authors"
+bug-reports: "https://github.com/ocaml/opam-repository/issues"
+dev-repo: "https://github.com/ocaml/opam-repository.git"
 homepage: "http://www.libexpat.org/"
 license: "MIT"
-depends: [ "conf-pkg-config" ]
 build: [["pkg-config" "expat"]]
+depends: [
+  "conf-pkg-config" {build}
+]
 depexts: [
   [["debian"] ["libexpat1-dev"]]
   [["mageia"] ["libexpat1-devel"]]
   [["ubuntu"] ["libexpat1-dev"]]
   [["win32" "cygwinports"] ["expat"]]
+  [["fedora"] ["expat-devel"]]
 ]
