@@ -13,7 +13,6 @@ remove: [
     "%{prefix}%/lib/gmp-freestanding"
 ]
 depends: [
-  "ocaml-freestanding"
-  "conf-m4" {build}
+  "ocaml-freestanding" {>= "0.2.3"}
 ]
-available: (arch = "x86_64" | arch = "amd64") & os != "win32"
+available: os != "win32"
