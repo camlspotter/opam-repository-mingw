@@ -13,3 +13,4 @@ depexts: [
 build: [
   ["cc" "-lrocksdb" "main.c"]
 ]
+available: os != "win32"
