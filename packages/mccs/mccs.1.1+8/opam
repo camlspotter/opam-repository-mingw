@@ -17,3 +17,6 @@ depends: [
   "jbuilder" {build}
   "cudf" {>= "0.7"}
 ]
+depexts: [
+  [["win32" "cygwinports"] ["gcc-g++"]]
+]
