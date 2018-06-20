@@ -6,7 +6,7 @@ bug-reports: "https://github.com/nunchaku-inria/nunchaku/issues"
 dev-repo: "https://github.com/nunchaku-inria/nunchaku.git"
 build: [
   ["jbuilder" "build" "-p" name "-j" jobs]
-  ["strip" "_build/default/src/main/nunchaku.exe"]
+  ["strip" "_build/default/src/main/nunchaku.exe"] { os != "win32" }
 ]
 build-test: ["jbuilder" "runtest" "-j" jobs]
 build-doc: [make "doc"]
