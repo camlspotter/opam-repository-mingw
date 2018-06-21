@@ -3,7 +3,7 @@ version: "4.07.0"
 src: "https://github.com/ocaml/ocaml/archive/4.07.0+beta2.tar.gz"
 patches:[
   "https://gist.githubusercontent.com/fdopen/0364d5245a90584cc7f34ba14e43a1c5/raw/d6ce9095dec5ed8f637d828947aa210d0dc69814/ocaml-4.07.0-beta2.patch"
-  "https://gist.githubusercontent.com/fdopen/20de934ae13a2af4dcfb1adab293b3c7/raw/1bab8284c4663173ff0d3e7b7563f445dc855e06/inline-flexdll.patch"
+  "https://gist.githubusercontent.com/fdopen/e9b6169663194ec07c9d3fd07ba29e2f/raw/ae5875f1882b6ee2fef72633f4eec94dea253e49/inline-flexdll.patch"
 ]
 build: [
   [ "mkdir" "-p" "%{lib}%/ocaml" ]
