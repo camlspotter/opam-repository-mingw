@@ -52,3 +52,4 @@ messages: [
   "For Lwt_log and Lwt_daemon, please install package lwt_log"
     {!lwt_log:installed}
 ]
+patches: "lwt-4.1.0.patch" {os = "win32"}
