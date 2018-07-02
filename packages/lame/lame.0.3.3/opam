@@ -3,7 +3,8 @@ maintainer: "Romain Beauxis <toots@rastageeks.org>"
 authors: "The Savonet Team <savonet-users@lists.sourceforge.net>"
 homepage: "https://github.com/savonet/ocaml-lame"
 build: [
-  ["./configure" "--prefix" prefix]
+  ["./configure" "--prefix" prefix] { os != "darwin" }
+  ["./configure" "CFLAGS=-I/usr/local/include" "LDFLAGS=-L/usr/local/lib" "OCAMLFLAGS=-ccopt -I/usr/local/include -cclib -L/usr/local/lib" "--prefix" prefix] { os = "darwin" }
   [make]
 ]
 install: [
@@ -12,10 +13,15 @@ install: [
 remove: ["ocamlfind" "remove" "lame"]
 depends: ["ocamlfind"]
 depexts: [
-  [ ["debian"] [ "libmp3lame-dev" ] ]
-  [ ["ubuntu"] [ "libmp3lame-dev" ] ]
-  [["win32" "cygwinports"] ["lame"]]
-]
+ [["alpine"] ["lame-dev"]]
+ [["centos"] ["lame-devel"]]
+ [["fedora"] ["lame-devel"]]
+ [["opensuse"] ["lame-devel"]]
+ [["debian"] ["libmp3lame-dev"]]
+ [["ubuntu"] ["libmp3lame-dev"]]
+ [[ "osx" "homebrew"] [ "lame"]]
+ [["win32" "cygwinports"] ["lame"]]
+ ]
 bug-reports: "https://github.com/savonet/ocaml-lame/issues"
 dev-repo: "https://github.com/savonet/ocaml-lame.git"
 patches: [
