@@ -14,4 +14,4 @@ depends: [
   "ctypes"
   "ctypes-foreign"
 ]
-available: [ocaml-version >= "4.06"]
+available: ocaml-version >= "4.06" & os != "win32"
