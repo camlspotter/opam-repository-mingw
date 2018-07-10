@@ -1,0 +1,145 @@
+--- ./configure
++++ ./configure
+@@ -103,6 +103,8 @@
+ 
+ # Sanity checks
+ 
++if test "$win32" = "false"; then
++
+ case "$prefix" in
+   /*) ;;
+   "") ;;
+@@ -129,6 +131,8 @@
+    *) ;;
+ esac
+ 
++fi
++
+ # Check Ocaml
+ 
+ ocamlc=${ocamln}c
+@@ -176,16 +180,16 @@
+ 
+ # Evaluate installation directories
+ 
+-ocamlc_where=$($ocamlc -where 2>/dev/null)
++ocamlc_where=$($ocamlc -where 2>/dev/null | tr -d '\015')
+ if [ "$?" != "0" ]; then
+   ocamlc_where=$($ocamlc -v | tail -1 | sed -e 's/^.*: //')
+ fi
+ 
+ x=$ocamlc_where
+ y=$(echo $x | sed -e 's|\\\\|/|g')
+-x="$(echo 'Sys.os_type;;' | ocaml | egrep 'Win32|Cygwin')"
++x="$(echo 'Sys.os_type;;' | ocaml | tr -d '\015' | egrep 'Win32|Cygwin')"
+ if test "$x" = ""; then win=false; else win=true; fi
+-x="$(echo 'Sys.os_type;;' | ocaml | grep 'Win32')"
++x="$(echo 'Sys.os_type;;' | ocaml | tr -d '\015' | grep 'Win32')"
+ if test "$x" = ""; then win32=false; else win32=true; fi
+ OLIBDIR="$y"
+ if [ "$OVERSION" "<" "4.00" ]; then
+@@ -196,14 +200,10 @@
+ 
+ if test "$win" = "true"; then
+     EXE=.exe
++    EXT_OBJ=$($ocamlc -config | tr -d '\015' | awk '/^ext_obj:/ {print $2}')
++    EXT_LIB=$($ocamlc -config | tr -d '\015' | awk '/^ext_lib:/ {print $2}')
+ else
+     EXE=
+-fi
+-
+-if test "$win32" = "true"; then
+-    EXT_OBJ=.obj
+-    EXT_LIB=.lib
+-else
+     EXT_OBJ=.o
+     EXT_LIB=.a
+ fi
+--- ./etc/Makefile
++++ ./etc/Makefile
+@@ -115,7 +115,7 @@
+ 	  for i in $(OBJS:.cmo=); do \
+ 	    cp $$i$(EXT_OBJ) "$(DESTDIR)$(LIBDIR)/$(CAMLP5N)/."; \
+ 	  done; \
+-	  cp $(CAMLP5N)o.opt "$(DESTDIR)$(BINDIR)/."; \
++	  cp $(CAMLP5N)o.opt "$(DESTDIR)$(BINDIR)/$(CAMLP5N)o.opt$(EXE)"; \
+ 	  cp mk$(CAMLP5N).opt.sh "$(DESTDIR)$(BINDIR)/mk$(CAMLP5N).opt"; \
+ 	  chmod a+x "$(DESTDIR)$(BINDIR)/mk$(CAMLP5N).opt"; \
+ 	fi
+--- ./main/main.ml
++++ ./main/main.ml
+@@ -163,6 +163,16 @@
+ ;
+ 
+ value print_version () = do {
++  let set_output_binary () =
++    match Sys.os_type with
++      [ "Win32" ->
++       do {
++          try set_binary_mode_out stdout True with _ -> ();
++          try set_binary_mode_out stderr True with _ -> ();
++        }
++      | _ -> () ]
++  in
++  set_output_binary ();
+   eprintf "Camlp5 version %s (ocaml %s)\n" Pcaml.version Pcaml.ocaml_version;
+   flush stderr;
+   exit 0
+--- ./meta/Makefile
++++ ./meta/Makefile
+@@ -1,4 +1,4 @@
+-# Makefile,v
++#c Makefile,v
+ 
+ TOP=..
+ include $(TOP)/config/Makefile
+@@ -66,7 +66,7 @@
+ 	cp pa_macro.cmi pa_extend.cmi "$(DESTDIR)$(LIBDIR)/$(CAMLP5N)/."
+ 	cp $(CAMLP5N)r$(EXE) "$(DESTDIR)$(BINDIR)/."
+ 	if test -f $(CAMLP5N)r.opt; then \
+-	  cp $(CAMLP5N)r.opt "$(DESTDIR)$(BINDIR)/."; \
++	  cp $(CAMLP5N)r.opt "$(DESTDIR)$(BINDIR)/$(CAMLP5N)r.opt$(EXE)"; \
+ 	fi
+ 	if test -f pa_r.cmx; then \
+ 	  cp $(OBJS:.cmo=.cmx) "$(DESTDIR)$(LIBDIR)/$(CAMLP5N)/."; \
+--- ./odyl/odyl.ml
++++ ./odyl/odyl.ml
+@@ -13,11 +13,37 @@
+     }
+     else if s = "-nolib" then do { Odyl_main.nolib.val := True; incr i }
+     else if s = "-where" then do {
+-      print_string Odyl_config.standard_library;
++      let set_output_binary () =
++        match Sys.os_type with
++          [ "Win32" ->
++            do {
++              try set_binary_mode_out stdout True with _ -> ();
++                try set_binary_mode_out stderr True with _ -> ();
++            }
++          | _ -> () ]
++      in
++      let slashify p =
++        match Sys.os_type with
++          [ "Win32" ->
++          let len = String.length p in
++          let b = Buffer.create len in
++          do {
++          for i = 0 to len - 1 do {
++            Buffer.add_char b (match p.[i] with
++            [ '\\' ->  '/'
++            | x -> x ])
++          };
++          Buffer.contents  b}
++        | _ -> p ]
++      in
++      do {
++        set_output_binary ();
++        print_string (slashify Odyl_config.standard_library);
+       print_newline ();
+       flush stdout;
+       exit 0
+     }
++    }
+     else if s = "--" then do { incr i; stop.val := True; () }
+     else if String.length s > 0 && s.[0] == '-' then stop.val := True
+     else if Filename.check_suffix s ".cmo" || Filename.check_suffix s ".cma"
