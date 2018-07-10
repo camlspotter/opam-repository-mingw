@@ -18,6 +18,6 @@ depends: [
   "menhir"
   "ocamlbuild" {build}
 ]
-available: ocaml-version >= "4.00.0"
+available: [ ocaml-version >= "4.00.0" & ocaml-version < "4.06" ]
 install: ["ocaml" "setup.ml" "-install"]
 dev-repo: "git://github.com/hhugo/odate"
