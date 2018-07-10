@@ -31,4 +31,5 @@ depexts: [
   [["homebrew"] ["lzo"]]
   [["alpine"] ["lzo-dev"]]
   [["centos"] ["lzo-devel"]]
+  [["win32" "cygwinports"] ["lzo2"]]
 ]
