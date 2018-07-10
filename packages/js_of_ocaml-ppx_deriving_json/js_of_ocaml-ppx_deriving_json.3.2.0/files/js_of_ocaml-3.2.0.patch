@@ -1,0 +1,11 @@
+--- ./ppx/ppx_deriving_json/lib/jbuild
++++ ./ppx/ppx_deriving_json/lib/jbuild
+@@ -6,7 +6,7 @@
+   (ppx_runtime_libraries (js_of_ocaml.deriving))
+   (kind ppx_deriver)
+   (libraries (ppx_deriving.api compiler-libs ppx_tools))
+-  (preprocess (action (run ${lib:ppx_tools:rewriter} ${lib:ppx_tools:ppx_metaquot} ${<})))
++  (preprocess (action (run ${lib:ppx_tools:rewriter.exe} ${lib:ppx_tools:ppx_metaquot.exe} ${<})))
+   ))
+ 
+ (rule
