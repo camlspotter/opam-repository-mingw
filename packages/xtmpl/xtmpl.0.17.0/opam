@@ -20,4 +20,4 @@ depends: [
   "re" {>= "1.7.3"}
   "iri"
 ]
-available: [ocaml-version >= "4.03.0"]
+available: ocaml-version >= "4.03.0" & os != "win32"
