@@ -18,3 +18,4 @@ post-messages: [
 depends: [
   "ocamlbuild" {build}
 ]
+patches: "hevea-2.32.patch" {os = "win32"}

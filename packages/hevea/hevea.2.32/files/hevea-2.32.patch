@@ -1,0 +1,26 @@
+--- ./check402.ml
++++ ./check402.ml
+@@ -1,4 +1,5 @@
+ let () =
++  set_binary_mode_out stdout true;
+   if compare Sys.ocaml_version "4.02.0" >= 0  then
+     Printf.printf "ok\n"
+   else
+--- ./install.sh
++++ ./install.sh
+@@ -28,7 +28,7 @@
+   shift
+   for f in $*
+   do
+-    cpv $f.$EXT $BINDIR/$f
++    cpv $f.$EXT $BINDIR/${f}.exe
+   done
+ }
+ 
+--- ./_tags
++++ ./_tags
+@@ -1,3 +1,3 @@
+ true: annot
+ true: safe_string
+-<mylib.ml> : pp(/bin/sh ../expandlib.sh)
++<mylib.ml> : pp(sh ../expandlib.sh)
