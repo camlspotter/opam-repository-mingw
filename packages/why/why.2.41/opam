@@ -22,7 +22,7 @@ tags: [
   "C"
   "ACSL"
 ]
-available: ocaml-version >= "4.02.0" & os != "win32"
+available: [ ocaml-version >= "4.02.0" ]
 build: [
   ["./configure" "--prefix" prefix]
   [make]
@@ -37,7 +37,5 @@ remove: [
 ]
 depends: [
   "why3" {>= "0.86.1" & <= "0.88.3" }
-  "frama-c" {= "20171101"}
-# useful ?
-# "conf-autoconf"  {build}
+  "frama-c" {= "20180501"}
 ]
