@@ -8,7 +8,7 @@ license: "Apache2"
 
 available: ocaml-version >= "4.06" & os != "win32"
 build: [
-  [ "jbuilder" "subst"] {pinned}
+  [ "jbuilder" "subst" "-p" name] {pinned}
   [ "jbuilder" "build" "-p" name "-j" jobs "@install"]
 ]
 
