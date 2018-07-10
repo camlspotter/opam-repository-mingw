@@ -1,0 +1,26 @@
+opam-version: "1"
+version: "4.07.0"
+src: "https://github.com/ocaml/ocaml/archive/4.07.0.tar.gz"
+patches:[
+  "https://gist.githubusercontent.com/fdopen/1baf7d8cc201a8c79064103dc931843d/raw/231ead51b59883ba95aaeb858ae3757719f942d4/ocaml-4.07.0+rc1.patch"
+  "https://gist.githubusercontent.com/fdopen/e9b6169663194ec07c9d3fd07ba29e2f/raw/ae5875f1882b6ee2fef72633f4eec94dea253e49/inline-flexdll.patch"
+]
+build: [
+  [ "mkdir" "-p" "%{lib}%/ocaml" ]
+  [ "dash" "-exc" "echo \"* : g = 1\" > %{lib}%/ocaml/ocaml_compiler_internal_params" ]
+  [ "cp" "config/m-nt.h" "byterun/caml/m.h" ]
+  [ "cp" "config/s-nt.h" "byterun/caml/s.h" ]
+  [ "cp" "config/Makefile.msvc64" "config/Makefile" ]
+  [ "sed" "-i" "s#@PREFIX@#%{prefix}%#g" "config/Makefile" ]
+  [ make "SHELL=/bin/dash" "flexdll" "world.opt" "flexlink.opt" "install" ]
+  [ "dash" "-exc" "echo \"%{lib}%/stublibs\"  >> \"%{lib}%/ocaml/ld.conf\"" ]
+]
+packages: [
+  "base-unix"
+  "base-bigarray"
+  "base-threads"
+]
+env: [
+  [CAML_LD_LIBRARY_PATH = "%{lib}%/stublibs"]
+  [CC = "cl.exe"]
+]
