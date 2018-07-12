@@ -19,4 +19,5 @@ depends: [
   "jbuilder" {build & >= "1.0+beta9"}
 ]
 build-test: [["jbuilder" "runtest" "-p" name "-j" jobs]]
-available: ocaml-version >= "4.02.3" & os != "win32"
+available: [ ocaml-version >= "4.02.3" ]
+patches: "lambda-term-1.13.patch" {os = "win32"}
