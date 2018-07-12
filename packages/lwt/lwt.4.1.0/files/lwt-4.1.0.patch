@@ -1,19 +1,20 @@
 --- ./src/unix/config/discover.ml
 +++ ./src/unix/config/discover.ml
-@@ -344,6 +344,16 @@
-     (String.concat " " (List.map (sprintf "-cclib %s") lib))
+@@ -326,12 +326,16 @@
+     Sys.command s = 0) fmt in
+   let obj_file = Filename.chop_suffix stub_file ".c" ^ !ext_obj
+   in
++  let obj_flag = match !system with
++  | "win32" | "win64" -> "-ccopt -Fo:"
++  | _ -> "-ccopt -o -ccopt " in
+   (* First compile the .c file using -ocamlc and CFLAGS (opt) *)
+   (cmd
+-    "%s -c %s %s -ccopt -o -ccopt %s >> %s 2>&1"
++    "%s -c %s %s %s%s >> %s 2>&1"
+     !ocamlc
+     (String.concat " " (List.map (fun x -> "-ccopt " ^ x) (List.map Filename.quote opt)))
+     (Filename.quote stub_file)
++    obj_flag
+     (Filename.quote obj_file)
      (Filename.quote !log_file))
- 
-+let compile opt_lib stub_file =
-+  match !system with
-+  | "win32" | "win64" ->
-+     let orig_dir = Sys.getcwd () in
-+     Sys.chdir (Filename.get_temp_dir_name ());
-+     let res = compile opt_lib stub_file in
-+     Sys.chdir orig_dir;
-+     res
-+  | _ -> compile opt_lib stub_file
-+
- let safe_remove file_name =
-   if !debug then
-     dprintf "DEBUG: Not removing %s\n" file_name
+   &&
