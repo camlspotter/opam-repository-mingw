@@ -21,9 +21,11 @@ remove: [
   ["rm" "-f" "%{bin}%/camlp4"  "%{bin}%/camlp4boot" "%{bin}%/mkcamlp4"
              "%{bin}%/camlp4r" "%{bin}%/camlp4rf"   "%{bin}%/camlp4orf"
              "%{bin}%/camlp4o" "%{bin}%/camlp4of"   "%{bin}%/camlp4oof"
-             "%{bin}%/camlp4prof"]
+             "%{bin}%/camlp4prof" "%{bin}%/camlp4o.opt" "%{bin}%/camlp4of.opt"
+             "%{bin}%/camlp4oof.opt" "%{bin}%/camlp4orf.opt" "%{bin}%/camlp4r.opt"
+             "%{bin}%/camlp4rf.opt" ]
 ]
-patches: [ "f0ea53725465260556832398096cef8d3f20b49d.patch" ]
 available: [ (!preinstalled) & (ocaml-version >= "4.07") & (ocaml-version < "4.08") ]
 bug-reports: "https://github.com/ocaml/camlp4/issues"
 dev-repo: "https://github.com/ocaml/camlp4.git"
+patches: "camlp4-4.07-1.patch" {os = "win32"}
