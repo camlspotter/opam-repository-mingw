@@ -1,6 +1,6 @@
 opam-version: "1"
 version: "3.12.1"
-src: "http://caml.inria.fr/pub/distrib/ocaml-3.12/ocaml-3.12.1.tar.bz2"
+src: "https://github.com/ocaml/ocaml/archive/3.12.1.tar.gz"
 patches:[
   "https://gist.githubusercontent.com/fdopen/8aa6d6014afbde41cee86cecc713e54e/raw/551ce5130a1d7894a8ba261bd73d62df76d74a3a/ocaml-3.12.1.patch"
 ]
