@@ -18,4 +18,5 @@ depends: [
   "jbuilder" {build & >= "1.0+beta10"}
 ]
 available: [ocaml-version >= "4.02.0" & ocaml-version < "4.07.0"]
+conflicts: [ "dune" ]
 patches: "ocaml-migrate-parsetree-1.0.7.patch" {os = "win32"}
