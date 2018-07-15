@@ -23,3 +23,4 @@ depends: [
 ]
 build-test: [["jbuilder" "runtest" "-p" name "-j" jobs]]
 available: [ocaml-version >= "4.02.3"]
+patches: "utop-2.2.0.patch" {os = "win32"}
