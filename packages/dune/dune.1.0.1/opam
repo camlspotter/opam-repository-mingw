@@ -15,3 +15,4 @@ available: [ ocaml-version >= "4.02.3" ]
 conflicts: [
   "jbuilder" {!= "transition"}
 ]
+patches: "dune-1.0.1.patch" {os = "win32"}
