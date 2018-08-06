@@ -11,5 +11,5 @@ depends: [
   "lwt" {>= "2.4.4" & < "4.0.0"}
   "ocamlbuild" {build}
 ]
-available: [ ocaml-version > "4.00.0" & ocaml-version < "4.03" ]
+available: ocaml-version > "4.00.0" & ocaml-version < "4.03" & os != "win32"
 install: ["%{make}%" "-C" "src" "install"]

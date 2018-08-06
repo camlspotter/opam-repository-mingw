@@ -12,6 +12,6 @@ depends: [
   "ounit"
   "ocamlbuild" {build}
 ]
-available: [ ocaml-version > "4.00.0" ]
+available: ocaml-version > "4.00.0" & os != "win32"
 install: [make "-C" "src" "install" "DESTDIR=%{prefix}%"]
 dev-repo: "git://github.com/toolslive/camltc"
