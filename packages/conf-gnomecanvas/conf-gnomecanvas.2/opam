@@ -10,4 +10,5 @@ depexts: [
   [["fedora"] ["libgnomecanvas-devel"]]
   [["osx" "homebrew"] ["libgnomecanvas"]]
   [["win32" "cygwinports"] ["libgnomecanvas2"]]
+  [["archlinux"] ["libgnomecanvas"]]
 ]
