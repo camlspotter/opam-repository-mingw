@@ -40,3 +40,4 @@ depexts: [
   [ ["homebrew"] ["libevent"] ]
 ]
 available: [ ocaml-version >= "4.02.0" ]
+patches: "ocaml-libevent-0.8.1.patch" {os = "win32"}
