@@ -23,3 +23,4 @@ depends: [
   "camomile"
 ]
 available: [ocaml-version >= "4.02"]
+patches: "javalib-2.3.5.patch" {os = "win32"}
