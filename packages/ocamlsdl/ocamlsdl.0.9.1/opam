@@ -34,3 +34,4 @@ authors: [
   "Julien Boulnois <jboulnois@gmail.com>"
 ]
 homepage: "http://ocamlsdl.sourceforge.net/"
+available: [ocaml-version < "4.06" |  os != "win32"]
