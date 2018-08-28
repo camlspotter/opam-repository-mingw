@@ -18,9 +18,7 @@ depends: [
   "ounit" {test}
 ]
 
-available: [
-  ocaml-version > "4.02.3"
-]
+available: ocaml-version > "4.02.3" & os != "win32"
 patches: [
   "osx.patch" { os = "darwin" }
 ]
