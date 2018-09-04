@@ -1,0 +1,11 @@
+--- ./src/Makefile.in
++++ ./src/Makefile.in
+@@ -34,7 +34,7 @@
+ SOURCES = vorbis_stubs.c vorbis.mli vorbis.ml ogg_demuxer_vorbis_decoder.mli ogg_demuxer_vorbis_decoder.ml
+ RES_CLIB_SUF = _stubs
+ RESULT = vorbis
+-LIBINSTALL_FILES = $(wildcard *.mli *.cmi *.cma *.cmxa *.cmx *.a *.so)
++LIBINSTALL_FILES = $(wildcard *.mli *.cmti *.cmi *.cma *.cmx *.cmxa *.$(EXT_LIB) *.$(EXT_DLL))
+ INCDIRS = @INC@ @OCAMLOGG_INC@
+ ACLIBS = @LIBS@
+ CLIBS = $(ACLIBS:-l%=%)

@@ -26,3 +26,7 @@ depexts: [
 available: [ocaml-version >= "4.03"]
 bug-reports: "https://github.com/savonet/ocaml-vorbis/issues"
 dev-repo: "https://github.com/savonet/ocaml-vorbis.git"
+patches: [
+  "ocaml-vorbis-0.7.1.patch" {os = "win32"}
+  "patch-ocamlmakefile-vorbis.0.7.1" {os = "win32"}
+]
