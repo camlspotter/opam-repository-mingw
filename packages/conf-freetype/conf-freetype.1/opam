@@ -20,4 +20,5 @@ depexts: [
   [ [ "freebsd" ] [ "print/freetype2" ] ]
   [ [ "openbsd" ] [ "print/freetype2" ] ]
   [ [ "osx" "homebrew" ] [ "freetype" ] ]
+  [ ["win32" "cygwinports"] ["freetype2"] ]
 ]
