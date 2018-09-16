@@ -12,7 +12,7 @@ build: [
   ["./boot.exe" "--release" "--subst"] {pinned}
   ["./boot.exe" "--release" "-j" jobs]
 ]
-available: [ ocaml-version >= "4.02.3" ]
+available: ocaml-version >= "4.02.3" & os != "win32"
 conflicts: [
   "jbuilder" {!= "transition"}
 ]
