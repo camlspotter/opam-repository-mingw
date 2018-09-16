@@ -12,6 +12,6 @@ build-doc: [
 depends: [
   "ocamlfind"
 ]
-available: ocaml-version >= "4.01.0"
+available: [ocaml-version >= "4.01.0" & ocaml-version < "4.06.0"]
 install: [make "install"]
 dev-repo: "git://github.com/raphael-proust/ocaml9p"

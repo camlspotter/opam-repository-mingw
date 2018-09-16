@@ -10,6 +10,6 @@ depends: [
   "conf-libpcre"
   "ocamlbuild" {build & != "0.9.0"}
 ]
-install: [make "install"]
 dev-repo: "git://github.com/mmottl/pcre-ocaml"
-available: os != "win32"
+install: [make "install"]
+available: ocaml-version < "4.06.0" & os != "win32"

@@ -8,4 +8,4 @@ build: [
 patches: ["opam.patch"]
 depends: ["camlp4"]
 install: [make "install" "OCAMLLIB=%{lib}%"]
-available: os != "win32"
+available: ocaml-version < "4.06.0" & os != "win32"

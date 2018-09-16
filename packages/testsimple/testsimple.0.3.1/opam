@@ -20,5 +20,6 @@ depexts: [
   [["ubuntu"] ["perl"]]
 ]
 patches: "patch-oasis-testsimple.0.3.1" {os = "win32"}
-install: ["ocaml" "setup.ml" "-install"]
 dev-repo: "git://github.com/hcarty/ocaml-testsimple"
+install: ["ocaml" "setup.ml" "-install"]
+available: [ocaml-version < "4.06.0"]

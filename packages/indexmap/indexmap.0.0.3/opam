@@ -15,6 +15,6 @@ depends: [
   "ocamlbuild" {build}
 ]
 patches: "patch-oasis-indexmap.0.0.3" {os = "win32"}
-available: ocaml-version >= "4.00.0"
+available: [ocaml-version >= "4.00.0" & ocaml-version < "4.06.0"]
 install: ["ocaml" "setup.ml" "-install"]
 dev-repo: "git://github.com/hcarty/indexmap"

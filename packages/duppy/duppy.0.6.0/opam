@@ -19,6 +19,7 @@ depopts: ["ssl"]
 conflicts: ["liquidsoap" {<= "1.2.1"}]
 bug-reports: "https://github.com/savonet/ocaml-duppy/issues"
 dev-repo: "https://github.com/savonet/ocaml-duppy.git"
+available: [ocaml-version < "4.06.0"]
 patches: [
   "patch-ocamlmakefile-duppy.0.6.0" {os = "win32"}
   "ocaml-duppy-0.6.0.patch" {os = "win32"}

@@ -39,4 +39,5 @@ depopts: [
 conflicts: [
   "msat" { < "0.5" }
 ]
-available: os != "win32" & (ocaml-version >= "4.01.0")
+available:
+  ocaml-version >= "4.01.0" & ocaml-version < "4.06.0" & os != "win32"

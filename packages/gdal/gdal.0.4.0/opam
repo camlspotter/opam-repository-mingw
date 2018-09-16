@@ -21,6 +21,6 @@ depexts: [
   [["debian"] ["libgdal-dev"]]
   [["ubuntu"] ["libgdal-dev"]]
 ]
-available: ocaml-version >= "4.01.0"
+available: [ocaml-version >= "4.01.0" & ocaml-version < "4.06.0"]
 install: ["ocaml" "setup.ml" "-install"]
 dev-repo: "git://github.com/hcarty/ocaml-gdal"

@@ -14,4 +14,4 @@ remove: [
   ["ocamlfind" "remove" "parmap"]
 ]
 depends: ["ocamlfind"]
-available: os != "win32"
+available: ocaml-version < "4.06.0" & os != "win32"

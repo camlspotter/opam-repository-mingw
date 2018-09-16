@@ -12,6 +12,6 @@ depends: [
   "ocamlbuild" {build}
   "conf-libsodium"
 ]
-available: os != "win32"
-install: [make "PREFIX=%{prefix}%" "install"]
 dev-repo: "git://github.com/dsheets/ocaml-sodium"
+install: [make "PREFIX=%{prefix}%" "install"]
+available: ocaml-version < "4.06.0" & os != "win32"

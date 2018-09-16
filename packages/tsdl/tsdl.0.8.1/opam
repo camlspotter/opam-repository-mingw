@@ -7,7 +7,8 @@ bug-reports: "https://github.com/dbuenzli/tsdl/issues"
 doc: "http://erratique.ch/software/tsdl/doc/Tsdl"
 tags: [ "audio" "bindings" "graphics" "media" "opengl" "input" "hci" ]
 license: "BSD3"
-available: ocaml-version >= "4.00.1" & os != "win32"
+available:
+  ocaml-version >= "4.00.1" & ocaml-version < "4.06.0" & os != "win32"
 depends: [
   "ocamlfind" {build}
   "conf-sdl2"
@@ -21,4 +22,3 @@ build:
   [ "ocaml" "pkg/build.ml" "native=true"           # TODO fixme
                            "native-dynlink=true" ] # TODO fixme
 ]
-available: ocaml-version >= "4.00.1" & os != "win32"

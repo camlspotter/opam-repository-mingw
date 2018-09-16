@@ -14,5 +14,6 @@ depends: [
   "ocamlbuild" {build}
 ]
 patches: "patch-oasis-dolog.0.6" {os = "win32"}
-install: ["ocaml" "setup.ml" "-install"]
 dev-repo: "git://github.com/UnixJunkie/dolog"
+install: ["ocaml" "setup.ml" "-install"]
+available: [ocaml-version < "4.06.0"]

@@ -17,5 +17,6 @@ depends: [
   "cmdliner"
   "ocamlbuild" {build}
 ]
-install: ["ocaml" "setup.ml" "-install"]
 dev-repo: "git://github.com/mirage/ocaml-crunch"
+install: ["ocaml" "setup.ml" "-install"]
+available: [ocaml-version < "4.06.0"]

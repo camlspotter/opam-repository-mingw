@@ -7,6 +7,7 @@ depends: [
   "ocamlfind"
   "ocamlbuild" {build}
 ]
-available: os != "win32" & (ocaml-version >= "4.00.0")
-install: [make "install"]
 dev-repo: "git://github.com/pmundkur/sonet"
+available:
+  ocaml-version >= "4.00.0" & ocaml-version < "4.06.0" & os != "win32"
+install: [make "install"]

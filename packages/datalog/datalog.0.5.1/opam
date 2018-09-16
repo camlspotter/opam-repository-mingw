@@ -17,7 +17,7 @@ depends: [
   "ocamlbuild" {build}
   "num"
 ]
-available: ocaml-version >= "4.00.1"
+available: [ocaml-version >= "4.00.1" & ocaml-version < "4.06.0"]
 install: [
   [make "all" "install_file" "doc" "man"]
   [make "install"]

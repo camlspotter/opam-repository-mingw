@@ -23,7 +23,7 @@ depopts: [
 ]
 bug-reports: "https://github.com/savonet/ocaml-mm/issues"
 dev-repo: "https://github.com/savonet/ocaml-mm.git"
-available: [compiler != "4.04.0+flambda"]
+available: [compiler != "4.04.0+flambda" & ocaml-version < "4.06.0"]
 patches: [
   "ocaml-mm-0.3.0.patch" {os = "win32"}
   "patch-ocamlmakefile-mm.0.3.0" {os = "win32"}

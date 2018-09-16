@@ -9,6 +9,7 @@ depends: [
   "ocamlfind"
   "ocamlbuild" {build}
 ]
+dev-repo: "git://github.com/UnixJunkie/interval-tree"
 patches: "patch-oasis-itv-tree.2.0" {os = "win32"}
 install: ["ocaml" "setup.ml" "-install"]
-dev-repo: "git://github.com/UnixJunkie/interval-tree"
+available: [ocaml-version < "4.06.0"]

@@ -15,5 +15,6 @@ depexts: [
  [ ["debian"] ["blktap-dev" "uuid-dev"] ]
  [ ["centos"] ["blktap-devel" "libuuid-devel" ] ]
 ]
-install: [make "install" "BINDIR=%{bin}%"]
 dev-repo: "git://github.com/xen-org/libvhd"
+install: [make "install" "BINDIR=%{bin}%"]
+available: [ocaml-version < "4.06.0"]
