@@ -28,3 +28,4 @@ conflicts: [
 ]
 
 available: ocaml-version >= "4.02.3"
+patches: "thanatonauts-bitstring-df903e8beef9.patch" {os = "win32"}
