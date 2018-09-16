@@ -11,6 +11,9 @@ build: [
   [make]
 ]
 install: [make "install"]
-remove: [make "uninstall"]
+remove: [
+  [make "uninstall"]
+  ["rm" "-rf" "%{lib}%/%{name}%"]
+]
 depopts : [ "result" "seq" "uchar" ]
 available: [ocaml-version >= "3.07" & ocaml-version < "4.09.0"]
