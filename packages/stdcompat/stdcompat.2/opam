@@ -15,4 +15,4 @@ depends: [
   "cppo" {build}
 ]
 available:
-  ocaml-version >= "3.12.1" & ocaml-version < "4.08.0" & os != "win32"
+  ocaml-version >= "3.12.1" & ocaml-version < "4.07.0" & os != "win32"

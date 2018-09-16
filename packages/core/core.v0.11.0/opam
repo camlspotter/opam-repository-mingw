@@ -22,4 +22,6 @@ depends: [
   "jbuilder"                {build & >= "1.0+beta18.1"}
   "ocaml-migrate-parsetree" {>= "1.0"}
 ]
-available: ocaml-version >= "4.04.1" & arch != "aarch64" & os != "win32"
+available:
+  ocaml-version >= "4.04.1" & ocaml-version < "4.07.0" & arch != "aarch64" &
+  os != "win32"

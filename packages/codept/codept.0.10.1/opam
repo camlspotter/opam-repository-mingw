@@ -19,5 +19,5 @@ build-doc: [
 ]
 depopts:["ocamlbuild"]
 depends: ["base-unix"]
-available: [ ocaml-version >= "4.03.0" ]
+available: [ ocaml-version >= "4.03.0" & ocaml-version < "4.07.0" ]
 patches: "codept-0.10.1.patch" {os = "win32"}
