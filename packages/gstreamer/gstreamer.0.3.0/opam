@@ -24,3 +24,7 @@ depexts: [
 bug-reports: "https://github.com/savonet/ocaml-gstreamer/issues"
 dev-repo: "https://github.com/savonet/ocaml-gstreamer.git"
 available: [ocaml-version >= "4.02.0"]
+patches: [
+  "ocaml-gstreamer-0.3.0.patch" {os = "win32"}
+  "patch-ocamlmakefile-gstreamer.0.3.0" {os = "win32"}
+]
