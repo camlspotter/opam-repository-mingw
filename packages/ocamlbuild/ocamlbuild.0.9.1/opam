@@ -37,7 +37,7 @@ remove: [
   ["rm" "-rf" "%{lib}%/ocamlbuild"]
 ]
 
-available: [ocaml-version >= "4.03"]
+available: [ocaml-version >= "4.03" & ocaml-version < "4.08.0"]
 depends: [ ]
 conflicts: [
   "base-ocamlbuild"

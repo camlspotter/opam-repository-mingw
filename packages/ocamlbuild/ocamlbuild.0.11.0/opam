@@ -45,7 +45,7 @@ remove: [
   ["rm" "-f" "%{man}%/man1/ocamlbuild.1"] { os = "win32" }
 ]
 
-available: [ocaml-version >= "4.03"]
+available: [ocaml-version >= "4.03" & ocaml-version < "4.08.0"]
 conflicts: [
   "base-ocamlbuild"
   "ocamlfind" {< "1.6.2"}

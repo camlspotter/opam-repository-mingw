@@ -40,7 +40,7 @@ remove: [
   ["rm" "-rf" "%{lib}%/ocaml/ocamlbuild"] { os = "win32" }
   ["rm" "-rf" "%{lib}%/ocamlbuild"] { os = "win32" }
 ]
-available: [ocaml-version >= "4.03"]
+available: [ocaml-version >= "4.03" & ocaml-version < "4.08.0"]
 conflicts: [
   "base-ocamlbuild"
   "ocamlfind" {< "1.6.2"}
