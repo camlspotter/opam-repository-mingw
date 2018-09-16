@@ -20,5 +20,5 @@ depends: [
   "result"
   "ppx_deriving" {>= "2.0"}
 ]
-available: [ocaml-version >= "4.02.1"]
+available: [ocaml-version >= "4.02.1" & ocaml-version < "4.06.0"]
 patches: "patch-topkg-argon2.0.2" {os = "win32"}

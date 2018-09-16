@@ -11,4 +11,5 @@ depends: [
   "ocamlbuild" {build}
 ]
 install: ["ocaml" "setup.ml" "-install"]
+available: [ocaml-version < "4.06.0"]
 patches: "patch-oasis-ospec.0.3.1" {os = "win32"}
