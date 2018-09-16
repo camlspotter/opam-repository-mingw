@@ -1,0 +1,76 @@
+--- ./configure.ac
++++ ./configure.ac
+@@ -160,7 +160,7 @@
+   CFLAGS="$CFLAGS -fPIC"
+ fi
+ 
+-OCAML_WHERE="`$OCAMLFIND ocamlc -where`"
++OCAML_WHERE="`$OCAMLFIND ocamlc -where | tr -d '\015'`"
+ # Beurk!
+ FINDLIB_PATH="`$OCAMLFIND printconf path | tr \\\\n \\; | sed -e 's#;$##' | sed -e 's#;#";"#g'`"
+ if test -n "${FINDLIB_PATH}"; then
+@@ -218,7 +218,7 @@
+         AC_MSG_RESULT(no)
+     fi
+     OCAMLC="$OCAMLFIND ocamlopt"
+-    _DEP_OPTS="-native"
++    _DEP_OPTS="-native -slash"
+ else
+     BYTE=yes
+     OCAMLCOMP=OCAMLC
+@@ -239,7 +239,7 @@
+     else
+         OCAMLC="$OCAMLFIND ocamlc"
+     fi
+-    _DEP_OPTS=""
++    _DEP_OPTS="-slash"
+ fi
+ 
+ OCAML_VERSION="`$OCAMLC -version`"
+@@ -334,7 +334,7 @@
+ if test -n "${w_DUPPY_SYNTAX}"; then
+   if test "${CAMLP4O}" != "no"; then
+     if test -z "${DUPPY_SYNTAX_path}"; then
+-      DUPPY_SYNTAX_path=`${OCAMLFIND} query duppy`
++      DUPPY_SYNTAX_path=`${OCAMLFIND} query duppy | tr -d '\015'`
+     fi
+     CAMLP4O="${CAMLP4O} ${DUPPY_SYNTAX_path}/pa_duppy.cmo"
+   fi
+--- ./configure
++++ ./configure
+@@ -5944,7 +5944,7 @@
+   CFLAGS="$CFLAGS -fPIC"
+ fi
+ 
+-OCAML_WHERE="`$OCAMLFIND ocamlc -where`"
++OCAML_WHERE="`$OCAMLFIND ocamlc -where | tr -d '\015'`"
+ # Beurk!
+ FINDLIB_PATH="`$OCAMLFIND printconf path | tr \\\\n \\; | sed -e 's#;$##' | sed -e 's#;#";"#g'`"
+ if test -n "${FINDLIB_PATH}"; then
+@@ -6008,7 +6008,7 @@
+ $as_echo "no" >&6; }
+     fi
+     OCAMLC="$OCAMLFIND ocamlopt"
+-    _DEP_OPTS="-native"
++    _DEP_OPTS="-native -slash"
+ else
+     BYTE=yes
+     OCAMLCOMP=OCAMLC
+@@ -6069,7 +6069,7 @@
+     else
+         OCAMLC="$OCAMLFIND ocamlc"
+     fi
+-    _DEP_OPTS=""
++    _DEP_OPTS="-slash"
+ fi
+ 
+ OCAML_VERSION="`$OCAMLC -version`"
+@@ -7203,7 +7203,7 @@
+ if test -n "${w_DUPPY_SYNTAX}"; then
+   if test "${CAMLP4O}" != "no"; then
+     if test -z "${DUPPY_SYNTAX_path}"; then
+-      DUPPY_SYNTAX_path=`${OCAMLFIND} query duppy`
++      DUPPY_SYNTAX_path=`${OCAMLFIND} query duppy | tr -d '\015'`
+     fi
+     CAMLP4O="${CAMLP4O} ${DUPPY_SYNTAX_path}/pa_duppy.cmo"
+   fi
