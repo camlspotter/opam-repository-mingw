@@ -12,5 +12,5 @@ remove: ["ocamlfind" "remove" "grenier"]
 depends: [
   "ocamlfind" {build}
 ]
-available: ocaml-version >= "4.02"
+available: [ocaml-version >= "4.02" & ocaml-version < "4.06.0"]
 patches: "patch-ocamlmakefile-grenier.0.5" {os = "win32"}
