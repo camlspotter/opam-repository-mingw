@@ -18,3 +18,4 @@ depends: [
   "stdio"                   {>= "v0.11.0"}
 ]
 available: [ ocaml-version >= "4.04.1" ]
+patches: "ppxlib-0.2.2.patch" {os = "win32"}
