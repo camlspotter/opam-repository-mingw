@@ -15,8 +15,8 @@ automates the steps listed below.
 
 ### Download
 
-* [32-bit](https://github.com/fdopen/opam-repository-mingw/releases/download/0.0.0.1/opam32.tar.xz)
-* [64-bit](https://github.com/fdopen/opam-repository-mingw/releases/download/0.0.0.1/opam64.tar.xz)
+* [32-bit](https://github.com/fdopen/opam-repository-mingw/releases/download/0.0.0.2/opam32.tar.xz)
+* [64-bit](https://github.com/fdopen/opam-repository-mingw/releases/download/0.0.0.2/opam64.tar.xz)
 
 The archives contain native versions of opam, flexdll and aspcud. They
 are all not linked against cygwin1.dll, so you can use them with
@@ -26,8 +26,8 @@ either the 32-bit or 64-bit version of cygwin.
 ### Installation
 
 * First install [cygwin](https://cygwin.com/) and a few additionals
-  packages: rsync, patch, diffutils, curl, make, unzip, git, m4, perl.
-  And of course mingw64-i686-gcc-core and/or mingw64-x86_64-gcc-core.
+  packages: rsync, patch, diffutils, curl, make, unzip, git, m4, perl,
+  and of course mingw64-i686-gcc-core and/or mingw64-x86_64-gcc-core.
 
 * If your logon name contains whitespace characters (e.g. 'Firstname
   Lastname') or any other character that would require quoting inside
@@ -40,10 +40,10 @@ either the 32-bit or 64-bit version of cygwin.
 $ tar -xf 'opam32.tar.xz' # or tar -xf 'opam64.tar.xz'
 $ bash opam32/install.sh  # --prefix /usr/foo, the default prefix is /usr/local
                           # maybe you have to add /usr/local/bin to your PATH
-$ opam init default 'https://github.com/fdopen/opam-repository-mingw.git' --comp 4.03.0+mingw32 --switch 4.03.0+mingw32
+$ opam init default "https://github.com/fdopen/opam-repository-mingw.git#opam2" -c "ocaml-variants.4.07.1+mingw32" --disable-sandboxing
 # or, if you prefer the 64-bit version - 'opam switch -a' will list other supported versions
-$ opam init default 'https://github.com/fdopen/opam-repository-mingw.git' --comp 4.03.0+mingw64 --switch 4.03.0+mingw64
-$ eval $(opam config env)
+$ opam init default "https://github.com/fdopen/opam-repository-mingw.git#opam2" -c "ocaml-variants.4.07.1+mingw64" --disable-sandboxing
+$ eval $(ocaml-env cygwin)
 ```
 
 ## Things to remember
