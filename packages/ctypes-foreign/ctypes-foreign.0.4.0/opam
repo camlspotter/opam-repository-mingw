@@ -12,7 +12,7 @@ depexts: [
   [ ["osx" "macports"] ["libffi"] ]
   [ ["centos"] ["libffi-devel"] ]
   [ ["oraclelinux"] ["libffi-devel"] ]
-  [ ["win32" "cygwinports"] ["libffi" "pkg-config"] ]
+  [ ["win32" "cygwinports"] ["libffi" "system:pkgconf"] ]
   [ ["fedora"] ["libffi-devel"] ]
   [ ["alpine"] ["libffi-dev"] ]
   [ ["opensuse"] ["libffi-devel"] ]

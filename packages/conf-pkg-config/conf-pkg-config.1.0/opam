@@ -20,7 +20,7 @@ depexts: [
   [["freebsd"] ["devel/pkgconf"]]
   [["openbsd"] ["devel/pkgconf"]]
   [["osx" "homebrew"] ["pkg-config"]]
-  [["win32" "cygwinports"] ["pkg-config"]]
+  [["win32" "cygwinports"] ["system:pkgconf"]]
   [["freebsd"] ["pkgconf"]]
 ]
 available: [ os != "openbsd" ]
